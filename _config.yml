@@ -1,0 +1,54 @@
+# replace the <full url of the public repository> with your repository url.
+
+# repositoryUrl: <full url of the public repository>/blob/master
+repositoryUrl: https://github.com/Dynamsoft/Docs-Template-Repo/blob/master
+
+
+# Full url of the publicshed site without last '/'.
+# For example: the full url of dbr doc sit is https://www.dynamsoft.com/barcode-reader/
+# then set docFullPath with https://www.dynamsoft.com/barcode-reader
+
+# docFullPath: <full url of the published site> (eg - https://www.dynamsoft.com/barcode-reader)
+docFullPat: https://dynamsoft.github.io/Docs-Template-Repo
+
+# Relative path to first-level domain name without last '/'.
+# For example: the full url of dbr doc sit is https://www.dynamsoft.com/barcode-reader/
+# then set docHomePage with /barcode-reader
+
+# docHomePage: #<relative path to first-level domain> (eg - /barcode-reader)
+docHomePage: /Docs-Template-Repo
+
+# Notice the root of the path is the first-level domain, so the relative path shall be started 
+# with the first-level path rather than the root path of the repository.
+
+# Example variable:
+
+# sampleFolder: <docHomePage path>/sample-folder/
+sampleFolder: /Docs-Template-Repo/sample-folder/
+
+
+# public resources.
+
+# assets: <docHomePage path>/assets/
+assets: /Docs-Template-Repo/assets/
+# edit_icon: <docHomePage path>/assets/img-icon/edit-icon.png
+edit_icon: /Docs-Template-Repo/assets/img-icon/edit-icon.png
+# smile_icon: <docHomePage path>/assets/img-icon/icon-smile.png
+smile_icon: /Docs-Template-Repo/assets/img-icon/icon-smile.png
+# sad_icon: <docHomePage path>/assets/img-icon/icon-sad.png
+sad_icon: /Docs-Template-Repo/assets/img-icon/icon-sad.png
+# dbr_icon: <docHomePage path>/assets/img-icon/icon-dbr.svg
+dbr_icon: /Docs-Template-Repo/assets/img-icon/icon-dbr.svg
+# dwt_icon: <docHomePage path>/assets/img-icon/icon-dwt.svg
+dwt_icon: /Docs-Template-Repo/assets/img-icon/icon-dwt.svg
+# dnt_icon: <docHomePage path>/assets/img-icon/icon-dnt.svg
+dnt_icon: /Docs-Template-Repo/assets/img-icon/icon-dnt.svg
+
+
+# Replace the <docHomePage> with the value of docHomePage defined above.
+
+# baseurl: "<docHomePage>"
+baseurl: "/Docs-Template-Repo"
+
+plugins:
+  - jemoji
