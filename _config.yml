@@ -1,7 +1,7 @@
 # replace the <full url of the public repository> with your repository url.
 
 # repositoryUrl: <full url of the public repository>/blob/master
-repositoryUrl: https://github.com/Dynamsoft/Docs-Template-Repo/blob/master
+repositoryUrl: https://github.com/Dynamsoft/Docs-Template-Repo/blob/main
 
 
 # Full url of the publicshed site without last '/'.
