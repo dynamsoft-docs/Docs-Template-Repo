@@ -1,6 +1,7 @@
 # replace the <full url of the public repository> with your repository url.
+# replace the <branch name> with the branch name used for publishing site, usually master branch.
 
-# repositoryUrl: <full url of the public repository>/blob/master
+# repositoryUrl: <full url of the public repository>/blob/<branch name>
 repositoryUrl: https://github.com/Dynamsoft/Docs-Template-Repo/blob/main
 
 
