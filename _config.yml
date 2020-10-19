@@ -14,9 +14,13 @@ docFullPat: https://dynamsoft.github.io/Docs-Template-Repo
 
 # Relative path to first-level domain name without last '/'.
 # For example: the full url of dbr doc sit is https://www.dynamsoft.com/barcode-reader/
-# then set docHomePage with /barcode-reader
+# then set firstLevelUrl with /barcode-reader
 
-# docHomePage: #<relative path to first-level domain> (eg - /barcode-reader)
+# firstLevelUrl: #<relative path to first-level domain> (eg - /barcode-reader)
+firstLevelUrl: /Docs-Template-Repo
+
+# docHomePage: #<relative path of homepage to first-level domain>
+# if index.md in the repo is the homepage, set the value same as firstLevelUrl.
 docHomePage: /Docs-Template-Repo
 
 # Notice the root of the path is the first-level domain, so the relative path shall be started 
@@ -24,31 +28,31 @@ docHomePage: /Docs-Template-Repo
 
 # Example variable:
 
-# sampleFolder: <docHomePage path>/sample-folder/
+# sampleFolder: <firstLevelUrl>/sample-folder/
 sampleFolder: /Docs-Template-Repo/sample-folder/
 
 
 # public resources.
 
-# assets: <docHomePage path>/assets/
+# assets: <firstLevelUrl>/assets/
 assets: /Docs-Template-Repo/assets/
-# edit_icon: <docHomePage path>/assets/img-icon/edit-icon.png
+# edit_icon: <firstLevelUrl>/assets/img-icon/edit-icon.png
 edit_icon: /Docs-Template-Repo/assets/img-icon/edit-icon.png
-# smile_icon: <docHomePage path>/assets/img-icon/icon-smile.png
+# smile_icon: <firstLevelUrl>/assets/img-icon/icon-smile.png
 smile_icon: /Docs-Template-Repo/assets/img-icon/icon-smile.png
-# sad_icon: <docHomePage path>/assets/img-icon/icon-sad.png
+# sad_icon: <firstLevelUrl>/assets/img-icon/icon-sad.png
 sad_icon: /Docs-Template-Repo/assets/img-icon/icon-sad.png
-# dbr_icon: <docHomePage path>/assets/img-icon/icon-dbr.svg
+# dbr_icon: <firstLevelUrl>/assets/img-icon/icon-dbr.svg
 dbr_icon: /Docs-Template-Repo/assets/img-icon/icon-dbr.svg
-# dwt_icon: <docHomePage path>/assets/img-icon/icon-dwt.svg
+# dwt_icon: <firstLevelUrl>/assets/img-icon/icon-dwt.svg
 dwt_icon: /Docs-Template-Repo/assets/img-icon/icon-dwt.svg
-# dnt_icon: <docHomePage path>/assets/img-icon/icon-dnt.svg
+# dnt_icon: <firstLevelUrl>/assets/img-icon/icon-dnt.svg
 dnt_icon: /Docs-Template-Repo/assets/img-icon/icon-dnt.svg
 
 
-# Replace the <docHomePage> with the value of docHomePage defined above.
+# Replace the <firstLevelUrl> with the value of firstLevelUrl defined above.
 
-# baseurl: "<docHomePage>"
+# baseurl: "<firstLevelUrl>"
 baseurl: "/Docs-Template-Repo"
 
 plugins:
