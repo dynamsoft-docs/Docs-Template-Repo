@@ -1,71 +1,120 @@
-// dbr download
-var ei = getUrlParam('ei')
-if (ei == '0') {
-    $('.editionName').html('Java');
-    window.location.href= 'https://download2.dynamsoft.com/dbr/dbr-java-7.6.zip';
-    $('.downloadlink').attr('href', 'https://download2.dynamsoft.com/dbr/dbr-java-7.6.zip');
-    $('.dbrThanksDownloading').show();
+$('#sideBarCnt').css({'width': $('.sideBar').width() + 'px'})
+$('.container .head').css({'width': $('.docContainer').width() + 'px'})
+$('#fullTreeMenuListContainer').css({'height': 'calc(100vh - 245px)'})
+
+if ($('.docContainer').height() + 125 > document.body.clientHeight) {
+    $('.history').addClass('history-fixed')
 }
-if (ei == '1') {
-    $('.editionName').html('raspberry pi');
-    window.location.href= 'https://download2.dynamsoft.com/dbr/dbr-rpi-7.6.tar.gz';
-    $('.downloadlink').attr('href', 'https://download2.dynamsoft.com/dbr/dbr-rpi-7.6.tar.gz');
-    $('.dbrThanksDownloading').show();
-}
-if (ei && ei != '' && ei != '0' && ei != '1') {
-    $.ajax({
-        type: 'GET',
-        url: '/barcode-reader/assets/files/ProductList.js',
-        data: {},
-        dataType: 'JSON',
-        success: function(res) {
-            for (var i = 0; i < res.length; i++) {
-                if (res[i].ProductId == 1000003) {
-                    var editionInfos = res[i].EditionInfos
-                    for (var j = 0; j<editionInfos.length; j++) {
-                        if (editionInfos[j].ProductEditionId == ei) {
-                            if (ei == '1000010') {
-                                $('.editionName').html('JavaScript');
-                            } else if (ei == '1000005') {
-                                $('.editionName').html('Windows');
-                            } else if (ei == '1000009') {
-                                $('.editionName').html('Android');
-                            } else if (ei == '1000008') {
-                                $('.editionName').html('iOS');
-                            } else if (ei == '1000007') {
-                                $('.editionName').html('Linux');
-                            }
-                            var VersionInfos = editionInfos[j].VersionInfos
-                            VersionInfos.sort(function (a, b) {
-                              if (a.VersionMajor > b.VersionMajor) {
-                                  return -1
-                              } else if (a.VersionMajor == b.VersionMajor) {
-                                  if (a.VersionMinor > b.VersionMinor) {
-                                      return -1
-                                  } else if (a.VersionMinor == b.VersionMinor) {
-                                      if (a.VersionBuild > b.VersionBuild) {
-                                          return -1
-                                      } else {
-                                          return 1
-                                      }
-                                  } else {
-                                      return 1
-                                  }
-                              } else {
-                                  return 1
-                              }
-                            })
-                            var vlength = VersionInfos.length
-                            if (vlength > 0) {
-                                var vlink = VersionInfos[0].TrialResourceUrl
-                                window.location.href= vlink;
-                                $('.downloadlink').attr('href', vlink);
-                                $('.dbrThanksDownloading').show();
-                            }
-                        }
-                    }
-                }
-            }
+
+$(window).resize(function() {
+    $('#sideBarCnt').css({'width': $('.sideBar').width() + 'px'})
+    $('.container .head').css({'width': $('.docContainer').width() + 'px'})
+    realFunc()
+})
+
+window.addEventListener('scroll', realFunc);
+
+function realFunc(){
+    var sd = $(window).scrollTop();
+    var dcheight = $('.docContainer').height() + 65 - sd
+    if (sd > 0 && dcheight < document.body.clientHeight) {
+        $('.history').removeClass('history-fixed')
+    } else {
+        if (!$('.history').hasClass('history-fixed')) {
+            $('.history').addClass('history-fixed')
         }
-    })
+        if ($('.docContainer').height() + 125 < document.body.clientHeight) {
+            $('.history').removeClass('history-fixed')
+        }
+    }
+    if (breakpoint() == 'lg') {
+        if (sd > 65 && dcheight>0) {
+            if (!$('.subHeadWrapper').hasClass('shw-fixed')) {
+                $('.subHeadWrapper').addClass('shw-fixed')
+                $('.docContainer').addClass('dc-fixed')
+                $('#sideBarCnt').addClass('ftm-fixed')
+                $('.rightSideMenu').addClass('rsm-fixed')
+                $('#docHead').addClass('ch-fixed')
+            }
+            if (dcheight > document.body.clientHeight) {
+                $('#sideBarCnt.ftm-fixed').css({'height': 'calc(100vh - 120px)'})
+                $('#sideBarCnt.ftm-fixed #fullTreeMenuListContainer').css({'height': 'calc(100vh - 180px)'})
+                $('.rightSideMenu.rsm-fixed').css({'height': 'calc(100vh - 110px)'})
+            } else {
+                $('#sideBarCnt.ftm-fixed').css({'height': (dcheight - 40) + 'px'})
+                $('#sideBarCnt.ftm-fixed #fullTreeMenuListContainer').css({'height': (dcheight - 90) + 'px'})
+                $('.rightSideMenu.rsm-fixed').css({'height': (dcheight - 40) + 'px'})
+            }
+            $('.markdown-body').css({'margin-top': (100 + $('.container .head').height()) + 'px'})
+        } else {
+            $('.subHeadWrapper').removeClass('shw-fixed')
+            $('.docContainer').removeClass('dc-fixed')
+            $('#sideBarCnt').removeClass('ftm-fixed')
+            $('.rightSideMenu').removeClass('rsm-fixed')
+            $('.container .head').removeClass('ch-fixed')
+            $('.markdown-body').css({'margin-top': '40px'})
+        }
+    }
+    if (breakpoint() == 'md') {
+        if (sd > 65 && dcheight > 0) {
+            if (!$('.subHeadWrapper').hasClass('shw-fixed')) {
+                $('.subHeadWrapper').addClass('shw-fixed')
+                $('.docContainer').addClass('dc-fixed')
+                $('#sideBarCnt').addClass('ftm-fixed')
+                $('#docHead').addClass('ch-fixed')
+            }
+            if (dcheight > document.body.clientHeight) {
+                $('#sideBarCnt.ftm-fixed').css({'height': 'calc(100vh - 120px)'})
+                $('#sideBarCnt.ftm-fixed #fullTreeMenuListContainer').css({'height': 'calc(100vh - 180px)'})
+                $('.rightSideMenu.rsm-fixed').css({'height': 'calc(100vh - 110px)'})
+            } else {
+                $('#sideBarCnt.ftm-fixed').css({'height': (dcheight - 40) + 'px'})
+                $('#sideBarCnt.ftm-fixed #fullTreeMenuListContainer').css({'height': (dcheight - 90) + 'px'})
+                $('.rightSideMenu.rsm-fixed').css({'height': (dcheight - 40) + 'px'})
+            }
+            $('.markdown-body').css({'margin-top': (100 + $('.container .head').height()) + 'px'})
+        } else {
+            $('.subHeadWrapper').removeClass('shw-fixed')
+            $('.docContainer').removeClass('dc-fixed')
+            $('#sideBarCnt').removeClass('ftm-fixed')
+            $('#docHead').removeClass('ch-fixed')
+            $('.markdown-body').css({'margin-top': '40px'})
+            $('#fullTreeMenuListContainer').css({'height': 'calc(100vh - 245px)'})
+        }
+    }
 }
+
+$('.sideBarIcon').click(function() {
+    $(".sideBar").toggleClass('hide-sm');
+    $(".sideBar").toggleClass('hide-xs');
+    setTimeout(function() {
+        console.log('sidebar' + $('.sideBar').width())
+        $('#sideBarCnt').css({'width': $('.sideBar').width() + 'px'})
+    }, 100)
+})
+
+let timeInt = setInterval(function() {
+    var container = $('#sideBarCnt'), scrollTo = $('#sideBarCnt .activeLink');
+    console.log(scrollTo)
+    if (scrollTo.length>0) {
+        container.scrollTop(
+            scrollTo.offset().top - container.offset().top + container.scrollTop()
+        );
+        clearInterval(timeInt)
+    }
+}, 500)
+
+$(document).click(function(){
+    $('.otherVersions').hide()
+    $('.fullVersionInfo').hide()
+})
+
+$('.changeBtn').on('click', function(e) {
+    $('.otherVersions').toggle()
+    stopPropagation(e);
+})
+
+$('.fvChange').on('click', function(e) {
+    $('.fullVersionInfo').toggle()
+    stopPropagation(e);
+})
