@@ -29,4 +29,13 @@
     <script type="text/javascript" src="{{ site.assets }}js/index-banner.min.js"></script>
     <script type="text/javascript" src="{{ site.assets }}js/historymanage.min.js"></script>
     <script type="text/javascript" src="{{ site.assets }}js/layout.min.js"></script>
+
+    {%- if page.noTitleIndex or page.url contains 'release-notes' -%}
+        <style>
+            .headCounter h2:before { content: ''!important; }
+            .headCounter h2 { counter-reset: none!important; counter-increment: none!important; }
+            .headCounter h3:before { content: ''!important; }
+            .headCounter h3 { counter-increment: none!important; }
+        </style>
+    {%- endif -%}
 </head>
