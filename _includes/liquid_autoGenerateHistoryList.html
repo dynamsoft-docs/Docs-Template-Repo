@@ -43,7 +43,7 @@
 	{%- for history in historyAry -%}
 		{%- assign tmpSize = history | size -%}
 		{%- if tmpSize > 20 -%}
-		{%- assign historyVer = history | split: 'versionText:' | last -%}
+			{%- assign historyVer = history | split: 'versionText:' | last -%}
 			{%- if historyVer == tmpPageVersion -%}
 				{%- assign newVer = false -%}
 				{%- break -%}
@@ -84,6 +84,3 @@
 {%- if historyRecode != '' -%}
 	<a class="changeBtn fontOswald" href="javascript:;" style="display: none!important;">Change +</a>
 {%- endif -%}
-
-
-
