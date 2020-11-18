@@ -14,9 +14,15 @@
 	{%- assign curUsedToMatchUrl = curUsedToMatchUrl | remove: 'index.html' -%}
 {%- endif -%}
 
+{%- if curPageVersion == "latest version" -%}
+	<p class="currentVersion fontOswald">latest version</p>		
+{%- else -%}
+	<p class="currentVersion fontOswald">{{ "version " | append: curPageVersion }}</p>
+{%- endif -%}
+
 {%- assign historyRecode = "" -%}
 
-
+<ul class="otherVersions" style="display: none!important;">
 {%- for my_page in site.pages -%}
 	{%- capture tmpPageVersion -%}
 		{%- if my_page.url contains '-v' -%}
@@ -41,13 +47,9 @@
 	{%- assign newVer = true -%}
 	{%- assign historyAry = historyRecode | split: '\nextUrlRecode\' -%}
 	{%- for history in historyAry -%}
-		{%- assign tmpSize = history | size -%}
-		{%- if tmpSize > 20 -%}
-			{%- assign historyVer = history | split: 'versionText:' | last -%}
-			{%- if historyVer == tmpPageVersion -%}
-				{%- assign newVer = false -%}
-				{%- break -%}
-			{%- endif -%}
+		{%- if history == tmpPageVersion -%}
+			{%- assign newVer = false -%}
+			{%- break -%}
 		{%- endif -%}
 	{%- endfor -%}
 
@@ -55,31 +57,16 @@
 		{%- continue -%}
 	{%- endunless -%}
 
-	{%- assign appendText = "FullUrl:" | append: my_page.url | append: "versionText:" | append: tmpPageVersion -%}
-	{%- assign historyRecode = historyRecode | append: '\nextUrlRecode\' | append: appendText -%}
-{%- endfor -%}
-
-{%- if curPageVersion == "latest version" -%}
-	<p class="currentVersion fontOswald">latest version</p>		
-{%- else -%}
-	<p class="currentVersion fontOswald">{{ "version " | append: curPageVersion }}</p>
-{%- endif -%}
-
-<ul class="otherVersions" style="display: none!important;">
-{%- assign historyAry = historyRecode | split: '\nextUrlRecode\' -%}
-{%- for history in historyAry -%}
-	{%- assign tmpSize = history | size -%}
-	{%- if tmpSize > 20 -%}
-		{%- assign historyVer = history | split: 'versionText:' | last -%}
-		{%- assign historyUrl = history | split: 'versionText:' | first | split: 'FullUrl:' | last -%}
-		{%- if historyVer == "latest version" -%}
-				<li><a href = "{{ site.firstLevelUrl }}{{ historyUrl }}" class="otherLinkColour">latest version</a></li>		
-			{%- else -%}
-				<li><a href = "{{ site.firstLevelUrl }}{{ historyUrl }}" class="otherLinkColour">{{ "version " | append: historyVer }}</a></li>
-		{%- endif -%}
+	{%- if tmpPageVersion == "latest version" -%}
+		<li><a href = "{{ site.firstLevelUrl }}{{ my_page.url }}" class="otherLinkColour">latest version</a></li>
+	{%- else -%}
+		<li><a href = "{{ site.firstLevelUrl }}{{ my_page.url }}" class="otherLinkColour">{{ "version " | append: tmpPageVersion }}</a></li>
 	{%- endif -%}
+
+	{%- assign historyRecode = historyRecode | append: '\nextUrlRecode\' | append: tmpPageVersion -%}
 {%- endfor -%}
 </ul>
+
 
 {%- if historyRecode != '' -%}
 	<a class="changeBtn fontOswald" href="javascript:;" style="display: none!important;">Change +</a>
