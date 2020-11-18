@@ -26,30 +26,27 @@
 		{%- endif -%}
 	{%- endcapture -%}
 
-	{%- if my_page.md5HashVal and page.md5HashVal and my_page.md5HashVal == page.md5HashVal -%}
-		{%- if curPageVersion != "latest version" and curPageVersion != tmpPageVersion and  tmpPageVersion > curPageVersion -%}
-			{%- assign curPageVersion = tmpPageVersion -%}
-		{%- endif -%}
-		{%- continue -%}
-	{%- else -%}
-		{%- if curPageVersion == tmpPageVersion -%}
-			{%- if curPageVersion != "latest version" and curPageVersion != tmpPageVersion and  tmpPageVersion > curPageVersion -%}
-			{%- assign curPageVersion = tmpPageVersion -%}
-			{%- endif -%}
-			{%- continue -%}
-		{%- endif -%}
-	{%- endif -%}
-
-
 	{%- assign needRemoveStr = "-v" | append: tmpPageVersion -%}
 	{%- assign tmpUsedToMatchUrl = my_page.url | remove: needRemoveStr -%}
 
+	
 	{%- if tmpUsedToMatchUrl contains 'index.html' -%}
 		{%- assign tmpUsedToMatchUrl = tmpUsedToMatchUrl | remove: 'index.html' -%}
 	{%- endif -%}
 
 	{%- if tmpUsedToMatchUrl != curUsedToMatchUrl -%}
 		{%- continue -%}
+	{%- endif -%}
+
+	{%- if curPageVersion == tmpPageVersion -%}
+		{%- continue -%}
+	{%- else -%}
+		{%- if my_page.md5HashVal and page.md5HashVal and my_page.md5HashVal == page.md5HashVal -%}
+			{%- if curPageVersion != "latest version" and curPageVersion != tmpPageVersion and  tmpPageVersion > curPageVersion -%}
+				{%- assign curPageVersion = tmpPageVersion -%}
+			{%- endif -%}
+			{%- continue -%}
+		{%- endif -%}
 	{%- endif -%}
 
 	{%- assign newVer = true -%}
@@ -106,3 +103,6 @@
 {%- if historyRecode != '' -%}
 	<a class="changeBtn fontOswald" href="javascript:;" style="display: none!important;">Change +</a>
 {%- endif -%}
+
+
+
