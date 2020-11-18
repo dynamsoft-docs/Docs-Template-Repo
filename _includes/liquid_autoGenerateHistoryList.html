@@ -32,6 +32,10 @@
 		{%- endif -%}
 	{%- endcapture -%}
 
+	{%- if curPageVersion == tmpPageVersion -%}
+		{%- continue -%}
+	{%- endif -%}
+
 	{%- assign needRemoveStr = "-v" | append: tmpPageVersion -%}
 	{%- assign tmpUsedToMatchUrl = my_page.url | remove: needRemoveStr -%}
 
@@ -40,7 +44,7 @@
 		{%- assign tmpUsedToMatchUrl = tmpUsedToMatchUrl | remove: 'index.html' -%}
 	{%- endif -%}
 
-	{%- if tmpUsedToMatchUrl != curUsedToMatchUrl or curPageVersion == tmpPageVersion -%}
+	{%- if tmpUsedToMatchUrl != curUsedToMatchUrl -%}
 		{%- continue -%}
 	{%- endif -%}
 
