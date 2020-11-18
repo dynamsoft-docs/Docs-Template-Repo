@@ -34,38 +34,20 @@
 		{%- assign tmpUsedToMatchUrl = tmpUsedToMatchUrl | remove: 'index.html' -%}
 	{%- endif -%}
 
-	{%- if tmpUsedToMatchUrl != curUsedToMatchUrl -%}
+	{%- if tmpUsedToMatchUrl != curUsedToMatchUrl or curPageVersion == tmpPageVersion -%}
 		{%- continue -%}
-	{%- endif -%}
-
-	{%- if curPageVersion == tmpPageVersion -%}
-		{%- continue -%}
-	{%- else -%}
-		{%- if my_page.md5HashVal and page.md5HashVal and my_page.md5HashVal == page.md5HashVal -%}
-			{%- if curPageVersion != "latest version" and curPageVersion != tmpPageVersion and  tmpPageVersion > curPageVersion -%}
-				{%- assign curPageVersion = tmpPageVersion -%}
-			{%- endif -%}
-			{%- continue -%}
-		{%- endif -%}
 	{%- endif -%}
 
 	{%- assign newVer = true -%}
 	{%- assign historyAry = historyRecode | split: '\nextUrlRecode\' -%}
 	{%- for history in historyAry -%}
-		{%- assign historyMd5 = history | split: 'md5HashVal:' | last -%}
-		{%- assign historyVer = history | split: 'md5HashVal:' | first | split: 'versionText:' | last -%}
-		{%- assign tmpSize = historyMd5 | size -%}
-		{%- if tmpSize > 0 and my_page.md5HashVal and my_page.md5HashVal == historyMd5 -%}
-			{%- if historyVer != "latest version" and historyVer != tmpPageVersion and tmpPageVersion > historyVer -%}
-				{%- assign replaceText = "FullUrl:" | append: my_page.url | append: "versionText:" | append: tmpPageVersion | append: "md5HashVal:" | append: my_page.md5HashVal -%}
-				{%- assign historyRecode = historyRecode | replace: history, replaceText -%}
+		{%- assign tmpSize = history | size -%}
+		{%- if tmpSize > 20 -%}
+		{%- assign historyVer = history | split: 'versionText:' | last -%}
+			{%- if historyVer == tmpPageVersion -%}
+				{%- assign newVer = false -%}
+				{%- break -%}
 			{%- endif -%}
-			{%- assign newVer = false -%}
-			{%- break -%}
-		{%- endif -%}
-		{%- if historyVer == tmpPageVersion -%}
-			{%- assign newVer = false -%}
-			{%- break -%}
 		{%- endif -%}
 	{%- endfor -%}
 
@@ -73,10 +55,9 @@
 		{%- continue -%}
 	{%- endunless -%}
 
-	{%- assign appendText = "FullUrl:" | append: my_page.url | append: "versionText:" | append: tmpPageVersion | append: "md5HashVal:" | append: my_page.md5HashVal -%}
+	{%- assign appendText = "FullUrl:" | append: my_page.url | append: "versionText:" | append: tmpPageVersion -%}
 	{%- assign historyRecode = historyRecode | append: '\nextUrlRecode\' | append: appendText -%}
 {%- endfor -%}
-
 
 {%- if curPageVersion == "latest version" -%}
 	<p class="currentVersion fontOswald">latest version</p>		
@@ -88,9 +69,9 @@
 {%- assign historyAry = historyRecode | split: '\nextUrlRecode\' -%}
 {%- for history in historyAry -%}
 	{%- assign tmpSize = history | size -%}
-	{%- if tmpSize > 30 -%}
-		{%- assign historyVer = history | split: 'md5HashVal:' | first | split: 'versionText:' | last -%}
-		{%- assign historyUrl = history | split: 'md5HashVal:' | first | split: 'versionText:' | first | split: 'FullUrl:' | last -%}
+	{%- if tmpSize > 20 -%}
+		{%- assign historyVer = history | split: 'versionText:' | last -%}
+		{%- assign historyUrl = history | split: 'versionText:' | first | split: 'FullUrl:' | last -%}
 		{%- if historyVer == "latest version" -%}
 				<li><a href = "{{ site.firstLevelUrl }}{{ historyUrl }}" class="otherLinkColour">latest version</a></li>		
 			{%- else -%}
