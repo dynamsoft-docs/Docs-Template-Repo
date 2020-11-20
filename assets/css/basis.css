@@ -67,7 +67,7 @@ ul.circle > li p:hover, ul.circle li.on p, ul.square > li.on p, ul.square > li p
 .rightSideMenu ul li > ul { margin-top: 5px; }
 
 
-.markdown-body { margin-top: 66px; box-sizing: border-box; min-height: auto; }
+.markdown-body { margin-top: 66px; box-sizing: border-box; min-height: auto; padding-bottom: 50px; }
 .markdown-body table th, .markdown-body table td { border-left: 1px solid #306877; border-right: 1px solid #306877; border-top: 1px solid #c7d0db; border-bottom: 1px solid #c7d0db; font-size: 14px;height: 30px; padding: 5px 10px; color: #606060; }
 .markdown-body table tr:last-child td { border-bottom: 1px solid #306877; }
 .markdown-body table th { border-top: 1px solid #306877; }
@@ -174,7 +174,7 @@ div::-webkit-scrollbar-corner, ul::-webkit-scrollbar-corner{
 	font-size: 18px;
 	display: inline-block;
 	padding-right: 30px;
-	color: #323234;
+	color: #FFFFFF;
 }
 .history .changeBtn, .history .fvChange {
 	color: #FE8E14;
@@ -258,7 +258,7 @@ div::-webkit-scrollbar-corner, ul::-webkit-scrollbar-corner{
 
 @media (max-width: 991px) {
 	.footerWrapper { margin-top: 100px; }
-	.markdown-body { min-height: calc(100vh - 378px); margin-top: 40px; }
+	.markdown-body { min-height: calc(100vh - 378px); margin-top: 40px;  }
 	.rightSideMenu { margin-top: 40px; }
 	.subHeadWrapper { position: relative; top: 0; }
 	.sideBar, .docContainer { padding-top: 0px; }
