@@ -228,9 +228,15 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
 }
 
 function UrlSearch(docUrl, listUrl) {
+    docUrl = toLowerCase(docUrl);
+    listUrl = toLowerCase(listUrl);
+
+    docUrl = docUrl.replace(/\/index.html/g,"/");
+    listUrl = listUrl.replace(/\/index.html/g,"/");
+
     var docUrlWithParam = getUrlVars(docUrl)["src"];
     var listUrlWithParam = getUrlVars(listUrl)["src"];
-
+    
     var tmpExp = new RegExp('programming/c-cplusplus/$')
     if (tmpExp.exec(docUrl) != null){
         docUrl = docUrl.substring(0, docUrl.indexOf("c-cplusplus/"));
