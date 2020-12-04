@@ -11,7 +11,7 @@ function GenerateContentByHead(needh3 = true) {
         for (var i = 0; i < h2_list.length; i++) {
             var curH2Text = $(h2_list[i]).text();
             var curH2Href = curH2Text.replace(/\s+/g, '-');
-            curH2Href = curH2Href.replace(/[/#:\\\[\]@$^();,`"'|.&]/g, "");
+            curH2Href = curH2Href.replace(/[/#:\?\\\[\]@$^();,`"'|.&]/g, "");
             curH2Href = curH2Href.toLowerCase();
             var curliContent = '<li style="list-style-image: none; list-style-type: circle;"><a href="#' + curH2Href + '" class="otherLinkColour">' + curH2Text + '</a>';
             if (needh3) {
