@@ -235,6 +235,7 @@ div::-webkit-scrollbar-corner, ul::-webkit-scrollbar-corner{
 	.subHeaderMenuUl .btn { padding: 0 10px; }
 	#fullTreeMenuListContainer ul { font-size: 14px; }
 	.container .docContainer .head  .editLinkColour  { padding: 0; }
+	.markdown-body { margin-top: 110px; }
 }
 
 @media (max-width: 1400px) { 
