@@ -228,8 +228,8 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
 }
 
 function UrlSearch(docUrl, listUrl) {
-    docUrl = toLowerCase(docUrl);
-    listUrl = toLowerCase(listUrl);
+    docUrl = docUrl.toLowerCase();
+    listUrl = listUrl.toLowerCase();
 
     docUrl = docUrl.replace(/\/index.html/g,"/");
     listUrl = listUrl.replace(/\/index.html/g,"/");
