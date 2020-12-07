@@ -57,8 +57,13 @@ function UrlReplace()
     var allHerf1 = $(".docContainer,.sideBar").find("a");
     for (var i = 0; i < allHerf1.length; i++)
     {
-        allHerf1[i].onclick = function(){addParam(this, ver); return false;};
+        allHerf1[i].setAttribute("onclick", "allHerfClick("+this+","+ver+")")
     }
+}
+
+function allHerfClick(_this, ver) {
+    addParam(_this, ver); 
+    return false;
 }
 
 function RedirToGivenVersionPage(inputVer)
