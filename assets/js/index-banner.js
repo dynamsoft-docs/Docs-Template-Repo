@@ -21,7 +21,7 @@ function GenerateContentByHead(needh3 = true) {
                     for (var j = 0; j < h3_list.length; j++) {
                         var curH3Text = $(h3_list[j]).text();
                         var curH3Href = curH3Text.replace(/\s+/g, '-');
-                        curH3Href = curH3Href.replace(/[/#:\\\[\]@$^();,`"'|.&]/g, "");
+                        curH3Href = curH3Href.replace(/[/#:\?\\\[\]@$^();,`"'|.&]/g, "");
                         curH3Href = curH3Href.toLowerCase();
                         curliContent += '<li style="list-style-image: none; list-style-type: disc;"><a href="#' + curH3Href + '" class="otherLinkColour">' + curH3Text + '</a></li>';
                     }
