@@ -10,9 +10,7 @@ function GenerateContentByHead(needh3 = true) {
         // }
         for (var i = 0; i < h2_list.length; i++) {
             var curH2Text = $(h2_list[i]).text();
-            var curH2Href = curH2Text.replace(/\s+/g, '-');
-            curH2Href = curH2Href.replace(/[/#:\?\\\[\]@$^();,`"'|.&]/g, "");
-            curH2Href = curH2Href.toLowerCase();
+            var curH2Href =  $(h2_list[i]).attr("id");
             var curliContent = '<li style="list-style-image: none; list-style-type: circle;"><a href="#' + curH2Href + '" class="otherLinkColour">' + curH2Text + '</a>';
             if (needh3) {
                 var h3_list = $(h2_list[i]).nextUntil(h2_list[i + 1], "h3");
@@ -20,9 +18,7 @@ function GenerateContentByHead(needh3 = true) {
                     curliContent += '<ul name="listLevel2">';
                     for (var j = 0; j < h3_list.length; j++) {
                         var curH3Text = $(h3_list[j]).text();
-                        var curH3Href = curH3Text.replace(/\s+/g, '-');
-                        curH3Href = curH3Href.replace(/[/#:\\\[\]@$^();,`"'|.&]/g, "");
-                        curH3Href = curH3Href.toLowerCase();
+                        var curH3Href = $(h3_list[j]).attr("id");
                         curliContent += '<li style="list-style-image: none; list-style-type: disc;"><a href="#' + curH3Href + '" class="otherLinkColour">' + curH3Text + '</a></li>';
                     }
                     curliContent += '</ul>'
