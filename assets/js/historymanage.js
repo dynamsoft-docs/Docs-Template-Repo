@@ -57,7 +57,7 @@ function UrlReplace()
     var allHerf1 = $(".docContainer,.sideBar").find("a");
     for (var i = 0; i < allHerf1.length; i++)
     {
-        allHerf1[i].setAttribute("onclick", "allHerfClick("+this+","+ver+")");
+        allHerf1[i].setAttribute("onclick", "allHerfClick("+this+","+ver+")")
     }
 }
 
@@ -100,7 +100,7 @@ function RedirToGivenVersionPage(inputVer)
             var tmpVerText = listAry[i].innerText;
             var tmpVer = null;
             if (tmpVerText == "latest version"){
-                tmpVer = "latest";
+                tmpVer = "latest"
             }
             else{
                 tmpVer = tmpVerText.replace('version ','');
@@ -244,7 +244,7 @@ function changeVersion (liTag)
 	var innertext = (liTag.innerText).toLowerCase();
 	var ver = null;
 	if (innertext == "latest version"){
-		ver = "latest";
+		ver = "latest"
 	}
 	else{
 		ver = innertext.replace('version ','');
