@@ -9,12 +9,12 @@ $(document).ready(function(){
     window.addEventListener('scroll', realFunc);
 
     function init() {
+        var menuHeight = $('#overall-header').height() + $('.subHeadWrapper').height()
         $('#sideBarCnt').css({'width': $('.sideBar').width() + 'px'})
         $('.container .head').css({'width': $('.docContainer').width() + 'px'})
-        $('#fullTreeMenuListContainer').css({'height': 'calc(100vh - 245px)'})
-        $('.rightSideMenu').css({'height': 'calc(100vh - 255px)'})
-
-        if ($('.docContainer').height() + 125 >= document.body.clientHeight) {
+        $('#fullTreeMenuListContainer').css({'height': 'calc(100vh - '+(menuHeight + 115) +'px);'})
+        $('.rightSideMenu').css({'height': 'calc(100vh - '+(menuHeight + 115)+'px);'})
+        if ($('.docContainer').height() + menuHeight >= document.body.clientHeight) {
             $('.history').addClass('history-fixed')
             $('#footerWrapper').css({'margin-top': '48px'})
         }
@@ -22,13 +22,14 @@ $(document).ready(function(){
 
     function realFunc() {
         if (breakpoint() == 'lg') {
+            var menuHeight = $('#overall-header').height() + $('.subHeadWrapper').height()
             var sd = $(window).scrollTop();
-            var dcHeight = $('.docContainer').height() + 125 - sd
+            var dcHeight = $('.docContainer').height() + menuHeight - sd
             var clientHeight = document.body.clientHeight
-            if (sd >= 65) {
+            if (sd >= $('#overall-header').height()) {
                 // head and sidebar fixed
                 $('.subHeadWrapper').css({'top': '0px'})
-                $('#docHead').css({'top': '60px'})
+                $('#docHead').css({'top': ($('.subHeadWrapper').height() + 1) + 'px'})
                 $('.sideBar').css({'padding-top': '0px'})
                 $('.sideBar #sideBarCnt').addClass('sidebar-fixed')
                 $('.rightSideMenu').addClass('rsm-fixed')
@@ -42,14 +43,14 @@ $(document).ready(function(){
                 }
             } else {
                 // head and sidebar fixed
-                $('.subHeadWrapper').css({'top': (65-sd) + 'px'})
-                $('#docHead').css({'top': (125-sd) + 'px'})
-                $('.sideBar').css({'padding-top': '60px'})
+                $('.subHeadWrapper').css({'top': ($('#overall-header').height()-sd) + 'px'})
+                $('#docHead').css({'top': (menuHeight-sd)+1 + 'px'})
+                $('.sideBar').css({'padding-top': $('.subHeadWrapper').height() + 'px'})
                 $('.sideBar #sideBarCnt').removeClass('sidebar-fixed')
                 $('.rightSideMenu').removeClass('rsm-fixed')
 
                 // history fixed
-                if (sd < 65 && dcHeight + 48 > clientHeight) {
+                if (sd < $('#overall-header').height() && dcHeight + 48 > clientHeight) {
                     if (!$('.history').hasClass('history-fixed')) {
                         $('.history').addClass('history-fixed')
                         $('#footerWrapper').css({'margin-top': '48px'})
@@ -70,21 +71,9 @@ $(document).ready(function(){
         $(".sideBar").toggleClass('hide-sm');
         $(".sideBar").toggleClass('hide-xs');
         setTimeout(function() {
-            console.log('sidebar' + $('.sideBar').width())
             $('#sideBarCnt').css({'width': $('.sideBar').width() + 'px'})
         }, 100)
     })
-
-    let timeInt = setInterval(function() {
-        var container = $('#sideBarCnt'), scrollTo = $('#sideBarCnt .activeLink');
-        console.log(scrollTo)
-        if (scrollTo.length>0) {
-            container.scrollTop(
-                scrollTo.offset().top - container.offset().top + container.scrollTop()
-            );
-            clearInterval(timeInt)
-        }
-    }, 500)
 
     $(document).click(function(){
         $('.otherVersions').hide()
