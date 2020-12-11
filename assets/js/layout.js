@@ -12,8 +12,8 @@ $(document).ready(function(){
         var menuHeight = $('#overall-header').height() + $('.subHeadWrapper').height();
         $('#sideBarCnt').css({'width': $('.sideBar').width() + 'px'});
         $('.container .head').css({'width': $('.docContainer').width() + 'px'});
-        $('#fullTreeMenuListContainer').css({'height': 'calc(100vh - '+(menuHeight + 115) +'px)'});
-        $('.rightSideMenu').css({'height': 'calc(100vh - '+(menuHeight + 115)+'px)'});
+        $('#fullTreeMenuListContainer').css({'height': 'calc(100vh - '+(menuHeight + 120) +'px)'});
+        $('.rightSideMenu').css({'height': 'calc(100vh - '+(menuHeight + 195)+'px)'});
         if ($('.docContainer').height() + menuHeight >= document.body.clientHeight) {
             $('.history').addClass('history-fixed');
             $('#footerWrapper').css({'margin-top': '48px'});
