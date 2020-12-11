@@ -68,7 +68,7 @@ ul.circle > li p:hover, ul.circle li.on p, ul.square > li.on p, ul.square > li p
 
 .rightSideMenu { border-left: 1px solid #ddd; margin-top: 66px; height: 100%; max-height: calc(100vh - 210px); overflow: auto; }
 .rightSideMenu.rsm-fixed { position: fixed; top: 80px; }
-.rightSideMenu ul { font-size: 14px; line-height: 22px; }
+.rightSideMenu ul { font-size: 14px; line-height: 22px; padding-left: 20px; }
 
 .dlrDoc .rightSideMenu { border-left: 1px solid #ddd; margin-top: 66px; height: 100%; max-height: calc(100vh - 290px); overflow: auto; }
 .dlrDoc .rightSideMenu.rsm-fixed { position: fixed; top: 100px; }
