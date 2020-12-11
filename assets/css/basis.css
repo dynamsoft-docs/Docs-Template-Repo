@@ -66,7 +66,7 @@ ul.circle > li p:hover, ul.circle li.on p, ul.square > li.on p, ul.square > li p
 .subHeadWrapper .mobileSubHeaderMenu ul li { display: inline-block; margin-right: 20px; }
 .subHeadWrapper .mobileSubHeaderMenu ul li:last-child { margin-right: 0; }
 
-.rightSideMenu { border-left: 1px solid #ddd; margin-top: 66px; height: 100%; max-height: 90vh; overflow: auto; }
+.rightSideMenu { border-left: 1px solid #ddd; margin-top: 66px; height: 100%; max-height: calc(100vh - 210px); overflow: auto; }
 .rightSideMenu.rsm-fixed { position: fixed; top: 80px; }
 .rightSideMenu ul { font-size: 14px; line-height: 22px; }
 
@@ -282,7 +282,7 @@ div::-webkit-scrollbar-corner, ul::-webkit-scrollbar-corner{
 	#docHead { position: relative; top: 0; }
 	.sideBarIcon { height: 40px; line-height: 38px; background: #EEEEEE; color: #444; text-align: right; padding-right: 36px; width: calc(50% - 175px); cursor: pointer; }
 	.sideBar {position: absolute; width: auto; left: 0; z-index: 12; background: #eeeeee; padding: 20px; padding-left: calc(50% - 355px);}
-	.sideBar .mainPage { margin-top: 0; width: auto!important;max-width: calc(100% - 20px); overflow-x: auto; }
+	.sideBar .mainPage { margin-top: 0; width: auto!important; max-width: calc(100% - 20px); overflow-x: auto; }
 	#fullTreeMenuListContainer > li { max-width: 320px; min-width: 200px; }
 	#TryFreeDownload { margin-top: 100px }
 	#sideBarCnt .docSearchPart { position: relative; margin-top: 0px; margin-bottom: 10px; }
