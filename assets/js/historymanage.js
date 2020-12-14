@@ -54,7 +54,7 @@ function UrlReplace()
     }
     
 
-    var allHerf1 = $(".docContainer,.sideBar").not('#feedbackFooter').find("a");
+    var allHerf1 = $(".docContainer .content, #docHead, #AutoGenerateSidebar, .sideBar").find("a");
     for (var i = 0; i < allHerf1.length; i++)
     {
         allHerf1[i].onclick = function(){addParam(this, ver); return false;};
