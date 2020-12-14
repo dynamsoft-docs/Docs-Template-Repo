@@ -54,12 +54,10 @@ function UrlReplace()
     }
     
 
-    var allHerf1 = $(".docContainer,.sideBar").find("a");
+    var allHerf1 = $(".docContainer,.sideBar").not('#feedbackFooter').find("a");
     for (var i = 0; i < allHerf1.length; i++)
     {
-        if (allHerf1[i].parent().attr('id') != 'feedbackFooter') {
-            allHerf1[i].onclick = function(){addParam(this, ver); return false;};
-        }
+        allHerf1[i].onclick = function(){addParam(this, ver); return false;};
     }
 }
 
