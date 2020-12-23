@@ -6,6 +6,14 @@
 	{%- endif -%}
 {%- endcapture -%}
 
+{%- if curPageVersion != "latest version" -%}
+	{%- capture firstChar -%}
+		{{ curPageVersion | truncate: 4 | replace:"...", "" }}
+	{%- endcapture -%}
+	{%- if firstChar < "0" or firstChar > "9" -%}
+		{%- assign curPageVersion = "latest version" -%}
+	{%- endif -%}
+{%- endif -%}
 
 {%- assign needRemoveStr = "-v" | append: curPageVersion -%}
 {%- assign curUsedToMatchUrl = page.url | remove: needRemoveStr -%}
@@ -32,6 +40,15 @@
 		{%- endif -%}
 	{%- endcapture -%}
 
+	{%- if tmpPageVersion != "latest version" -%}
+		{%- capture firstChar -%}
+			{{ tmpPageVersion | truncate: 4 | replace:"...", "" }}
+		{%- endcapture -%}
+		{%- if firstChar < "0" or firstChar > "9" -%}
+			{%- assign tmpPageVersion = "latest version" -%}
+		{%- endif -%}
+	{%- endif -%}
+	
 	{%- if curPageVersion == tmpPageVersion -%}
 		{%- continue -%}
 	{%- endif -%}
