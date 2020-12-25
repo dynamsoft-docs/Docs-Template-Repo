@@ -1,18 +1,17 @@
-{%- capture curPageVersion -%}
-	{%- if page.url contains '-v' -%}
-		{{ page.url |  split: '-v' | last | split: '/' | first | replace: '.html', '' | rstrip }}
-	{%- else -%}
-		latest version
-	{%- endif -%}
-{%- endcapture -%}
+{%- assign curPageVersion = "latest version" -%}
 
-{%- if curPageVersion != "latest version" -%}
-	{%- capture firstChar -%}
-		{{ curPageVersion | truncate: 4 | replace:"...", "" }}
-	{%- endcapture -%}
-	{%- if firstChar < "0" or firstChar > "9" -%}
-		{%- assign curPageVersion = "latest version" -%}
-	{%- endif -%}
+{%- if page.url contains '-v' -%}
+	{%- assign candidateVersionStr = page.url |  split: '-v' -%}
+	{%- for tmpStr in candidateVersionStr offset:1 -%}
+		{%- assign tmpVer = tmpStr | split: '/' | first | replace: '.html', '' | rstrip -%}
+		{%- capture firstChar -%}
+			{{ tmpVer | truncate: 4 | replace:"...", "" }}
+		{%- endcapture -%}
+		{%- if firstChar >= "0" and firstChar <= "9" -%}
+			{%- assign curPageVersion = tmpVer -%}
+			{%- break -%}
+		{%- endif -%}
+	{%- endfor -%}
 {%- endif -%}
 
 {%- assign needRemoveStr = "-v" | append: curPageVersion -%}
@@ -32,21 +31,19 @@
 
 <ul class="otherVersions" style="display: none!important;">
 {%- for my_page in site.pages -%}
-	{%- capture tmpPageVersion -%}
-		{%- if my_page.url contains '-v' -%}
-			{{ my_page.url |  split: '-v' | last | split: '/' | first | replace: '.html', '' | rstrip }}
-		{%- else -%}
-			latest version
-		{%- endif -%}
-	{%- endcapture -%}
-
-	{%- if tmpPageVersion != "latest version" -%}
-		{%- capture firstChar -%}
-			{{ tmpPageVersion | truncate: 4 | replace:"...", "" }}
-		{%- endcapture -%}
-		{%- if firstChar < "0" or firstChar > "9" -%}
-			{%- assign tmpPageVersion = "latest version" -%}
-		{%- endif -%}
+	{%- assign tmpPageVersion = "latest version" -%}
+	{%- if my_page.url contains '-v' -%}
+		{%- assign candidateVersionStr = my_page.url |  split: '-v' -%}
+		{%- for tmpStr in candidateVersionStr offset:1 -%}
+			{%- assign tmpVer = tmpStr | split: '/' | first | replace: '.html', '' | rstrip -%}
+			{%- capture firstChar -%}
+				{{ tmpVer | truncate: 4 | replace:"...", "" }}
+			{%- endcapture -%}
+			{%- if firstChar >= "0" and firstChar <= "9" -%}
+				{%- assign tmpPageVersion = tmpVer -%}
+				{%- break -%}
+			{%- endif -%}
+		{%- endfor -%}
 	{%- endif -%}
 	
 	{%- if curPageVersion == tmpPageVersion -%}
@@ -56,7 +53,6 @@
 	{%- assign needRemoveStr = "-v" | append: tmpPageVersion -%}
 	{%- assign tmpUsedToMatchUrl = my_page.url | remove: needRemoveStr -%}
 
-	
 	{%- if tmpUsedToMatchUrl contains 'index.html' -%}
 		{%- assign tmpUsedToMatchUrl = tmpUsedToMatchUrl | remove: 'index.html' -%}
 	{%- endif -%}
