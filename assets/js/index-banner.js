@@ -153,6 +153,28 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
                         // }
 
                         if (firstTime) {
+                            var crumbul = $($('#crumbs')).children("ul")
+                            if (crumbul.length != 0) {
+                                var parentsLi = $(curLi).parents("li");
+                                var appendText = "";
+                                if (parentsLi.length > 0) {
+                                    for (var j = parentsLi.length - 1; j >= 0 ; j--) {
+                                        var tmpATag = $(parentsLi[j]).children("a");
+                                        if (tmpATag.length > 0) {
+                                            appendText += '<li><a class="bluelink" href = "' + tmpATag[0].href + '">'+ tmpATag[0].textContent + '</a></li>';
+                                        }
+                                    }
+                                }
+
+                                var childUl = $(curLi).children("ul");
+                                if (childUl.length > 0) {
+                                    appendText += '<li><a class="bluelink" href = "' + curListATag[0].href + '">'+ curListATag[0].textContent + '</a></li>';
+                                }
+                                else {
+                                    appendText += '<li id="breadcrumbLastNode">' + curListATag[0].textContent + '</li>'
+                                }
+                                $(crumbul[0]).append(appendText);
+                            }
                             var parentsUL = $(curLi).parents("ul");
                             for (var j = 0, lenUL = parentsUL.length; j < lenUL; j++) {
                                 var curUL =  parentsUL[j];
@@ -203,12 +225,6 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
                             for (var j = 0, lenLi = parentsLi.length; j < lenLi; j++) {
                                 parentsLi[j].className = "expandListStyle"
                                 // parentsLi[j].style.listStyleImage = "url('/assets/img-icon/expand-list.png')";
-                            }
-
-                            var breadcrumbLastNode = document.getElementById("breadcrumbLastNode");
-                            if (breadcrumbLastNode != null)
-                            {
-                                breadcrumbLastNode.textContent = curListATag[0].textContent;
                             }
 
                             break;

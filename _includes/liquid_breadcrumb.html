@@ -10,7 +10,7 @@
 <li><a class="bluelink" href = "{{ site.docHomePage }}">Documentation</a></li>
 {%- endif -%}
 
-{%- for cur_level in level_ary -%}
+<!-- {%- for cur_level in level_ary -%}
     {%- assign breadcrumbUrl = page.url | split: cur_level | first | strip -%}
     {%- if breadcrumbUrl == "/" or breadcrumbUrl == "" -%}
         {%- continue -%}
@@ -49,4 +49,4 @@
         {%- assign listUrl =  site.firstLevelUrl | strip | append: pageUrlWihtoutSpace -%}
         <li><a class="bluelink" href = "{{ listUrl }}">{{ page.breadcrumbText }}</a></li>
     {%- endif -%}
-{%- endif -%}
+{%- endif -%} -->
