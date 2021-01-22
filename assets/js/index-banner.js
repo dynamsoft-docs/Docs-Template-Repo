@@ -153,7 +153,8 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
                         // }
 
                         if (firstTime) {
-                            if ($('#autoGenerateBreadcrumbNodes').length != 0) {
+                            var breadCrumb = $('.autoGenerateBreadcrumbNodes');
+                            if (breadCrumb.length != 0) {
                                 var parentsLi = $(curLi).parents("li");
                                 var appendText = "";
                                 if (parentsLi.length > 0) {
@@ -172,7 +173,7 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
                                 else {
                                     appendText += '<li id="breadcrumbLastNode">' + curListATag[0].textContent + '</li>'
                                 }
-                                $('#autoGenerateBreadcrumbNodes').append(appendText);
+                                breadCrumb[0].append(appendText);
                             }
                             var parentsUL = $(curLi).parents("ul");
                             for (var j = 0, lenUL = parentsUL.length; j < lenUL; j++) {
