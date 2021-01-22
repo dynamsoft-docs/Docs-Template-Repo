@@ -172,7 +172,7 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
                                 else {
                                     appendText += '<li id="breadcrumbLastNode">' + curListATag[0].textContent + '</li>'
                                 }
-                                $('#autoGenerateBreadcrumbNodes').append(appendContent);
+                                $('#autoGenerateBreadcrumbNodes').append(appendText);
                             }
                             var parentsUL = $(curLi).parents("ul");
                             for (var j = 0, lenUL = parentsUL.length; j < lenUL; j++) {
