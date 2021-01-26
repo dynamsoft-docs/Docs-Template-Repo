@@ -787,7 +787,7 @@ i.dbr-white-logo { display: inline-block; width: 221px; height: 30px; background
 .productMenu .menuList li.title, .productMenu .menuList li.title a { font-size: 26px; margin-right: 30px; color: #FE8E14; padding-left: 0;}
 .productMenu .menuList li.title a { margin-right: 0; }
 .productMenu .downloadBtn { display: inline-block; padding: 0 25px; height: 54px; line-height: 54px; font-size: 18px; text-align: center; cursor: pointer; margin-top: 20px; color: #FFFFFF; background: #FE8E14; font-family: Oswald; transition: ease-in-out 0.2s all; box-shadow: 0px 0px 0 0 #FFFFFF; }
-.productMenu .downloadBtn:hover { box-shadow: -8px 8px 0 0 #000000; transform: translate(8px, -8px); background: #fe8e14; }
+.productMenu .downloadBtn:hover { box-shadow: -8px 8px 0 0 #000000; transform: translate(8px, -8px); background: #fe8e14; color: #ffffff!important; }
 .productMenu .pcProductMenu .ct-more { position: absolute; top: 95px; padding: 8px 0; width: auto; height: auto; background: #F5F5F5; position: absolute; border: 1px solid #ddd; border-top: 2px solid #ddd; z-index: 11; }
 .productMenu .pcProductMenu .ct-more li { float: none; display: block; padding: 0; height: 30px; line-height: 30px; margin-right: 0; }
 .productMenu .pcProductMenu .ct-more li a { display: block; padding: 0; width: auto; text-align: left; white-space: nowrap; text-transform: capitalize; }
