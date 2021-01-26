@@ -91,6 +91,7 @@ ul.circle > li p:hover, ul.circle li.on p, ul.square > li.on p, ul.square > li p
 .markdown-body code.language-plaintext { padding: 3px 5px; color: #306877;background-color: #d5e6ea; border-radius: 0; }
 .markdown-body h3 code { font-family: Oswald-Light; font-weight: normal; }
 .markdown-body ol, .markdown-body ol li  { list-style: decimal; }
+.markdown-body ul { padding-left: 20px; }
 .markdown-body ul, .markdown-body ul li { list-style: disc; margin-left: 0; }
 .markdown-body a, .markdown-body a:active { color:#50a8e1;text-decoration:none!important }
 .markdown-body a:hover { color:#61c2ec }
