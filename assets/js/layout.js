@@ -1,5 +1,10 @@
 $(document).ready(function(){
-    init()
+    init();
+
+    var sd = $(window).scrollTop()
+    if(sd > 0) {
+        realFunc()
+    }
 
     $(window).resize(function() {
         init()
