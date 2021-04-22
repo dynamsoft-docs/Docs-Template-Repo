@@ -30,6 +30,14 @@ $(document).ready(function(){
             $('#footerWrapper').css({'margin-top': '48px'});
         }
         $('.docContainer .markdown-body').css({'margin-top': ($('#docHead').height() + 30) + 'px'});
+        if (breakpoint() == 'lg') {
+            $('.markdown-body h2').css({'padding-top': $('#docHead').height() + 120 + 'px'})
+            $('.markdown-body h2').css({'margin-top': -$('#docHead').height() - 90 + 'px'})
+            $('.markdown-body h3').css({'padding-top': $('#docHead').height() + 120 + 'px'})
+            $('.markdown-body h3').css({'margin-top': -$('#docHead').height() - 120 + 'px'})
+            $('.markdown-body h4').css({'padding-top': $('#docHead').height() + 120 + 'px'})
+            $('.markdown-body h4').css({'margin-top': -$('#docHead').height() - 120 + 'px'})
+        }
     }
 
     function realFunc() {
