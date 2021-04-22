@@ -29,6 +29,7 @@ $(document).ready(function(){
             $('.history').addClass('history-fixed');
             $('#footerWrapper').css({'margin-top': '48px'});
         }
+        $('.docContainer .markdown-body').css({'margin-top': ($('#docHead').height() + 30) + 'px'});
     }
 
     function realFunc() {
