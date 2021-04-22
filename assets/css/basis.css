@@ -875,3 +875,17 @@ i.dbr-white-logo { display: inline-block; width: 221px; height: 30px; background
     .productMenu .container { max-width: 1630px }
 }
 
+#comm100-float-button-2.online {
+    width: 58px!important;
+    height: 168px!important;
+    right: 0!important;
+    left: unset!important;
+    background: url(../img-icon/chatNow.png)!important;
+}
+#comm100-float-button-2.offline {
+    width: 58px!important;
+    height: 168px!important;
+    right: 0!important;
+    left: unset!important;
+    background: url(../img-icon/liveMessage.png)!important;
+}

@@ -1,4 +1,9 @@
 $(document).ready(function(){
+    if ($('#comm100-float-button-2').css('background').indexOf('imgId=5000315') >= 0) {
+        $('#comm100-float-button-2').addClass('online');
+    } else {
+        $('#comm100-float-button-2').addClass('offline');
+    }
     init();
 
     var sd = $(window).scrollTop()
