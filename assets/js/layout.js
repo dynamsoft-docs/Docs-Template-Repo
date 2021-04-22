@@ -120,7 +120,7 @@ $(document).ready(function(){
     })
 
     var commBtnInterval = setInterval(function() {
-        if ($('#comm100-float-button-2').css('background')!='') {
+        if ($('#comm100-float-button-2').css('background') != undefined && $('#comm100-float-button-2').css('background')!='') {
             if ($('#comm100-float-button-2').css('background').indexOf('imgId=5000315') >= 0) {
                 $('#comm100-float-button-2').addClass('online');
             } 
