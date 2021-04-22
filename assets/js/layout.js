@@ -37,6 +37,8 @@ $(document).ready(function(){
             $('.markdown-body h3').css({'margin-top': -$('#docHead').height() - 120 + 'px'})
             $('.markdown-body h4').css({'padding-top': $('#docHead').height() + 120 + 'px'})
             $('.markdown-body h4').css({'margin-top': -$('#docHead').height() - 120 + 'px'})
+            $('.markdown-body h5').css({'padding-top': $('#docHead').height() + 120 + 'px'})
+            $('.markdown-body h5').css({'margin-top': -$('#docHead').height() - 120 + 'px'})
         }
     }
 
