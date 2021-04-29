@@ -143,15 +143,15 @@ $(document).ready(function(){
         stopPropagation(e);
     })
 
-    var commBtnInterval = setInterval(function() {
-        if ($('#comm100-float-button-2').css('background') != undefined && $('#comm100-float-button-2').css('background')!='') {
-            if ($('#comm100-float-button-2').css('background').indexOf('imgId=5000315') >= 0) {
-                $('#comm100-float-button-2').addClass('online');
-            } 
-            if ($('#comm100-float-button-2').css('background').indexOf('imgId=5000316') >= 0) {
-                $('#comm100-float-button-2').addClass('offline');
-            }
-            clearInterval(commBtnInterval)
-        }
-    }, 1000);
+    // var commBtnInterval = setInterval(function() {
+    //     if ($('#comm100-float-button-2').css('background') != undefined && $('#comm100-float-button-2').css('background')!='') {
+    //         if ($('#comm100-float-button-2').css('background').indexOf('imgId=5000315') >= 0) {
+    //             $('#comm100-float-button-2').addClass('online');
+    //         } 
+    //         if ($('#comm100-float-button-2').css('background').indexOf('imgId=5000316') >= 0) {
+    //             $('#comm100-float-button-2').addClass('offline');
+    //         }
+    //         clearInterval(commBtnInterval)
+    //     }
+    // }, 1000);
 })
