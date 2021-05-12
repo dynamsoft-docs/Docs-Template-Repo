@@ -1,4 +1,4 @@
-@font-face { font-family: Oswald; src: local('â˜º'), url('../font-face/Oswald-Regular.ttf') format('truetype'); font-weight: normal; font-style: normal; }
+@font-face { font-family: Oswald; src: local('â˜º'), url('../font-face/Oswald.ttf') format('truetype'); font-weight: normal; font-style: normal; }
 @font-face { font-family: Oswald-Light; src: local('â˜º'), url('../font-face/Oswald-Light.ttf') format('truetype'); font-weight: normal; font-style: normal; }
 @font-face { font-family: OpenSans-Light; src: url('../font-face/OpenSans-Light.eot'); src: local('â˜º'), url('../font-face/OpenSans-Light.eot?#iefix') format('embedded-opentype'), url('../font-face/OpenSans-Light.woff') format('woff'), url('../font-face/OpenSans-Light.ttf') format('truetype'), url('../font-face/OpenSans-Light.svg#webfontOTINA1xY') format('svg'); font-weight: normal; font-style: normal; }
 @font-face { font-family: OpenSans-Regular; src: url('../font-face/OpenSans-Regular.eot'); src: local('â˜º'), url('../font-face/OpenSans-Regular.eot?#iefix') format('embedded-opentype'), url('../font-face/OpenSans-Regular.woff') format('woff'), url('../font-face/OpenSans-Regular.ttf') format('truetype'), url('../font-face/OpenSans-Regular.svg#webfontOTINA1xY') format('svg'); font-weight: normal; font-style: normal; }
@@ -417,13 +417,14 @@ li, ul { list-style: none; margin: 0; padding: 0; }
 @media screen and (max-width: 767px) {
     #xsMenu { height: 60px; }
     #xsHeader { border-bottom: 1px solid #eee; background-color: #ffffff; }
+    #xsHeader.showMenu { position: fixed; top: 0; width: 100%; left: 0; }
     #xsHeader .ds-logo { float: left; margin: 14px 0 0; width: 125px; height: 30px; }
     #xsMenu .xsMenuToggle { float: right; padding: 0px 0 0px 10px; cursor: pointer; }
     #xsMenu .xsMenuToggle .open { display: inline-block; margin-top: 18px; }
     #xsMenu .xsMenuToggle .open span { display: block; margin-top: 4px; width: 22px; height: 2px; background: #aaa; }
     #xsMenu .xsMenuToggle .close { display: none; font-size: 4rem; color: #aaa; font-family: initial; opacity: 1; margin-top: 9px; }
     #xsNav { display: none; height: calc(100vh - 60px); background-color: #000000; color: #FFFFFF; padding-top: 25px; position: fixed; width: 100%; z-index: 1111; }
-    #xsSearch { position: relative; margin: 0 0 15px; height: 46px; width: 100%; border-bottom: 0; }
+    #xsSearch { position: relative; margin: 0 0 15px; height: 46px; width: 100%; }
     #xsSearch input[type=text] { padding: 0 35px 0 15px; width: 100%; height: 43px; border: none; border-radius: 0; outline: none; vertical-align: top; font-size: 16px; }
     #xsSearch .xsSearchSubmit { display: inline-block; position: absolute; right: 15px; top: 0; width: 30px; height: 100%; background: url(https://www.dynamsoft.com/assets/img-icon/icon-search-a-16x16.png) no-repeat 100%; cursor: pointer; }
     #xsNav .xsNavToggle { display: inline-block; padding: 0 15px 3px; color: #999; cursor: pointer; }
@@ -431,7 +432,7 @@ li, ul { list-style: none; margin: 0; padding: 0; }
     #xsNav .products { margin-bottom: 5px; }
     #xsNav li { padding: 5px 0; line-height: 26px; }
     #xsNav li a.bluelink { color: #50a8e1; }
-    #subMenu { display: none !important; box-shadow: none; }
+    #subMenu { display: none !important; }
     #pcMenu { display: none !important; }
     #xsNav li.menuItem { padding: 20px 0; border-bottom: 1px solid #999; }
     #xsNav li.menuItem .menuName, #xsNav li.menuItem .menuName a { color: #FFFFFF; font-size: 20px; font-family: Oswald; }
@@ -452,11 +453,12 @@ li, ul { list-style: none; margin: 0; padding: 0; }
 @media (min-width: 768px) {
     #overall-header { height: 65px; }
     #pcMenu.fixed { position: fixed; top: 65px; left: 0; right: 0; width: 100%; z-index: 1111; }
-    #subMenu { padding: 35px 20px 55px 45px; position: absolute; z-index: 1111; width: 620px; background: #f5f5f5; border: 1px solid #ddd; border-top: 2px solid #ddd; box-shadow: none; }
+    #subMenu { /*display: none;*/ padding: 35px 20px 55px 45px; position: absolute; z-index: 1111; width: 620px; background: #f5f5f5; border: 1px solid #ddd; border-top: 2px solid #ddd; box-shadow: unset; }
     #subMenu .subMenuContent .pro > a { display: inline-block; margin: 0 0 6px; font-size: 14px; line-height: 32px; color: #444; font-family: OpenSans-Semibold; }
     #subMenu .subMenuContent .pro .logo { display: inline-block; float: left; margin: 0 9px 0 0; }
     #subMenu .subMenuContent .pro .logo img { width: 33px; height: 32px; }
     #subMenu .subMenuContent .pro .intro { margin: 4px 0 0; font-size: 14px; line-height: 22px; color: #999; }
+    #subMenu .subMenuContent .proPanel .rightPart .rightPartTitle { color: #323234; }
 }
 
 @media (max-width: 991px) and (min-width: 768px) {
@@ -475,13 +477,12 @@ li, ul { list-style: none; margin: 0; padding: 0; }
     #subMenu .subMenuContent .pro { margin-bottom: 15px; }
     #pcMenu .headSubMenu { display: none !important; }
 
-    #subMenu { display: none; padding: 40px 30px 50px 50px; width: 100%; top: 0; left: 310px; }
+    #subMenu { display: none; padding: 40px 20px 50px 30px; width: 100%; top: 0; left: 0; margin-left: 0; }
     #subMenu .icon-orange-angle { display: none; }
-    #subMenu .subMenuContent .proPanel { margin-bottom: 35px; }
+    #subMenu .subMenuContent .proPanel { margin-bottom: 0px; }
     #subMenu .subMenuContent .proPanel .leftPart, #subMenu .subMenuContent .proPanel .rightPart { display: block; vertical-align: top; }
     #subMenu .subMenuContent .proPanel .leftPart .bigProduct, #subMenu .subMenuContent .proPanel .leftPart .smallProduct { display: inline-block; vertical-align: top; cursor: pointer; }
-    #subMenu .subMenuContent .proPanel .leftPart .proLine { margin-bottom: 50px; }
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct { padding-right: 35px; }
+    #subMenu .subMenuContent .proPanel .leftPart .proLine { margin-bottom: 30px; }
     #subMenu .subMenuContent .proPanel .leftPart .bigProduct .icon { display: inline-block; border-radius: 5px; width: 50px; height: 50px; background: #999; vertical-align: top; }
     #subMenu .subMenuContent .proPanel .leftPart .bigProduct .icon.dbrIcon { background: url(../img-icon/dbr-big.png); background-size: cover; }
     #subMenu .subMenuContent .proPanel .leftPart .bigProduct .icon.dwtIcon { background: url(../img-icon/dwt-big.png); background-size: cover; }
@@ -495,8 +496,16 @@ li, ul { list-style: none; margin: 0; padding: 0; }
     #subMenu .subMenuContent .proPanel .leftPart .smallProduct .proInfo { display: inline-block; width: 240px; vertical-align: top; padding-left: 10px; }
     #subMenu .subMenuContent .proPanel .leftPart .smallProduct .proInfo .title { font-size: 14px; line-height: 20px; margin-bottom: 5px; color: #323234; }
     #subMenu .subMenuContent .proPanel .leftPart .smallProduct .proInfo .intro { font-size: 14px; line-height: 24px; color: #606060; }
-    #subMenu .subMenuContent .proPanel .rightPart { padding-left: 20px; }
-    #subMenu .subMenuContent .proPanel .rightPart .subProduct { width: 237px; display: inline-block; vertical-align: top; margin-bottom: 40px; }
+    #subMenu .subMenuContent .proPanel .leftPart .smallProduct a { padding-left: 22px; }
+    #subMenu .subMenuContent .proPanel .leftPart .bigProduct.dwt, #subMenu .subMenuContent .proPanel .leftPart .smallProduct.dnt { padding-left: 0px; padding-right: 0px; }
+    #subMenu .subMenuContent .proPanel .leftPart .bigProduct.dbr, #subMenu .subMenuContent .proPanel .leftPart .smallProduct.dlr { width: 350px; padding-right: 30px; }
+    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .advancedModules { padding-left: 63px; }
+    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .advancedModules p { margin-bottom: 5px; font-size: 12px; line-height: 22px; }
+    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .advancedModules p.label { margin-top: 15px; font-size: 14px; }
+    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .advancedModules p a { display: inline; color: #323234; }
+    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .advancedModules p a:hover { color: #fe8e14; }
+    #subMenu .subMenuContent .proPanel .rightPart { padding-left: 63px; }
+    #subMenu .subMenuContent .proPanel .rightPart .subProduct { width: 238px; display: inline-block; vertical-align: top; margin-bottom: 40px; }
     #subMenu .subMenuContent .proPanel .rightPart .subProduct:first-child { padding-left: 42px; }
     #subMenu .subMenuContent .proPanel .rightPart .subProduct:last-child { margin-bottom: 0; margin-left: 110px; }
     #subMenu .subMenuContent .proPanel .rightPart .subProduct .title { font-size: 14px; line-height: 20px; margin-bottom: 5px; color: #323234; }
@@ -506,14 +515,14 @@ li, ul { list-style: none; margin: 0; padding: 0; }
 @media (min-width: 992px) {
     #overall-header, #mdHeader, #mdMenu li, #cp-header, #cp-header .header-visitor a { height: 72px; }
     #cp-header .header-visitor, header-signin { height: 72px; }
-    #mdHeader { height: 72px; background: #ffffff; }
+    #mdHeader { height: 72px; background: #ffffff; /*border-bottom: 1px solid #ddd;*/ }
     #mdHeader .ds-logo { float: left; margin: 16px 0 0; width: 145px; height: 35px; }
-    #mdMenu { padding-left: 190px; margin: 0; width: 100%;}
+    #mdMenu { padding-left: 190px; margin: 0; width: 100%; }
     #mdMenu li { float: left; height: 72px; padding: 0; text-align: center; list-style: none; margin-right: 40px; }
     #mdMenu li a { display: inline-block; padding: 0; line-height: 71px; font-size: 18px; color: #444; font-family: Oswald; }
     #mdMenu .icon-orange-angle { width: 7px; height: 13px; }
 
-    #cp-header { float: right; padding: 0; height: 72px; }
+    #cp-header { float: right; padding: 0; height: 72px;}
     #cp-header li { text-indent: 0; }
     #cp-header .action-signin { margin: 0; }
     #cp-header .action-buttons { height: auto; margin-top: 21px; margin-right: 20px; }
@@ -548,9 +557,9 @@ li, ul { list-style: none; margin: 0; padding: 0; }
     #companySubMenu .icon-orange-angle { left: 60px; }
     #subMenu .icon-orange-angle { display: none; position: absolute; width: 26px; height: 33px; left: 100px; top: -15px; }
 
-    #subMenu { padding: 0px 0px 50px 0px; display: none; width: 830px; left: 554px; top: 0; }
+    #subMenu { padding: 0px 0px 50px 0px; display: none; width: 970px; left: 50%; top: 0; transform: translateX(-50%); margin-left: 0; box-shadow: unset; }
     #subMenu .subMenuContent .proPanel { margin-bottom: 0px; }
-    #subMenu .subMenuContent .proPanel .leftPart, #subMenu .subMenuContent .proPanel .rightPart { display: inline-block; vertical-align: top; float: left; }
+    #subMenu .subMenuContent .proPanel .leftPart, #subMenu .subMenuContent .proPanel .rightPart { display: inline-block; vertical-align: top; }
     #subMenu .subMenuContent .proPanel .leftPart { border-right: 1px solid #ddd; }
     #subMenu .subMenuContent .proPanel .leftPart .bigProduct, #subMenu .subMenuContent .proPanel .leftPart .smallProduct { display: inline-block; vertical-align: top; }
     #subMenu .subMenuContent .proPanel .leftPart .proLine { margin-bottom: 0px; }
@@ -566,21 +575,30 @@ li, ul { list-style: none; margin: 0; padding: 0; }
     #subMenu .subMenuContent .proPanel .leftPart .smallProduct .icon { display: inline-block; border-radius: 5px; width: 30px; height: 30px; background: #999; vertical-align: top; }
     #subMenu .subMenuContent .proPanel .leftPart .smallProduct .icon.dlrIcon { background: url(../img-icon/dlr-small.png); background-size: cover; }
     #subMenu .subMenuContent .proPanel .leftPart .smallProduct .icon.dntIcon { background: url(../img-icon/dnt-small.png); background-size: cover; }
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct .proInfo { display: inline-block; width: 200px; vertical-align: top; padding-left: 10px; }
+    #subMenu .subMenuContent .proPanel .leftPart .smallProduct .proInfo { display: inline-block; width: 240px; vertical-align: top; padding-left: 10px; }
     #subMenu .subMenuContent .proPanel .leftPart .smallProduct .proInfo .title { font-size: 14px; line-height: 20px; margin-bottom: 5px; color: #323234; }
     #subMenu .subMenuContent .proPanel .leftPart .smallProduct .proInfo .intro { font-size: 14px; line-height: 24px; color: #606060; }
     #subMenu .subMenuContent .proPanel .leftPart .bigProduct a, #subMenu .subMenuContent .proPanel .leftPart .smallProduct a { display: block; width: 100%; height: 100%; }
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct a { padding: 40px 20px 40px 30px; }
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct a { padding: 40px 20px 40px 20px; }
-    #subMenu .subMenuContent .proPanel .rightPart { padding-left: 0px; padding-top: 20px; }
-    #subMenu .subMenuContent .proPanel .rightPart .subProduct { width: 243px; margin-bottom: 0px; padding: 0; }
-    #subMenu .subMenuContent .proPanel .rightPart .subProduct a { display: block; width: 100%; height: 100%; padding: 20px 60px 20px 30px; }
+    #subMenu .subMenuContent .proPanel .leftPart .bigProduct { padding: 40px 20px 0px 30px; }
+    #subMenu .subMenuContent .proPanel .leftPart .smallProduct { padding: 30px 20px 40px 20px; }
+    #subMenu .subMenuContent .proPanel .leftPart .smallProduct a { padding-left: 22px; }
+    #subMenu .subMenuContent .proPanel .leftPart .bigProduct.dwt, #subMenu .subMenuContent .proPanel .leftPart .smallProduct.dnt { padding-left: 10px; padding-right: 30px; }
+    #subMenu .subMenuContent .proPanel .leftPart .bigProduct.dbr, #subMenu .subMenuContent .proPanel .leftPart .smallProduct.dlr { width: 370px; }
+    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .advancedModules { padding-left: 63px; }
+    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .advancedModules p { margin-bottom: 5px; font-size: 12px; line-height: 22px; }
+    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .advancedModules p.label { margin-top: 15px; font-size: 14px; padding: 0; color: #323234; font-weight: normal; display: inline-block; }
+    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .advancedModules p a { display: inline; color: #323234; }
+    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .advancedModules p a:hover { color: #fe8e14; }
+    #subMenu .subMenuContent .proPanel .rightPart { padding-left: 0px; padding-top: 40px; }
+    #subMenu .subMenuContent .proPanel .rightPart .rightPartTitle { padding-left: 25px; font-size: 18px; line-height: 22px; color: #323234; }
+    #subMenu .subMenuContent .proPanel .rightPart .subProduct { width: 220px; margin-bottom: 0px; padding: 0; }
+    #subMenu .subMenuContent .proPanel .rightPart .subProduct a { display: block; width: 100%; height: 100%; padding: 20px 0px 20px 25px; }
     #subMenu .subMenuContent .proPanel .rightPart .subProduct:last-child { margin-bottom: 0; }
     #subMenu .subMenuContent .proPanel .rightPart .subProduct .title { font-size: 14px; line-height: 20px; margin-bottom: 5px; color: #323234; }
     #subMenu .subMenuContent .proPanel .rightPart .subProduct .intro { font-size: 14px; line-height: 26px; color: #606060; }
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct:hover,
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct:hover,
-    #subMenu .subMenuContent .proPanel .rightPart .subProduct:hover { background: #FFFFFF; }
+    #subMenu .subMenuContent .proPanel .leftPart .bigProduct > a:hover .proInfo .intro,
+    #subMenu .subMenuContent .proPanel .leftPart .smallProduct > a:hover .proInfo .intro,
+    #subMenu .subMenuContent .proPanel .rightPart .subProduct > a:hover .intro { color: #fe8e14; }
 }
 
 @media (min-width: 1200px) {
@@ -624,7 +642,7 @@ li, ul { list-style: none; margin: 0; padding: 0; }
     #companySubMenu .subMenuList li.item a:hover { color: #fe8e14; }
     #companySubMenu .icon-orange-angle { left: 60px; }
 
-    #subMenu { padding: 0px 0px 52px 0px; width: 1000px; top: 0; left: 528px; }
+    #subMenu { padding: 0px 0px 52px 0px; width: 1076px; left: 50%; transform: translateX(-50%); }
     #subMenu .subMenuContent .proPanel { margin-bottom: 0px; }
     #subMenu .subMenuContent .proPanel .leftPart, #subMenu .subMenuContent .proPanel .rightPart { display: inline-block; vertical-align: top; }
     #subMenu .subMenuContent .proPanel .leftPart { border-right: 1px solid #ddd; }
@@ -632,31 +650,35 @@ li, ul { list-style: none; margin: 0; padding: 0; }
     #subMenu .subMenuContent .proPanel .leftPart .proLine { margin-bottom: 0px; }
     #subMenu .subMenuContent .proPanel .leftPart .proLine:last-child { margin-bottom: 0; }
     #subMenu .subMenuContent .proPanel .leftPart .bigProduct { padding: 0; }
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .icon { display: inline-block; border-radius: 5px; width: 60px; height: 60px; background: #999; vertical-align: top; }
+    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .icon { display: inline-block; border-radius: 5px; width: 70px; height: 70px; background: #999; vertical-align: top; }
     #subMenu .subMenuContent .proPanel .leftPart .bigProduct .icon.dbrIcon { background: url(../img-icon/dbr-big.png); background-size: cover; }
     #subMenu .subMenuContent .proPanel .leftPart .bigProduct .icon.dwtIcon { background: url(../img-icon/dwt-big.png); background-size: cover; }
     #subMenu .subMenuContent .proPanel .leftPart .bigProduct .proInfo { display: inline-block; width: 236px; vertical-align: top; padding-left: 10px; }
     #subMenu .subMenuContent .proPanel .leftPart .bigProduct .proInfo .title { font-size: 18px; line-height: 18px; margin-bottom: 10px; color: #323234; }
     #subMenu .subMenuContent .proPanel .leftPart .bigProduct .proInfo .intro { font-size: 14px; line-height: 22px; color: #606060; }
     #subMenu .subMenuContent .proPanel .leftPart .smallProduct { padding: 0; }
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct .icon { display: inline-block; border-radius: 5px; width: 30px; height: 30px; background: #999; vertical-align: top; }
+    #subMenu .subMenuContent .proPanel .leftPart .smallProduct .icon { display: inline-block; border-radius: 5px; width: 48px; height: 48px; background: #999; vertical-align: top; }
     #subMenu .subMenuContent .proPanel .leftPart .smallProduct .icon.dlrIcon { background: url(../img-icon/dlr-small.png); background-size: cover; }
     #subMenu .subMenuContent .proPanel .leftPart .smallProduct .icon.dntIcon { background: url(../img-icon/dnt-small.png); background-size: cover; }
     #subMenu .subMenuContent .proPanel .leftPart .smallProduct .proInfo { display: inline-block; width: 236px; vertical-align: top; padding-left: 10px; }
     #subMenu .subMenuContent .proPanel .leftPart .smallProduct .proInfo .title { font-size: 14px; line-height: 20px; margin-bottom: 5px; color: #323234; }
     #subMenu .subMenuContent .proPanel .leftPart .smallProduct .proInfo .intro { font-size: 14px; line-height: 24px; color: #606060; }
     #subMenu .subMenuContent .proPanel .leftPart .bigProduct a, #subMenu .subMenuContent .proPanel .leftPart .smallProduct a { display: block; width: 100%; height: 100%; }
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct a { padding: 40px 30px 40px 50px; }
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct a { padding: 40px 20px 40px 30px; }
-    #subMenu .subMenuContent .proPanel .rightPart { padding-left: 0px; padding-top: 20px; }
-    #subMenu .subMenuContent .proPanel .rightPart .subProduct { width: 291px; margin-bottom: 0px; padding: 0; }
-    #subMenu .subMenuContent .proPanel .rightPart .subProduct a { display: block; width: 100%; height: 100%; padding: 20px 60px 20px 40px; }
+    #subMenu .subMenuContent .proPanel .leftPart .bigProduct { padding: 40px 15px 0px 40px; }
+    #subMenu .subMenuContent .proPanel .leftPart .smallProduct { padding: 40px 15px 40px 40px; }
+    #subMenu .subMenuContent .proPanel .leftPart .smallProduct a { padding-left: 22px; }
+    #subMenu .subMenuContent .proPanel .leftPart .bigProduct.dwt, #subMenu .subMenuContent .proPanel .leftPart .smallProduct.dnt { padding-left: 20px; padding-right: 50px; }
+    #subMenu .subMenuContent .proPanel .leftPart .bigProduct.dbr, #subMenu .subMenuContent .proPanel .leftPart .smallProduct.dlr { width: 400px; }
+    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .advancedModules { padding-left: 83px; }
+    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .advancedModules p { margin-bottom: 5px; font-size: 12px; line-height: 22px; }
+    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .advancedModules p.label { margin-top: 15px; font-size: 14px; }
+    #subMenu .subMenuContent .proPanel .rightPart { padding-left: 0px; padding-top: 40px; }
+    #subMenu .subMenuContent .proPanel .rightPart .rightPartTitle { padding-left: 40px; font-size: 18px; line-height: 22px; }
+    #subMenu .subMenuContent .proPanel .rightPart .subProduct { width: 263px; margin-bottom: 0px; padding: 0; }
+    #subMenu .subMenuContent .proPanel .rightPart .subProduct a { display: block; width: 100%; height: 100%; padding: 20px 30px 20px 40px; }
     #subMenu .subMenuContent .proPanel .rightPart .subProduct:last-child { margin-bottom: 0; }
     #subMenu .subMenuContent .proPanel .rightPart .subProduct .title { font-size: 14px; line-height: 20px; margin-bottom: 5px; color: #323234; }
     #subMenu .subMenuContent .proPanel .rightPart .subProduct .intro { font-size: 14px; line-height: 26px; color: #606060; }
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct:hover,
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct:hover,
-    #subMenu .subMenuContent .proPanel .rightPart .subProduct:hover { background: #FFFFFF; }
 }
 
 @media (min-width: 1680px) {
@@ -692,31 +714,35 @@ li, ul { list-style: none; margin: 0; padding: 0; }
     #companySubMenu .subMenuList li.item { margin-top: 15px; }
     #companySubMenu .subMenuList li.item a { font-size: 20px; }
     #companySubMenu .icon-orange-angle { left: 70px; }
-    #subMenu { padding: 0px 0px 52px 0px; width: 1187px; top: 0; left: 580px; }
+    #subMenu { padding: 0px 0px 52px 0px; width: 1225px; left: 188px; transform: unset }
     #subMenu .subMenuContent .proPanel .leftPart .proLine { margin-bottom: 0px; }
     #subMenu .subMenuContent .proPanel .leftPart .proLine:last-child { margin-bottom: 0; }
     #subMenu .subMenuContent .proPanel .leftPart .bigProduct { padding: 0; }
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .icon { width: 75px; height: 75px; }
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .proInfo { width: 295px; }
+    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .icon { width: 70px; height: 70px; }
+    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .proInfo { width: 295px; padding-left: 15px; }
     #subMenu .subMenuContent .proPanel .leftPart .bigProduct .proInfo .title { font-size: 20px; line-height: 20px; margin-bottom: 10px; }
     #subMenu .subMenuContent .proPanel .leftPart .bigProduct .proInfo .intro { font-size: 16px; line-height: 24px; }
     #subMenu .subMenuContent .proPanel .leftPart .smallProduct { padding: 0; }
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct .icon { width: 40px; height: 40px; }
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct .proInfo { width: 295px; }
+    #subMenu .subMenuContent .proPanel .leftPart .smallProduct .icon { width: 48px; height: 48px; }
+    #subMenu .subMenuContent .proPanel .leftPart .smallProduct .proInfo { width: 295px; padding-left: 15px; }
     #subMenu .subMenuContent .proPanel .leftPart .smallProduct .proInfo .title { font-size: 16px; line-height: 20px; }
     #subMenu .subMenuContent .proPanel .leftPart .smallProduct .proInfo .intro { font-size: 16px; line-height: 26px; }
     #subMenu .subMenuContent .proPanel .leftPart .bigProduct a, #subMenu .subMenuContent .proPanel .leftPart .smallProduct a { display: block; width: 100%; height: 100%; }
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct a { padding: 50px 30px 40px 60px; }
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct a { padding: 50px 20px 40px 30px; }
-    #subMenu .subMenuContent .proPanel .rightPart { padding-left: 0px; padding-top: 30px; }
-    #subMenu .subMenuContent .proPanel .rightPart .subProduct { width: 325px; margin-bottom: 0px; padding: 0; }
-    #subMenu .subMenuContent .proPanel .rightPart .subProduct a { display: block; width: 100%; height: 100%; padding: 20px 60px 20px 40px; }
+    #subMenu .subMenuContent .proPanel .leftPart .bigProduct { padding: 50px 15px 25px 55px; }
+    #subMenu .subMenuContent .proPanel .leftPart .smallProduct { padding: 25px 30px 40px 55px; }
+    #subMenu .subMenuContent .proPanel .leftPart .smallProduct a { padding-left: 20px; }
+    #subMenu .subMenuContent .proPanel .leftPart .bigProduct.dwt, #subMenu .subMenuContent .proPanel .leftPart .smallProduct.dnt { padding-left: 30px; padding-right: 50px; }
+    #subMenu .subMenuContent .proPanel .leftPart .bigProduct.dbr, #subMenu .subMenuContent .proPanel .leftPart .smallProduct.dlr { width: 453px; }
+    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .advancedModules { padding-left: 85px; }
+    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .advancedModules p { margin-bottom: 8px; font-size: 14px; line-height: 22px; }
+    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .advancedModules p.label { margin-top: 16px; font-size: 16px; }
+    #subMenu .subMenuContent .proPanel .rightPart { padding-left: 0px; padding-top: 50px; }
+    #subMenu .subMenuContent .proPanel .rightPart .rightPartTitle { padding-left: 40px; font-size: 20px; line-height: 22px; }
+    #subMenu .subMenuContent .proPanel .rightPart .subProduct { width: 300px; margin-bottom: 0px; padding: 0; }
+    #subMenu .subMenuContent .proPanel .rightPart .subProduct a { display: block; width: 100%; height: 100%; padding: 36px 40px 20px 40px; }
     #subMenu .subMenuContent .proPanel .rightPart .subProduct:last-child { margin-bottom: 0; }
     #subMenu .subMenuContent .proPanel .rightPart .subProduct .title { font-size: 16px; line-height: 20px; margin-bottom: 5px; color: #323234; }
     #subMenu .subMenuContent .proPanel .rightPart .subProduct .intro { font-size: 16px; line-height: 26px; color: #606060; }
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct:hover,
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct:hover,
-    #subMenu .subMenuContent .proPanel .rightPart .subProduct:hover { background: #FFFFFF; }
 }
 
 @media (min-width: 992px) {
