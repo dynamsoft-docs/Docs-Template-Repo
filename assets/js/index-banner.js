@@ -142,7 +142,7 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
             for (var i = 0, len = listAry.length; i < len; i++) {
                 var curLi = listAry[i];
                 var curListATag =  $(curLi).children("a");
-                if (curListATag.length > 0) {
+                if (curListATag.length > 0 && curListATag[0].getAttribute("href") != null) {
                     if (UrlSearch(searchUrl, curListATag[0].href)) {
                         foundCurList = true;
                         curListATag[0].style.color = '#fe8e14';
