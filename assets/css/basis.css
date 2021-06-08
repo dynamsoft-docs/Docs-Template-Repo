@@ -111,7 +111,7 @@ ul.circle > li p:hover, ul.circle li.on p, ul.square > li.on p, ul.square > li p
 .sideBar, .docContainer { padding-top: 60px; }
 #sideBarCnt.sidebar-fixed { position: fixed; top: 60px; max-height: unset; }
 
-.dlrDoc .sideBar, .docContainer { padding-top: 95px; }
+.docContainer { padding-top: 95px; }
 .dlrDoc #sideBarCnt.sidebar-fixed { position: fixed; top: 95px; max-height: unset; }
 #fullTreeMenuListContainer ul { display: none; margin-left: 15px; margin-bottom: 10px; }
 #fullTreeMenuListContainer li { list-style: none; padding-left: 15px; line-height: 20px; margin-bottom: 8px; position: relative; }
@@ -274,7 +274,7 @@ div::-webkit-scrollbar-corner, ul::-webkit-scrollbar-corner{
     .dlrDoc #docHead { top: 154px; }
     .subHeadWrapper { top: 72px; }
 	.dlrDoc .subHeadWrapper { height: 72px; top: 72px; }
-	.dlrDoc .sideBar, .dlrDoc .docContainer { padding-top: 72px; }
+	.dlrDoc .docContainer { padding-top: 72px; }
 	.dlrDoc .rightSideMenu.rsm-fixed { position: fixed; top: 90px; }
     .dlrDoc #sideBarCnt.sidebar-fixed { position: fixed; top: 72px; max-height: unset; }
 }
