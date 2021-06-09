@@ -88,10 +88,10 @@ $(document).ready(function(){
                 // head and sidebar fixed
                 if ($('.subHeadWrapper').length > 0) {
                     $('.subHeadWrapper').css({'top': ($('#overall-header').height()-sd) + 'px'});
-                    $('.sideBar').css({'padding-top': $('.subHeadWrapper').height() + 42 + 'px'});
+                    $('.sideBar').css({'padding-top': $('.subHeadWrapper').height() + 42 + 'px!important'});
                 } else {
                     $('.productMenu').css({'top': ($('#overall-header').height()-sd) + 'px'});
-                    $('.sideBar').css({'padding-top': $('.productMenu').height() + 42 + 'px'});
+                    $('.sideBar').css({'padding-top': $('.productMenu').height() + 42 + 'px!important'});
                 }
                 $('#docHead').css({'top': (menuHeight-sd)+1 + 'px'});
                 $('.sideBar #sideBarCnt').removeClass('sidebar-fixed');
@@ -104,7 +104,7 @@ $(document).ready(function(){
             $('.subHeadWrapper').css({'top': 'unset'});
             $('.productMenu').css({'top': 'unset'});
             $('#docHead').css({'top': 'unset'});
-            $('.sideBar').css({'padding-top': '20px'});
+            $('.sideBar').css({'padding-top': '20px!important'});
         }
     }
 

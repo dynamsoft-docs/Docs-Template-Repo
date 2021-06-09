@@ -925,7 +925,7 @@ i.dbr-white-logo { display: inline-block; width: 221px; height: 30px; background
 
 
 /* version style adjust 2021-06-04 */
-.sideBar { padding-top: 137px; }
+.sideBar { padding-top: 137px!important; }
 #sideBarCnt.sidebar-fixed { top: 134px!important; }
 .history { position: fixed; width: 250px; height: 32px; background: #ffffff; border: 1px solid #ddd; border-radius: 3px;  color: #323234; padding: 0; top: 219px; left: calc(50% - 800px); z-index: 12; }
 .history .container { width: 100%;padding: 0; }
@@ -946,11 +946,11 @@ i.dbr-white-logo { display: inline-block; width: 221px; height: 30px; background
 }
 
 @media (max-width: 991px) {
-    .sideBar { padding-top: 0; }
+    .sideBar { padding-top: 0!important; }
     .history.history-absolute { position: absolute; top: 130px!important; left: calc(50% - 160px);}
 }
 
 @media (max-width: 767px) {
-    .sideBar { padding-top: 0; }
+    .sideBar { padding-top: 0!important; }
     .history.history-absolute { position: absolute; top: 110px!important; left: 185px;}
 }
