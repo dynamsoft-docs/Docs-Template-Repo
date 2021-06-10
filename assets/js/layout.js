@@ -85,10 +85,8 @@ $(document).ready(function(){
                     $('#docHead').css({'top': '0px'});
                     $('.history').css({'top': '30px'})
                 }
-                // $('.sideBar').css({'padding-top': '0px'});
                 $('.sideBar #sideBarCnt').addClass('sidebar-fixed');
                 $('.rightSideMenu').addClass('rsm-fixed');
-                // $('.history').css({'top': '119px'})
             } else {
                 // head and sidebar fixed
                 if ($('.subHeadWrapper').length > 0) {
