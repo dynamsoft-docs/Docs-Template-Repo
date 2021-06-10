@@ -162,21 +162,14 @@ div::-webkit-scrollbar-thumb:hover, ul::-webkit-scrollbar-thumb:hover{
 div::-webkit-scrollbar-corner, ul::-webkit-scrollbar-corner{
   background: #179a16;
 }
-.history { 
-	position: relative;
-	/* border-top: 1px solid #ddd;
-	border-bottom: 1px solid #ddd; */
-	padding-top: 10px;
-	padding-bottom: 10px;
-	text-align: center;
-	background: #306877; 
-	color: #FFFFFF;
-}
+.history {text-align: center;}
+
 .history.history-fixed {
 	position: fixed;
 	width: 100%;
 	bottom: 0;
 }
+
 .history .otherVersions {
 	position: absolute;
 	display: none;
@@ -188,19 +181,12 @@ div::-webkit-scrollbar-corner, ul::-webkit-scrollbar-corner{
 	text-transform: capitalize;
 	color: #323234;
 }
-.history .currentVersion {
-	margin-bottom: 0;
-	text-transform: capitalize;
-	font-size: 18px;
-	display: inline-block;
-	padding-right: 30px;
-	color: #FFFFFF;
-}
-.history .changeBtn, .history .fvChange {
+
+/* .history .changeBtn, .history .fvChange {
 	color: #FE8E14;
-}
+} */
 .fullVersionHistory { position: relative; }
-.fullVersionHistory .fullVersionInfo {
+/* .fullVersionHistory .fullVersionInfo {
 	position: absolute;
 	display: none;
 	bottom: 28px;
@@ -211,15 +197,15 @@ div::-webkit-scrollbar-corner, ul::-webkit-scrollbar-corner{
 	text-transform: capitalize;
 	width: 155px;
 	z-index: 1111;
-}
-.fullVersionHistory .fullVersionInfo li {
+} */
+/* .fullVersionHistory .fullVersionInfo li {
 	cursor: pointer;
 	color: #323234;
 	text-align: left;
-}
-.fullVersionHistory .fvChange {
+} */
+/* .fullVersionHistory .fvChange {
 	color: #FE8E14;
-}
+} */
 
 
 .dbrThanksDownloading {
