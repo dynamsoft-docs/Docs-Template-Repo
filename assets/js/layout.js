@@ -76,29 +76,33 @@ $(document).ready(function(){
                 if ($('.subHeadWrapper').length > 0) {
                     $('.subHeadWrapper').css({'top': '0px'});
                     $('#docHead').css({'top': ($('.subHeadWrapper').height() + 1) + 'px'});
+                    $('.history').css({'top': '119px'})
                 } else {
                     $('.productMenu').css({'top': '0px'});
                     $('#docHead').css({'top': ($('.productMenu').height()) + 'px'});
+                    $('.history').css({'top': '30px'})
                 }
                 // $('.sideBar').css({'padding-top': '0px'});
                 $('.sideBar #sideBarCnt').addClass('sidebar-fixed');
                 $('.rightSideMenu').addClass('rsm-fixed');
-                $('.history').css({'top': '119px'})
+                
             } else {
                 // head and sidebar fixed
                 if ($('.subHeadWrapper').length > 0) {
                     $('.subHeadWrapper').css({'top': ($('#overall-header').height()-sd) + 'px'});
                     $('.sideBar').css({'padding-top': $('.subHeadWrapper').height() + 42 + 'px!important'});
+                    $('.history').css({'top': ($('#overall-header').height() + $('.productMenu').height() + 30 +  - sd) + 'px'})
                 } else {
                     $('.productMenu').css({'top': ($('#overall-header').height()-sd) + 'px'});
-                    $('.sideBar').css({'padding-top': $('.productMenu').height() + 42 + 'px!important'});
+                    $('.sideBar').css({'padding-top':  + '42px!important'});
+                    $('.history').css({'top': ($('#overall-header').height() + 30 +  - sd) + 'px'})
                 }
                 $('#docHead').css({'top': (menuHeight-sd)+1 + 'px'});
                 $('.sideBar #sideBarCnt').removeClass('sidebar-fixed');
                 $('.rightSideMenu').removeClass('rsm-fixed');
 
                 // history fixed
-                $('.history').css({'top': ($('#overall-header').height() + $('.productMenu').height() + 30 +  - sd) + 'px'})
+                
             }
         } else {
             $('.subHeadWrapper').css({'top': 'unset'});
