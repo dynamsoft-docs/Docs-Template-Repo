@@ -74,8 +74,8 @@ $(document).ready(function(){
             if (sd >= $('#overall-header').height()) {
                 // head and sidebar fixed
                 if ($('.productMenu').length > 0) {
-                    $('.subHeadWrapper').css({'top': '0px'});
-                    $('#docHead').css({'top': ($('.subHeadWrapper').height() + 1) + 'px'});
+                    $('.productMenu').css({'top': '0px'});
+                    $('#docHead').css({'top': ($('.productMenu').height() + 1) + 'px'});
                     $('.history').css({'top': '119px'})
                 } else {
                     $('.productMenu').css({'top': '0px'});
@@ -89,8 +89,8 @@ $(document).ready(function(){
             } else {
                 // head and sidebar fixed
                 if ($('.productMenu').length > 0) {
-                    $('.subHeadWrapper').css({'top': ($('#overall-header').height()-sd) + 'px'});
-                    $('.sideBar').css({'padding-top': $('.subHeadWrapper').height() + 42 + 'px!important'});
+                    $('.productMenu').css({'top': ($('#overall-header').height()-sd) + 'px'});
+                    $('.sideBar').css({'padding-top': $('.productMenu').height() + 42 + 'px!important'});
                     $('.history').css({'top': ($('#overall-header').height() + $('.productMenu').height() + 30 +  - sd) + 'px'})
                 } else {
                     $('.productMenu').css({'top': ($('#overall-header').height()-sd) + 'px'});
