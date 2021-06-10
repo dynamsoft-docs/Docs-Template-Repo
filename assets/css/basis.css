@@ -942,12 +942,12 @@ i.dbr-white-logo { display: inline-block; width: 221px; height: 30px; background
 
 @media (max-width: 1679px) {
     .sideBar { padding-top: 117px!important; }
-    .history { left: 65px; top: 195px; }
+    .history { left: 65px; top: 175px; }
     .noSubMenuDoc .history { top: 120px; }
 }
 
 @media (max-width: 1199px) {
-    .history { left: 35px; top: 195px; }
+    .history { left: 35px; top: 175px; }
     .noSubMenuDoc .history { top: 120px; }
 }
 
