@@ -73,36 +73,32 @@ $(document).ready(function(){
             var clientHeight = document.body.clientHeight;
             if (sd >= $('#overall-header').height()) {
                 // head and sidebar fixed
-                if ($('.productMenu').length > 0) {
-                    $('.productMenu').css({'top': '0px'});
-                    $('#docHead').css({'top': ($('.productMenu').height() + 1) + 'px'});
-                    $('.history').css({'top': '119px'})
+                if ($('.subHeadWrapper').length > 0) {
+                    $('.subHeadWrapper').css({'top': '0px'});
+                    $('#docHead').css({'top': ($('.subHeadWrapper').height() + 1) + 'px'});
                 } else {
                     $('.productMenu').css({'top': '0px'});
                     $('#docHead').css({'top': ($('.productMenu').height()) + 'px'});
-                    $('.history').css({'top': '30px'})
                 }
                 // $('.sideBar').css({'padding-top': '0px'});
                 $('.sideBar #sideBarCnt').addClass('sidebar-fixed');
                 $('.rightSideMenu').addClass('rsm-fixed');
-                
+                $('.history').css({'top': '119px'})
             } else {
                 // head and sidebar fixed
-                if ($('.productMenu').length > 0) {
-                    $('.productMenu').css({'top': ($('#overall-header').height()-sd) + 'px'});
-                    $('.sideBar').css({'padding-top': $('.productMenu').height() + 42 + 'px!important'});
-                    $('.history').css({'top': ($('#overall-header').height() + $('.productMenu').height() + 30 +  - sd) + 'px'})
+                if ($('.subHeadWrapper').length > 0) {
+                    $('.subHeadWrapper').css({'top': ($('#overall-header').height()-sd) + 'px'});
+                    $('.sideBar').css({'padding-top': $('.subHeadWrapper').height() + 42 + 'px!important'});
                 } else {
                     $('.productMenu').css({'top': ($('#overall-header').height()-sd) + 'px'});
-                    $('.sideBar').css({'padding-top':  + '42px!important'});
-                    $('.history').css({'top': ($('#overall-header').height() + 30 +  - sd) + 'px'})
+                    $('.sideBar').css({'padding-top': $('.productMenu').height() + 42 + 'px!important'});
                 }
                 $('#docHead').css({'top': (menuHeight-sd)+1 + 'px'});
                 $('.sideBar #sideBarCnt').removeClass('sidebar-fixed');
                 $('.rightSideMenu').removeClass('rsm-fixed');
 
                 // history fixed
-                
+                $('.history').css({'top': ($('#overall-header').height() + $('.productMenu').height() + 30 +  - sd) + 'px'})
             }
         } else {
             $('.subHeadWrapper').css({'top': 'unset'});
