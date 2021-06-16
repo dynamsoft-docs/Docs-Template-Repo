@@ -211,7 +211,11 @@ function addParam (aTag, verText)
 
     var exp = new RegExp(/[?&]ver=[^&^#]+/gi);
 	if (exp.exec(hrefVal) != null){
-		window.location.href = hrefVal;
+        if (aTag.target == '_blank') {
+            window.open(hrefVal)
+        } else {
+            window.location.href = hrefVal;
+        }
 		return;
 	}
 	
@@ -227,12 +231,20 @@ function addParam (aTag, verText)
 	if (hrefVal.indexOf("#") != -1){
 		var urlAry = hrefVal.split("#");
 		if (urlAry.length == 2){
-			window.location.href = urlAry[0]+verStr+"#"+urlAry[1];
+            if (aTag.target == '_blank') {
+                window.open(urlAry[0]+verStr+"#"+urlAry[1])
+            } else {
+                window.location.href = urlAry[0]+verStr+"#"+urlAry[1];
+            }
 			return;
 		}
 	}
 	else{
-		window.location.href = hrefVal+verStr;
+        if (aTag.target == '_blank') {
+		    window.open(hrefVal+verStr);
+        } else {
+            window.location.href = hrefVal+verStr;
+        }
 		return;
 	}
 	
