@@ -19,6 +19,16 @@
                 {{ page.url	| strip }}index.md
             {% endif %}
         {% endcapture %}
-        <a href="{{ site.repositoryUrl }}{{ sourceCodeUrl | strip }}" class="editLinkColour">Edit<img src="{{ site.edit_icon }}" width="20px" height="15px" style="vertical-align: middle; margin-left: 5px; margin-top: -3px;" /></a>
+        {%- if page.category -%}
+            {%- if page.category == 'js-repo' -%}
+                <a href="{{ site.repositoryUrlJS }}{{ sourceCodeUrl | strip }}" class="editLinkColour">Edit<img src="{{ site.edit_icon }}" width="20px" height="15px" style="vertical-align: middle; margin-left: 5px; margin-top: -3px;" /></a>
+            {%- elsif page.category == 'mobile-repo' -%}
+                <a href="{{ site.repositoryUrlMobile }}{{ sourceCodeUrl | strip }}" class="editLinkColour">Edit<img src="{{ site.edit_icon }}" width="20px" height="15px" style="vertical-align: middle; margin-left: 5px; margin-top: -3px;" /></a>
+            {%- else -%}
+                <a href="{{ site.repositoryUrl }}{{ sourceCodeUrl | strip }}" class="editLinkColour">Edit<img src="{{ site.edit_icon }}" width="20px" height="15px" style="vertical-align: middle; margin-left: 5px; margin-top: -3px;" /></a>
+            {%- endif -%}
+        {%- else -%}
+            <a href="{{ site.repositoryUrl }}{{ sourceCodeUrl | strip }}" class="editLinkColour">Edit<img src="{{ site.edit_icon }}" width="20px" height="15px" style="vertical-align: middle; margin-left: 5px; margin-top: -3px;" /></a>
+        {%- endif -%}
     </div>
 </div>
