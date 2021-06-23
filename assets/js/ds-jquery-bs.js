@@ -1,21 +1,3 @@
-// /*JavaScript Document*/
-// $(function(){
-// 	/* devic-type */
-// 	if(browserRedirect() == 'pc'){
-// 		$(".visible-mobile").hide();
-// 		$(".hidden-mobile").show();		
-// 	}else{
-// 		/*Compatible with the bottom of the live chat button*/
-// 		$('body').addClass('mobile');
-// 		/* Compatible -- click document to hide headerNav */
-// 		$("body").css('cursor','pointer');
-// 		/* disabled Btn */
-// 		$(".btn-disabled-mobile").addClass('disabled');
-// 		$(".visible-mobile").show();
-// 		$(".hidden-mobile").hide();	
-// 	}
-// })
-
 $(function(){
 	/*xsMenu*/
 	$("#xsMenu .xsMenuToggle").click(function() {
@@ -93,7 +75,7 @@ $(function(){
 		$("#subNav .ct-list > li .subNav-toggle i.show-xs").addClass('fa-angle-down').removeClass('fa-angle-up');
 	});
 
-	$("#subNav .subNav-toggle").click(function(){		
+	$("#subNav .subNav-toggle").click(function() {		
 		$(this).parent('li').siblings('li').removeClass('on');
 		$(this).parent('li').siblings('li').find("ul.ct-more").hide();
 		$(this).parent('li').siblings('li').find(".subNav-toggle i.show-xs").addClass('fa-angle-down').removeClass('fa-angle-up');
@@ -150,11 +132,13 @@ $(function(){
 		if(breakpoint()=='xs'){
 			$("#subNav .ct-list").slideUp();
 		}
+
 		$("#subNav .subNav-xsToggle").removeClass('on');
 		$("#subNav .subNav-xsToggle .fa").addClass('fa-caret-right').removeClass('fa-caret-down');
 		$("#subNav .ct-list > li").removeClass('on');
 		$("#subNav .ct-list > li ul.ct-more").slideUp();
 		$("#subNav .ct-list > li .subNav-toggle i.show-xs").addClass('fa-angle-down').removeClass('fa-angle-up');
+		
 		/*smSearch*/
 		$("#smSearch .smSearchSubmit").hide();
 		$("#smSearch input[type='text']").hide();
@@ -169,115 +153,7 @@ $(function(){
 		stopPropagation(e);
 	});
 	
-	/*toTop && sunNav-scroll-fixed*/
-	// $(window).scroll(function(){
-	// 	var windowScTop = $(window).scrollTop();
-	// 	if (windowScTop > subNavOffsetTop) {
-	// 		var subNavPs=$("#subNav").css('position');
-	// 		var subNavDis=$("#subNav").css('display');
-	// 		if(subNavPs=='relative'&&subNavDis=='block'){
-	// 		    $("#subNav").addClass('subNav-fixed');
-	// 		    $("#header").addClass('fixed');
-	// 			$("#subNav .subNav-rt .d-btn").addClass('bgOrange');
-	// 		}
-	// 		$("#toTop").fadeIn();
-	// 		$(".form-email-only").hide();
-	// 	} else {
-	// 		$("#header").removeClass('fixed');
-	// 		$("#subNav").removeClass('subNav-fixed');
-	// 		$("#subNav .subNav-rt .d-btn").removeClass('bgOrange');
-	// 		$("#toTop").fadeOut();
-	// 		$(".form-email-only").show();
-	// 	}
-	// });
-	
-	// $("#toTop").click(function(){
-	// 	$('html,body').animate({scrollTop:0},500);
-	// 	return false;		
-  //   });	
-	
 });
-
-// $(function () {
-//     $("[data-toggle='tooltip']").tooltip();
-// });
-
-// $(function() {
-// popup div
-	//select all the a tag with name equal to modal
-  //   $('a[name=modal]').click(function(e) {
-	// 	var id = $(this).attr('href');
-	// 	popup(id, e);
-	// 	$('#mask').show();	
-	// });
-	//if close button is clicked
-	// $('.window .close').click(function (e) {
-	// 	//Cancel the link behavior
-	// 	e.preventDefault();
-	// 	$('#mask').hide();
-	// 	$('.window').hide();
-	// });		
-	//if mask is clicked
-  //   $('#mask').click(function () {
-	// 	$(this).hide();
-	// 	$('.window').hide();
-	// });	
-	
-	// $(window).resize(function () {	 
- 	// 	resizeWindow();
-	// });		
-// });
-
-// function isLogin() {
-// 	var DynamsoftToken = $.getCookie('DynamsoftToken')
-// 	if (DynamsoftToken) {
-// 		$('.header-visitor').hide()
-// 		$('.header-signin').show()
-// 		$('#lblusername').html($.getCookie('DynamsoftUserName'))
-// 		if ($.getCookie('DynamsoftRole') == '1' || $.getCookie('DynamsoftRole') == '4') {
-// 			$('#cp-header #action-nav .userbox-more li:nth-child(2)').show()
-// 		}
-// 	} else {
-// 		$('.header-signin').hide()
-// 		$('.header-visitor').show()
-// 	}
-// }
-
-/*popup div*/
-// function popup(id, e) {
-// 	/*Cancel the link behavior*/
-//     if ( e && e.preventDefault ){
-// 		e.preventDefault();
-// 	} else {
-// 		window.event.returnValue = false;
-// 	}
-// 	/*Get the screen height and width*/
-//     var maskHeight = $(document).height();
-//     var maskWidth = $(window).width();
-// 	/*Set heigth and width to mask to fill up the whole screen*/
-//     $("#mask").css({
-//         "width": maskWidth,
-//         "height": maskHeight
-//     });
-// 	/*Get the window height and width*/
-//     var winH = $(window).height();
-//     var winW = $(window).width();
-// 	/*Set the popup window to center*/
-//     $(id).css("top", winH / 2 - $(id).height() / 2);
-//     $(id).css("left", winW / 2 - $(id).width() / 2);
-// 	/*transition effect*/
-//     $(id).fadeIn(500);
-// }
-
-// function resizeWindow() {
-//     var box = $(".window");
-// 	/*Get the window height and width*/
-//     var winH = $(window).height();
-//     var winW = $(window).width();
-// 	/*Set the popup window to center*/
-//     box.css("top", winH/2 - box.height()/2);
-//     box.css("left", winW /2 - box.width()/2);
-// }
 
 /*event bubble*/
 function stopPropagation(e) {
@@ -287,26 +163,6 @@ function stopPropagation(e) {
 		e.cancelBubble = true;
 }
 
-/*device - Type*/
-// function browserRedirect() {
-// 	var deviceType;
-// 	var sUserAgent = navigator.userAgent.toLowerCase();
-// 	var bIsIpad = sUserAgent.match(/ipad/i) == "ipad";
-// 	var bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os";
-// 	var bIsMidp = sUserAgent.match(/midp/i) == "midp";
-// 	var bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == "rv:1.2.3.4";
-// 	var bIsUc = sUserAgent.match(/ucweb/i) == "ucweb";
-// 	var bIsAndroid = sUserAgent.match(/android/i) == "android";
-// 	var bIsCE = sUserAgent.match(/windows ce/i) == "windows ce";
-// 	var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile"; 
-// 	if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {
-// 		deviceType = 'phone'; 
-// 	} else {
-// 		deviceType = 'pc'; 
-// 	}  
-// 	return deviceType;
-// }
-//responsive type
 function breakpoint(){
 	var type;
 	if($("#xsHeader").css('display')=='block'){
@@ -322,66 +178,6 @@ function breakpoint(){
 				}
 	return type;
 }
-
-/*Dialog Message*/
-// function MsgDialog(){
-// 	$('#msgDialog').fadeToggle('fast');
-// }
-
-/*scroll To Main Content*/
-// function scrollToMainContent(){
-// 	var targetOffsetTop = $(".scrollToMainContent").offset().top;
-// 	$('html,body').animate({scrollTop:targetOffsetTop + 10},300);
-// }
-
-// (function ($) {
-// 	/*drop down menu*/
-// 	$.fn.clickhide = function (options) {
-// 		/*default configuration properities*/
-// 		var defaults = {
-// 			_clickOrHover: "click",/*click&&mouseenter*/
-// 			_slideOrShow: "slide",
-// 			_switchSpeed: " ",
-// 			_documentClick: "true",
-// 			_rootObjID: "#rootObjID",
-// 			_toggleNode: ".toggleNode",
-// 			_operateNode: ".operateNode",
-// 			_currentTabClass: "currentTabClass",
-// 			handler: null
-// 		};
-// 		var options = $.extend(defaults, options);
-// 		var operateNode = $(options._rootObjID).find(options._operateNode);
-// 		$(options._rootObjID).find(options._toggleNode).each(function(index, element) {   
-// 		   $(this).bind(options._clickOrHover, function (e) {   
-// 			  $(options._toggleNode).not(this).removeClass(options._currentTabClass);
-// 			  $(this).toggleClass(options._currentTabClass);
-// 			  operateNode.eq(index).toggleClass('on');/*filter options._operateNode*/
-// 			  if(options._slideOrShow == 'slide'){
-// 				 operateNode.not('.on').slideUp(options._switchSpeed);
-// 				 operateNode.eq(index).slideToggle(options._switchSpeed); 
-// 			  }else if(options._slideOrShow == 'show'){
-// 				 operateNode.not('.on').hide(options._switchSpeed);
-// 				 operateNode.eq(index).toggle(options._switchSpeed);
-// 			   }
-// 			   operateNode.eq(index).removeClass('on');
-// 		  });
-// 		});
-// 		$(document).click(function(){
-// 			if(options._documentClick == 'true'){
-// 				$(options._toggleNode).removeClass(options._currentTabClass);
-// 				if(options._slideOrShow == 'slide'){
-// 				   operateNode.slideUp();
-// 				  }else if(options._slideOrShow == 'show'){
-// 				   operateNode.hide();
-// 				  }
-// 			}
-// 		});
-// 		$(options._toggleNode).bind(options._clickOrHover,function(e){
-// 			stopPropagation(e);
-// 		});
-		
-// 	};
-// })(jQuery);
 
 function getUrlParam(name) {
 	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
