@@ -946,3 +946,18 @@ i.dbr-white-logo { display: inline-block; width: 221px; height: 30px; background
     .sideBar { padding-top: 0!important; }
     .history.history-absolute { position: absolute; top: 110px!important; left: 185px;}
 }
+
+
+.markdown-body .doc-card-prefix + blockquote {
+    padding: 20px;
+    margin: 20px 0;
+    border: solid lightgray 1px;
+    box-shadow: 0 0 4px rgb(0 0 0 / 25%);
+}
+
+.markdown-body .doc-card-prefix + blockquote hr {
+    height: 1px;
+    margin: 10px -20px;
+    background-color: #e1e4e8;
+    border: 0;
+}
