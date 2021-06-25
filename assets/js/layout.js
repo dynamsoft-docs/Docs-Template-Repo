@@ -1,5 +1,7 @@
 $(document).ready(function(){ 
     init();
+    $('.markdown-body .sample-code-prefix + blockquote > ul > li:first-child').addClass('on')
+    $('.markdown-body .sample-code-prefix + blockquote > ol > li:first-child').addClass('on')
 
     var sd = $(window).scrollTop()
     if(sd > 0) {
@@ -140,4 +142,31 @@ $(document).ready(function(){
         $('.fullVersionInfo').slideToggle();
         stopPropagation(e);
     })
+
+    $('.markdown-body .sample-code-prefix + blockquote ul li').on('click', function() {
+        var index = $(this).index()
+        var sIndex = $($(this).parent().parent()[0].previousSibling.previousSibling).index('.sample-code-prefix')
+        $('.markdown-body .sample-code-prefix').eq(sIndex).find('+ blockquote ul li').removeClass('on')
+        $('.markdown-body .sample-code-prefix').eq(sIndex).find('+ blockquote ol li').removeClass('on')
+        $('.markdown-body .sample-code-prefix').eq(sIndex).find('+ blockquote ul li').eq(index).addClass('on')
+        $('.markdown-body .sample-code-prefix').eq(sIndex).find('+ blockquote ol li').eq(index).addClass('on')
+    })
+
+    $('.markdown-body .sample-code-prefix + blockquote ol li a').on('click', function() {
+        copy($(this).parent().find('code').text())
+    })
+
+    $('.copy-prefix + p a').on('click', function() {
+        copy($(this).parent().find('+ div code').text())
+    })
 })
+
+function copy(data) {
+    let url = data;
+    let oInput = document.createElement('textarea')
+    oInput.value = url
+    document.body.appendChild(oInput)
+    oInput.select()
+    document.execCommand("Copy");
+    oInput.remove()
+}

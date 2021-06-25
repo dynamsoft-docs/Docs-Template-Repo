@@ -961,3 +961,64 @@ i.dbr-white-logo { display: inline-block; width: 221px; height: 30px; background
     background-color: #e1e4e8;
     border: 0;
 }
+
+.markdown-body .sample-code-prefix + blockquote {
+    padding: 0;
+    margin: 20px 0;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.markdown-body .sample-code-prefix + blockquote ul, .markdown-body .sample-code-prefix + blockquote ol, .markdown-body .sample-code-prefix + blockquote li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.markdown-body .sample-code-prefix + blockquote ul {
+    border-bottom: 1px solid #ddd;
+    padding: 0 25px;
+}
+
+.markdown-body .sample-code-prefix + blockquote ul li {
+    display: inline-block;
+    padding: 10px 0;
+    margin-right: 30px;
+    cursor: pointer;
+}
+.markdown-body .sample-code-prefix + blockquote ul li.on { 
+    color: #fe8e14;
+    border-bottom: 3px solid #fe8e14;
+}
+
+.markdown-body .sample-code-prefix + blockquote ol li {
+    position: relative;
+    background: #f6f8fa;
+    opacity: 0;
+    height: 0;
+}
+.markdown-body .sample-code-prefix + blockquote ol li.on { 
+    padding: 25px 20px;
+    opacity: 1;
+    height: auto;
+}
+.markdown-body .sample-code-prefix + blockquote ol li .highlight {
+    margin-bottom: 0;
+    border: 0;
+    padding: 0;
+}
+.markdown-body .sample-code-prefix + blockquote ol li img {
+    position: absolute;
+    top: 5px;
+    right: 11px;
+    width: 20px;
+}
+.copy-prefix + p {
+    text-align: right;
+    margin-bottom: -25px;
+    margin-right: 10px;
+    z-index: 122;
+    position: relative;
+}
+.copy-prefix + p a img { width: 20px; }
