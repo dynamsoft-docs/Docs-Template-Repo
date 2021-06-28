@@ -90,7 +90,15 @@ function RedirToGivenVersionPage(inputVer)
             bestVersion = curVer;
         }
     }
-    
+    var anchorVal = "";
+    var curDocUrl = document.URL;
+    if (curDocUrl.indexOf("#") != -1){
+		var urlAry = curDocUrl.split("#");
+		if (urlAry.length == 2){
+            anchorVal = "#" + urlAry[1];
+		}
+	}
+
     var historyList = $(".otherVersions");
     if (historyList != null)
     {
@@ -115,10 +123,10 @@ function RedirToGivenVersionPage(inputVer)
                     }
                     else{
                     	if (getUrlVars(document.URL)["src"] != undefined){
-                    		window.location.replace(aTag[0].href + "?src=" + getUrlVars(document.URL)["src"] + "&&ver=" +inputVer+"&&matchVer=true");
+                    		window.location.replace(aTag[0].href + "?src=" + getUrlVars(document.URL)["src"] + "&&ver=" +inputVer+"&&matchVer=true" + anchorVal);
                     	}
                     	else{
-                        	window.location.replace(aTag[0].href + "?ver=" +inputVer+"&&matchVer=true");
+                        	window.location.replace(aTag[0].href + "?ver=" +inputVer+"&&matchVer=true" + anchorVal);
                     	}
                        return;
                     }
