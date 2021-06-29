@@ -1029,13 +1029,19 @@ i.dbr-white-logo { display: inline-block; width: 221px; height: 30px; background
         -ms-column-count: 1;
         -o-column-count: 1;
         column-count: 1;
+	padding: 0;
     }
-}	
-.markdown-body .doc-card-list-prefix+blockquote ul {
-    -moz-column-count: 3;
-    -ms-column-count: 3;
-    -o-column-count: 3;
-    column-count: 3;
-    padding: 0;
+}
+@media (min-width: 992px) {
+    .markdown-body .doc-card-list-prefix+blockquote ul {
+    	-moz-column-count: 3;
+  	-ms-column-count: 3;
+    	-o-column-count: 3;
+    	column-count: 3;
+	padding: 0;
+    }
+}
+
+.markdown-body .doc-card-list-prefix+blockquote ul, .markdown-body .doc-card-list-prefix+blockquote ul li {
     list-style: none;
 }
