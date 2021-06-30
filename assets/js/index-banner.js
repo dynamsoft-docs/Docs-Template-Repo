@@ -1,39 +1,36 @@
 function GenerateContentByHead(needh3 = true) {
-    var h2_list = $('.content h2');
-    if (h2_list.length > 0) {
-        var appendContent = '<ul>';
-        // if(needh3) {
-        //     appendContent += '<ul>';
-        // }
-        // else {
-        //     appendContent += '<ul style="display: block;">';
-        // }
-        for (var i = 0; i < h2_list.length; i++) {
-            var curH2Text = $(h2_list[i]).text();
-            var curH2Href =  $(h2_list[i]).attr("id");
-            var curliContent = '<li style="list-style-image: none; list-style-type: circle;"><a href="#' + curH2Href + '" class="otherLinkColour">' + curH2Text + '</a>';
-            if (needh3) {
-                var h3_list = $(h2_list[i]).nextUntil(h2_list[i + 1], "h3");
-                if (h3_list.length > 0) {
-                    curliContent += '<ul name="listLevel2">';
-                    for (var j = 0; j < h3_list.length; j++) {
-                        var curH3Text = $(h3_list[j]).text();
-                        var curH3Href = $(h3_list[j]).attr("id");
-                        curliContent += '<li style="list-style-image: none; list-style-type: disc;"><a href="#' + curH3Href + '" class="otherLinkColour">' + curH3Text + '</a></li>';
-                    }
-                    curliContent += '</ul>'
+    var titleList, appendHtml='<ul>';
+    needh3 = true
+    if (needh3) {
+        titleList = document.querySelectorAll('.content h2, .content h3');
+    } else {
+        titleList = document.querySelectorAll('.content h2');
+    }
+    for(var i = 0; i < titleList.length; i++) {
+        var curH2Text = $(titleList[i]).text();
+        var curH2Href =  $(titleList[i]).attr("id");
+        var curliContent = '<li style="list-style-image: none; list-style-type: circle;"><a href="#' + curH2Href + '" class="otherLinkColour">' + curH2Text + '</a>';
+        if (i + 1 < titleList.length && titleList[i].localName == 'h2' && titleList[i+1].localName == 'h3') {
+            curliContent += '<ul name="listLevel2">';
+            for (var j = i+1; j < titleList.length; j++) {
+                if (titleList[j].localName == 'h3') {
+                    i = j
+                    var curH3Text = $(titleList[j]).text();
+                    var curH3Href = $(titleList[j]).attr("id");
+                    curliContent += '<li style="list-style-image: none; list-style-type: disc;"><a href="#' + curH3Href + '" class="otherLinkColour">' + curH3Text + '</a></li>';
+                } else {
+                    break;
                 }
             }
+            curliContent += '</ul>'
+        } else {
             curliContent += '</li>'
-            appendContent += curliContent;
         }
-        appendContent += '</ul>'
-        if ($('#AutoGenerateSidebar').length != 0) {
-            $('#AutoGenerateSidebar').append(appendContent);
-        }
-        // if (!needh3 && $('#sidelistDocContent').length != 0) {
-        //     $($('#sidelistDocContent')[0]).append(appendContent);
-        // }
+        appendHtml += curliContent
+    }
+    appendHtml += '</ul>'
+    if ($('#AutoGenerateSidebar').length != 0) {
+        $('#AutoGenerateSidebar').append(appendHtml);
     }
 }
 
