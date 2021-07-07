@@ -1,6 +1,5 @@
 function GenerateContentByHead(needh3 = true) {
     var titleList, appendHtml='<ul>';
-    needh3 = true
     if (needh3) {
         titleList = document.querySelectorAll('.content h2, .content h3');
     } else {
