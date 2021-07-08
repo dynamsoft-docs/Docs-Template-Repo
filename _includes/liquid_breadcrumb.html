@@ -1,9 +1,5 @@
 {%- assign level_ary = page.url | split: '/' -%}
 
-{%- if site.productUrl -%}
-<li><a class="bluelink" href = "{{ site.productUrl }}">{{ site.productName }}</a></li>
-{%- endif -%}
-
 {%- if site.docRootName -%}
 <li><a class="bluelink" href = "{{ site.docHomePage }}">{{ site.docRootName }}</a></li>
 {%- else -%}
