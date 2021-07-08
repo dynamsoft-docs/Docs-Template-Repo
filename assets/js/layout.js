@@ -27,6 +27,7 @@ $(document).ready(function(){
         $('.container .head').css({'width': $('.docContainer').width() + 'px'});
         $('#fullTreeMenuListContainer').css({'height': 'calc(100vh - '+(menuHeight + 120) +'px)'});
         $('.rightSideMenu').css({'height': 'calc(100vh - '+ (menuHeight)+'px)'});
+        $('.rightSideMenu').css({'padding-top': $('#docHead').outerHeight()+'px'});
         $('.docContainer .markdown-body').css({'margin-top': ($('#docHead').outerHeight() + 0) + 'px'});
         if (breakpoint() == 'lg') {
             $('.history').css({'width': $('#txtSearch').outerWidth() + 'px'});
