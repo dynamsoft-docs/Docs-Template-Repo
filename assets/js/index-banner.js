@@ -276,18 +276,18 @@ function UrlSearch(docUrl, listUrl) {
     }  
     
 
-    var regExp = new RegExp(listUrl + '$');
+    var regExp = new RegExp('^' + listUrl + '$');
     if (regExp.exec(docUrl) != null) {
         if (docUrlAnchor == listUrlAnchor || docUrlAnchor == undefined) {
             return 1;
         }
-        else {
+        else if (docUrlAnchor != undefined && listUrlAnchor == undefined) {
             return 0;
         }
     }
     else {
-        regExp = new RegExp(docUrl + '$');
-        if (regExp.exec(listUrl) != null) {
+        regExp = new RegExp('^' + listUrl);
+        if (regExp.exec(docUrl) != null) {
             return 0;
         }
         else {
