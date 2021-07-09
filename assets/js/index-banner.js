@@ -132,7 +132,7 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
             var curListATag =  $(curLi).children("a");
             if (curListATag.length > 0 && curListATag[0].getAttribute("href") != null) {
                 var returnVal = UrlSearch(searchUrl, curListATag[0].href);
-                if (returnVal == 1)
+                if (returnVal == 1) {
                     bestMatchList = i;
                     break;               
                 }
@@ -148,8 +148,7 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
             }
         }
 
-        if (bestMatchList != -1)
-        {
+        if (bestMatchList != -1) {
             var curLi = listAry[bestMatchList];
             var curListATag =  $(curLi).children("a");
 
@@ -233,182 +232,9 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
                 }
             }
         }
-
-        // for (var iter = 0; iter < 2; iter++) {
-        //     if (iter == 1) {
-        //         if (firstTime && !foundCurList && searchUrl.indexOf("#") != -1) {
-        //             searchUrl = searchUrl.substring(0, searchUrl.indexOf("#"));
-        //         }
-        //         else {
-        //             continue;
-        //         }  
-        //     }
-        //     for (var i = 0, len = listAry.length; i < len; i++) {
-        //         var curLi = listAry[i];
-        //         var curListATag =  $(curLi).children("a");
-        //         if (curListATag.length > 0 && curListATag[0].getAttribute("href") != null) {
-        //             if (UrlSearch(searchUrl, curListATag[0].href)) {
-        //                 foundCurList = true;
-        //                 curListATag[0].style.color = '#fe8e14';
-        //                 curListATag[0].className = "otherLinkColour activeLink"
-
-        //                 // if (needGenerateDocHead) {
-        //                 //     curLi.id = "sidelistDocContent";
-        //                 // }
-
-        //                 if (firstTime) {
-        //                     var crumbul = $($('#crumbs')).children("ul")
-        //                     if (crumbul.length != 0) {
-        //                         var parentsLi = $(curLi).parents("li");
-        //                         var appendText = "";
-        //                         if (parentsLi.length > 0) {
-        //                             for (var j = parentsLi.length - 1; j >= 0 ; j--) {
-        //                                 var tmpATag = $(parentsLi[j]).children("a");
-        //                                 if (tmpATag.length > 0) {
-        //                                     appendText += '<li><a class="bluelink" href = "' + tmpATag[0].href + '">'+ tmpATag[0].textContent + '</a></li>';
-        //                                 }
-        //                             }
-        //                         }
-
-        //                         var childUl = $(curLi).children("ul");
-        //                         if (childUl.length > 0) {
-        //                             appendText += '<li><a class="bluelink" href = "' + curListATag[0].href + '">'+ curListATag[0].textContent + '</a></li>';
-        //                         }
-        //                         else {
-        //                             appendText += '<li id="breadcrumbLastNode">' + curListATag[0].textContent + '</li>'
-        //                         }
-        //                         $(crumbul[0]).append(appendText);
-        //                     }
-        //                     var parentsUL = $(curLi).parents("ul");
-        //                     for (var j = 0, lenUL = parentsUL.length; j < lenUL; j++) {
-        //                         var curUL =  parentsUL[j];
-        //                         if (curUL.style.display != "block") {
-        //                             curUL.style.display = "block";
-        //                         }
-        //                         var curULChildrenListAry = $(curUL).children("li");
-        //                         for (var k = 0, lenChildLi = curULChildrenListAry.length; k < lenChildLi; k++) {
-        //                             var curULTag = $(curULChildrenListAry[k]).children("ul");
-        //                             if (curULTag.length > 0) {
-        //                                 if (curULTag[0].style.display != "block") {
-        //                                     curULChildrenListAry[k].className = "collapseListStyle"
-        //                                     // curULChildrenListAry[k].style.listStyleImage = "url('/assets/img-icon/collapse-list.png')";  
-        //                                 }
-        //                                 else {
-        //                                     curULChildrenListAry[k].className = "expandListStyle"
-        //                                     // curULChildrenListAry[k].style.listStyleImage = "url('/assets/img-icon/expand-list.png')";
-        //                                 }
-        //                             }
-        //                         }
-        //                     }
-    
-        //                     var childUL = $(curLi).children("ul");
-        //                     if (childUL.length > 0) {
-        //                         curLi.className = "expandListStyle"
-        //                         // curLi.style.listStyleImage = "url('/assets/img-icon/expand-list.png')";
-        //                         if (childUL[0].style.display != "block") {
-        //                             childUL[0].style.display = "block";
-        //                         }
-        //                         curListATag[0].removeAttribute("href");
-
-        //                         var childrenLi = $(childUL[0]).children("li");
-        //                         for (var j = 0; j < childrenLi.length; j++) {
-        //                             var curULTag = $(childrenLi[j]).children("ul");
-        //                             if (curULTag.length > 0) {
-        //                                 if (curULTag[0].style.display != "block") {
-        //                                     childrenLi[j].className = "collapseListStyle"
-        //                                     // childrenLi[j].style.listStyleImage = "url('/assets/img-icon/collapse-list.png')";  
-        //                                 }
-        //                                 else {
-        //                                     childrenLi[j].className = "expandListStyle"
-        //                                     // childrenLi[j].style.listStyleImage = "url('/assets/img-icon/expand-list.png')";
-        //                                 }
-        //                             }
-        //                         }
-        //                     }
-        //                     var parentsLi = $(curLi).parents("li");
-        //                     for (var j = 0, lenLi = parentsLi.length; j < lenLi; j++) {
-        //                         parentsLi[j].className = "expandListStyle"
-        //                         // parentsLi[j].style.listStyleImage = "url('/assets/img-icon/expand-list.png')";
-        //                     }
-
-        //                     break;
-        //                 }               
-        //             }
-        //             else if (!firstTime) {
-        //                 curListATag[0].style.fontWeight = 'normal';
-        //             }
-        //         }
-        //     }
-        // }
     }
 }
 
-// function UrlSearch(docUrl, listUrl) {
-//     docUrl = docUrl.toLowerCase();
-//     listUrl = listUrl.toLowerCase();
-
-//     docUrl = docUrl.replace(/\/index.html/g,"/");
-//     listUrl = listUrl.replace(/\/index.html/g,"/");
-
-//     var docUrlWithParam = getUrlVars(docUrl)["src"];
-//     var listUrlWithParam = getUrlVars(listUrl)["src"];
-    
-//     var tmpExp = new RegExp('programming/c-cplusplus/$')
-//     if (tmpExp.exec(docUrl) != null){
-//         docUrl = docUrl.substring(0, docUrl.indexOf("c-cplusplus/"));
-//     }
-    
-//     if (docUrl.indexOf("?") != -1) {
-//           docUrl = docUrl.substring(0, docUrl.indexOf("?"));
-//     }
-//     if (listUrl.indexOf("?") != -1) {
-//           listUrl = listUrl.substring(0, listUrl.indexOf("?"));
-//     }  
-     
-//     if (docUrlWithParam != undefined && listUrlWithParam != undefined) {
-//         if (docUrlWithParam != listUrlWithParam) {
-//             return false;
-//         }
-//         else {
-//             var regExp = new RegExp(listUrl + '$');
-//             if (regExp.exec(docUrl) != null) {
-//                 return true;
-//             }
-//             else if (docUrl.indexOf("#") == -1 && listUrl.indexOf("#") != -1){
-//                 listUrl = listUrl.substring(0, listUrl.indexOf("#"));
-//                 regExp = new RegExp(listUrl + '$');
-//                 if (regExp.exec(docUrl) != null) {
-//                         return true;
-//                 }
-//                 else {
-//                     return false;
-//                 }
-//             }
-//             else {
-//                 return false;
-//             }
-//         }
-//     }
-//     else {
-//         var regExp = new RegExp(listUrl + '$');
-//         if (regExp.exec(docUrl) != null) {
-//             return true;
-//         }
-//         else if (docUrl.indexOf("#") == -1 && listUrl.indexOf("#") != -1){
-//             listUrl = listUrl.substring(0, listUrl.indexOf("#"));
-//             regExp = new RegExp(listUrl + '$');
-//             if (regExp.exec(docUrl) != null) {
-//                     return true;
-//             }
-//             else {
-//                 return false;
-//             }
-//         }
-//         else {
-//             return false;
-//         }
-//     }
-// }
 
 function UrlSearch(docUrl, listUrl) {
     docUrl = docUrl.toLowerCase();
