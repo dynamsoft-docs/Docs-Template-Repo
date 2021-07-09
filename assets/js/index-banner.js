@@ -83,7 +83,7 @@ function FullTreeMenuList(generateDocHead, needh3 = true) {
                         }
                     }
                     else {
-                        HighlightCurrentListForFullTree("fullTreeMenuListContainer", false, ($(liAry[i]).children("a"))[0].href);
+                        //HighlightCurrentListForFullTree("fullTreeMenuListContainer", false, ($(liAry[i]).children("a"))[0].href);
                     }
                     event.stopPropagation();
                 }
