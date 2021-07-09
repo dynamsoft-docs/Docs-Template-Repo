@@ -63,6 +63,7 @@ $(document).ready(function(){
     }
 
     function realFunc() {
+        $('.rightSideMenu').css({'padding-top': $('#docHead').outerHeight()+'px'});
         if (breakpoint() == 'lg') {
             var subHeight = 0;
             if ($('.subHeadWrapper').length > 0) {
