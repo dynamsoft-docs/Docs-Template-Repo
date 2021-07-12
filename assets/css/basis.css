@@ -78,11 +78,11 @@ ul.circle > li p:hover, ul.circle li.on p, ul.square > li.on p, ul.square > li p
 
 
 .markdown-body { margin-top: 66px; box-sizing: border-box; min-height: auto; padding-bottom: 50px; }
-.markdown-body table th, .markdown-body table td { border-left: 1px solid #306877; border-right: 1px solid #306877; border-top: 1px solid #c7d0db; border-bottom: 1px solid #c7d0db; font-size: 14px;height: 30px; padding: 5px 10px; color: #606060; }
-.markdown-body table tr:last-child td { border-bottom: 1px solid #306877; }
-.markdown-body table th { border-top: 1px solid #306877; }
-.markdown-body table thead th { background-color: #306877; text-align: left; color: #FFFFFF; font-family: Oswald-Regular; font-size: 16px!important; font-weight: normal!important; }
-.markdown-body table thead th strong { color: #FFFFFF; }
+.markdown-body table th, .markdown-body table td { border-left: 1px solid #dddddd; border-right: 1px solid #dddddd; border-top: 1px solid #dddddd; border-bottom: 1px solid #dddddd; font-size: 14px; height: 30px; padding: 5px 10px; color: #606060; }
+.markdown-body table tr:last-child td { border-bottom: 1px solid #dddddd; }
+.markdown-body table th { border-top: 1px solid #323234; border-right: 1px solid #323234; border-left: #323234; }
+.markdown-body table thead th { background-color: #323234; text-align: left; color: #FFFFFF; font-family: Oswald-Regular; font-size: 16px!important; font-weight: normal!important; }
+.markdown-body table thead th strong { color: #FFFFFF; font-family: Oswald-Regular; font-weight: normal;}
 .markdown-body table tr:nth-child(2n) { background-color: #ffffff; }
 .markdown-body h1 { border-bottom: 0; font-size: 30px; }
 .markdown-body h2 { padding-top: 160px; margin-top: -130px; border-bottom: 0; font-size: 20px;}
@@ -792,11 +792,11 @@ i.dbr-white-logo { display: inline-block; width: 221px; height: 30px; background
 }
 
 /*  Sub Navigation  */
-.productMenu { width: 100%; height: 95px; font-size: 14px; background: #F5F5F5; position: fixed; left: 0; right: 0; z-index: 111;box-shadow: 0 7px 7px -7px rgb(130 130 130 / 70%); }
+.productMenu { width: 100%; height: 95px; font-size: 14px; background: #323234; position: fixed; left: 0; right: 0; z-index: 111; }
 .productMenu.fixedMenu { position: fixed; top: 0; z-index: 111; box-shadow: 0px 2px 9px 0px rgba(0,0,0,0.2); }
 .mobileProductMenu { display: none!important; }
 .productMenu .menuList { margin: 0; padding: 0; list-style: none; display: inline-block; margin-bottom: 0; }
-.productMenu .menuList li { display: inline-block; position: relative; color: #323234; line-height: 95px; margin-right: 30px; padding: 0 10px; font-size: 18px; cursor: pointer; vertical-align: top; font-family: Oswald-Regular; }
+.productMenu .menuList li { display: inline-block; position: relative; color: #ffffff; line-height: 95px; margin-right: 30px; padding: 0 10px; font-size: 18px; cursor: pointer; vertical-align: top; font-family: Oswald-Regular; }
 /*.productMenu .menuList li:first-child { font-size: 26px; margin-right: 50px; padding: 0; }*/
 .productMenu .menuList li:last-child { margin-right: 0; }
 .productMenu .menuList li a { font-family: Oswald-Regular; }
@@ -813,7 +813,7 @@ i.dbr-white-logo { display: inline-block; width: 221px; height: 30px; background
 #BarcodeMenuContainer .productSubMenuWrap .subMenuCnt { top: 0px; left: 505px; }
 .productMenu span.type { display: inline-block; color: #aaa; }
 .productMenu .pcProductMenu .ct-more { left: -22%; }
-.productMenu .pcProductMenu .menuList li a, .productMenu .menuList li a:active { color: #323234; }
+.productMenu .pcProductMenu .menuList li a, .productMenu .menuList li a:active { color: #ffffff; }
 .productMenu .pcProductMenu .menuList li a:hover { color: #fe8e14; }
 .productMenu .pcProductMenu .ct-more { width: auto; padding: 35px 40px; }
 .productMenu .pcProductMenu .ct-more li { height: auto; color: #323234; line-height: 30px; font-size: 18px; margin-top: 10px; }
@@ -821,7 +821,7 @@ i.dbr-white-logo { display: inline-block; width: 221px; height: 30px; background
 .productMenu .pcProductMenu .ct-more li a { color: #323234; text-transform: uppercase; }
 .productMenu .pcProductMenu .ct-more li a.on, .productMenu .pcProductMenu .ct-more li a:hover { color: #fe8e14; }
 .productMenu .pcProductMenu .ct-more .icon-orange-angle { display: none; position: absolute; width: 26px; height: 33px; left: 35px; top: -15px; }
-.productMenu .pcProductMenu .item.on { background: #dddddd; }
+.productMenu .pcProductMenu .item.on { background: #dddddd; color: #323234; }
 
 @media (max-width: 1679.98px) {
     .productMenu { height: 72px; }
