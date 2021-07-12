@@ -88,7 +88,7 @@ ul.circle > li p:hover, ul.circle li.on p, ul.square > li.on p, ul.square > li p
 .markdown-body h2 { padding-top: 160px; margin-top: -130px; border-bottom: 0; font-size: 20px;}
 .markdown-body h3 { padding-top: 160px; margin-top: -160px; border-bottom: 0; font-size: 18px;}
 .markdown-body h4 { padding-top: 160px; margin-top: -160px; font-weight: normal; }
-.markdown-body code.language-plaintext { padding: 3px 5px; color: #306877;background-color: #d5e6ea; border-radius: 0; }
+.markdown-body code.language-plaintext { padding: 3px 5px; color: #323234;background-color: #EEEEEE; border-radius: 0; }
 .markdown-body h3 code { font-family: Oswald-Light; font-weight: normal; }
 .markdown-body ol, .markdown-body ol li  { list-style: decimal; }
 .markdown-body ul { padding-left: 20px; }
@@ -101,7 +101,7 @@ ul.circle > li p:hover, ul.circle li.on p, ul.square > li.on p, ul.square > li p
 #crumbs ul > li + li:before { color: #CCCCCC; content: "> "; padding: 0 5px; }
 
 .markdown-body a strong, .markdown-body a code, .markdown-body a pre { color: inherit; }
-.markdown-body a code.language-plaintext { color: #306877; text-decoration: underline; }
+.markdown-body a code.language-plaintext { color: #323234; text-decoration: underline; }
 .markdown-body a code.language-plaintext:hover { opacity: .7; }
 /* .markdown-body a code.language-plaintext { color: #009688; }
 .markdown-body a code.language-plaintext:hover { opacity: .7; } */
