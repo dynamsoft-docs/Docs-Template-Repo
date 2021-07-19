@@ -49,6 +49,9 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                 GenerateContentByHead(needh3);
                 //GenerateContentByHead(false);
             }
+    
+            $('.docContainer, .sideBar, .history').show();
+            init();
 
             navWrap = document.getElementById("fullTreeMenuListContainer");
             var liAry = navWrap.getElementsByTagName("li");
@@ -128,7 +131,10 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                         GenerateContentByHead(needh3);
                         //GenerateContentByHead(false);
                     }
-    
+
+                    $('.docContainer, .sideBar, .history').show();
+                    init();
+
                     navWrap = document.getElementById("fullTreeMenuListContainer");
                     var liAry = navWrap.getElementsByTagName("li");
     
@@ -238,10 +244,9 @@ function SearchVersion() {
 
 function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = document.URL, pageStartVer = undefined, curPageRealVer = undefined) {
     var navWrap = document.getElementById(searchListId);
+    
     if (navWrap != null) {
-        var listAry = navWrap.getElementsByTagName("li");    
-
-        
+        var listAry = navWrap.getElementsByTagName("li");        
         var oriUrl = searchUrl;
         //history version doc url
         searchUrl = searchUrl.replace(/\/index-v[0-9]+[^\/]*.html/g,"/");
