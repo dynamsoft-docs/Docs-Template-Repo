@@ -1,0 +1,86 @@
+{%- assign targetPath = include.curPath | append: include.targetRelativePath | rstrip -%}
+{%- assign validTreeFiles = site.data.full_tree.tree_file_list -%}
+
+{%- assign targetVer = include.ver | rstrip -%}
+{%- if targetVer == "latest version" -%}
+        {%- assign targetVer = "10000" -%}
+{%- endif -%}
+
+{%- assign nearestFile = "" -%}
+{%- assign findTargetFile = false -%}
+{%- assign nearestVer = "10000" -%}
+{%- assign nearestVerDiff = 10000 -%}
+
+{%- for treeFile in validTreeFiles -%}
+        {%- assign curTreeFileVer = "10000" -%}
+        {%- assign treeFile = treeFile | rstrip -%}
+        {%- assign matchUrl = treeFile -%}
+        {%- if treeFile contains '-v' -%}
+                {%- assign curTreeFileVer = treeFile |  split: '-v' | last | split: '/' | first | replace: '.html', '' | rstrip -%}
+                {%- assign matchUrl = treeFile | remove: '-v' | remove: curTreeFileVer | rstrip -%}
+        {%- endif -%}
+        {%- if matchUrl == targetPath -%}
+                {%- if targetVer == curTreeFileVer -%}
+                        {%- assign nearestFile = treeFile -%}
+                        {%- assign findTargetFile = true -%}
+                        {%- break -%}
+                {%- else -%}
+                        {%- assign verDiff = 10000 -%}
+                        {%- assign validVer = false -%}
+                        {%- assign needCheckSize = true -%}
+                        {%- assign targetVerArray = targetVer | split:'.' -%}
+                        {%- assign curTreeFileVerArray = curTreeFileVer | split:'.' -%}
+                        {%- assign minSize = targetVerArray.size -%}
+                        {%- if curTreeFileVerArray.size < minSize -%}
+                                {%- assign minSize = curTreeFileVerArray.size -%}
+                        {%- endif -%}
+                        {%- for i in (0..minSize-1) -%}
+                                {%- assign curVal = curTreeFileVerArray[i] | plus: 0 -%}
+                                {%- assign targetVal = targetVerArray[i] | plus: 0 -%}
+                                {%- if curVal > targetVal -%}
+                                        {%- assign tmpDiff = curVal | minus: targetVal -%}
+                                        {%- if i == 0 -%}
+                                                {%- assign verDiff = tmpDiff -%}
+                                        {%- else -%}
+                                                {%- assign verDiff = tmpDiff | divided_by: 10 | divided_by: i -%}
+                                        {%- endif -%}
+                                        {%- assign validVer = true -%}    
+                                        {%- break -%}
+                                {%- elsif curVal < targetVal -%}
+                                        {%- assign needCheckSize = false -%}
+                                {%- endif -%}
+                        {% endfor %}
+                        {%- unless validVer -%}
+                                {%- if needCheckSize and curTreeFileVerArray.size > targetVerArray.size -%}
+                                        {%- assign validVer = true -%}
+                                        {%- assign curVal = curTreeFileVerArray[minSize] | plus: 0 -%}
+                                        {%- assign verDiff = curVal | divided_by: 10 | divided_by: minSize  -%}   
+                                {%- endif -%}
+                        {% endunless %}
+                        {%- if validVer -%}
+                                {%- if findTargetFile -%}
+                                        {%- if verDiff < nearestVerDiff -%}
+                                                {%- assign nearestFile = treeFile -%}
+                                                {%- assign nearestVer = curTreeFileVer -%}
+                                                {%- assign nearestVerDiff = verDiff -%}
+                                        {%- endif -%}
+                                {%- else -%}
+                                        {%- assign nearestFile = treeFile -%}
+                                        {%- assign nearestVer = curTreeFileVer -%}
+                                        {%- assign nearestVerDiff = verDiff -%}
+                                        {%- assign findTargetFile = true -%}
+                                {%- endif -%}
+                        {%- endif -%}
+                {%- endif -%}
+        {%- endif -%}
+{%- endfor -%}
+
+{%- if findTargetFile -%}
+        {%- assign relativePath = nearestFile | remove: include.curPath -%}
+        {%- assign curDirPath = "" -%}
+        {%- if nearestFile contains '/' -%}
+                {%- assign needRemoveStr = nearestFile |  split: '/' | last | rstrip -%}
+                {%- assign currentPath = page.url | remove: needRemoveStr -%}
+        {%- endif -%}
+        {%- include {{ relativePath }} ver=include.ver curPath=curDirPath -%}
+{%- endif -%}

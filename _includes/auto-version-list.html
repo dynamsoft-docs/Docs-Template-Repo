@@ -1,0 +1,17 @@
+<span class="fullVersionHistory">
+    <ul class="fullVersionInfo">
+        {%- assign validVerInfo = site.data.product_version.version_info_list -%}
+        {%- for verInfo in validVerInfo -%}
+            {%- assign curVerText = "" -%}
+            {%- assign verInfo = verInfo | downcase | rstrip -%}
+            {%- if verInfo == "latest version"-%}
+                {%- assign curVerText = verInfo | capitalize -%}
+            {%- else -%}
+                {%- assign curVerText = "Version " | append: verInfo -%}
+            {%- endif -%}
+
+            <li onclick="changeVersion(this)">{{ curVerText }}</li>
+        {%- endfor -%}
+    </ul>
+    <a class="fvChange fontOswald" href="javascript:;">Change +</a>
+</span>
