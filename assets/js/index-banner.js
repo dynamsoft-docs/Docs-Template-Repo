@@ -33,28 +33,42 @@ function GenerateContentByHead(needh3 = true) {
     }
 }
 
-function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefined) {
-    console.log('enter full tree menu list function...')
-    var version_tree_list = null
-    var curPageVersion = getUrlVars(document.URL)["ver"];
-    curPageVersion = curPageVersion == 'latest' || curPageVersion == null ? 'latest_version' : curPageVersion
-    console.log(version_tree_list, curPageVersion)
+function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefined, useVersionTree = false) {
+    var verArray = SearchVersion();
     var versionListInterval = setInterval(function() {
-        version_tree_list = $('#sideBarIframe').contents().find('#version_tree_list span')
-        console.log(version_tree_list, curPageVersion)
-        if (version_tree_list && version_tree_list.length > 0  && curPageVersion) {
-            for(var i = 0; i<version_tree_list.length; i++) {
-                console.log($(version_tree_list[i]).attr('id'), 'version_tree_' + curPageVersion)
-                if ($(version_tree_list[i]).attr('id') == 'version_tree_' + curPageVersion) {
-                    $('#fullTreeMenuListContainer').html($(version_tree_list[i]).html())
+        var stopInterval = false;
+        if (!useVersionTree) {
+            stopInterval = true;
+        }
+        else {
+            console.log('enter full tree menu list function...')
+            var version_tree_list = null
+            var curPageVersion = verArray[0];
+            curPageVersion = curPageVersion == 'latest' || curPageVersion == null ? 'latest_version' : curPageVersion;
+            console.log(version_tree_list, curPageVersion);
+            version_tree_list = $('#sideBarIframe').contents().find('#version_tree_list span');
+            console.log(version_tree_list, curPageVersion);
+            if (version_tree_list && version_tree_list.length > 0  && curPageVersion) {
+                for(var i = 0; i<version_tree_list.length; i++) {
+                    console.log($(version_tree_list[i]).attr('id'), 'version_tree_' + curPageVersion);
+                    if ($(version_tree_list[i]).attr('id') == 'version_tree_' + curPageVersion) {
+                        $('#fullTreeMenuListContainer').html($(version_tree_list[i]).html());
+                    }
                 }
+                stopInterval = true;
             }
-            
-            var curPageRealVer = SearchVersion();
+        }
+        
+        if (stopInterval) {
+            var allHerf1 = $(".docContainer .content, #docHead, #AutoGenerateSidebar, .sideBar").find("a");
+            for (var i = 0; i < allHerf1.length; i++)
+            {
+                allHerf1[i].onclick = function(){addParam(this, verArray[0]); return false;};
+            }
 
             var navWrap = document.getElementById("fullTreeMenuListContainer");
             if (navWrap != null) {
-                HighlightCurrentListForFullTree("fullTreeMenuListContainer", true, document.URL, pageStartVer, curPageRealVer);
+                HighlightCurrentListForFullTree("fullTreeMenuListContainer", true, document.URL, pageStartVer, verArray[1]);
                 if (generateDocHead) {
                     GenerateContentByHead(needh3);
                     //GenerateContentByHead(false);
@@ -162,13 +176,8 @@ function SearchVersion() {
         compatiableDiv.style.display = "none";
     }
 
-    var allHerf1 = $(".docContainer .content, #docHead, #AutoGenerateSidebar, .sideBar").find("a");
-    for (var i = 0; i < allHerf1.length; i++)
-    {
-        allHerf1[i].onclick = function(){addParam(this, ver); return false;};
-    }
-
-    return curVerFromUrl;
+    var verArray = new Array(ver, curVerFromUrl);
+    return verArray;
 }
 
 function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = document.URL, pageStartVer = undefined, curPageRealVer = undefined) {

@@ -1,6 +1,6 @@
 function UrlReplace()
 {
-    var docUrl = document.URL;    
+    var docUrl = document.URL;
     var ver = getUrlVars(docUrl)["ver"];
     var matchVer = getUrlVars(docUrl)["matchVer"];
     if (matchVer == undefined && ver != undefined) {
