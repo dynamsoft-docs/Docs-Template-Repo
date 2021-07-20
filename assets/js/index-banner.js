@@ -50,7 +50,10 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                 //GenerateContentByHead(false);
             }
     
-            $('.docContainer, .sideBar, .history').show();
+            var hiddenLayout = $('.docContainer, .sideBar, .history');
+            for (var i = 0; i < hiddenLayout.length; i++) {
+                hiddenLayout[i].style.visibility = "visible";
+            }
             init();
 
             navWrap = document.getElementById("fullTreeMenuListContainer");
@@ -132,7 +135,10 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                         //GenerateContentByHead(false);
                     }
 
-                    $('.docContainer, .sideBar, .history').show();
+                    var hiddenLayout = $('.docContainer, .sideBar, .history');
+                    for (var i = 0; i < hiddenLayout.length; i++) {
+                        hiddenLayout[i].style.visibility = "visible";
+                    }
                     init();
 
                     navWrap = document.getElementById("fullTreeMenuListContainer");
