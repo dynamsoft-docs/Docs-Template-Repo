@@ -4,7 +4,7 @@
         {%- for verInfo in validVerInfo -%}
             {%- assign curId = "version_tree_" | append: verInfo | replace: " ", "_" | downcase -%}
             <span id="{{ curId }}">
-                {%- include liquid_searchVersionTreeFile.html ver=verInfo curPath="" targetRelativePath="sidelist-fullTree.html" -%}
+                {%- include liquid_searchVersionTreeFile.html ver=verInfo curPath="" targetRelativePath="sidelist-full-tree.html" -%}
             </span>
         {%- endfor -%}
     </div>
