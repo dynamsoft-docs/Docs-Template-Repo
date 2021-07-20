@@ -309,7 +309,7 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
             var curListATag =  $(curLi).children("a");
             
             if (!findExactPage) {
-                // var ver = getUrlVars(document.URL)["ver"];
+                var ver = getUrlVars(document.URL)["ver"];
                 // if (ver != undefined) {
                 //     addParam(curListATag[0], ver);
                 // }
