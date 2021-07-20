@@ -7,5 +7,6 @@
                 {%- include liquid_searchVersionTreeFile.html ver=verInfo curPath="" targetRelativePath="sidelist-full-tree.html" -%}
             </span>
         {%- endfor -%}
+        <span id="complete_loading_tree"></span>
     </div>
 {%- endif -%}
