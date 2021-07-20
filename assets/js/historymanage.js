@@ -21,7 +21,7 @@ function RedirToGivenVersionPage(inputVer)
     var curVer = null;
     var bestVersion = null;
     if (curVerTag != null) {
-        var verText = (curVerTag[0].innerText).toLowerCase();
+        var verText = (curVerTag[0].innerHTML).toLowerCase();
         if (verText == "latest version"){
             curVer = "latest"
         }
