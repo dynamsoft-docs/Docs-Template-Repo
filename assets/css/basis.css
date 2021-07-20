@@ -108,9 +108,9 @@ ul.circle > li p:hover, ul.circle li.on p, ul.square > li.on p, ul.square > li p
 
 #menuLsitContainer ul { display: none; }
 
-.sideBar, .docContainer { padding-top: 60px; display: none; }
+.sideBar, .docContainer { padding-top: 60px; visibility: hidden; }
 #sideBarCnt.sidebar-fixed { position: fixed; top: 60px; max-height: unset; }
-.history { display: none;}
+.history { visibility: hidden; }
 
 .docContainer { padding-top: 95px; }
 .dlrDoc #sideBarCnt.sidebar-fixed { position: fixed; top: 95px; max-height: unset; }
@@ -1046,3 +1046,5 @@ i.dbr-white-logo { display: inline-block; width: 221px; height: 30px; background
 .markdown-body .doc-card-list-prefix+blockquote ul, .markdown-body .doc-card-list-prefix+blockquote ul li {
     list-style: none;
 }
+
+#sideBarIframe { display: none; }
