@@ -310,12 +310,21 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
             
             if (!findExactPage) {
                 var ver = getUrlVars(document.URL)["ver"];
-                if (ver != undefined &&
-                    ((ver != "latest" && pageStartVer != undefined && pageStartVer != "" && pageStartVer > ver) 
-                    || (curPageRealVer != undefined && curPageRealVer != "" && ((ver == "latest" && ver != curPageRealVer) || (ver != "latest" && ver > curPageRealVer)))
-                    )) {
+                if (ver != undefined) {
                     addParam(curListATag[0], ver);
                 }
+                else if (curPageRealVer != undefined) {
+                    addParam(curListATag[0], curPageRealVer);
+                }
+                else {
+                    window.location.href = curListATag[0].href;
+                }
+                // if (ver != undefined &&
+                //     ((ver != "latest" && pageStartVer != undefined && pageStartVer != "" && pageStartVer > ver) 
+                //     || (curPageRealVer != undefined && curPageRealVer != "" && ((ver == "latest" && ver != curPageRealVer) || (ver != "latest" && ver > curPageRealVer)))
+                //     )) {
+                //     addParam(curListATag[0], ver);
+                // }
             }
         
             curListATag[0].style.color = '#fe8e14';
