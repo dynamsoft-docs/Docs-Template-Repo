@@ -285,20 +285,21 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
             searchUrl = searchUrl.substring(0, searchUrl.indexOf("/#") + 1 );
         }
         var bestMatchList = -1;
-        var findExactPage = false;
+        var bestReturnVal = -1;
 
         for (var i = 0, len = listAry.length; i < len; i++) {
             var curLi = listAry[i];
             var curListATag =  $(curLi).children("a");
             if (curListATag.length > 0 && curListATag[0].getAttribute("href") != null) {
                 var returnVal = UrlSearch(searchUrl, curListATag[0].href);
-                if (returnVal == 1) {
-                    findExactPage = true;
+                if (returnVal == 2) {
+                    bestReturnVal = returnVal;
                     bestMatchList = i;
                     break;               
                 }
                 else {
-                    if (returnVal == 0) {
+                    if (returnVal >= bestReturnVal) {
+                        bestReturnVal = returnVal;
                         bestMatchList = i;
                     }
                     
@@ -313,7 +314,7 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
             var curLi = listAry[bestMatchList];
             var curListATag =  $(curLi).children("a");
             
-            if (!findExactPage) {
+            if (bestReturnVal == 0) {
                 var ver = getUrlVars(document.URL)["ver"];
                 // if (ver != undefined) {
                 //     addParam(curListATag[0], ver);
@@ -324,10 +325,11 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
                 // else {
                 //     window.location.href = curListATag[0].href;
                 // }
-                if (ver != undefined &&
+                var ifChangeVersion = getUrlVars(document.URL)["cVer"];
+                if (ifChangeVersion != undefined || (ver != undefined &&
                     ((ver != "latest" && pageStartVer != undefined && pageStartVer != "" && pageStartVer > ver) 
                     || (curPageRealVer != undefined && curPageRealVer != "" && ((ver == "latest" && ver != curPageRealVer) || (ver != "latest" && ver > curPageRealVer)))
-                    )) {
+                    ))) {
                     addParam(curListATag[0], ver);
                 }
             }
@@ -457,10 +459,10 @@ function UrlSearch(docUrl, listUrl) {
     var regExp = new RegExp('^' + listUrl + '$');
     if (regExp.exec(docUrl) != null) {
         if (docUrlAnchor == listUrlAnchor || docUrlAnchor == undefined) {
-            return 1;
+            return 2;
         }
         else if (docUrlAnchor != undefined && listUrlAnchor == undefined) {
-            return 0;
+            return 1;
         }
     }
     else {
