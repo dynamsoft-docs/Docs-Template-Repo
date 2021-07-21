@@ -324,10 +324,11 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
                 // else {
                 //     window.location.href = curListATag[0].href;
                 // }
-                if (ver != undefined &&
+                var ifChangeVersion = getUrlVars(document.URL)["cVer"];
+                if (ifChangeVersion != undefined || (ver != undefined &&
                     ((ver != "latest" && pageStartVer != undefined && pageStartVer != "" && pageStartVer > ver) 
                     || (curPageRealVer != undefined && curPageRealVer != "" && ((ver == "latest" && ver != curPageRealVer) || (ver != "latest" && ver > curPageRealVer)))
-                    )) {
+                    ))) {
                     addParam(curListATag[0], ver);
                 }
             }

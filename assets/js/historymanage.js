@@ -230,7 +230,7 @@ function changeVersion (liTag)
 		curUrl = curUrl.substring(0, curUrl.indexOf("#"));
 	}
 	
-	curUrl = curUrl + "?ver=" + ver;
+	curUrl = curUrl + "?ver=" + ver + "&&cVer=true";
 	if (srcVal != undefined){
 		curUrl = curUrl + "&&src=" + srcVal;
 	}
