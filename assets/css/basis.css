@@ -111,6 +111,7 @@ ul.circle > li p:hover, ul.circle li.on p, ul.square > li.on p, ul.square > li p
 .sideBar, .docContainer { padding-top: 60px; visibility: hidden; }
 #sideBarCnt.sidebar-fixed { position: fixed; top: 60px; max-height: unset; }
 .history { visibility: hidden; }
+#searchResult { visibility: visible;  }
 
 .docContainer { padding-top: 95px; }
 .dlrDoc #sideBarCnt.sidebar-fixed { position: fixed; top: 95px; max-height: unset; }
