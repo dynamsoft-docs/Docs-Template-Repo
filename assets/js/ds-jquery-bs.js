@@ -43,25 +43,36 @@ $(function(){
 			$("#subMenu").slideUp();
 			$('#docSubMenu').slideUp();
 			$('#companySubMenu').slideUp();
+			$('#useCaseSubMenu').slideUp();
 			$('#dbrSubMenu').slideToggle(300);
 		}
 		if ($(this).hasClass('docMenu')) {
 			$("#subMenu").slideUp();
 			$('#dbrSubMenu').slideUp();
 			$('#companySubMenu').slideUp();
+			$('#useCaseSubMenu').slideUp();
 			$('#docSubMenu').slideToggle(300);
 		}
 		if ($(this).hasClass('companyMenu')) {
 			$("#subMenu").slideUp();
 			$('#dbrSubMenu').slideUp();
 			$('#docSubMenu').slideUp();
+			$('#useCaseSubMenu').slideUp();
 			$('#companySubMenu').slideToggle(300);
 		}
 		if ($(this).hasClass('proMenu')) {
 			$('#dbrSubMenu').slideUp();
 			$('#docSubMenu').slideUp();
 			$('#companySubMenu').slideUp();
+			$('#useCaseSubMenu').slideUp();
 			$("#subMenu").slideToggle(300);
+		}
+		if ($(this).hasClass('useCaseMenu')) {
+			$("#subMenu").slideUp(300);
+			$('#dbrSubMenu').slideUp();
+			$('#docSubMenu').slideUp();
+			$('#companySubMenu').slideUp();
+			$('#useCaseSubMenu').slideToggle(300);
 		}
 	});
 	
