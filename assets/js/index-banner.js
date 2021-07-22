@@ -298,7 +298,7 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
                     break;               
                 }
                 else {
-                    if (returnVal >= bestReturnVal) {
+                    if (returnVal > bestReturnVal || ( returnVal == 0 && bestReturnVal == 0)) {
                         bestReturnVal = returnVal;
                         bestMatchList = i;
                     }
@@ -459,6 +459,9 @@ function UrlSearch(docUrl, listUrl) {
     var regExp = new RegExp('^' + listUrl + '$');
     if (regExp.exec(docUrl) != null) {
         if (docUrlAnchor == listUrlAnchor || docUrlAnchor == undefined) {
+            if (docUrlWithParam == undefined && listUrlWithParam != undefined) {
+                return 1;
+            }
             return 2;
         }
         else if (docUrlAnchor != undefined && listUrlAnchor == undefined) {
