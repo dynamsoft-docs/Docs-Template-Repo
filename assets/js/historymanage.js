@@ -165,7 +165,7 @@ function addParam (aTag, verText)
         return;
 
     var exp = new RegExp(/[?&]ver=[^&^#]+/gi);
-	if (exp.exec(hrefVal) != null){
+	if (exp.exec(hrefVal) != null) {
         if (aTag.target == '_blank') {
             window.open(hrefVal)
         } else {
@@ -175,15 +175,15 @@ function addParam (aTag, verText)
 	}
 	
 	var verStr = "";
-	exp = new RegExp(/[?]+([^=]+)=/gi)
-        if (exp.exec(hrefVal) != null){
+	exp = new RegExp(/[?]+([^=]+)=/gi);
+    if (exp.exec(hrefVal) != null) {
 		verStr = "&&ver=" + verText;
 	}
-	else{
+	else {
 		verStr = "?ver=" + verText;
 	}
 	
-	if (hrefVal.indexOf("#") != -1){
+	if (hrefVal.indexOf("#") != -1) {
 		var urlAry = hrefVal.split("#");
 		if (urlAry.length == 2){
             if (aTag.target == '_blank') {
