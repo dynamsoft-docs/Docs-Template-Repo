@@ -27,6 +27,19 @@
 	<p class="currentVersion fontOswald">{{ "version " | append: curPageVersion }}</p>
 {%- endif -%}
 
+{%- assign hasAddtionalMappingDir = false -%}
+{%- assign additionalMappingList = nil -%}
+{%- assign startPath = nil -%}
+{%- for mappingMember in site.data.history_mapping_list -%}
+    {%- if curUsedToMatchUrl contains mappingMember.start_path -%}
+    	{%- assign hasAddtionalMappingDir = true -%}
+		{%- assign additionalMappingList = mappingMember.additional_mapping_path -%}
+		{%- assign startPath = mappingMember.start_path -%}
+		{%- break -%}
+	{%- endif -%}
+{%- endfor -%}
+
+
 {%- assign historyRecode = "" -%}
 
 <ul class="otherVersions" style="display: none!important;">
@@ -57,6 +70,15 @@
 		{%- assign tmpUsedToMatchUrl = tmpUsedToMatchUrl | remove: 'index.html' -%}
 	{%- endif -%}
 
+	{%- if hasAddtionalMappingDir -%}
+		{%- for curMapDir in additionalMappingList -%}
+			{%- if tmpUsedToMatchUrl contains curMapDir -%}
+				{%- assign tmpUsedToMatchUrl = tmpUsedToMatchUrl | replace: curMapDir, startPath -%}
+				{%- break -%}
+			{%- endif -%}
+		{%- endfor -%}
+	{%- endif -%}
+	
 	{%- if tmpUsedToMatchUrl != curUsedToMatchUrl -%}
 		{%- continue -%}
 	{%- endif -%}
