@@ -38,7 +38,7 @@ jobs:
           cd barcode-reader-docs-mobile && git pull && cd .. && cp -rfp ./barcode-reader-docs-mobile/* ./DBRDoc/
           cp -rfp ./Docs-Template-Repo/* ./DBRDoc/
           cd DBRDoc && bundle exec jekyll build
-          python3 /home/ubuntu/ftp.py /home/ubuntu/DBRDoc/_site/ ./www.dynamsoft.com/barcode-reader/
+          python3 /home/ubuntu/ftp.py /home/ubuntu/DBRDoc/_site/ ./www.dynamsoft.com/barcode-reader/ prod
 
       - name: Build DLR Doc
         run: |
@@ -48,7 +48,7 @@ jobs:
           cd label-recognition-docs && git pull && cd .. && cp -rfp ./label-recognition-docs/* ./DLRDoc/
           cp -rfp ./Docs-Template-Repo/* ./DLRDoc/
           cd DLRDoc && bundle exec jekyll build
-          python3 /home/ubuntu/ftp.py /home/ubuntu/DLRDoc/_site/ ./www.dynamsoft.com/label-recognition/
+          python3 /home/ubuntu/ftp.py /home/ubuntu/DLRDoc/_site/ ./www.dynamsoft.com/label-recognition/ prod
           
       - name: Build DLS Doc
         run: |
@@ -58,7 +58,7 @@ jobs:
           cd license-server-docs && git pull && cd .. && cp -rfp ./license-server-docs/* ./DLSDoc/
           cp -rfp ./Docs-Template-Repo/* ./DLSDoc/
           cd DLSDoc && bundle exec jekyll build
-          python3 /home/ubuntu/ftp.py /home/ubuntu/DLSDoc/_site/ ./www.dynamsoft.com/license-server/docs/
+          python3 /home/ubuntu/ftp.py /home/ubuntu/DLSDoc/_site/ ./www.dynamsoft.com/license-server/docs/ prod
           
       - name: Build DNT Doc
         run: |
@@ -68,7 +68,7 @@ jobs:
           cd dotnet-twain-docs && git pull && cd .. && cp -rfp ./dotnet-twain-docs/* ./DNTDoc/
           cp -rfp ./Docs-Template-Repo/* ./DNTDoc/
           cd DNTDoc && bundle exec jekyll build
-          python3 /home/ubuntu/ftp.py /home/ubuntu/DNTDoc/_site/ ./www.dynamsoft.com/dotnet-twain/docs/          
+          python3 /home/ubuntu/ftp.py /home/ubuntu/DNTDoc/_site/ ./www.dynamsoft.com/dotnet-twain/docs/ prod
 
       - name: Build DWT Doc
         run: |
@@ -78,7 +78,7 @@ jobs:
           cd web-twain-docs && git pull && cd .. && cp -rfp ./web-twain-docs/* ./DWTDoc/
           cp -rfp ./Docs-Template-Repo/* ./DWTDoc/
           cd DWTDoc && bundle exec jekyll build
-          python3 /home/ubuntu/ftp.py /home/ubuntu/DWTDoc/_site/ ./www.dynamsoft.com/web-twain/docs/
+          python3 /home/ubuntu/ftp.py /home/ubuntu/DWTDoc/_site/ ./www.dynamsoft.com/web-twain/docs/ prod
 
       - name: Build Company Doc
         run: |
@@ -88,7 +88,7 @@ jobs:
           cd company-docs && git pull && cd .. && cp -rfp ./company-docs/* ./CompanyDoc/
           cp -rfp ./Docs-Template-Repo/* ./CompanyDoc/
           cd CompanyDoc && bundle exec jekyll build
-          python3 /home/ubuntu/ftp.py /home/ubuntu/CompanyDoc/_site/ ./www.dynamsoft.com/company/docs/
+          python3 /home/ubuntu/ftp.py /home/ubuntu/CompanyDoc/_site/ ./www.dynamsoft.com/company/docs/ prod
 
       - name: Build DCE Doc
         run: |
@@ -97,7 +97,7 @@ jobs:
           cd camera-enhancer-docs && git pull && cd .. && cp -rfp ./camera-enhancer-docs/* ./DCEDoc/
           cp -rfp ./Docs-Template-Repo/* ./DCEDoc/
           cd DCEDoc && bundle exec jekyll build
-          python3 /home/ubuntu/ftp.py /home/ubuntu/DCEDoc/_site/ ./www.dynamsoft.com/camera-enhancer/docs/
+          python3 /home/ubuntu/ftp.py /home/ubuntu/DCEDoc/_site/ ./www.dynamsoft.com/camera-enhancer/docs/ prod
 
 
 
