@@ -34,6 +34,18 @@ function GenerateContentByHead(needh3 = true) {
 }
 
 function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefined, useVersionTree = false) {
+    if (useVersionTree == 'true') {
+        useVersionTree = true;
+    }
+    else if (useVersionTree == 'false') {
+        useVersionTree = false;
+    }
+    if (generateDocHead == 'true') {
+        generateDocHead = true;
+    }
+    else if (generateDocHead == 'false') {
+        generateDocHead = false;
+    }
     var verArray = SearchVersion();
     if (!useVersionTree) {
         var allHerf1 = $(".docContainer .content, #docHead, #AutoGenerateSidebar, .sideBar").find("a");
@@ -46,6 +58,12 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
         if (navWrap != null) {
             HighlightCurrentListForFullTree("fullTreeMenuListContainer", true, document.URL, pageStartVer, verArray[1]);
             if (generateDocHead) {
+                if (needh3 == 'true') {
+                    needh3 = true;
+                }
+                else if (needh3 == 'false') {
+                    needh3 = false;
+                }
                 GenerateContentByHead(needh3);
                 //GenerateContentByHead(false);
             }
@@ -136,6 +154,12 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                     if (navWrap != null) {
                         HighlightCurrentListForFullTree("fullTreeMenuListContainer", true, document.URL, pageStartVer, verArray[1]);
                         if (generateDocHead) {
+                            if (needh3 == 'true') {
+                                needh3 = true;
+                            }
+                            else if (needh3 == 'false') {
+                                needh3 = false;
+                            }
                             GenerateContentByHead(needh3);
                             //GenerateContentByHead(false);
                         }
