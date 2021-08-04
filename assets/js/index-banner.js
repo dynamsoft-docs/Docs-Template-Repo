@@ -73,7 +73,7 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
             }
             init();
 
-            $('#fullTreeMenuListContainer').scrollTop($('#fullTreeMenuListContainer .activeLink').offset().top)
+            $('#fullTreeMenuListContainer').scrollTop($('#fullTreeMenuListContainer .activeLink').offset().top - $('#fullTreeMenuListContainer').offset().top)
             
 
             navWrap = document.getElementById("fullTreeMenuListContainer");
@@ -171,7 +171,7 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                         }
                         init();
 
-                        $('#fullTreeMenuListContainer').scrollTop($('#fullTreeMenuListContainer .activeLink').offset().top)
+                        $('#fullTreeMenuListContainer').scrollTop($('#fullTreeMenuListContainer .activeLink').offset().top - $('#fullTreeMenuListContainer').offset().top)
                         
     
                         navWrap = document.getElementById("fullTreeMenuListContainer");
