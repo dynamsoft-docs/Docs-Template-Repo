@@ -322,7 +322,7 @@ div::-webkit-scrollbar-corner, ul::-webkit-scrollbar-corner{
 	.docContainer { border-left: 1px solid #ddd;padding-left: 40px;min-height: calc(100vh - 181px); }
 	.subHeadWrapper .subHeaderMenuUl li { margin-right: 0px; }
 	.subHeadWrapper .subHeaderMenuUl li.title { margin-right: 20px; padding: 0; }
-	.sideBar .mainPage { width: auto; height: auto; max-height: auto; }
+	.sideBar .mainPage { width: auto; height: auto; max-height: auto; font-size: 14px; }
 	.sideBarIcon { display: none; overflow: auto; }
 }
 
@@ -335,6 +335,7 @@ div::-webkit-scrollbar-corner, ul::-webkit-scrollbar-corner{
 	.subHeadWrapper .subHeaderMenuUl li { margin-right: 20px; }
 	.subHeadWrapper .subHeaderMenuUl li.title { margin-right: 100px; padding: 0; }
 	#crumbs { font-size: 16px; }
+    .sideBar .mainPage { font-size: 14px; }
 	/* .rightSideMenu { max-width: 212px; } */
 	/* .sideBar .mainPage { width: 262px; overflow: auto; } */
 }
@@ -349,7 +350,7 @@ div::-webkit-scrollbar-corner, ul::-webkit-scrollbar-corner{
     .markdown-body { padding-right: 80px; width: calc(100% - 280px); }
 	.recordLink.sadLink { margin-left: 30px; }
 	.rightSideMenu { width: 280px; display: block!important;}
-	.sideBar .mainPage { width: 100%; overflow: auto; }
+	.sideBar .mainPage { width: 100%; overflow: auto; font-size: 16px; }
 }
 .icon-orange-angle { display: inline-block; width: 10px; height: 13px; background: url(../img-icon/Artwork.png) no-repeat center; background-size: contain; }
 
