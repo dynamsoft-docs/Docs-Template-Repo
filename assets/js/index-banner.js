@@ -73,7 +73,14 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
             }
             init();
 
-            $('#fullTreeMenuListContainer').scrollTop($('#fullTreeMenuListContainer .activeLink').offset().top - $('#fullTreeMenuListContainer').offset().top)
+            var treeHeight = $('#fullTreeMenuListContainer')[0].clientHeight;
+            var treeOffsetTop = $('#fullTreeMenuListContainer').offset().top;
+            var nodeOffsetTop = $('#fullTreeMenuListContainer .activeLink').offset().top;
+            if (nodeOffsetTop > treeHeight + treeOffsetTop) {
+                var lineHeight = $('#fullTreeMenuListContainer .activeLink')[0].offsetHeight;
+                $('#fullTreeMenuListContainer').scrollTop(nodeOffsetTop - treeOffsetTop - lineHeight);
+            }
+            
             
 
             navWrap = document.getElementById("fullTreeMenuListContainer");
@@ -171,8 +178,13 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                         }
                         init();
 
-                        $('#fullTreeMenuListContainer').scrollTop($('#fullTreeMenuListContainer .activeLink').offset().top - $('#fullTreeMenuListContainer').offset().top)
-                        
+                        var treeHeight = $('#fullTreeMenuListContainer')[0].clientHeight;
+                        var treeOffsetTop = $('#fullTreeMenuListContainer').offset().top;
+                        var nodeOffsetTop = $('#fullTreeMenuListContainer .activeLink').offset().top;
+                        if (nodeOffsetTop > treeHeight + treeOffsetTop) {
+                            var lineHeight = $('#fullTreeMenuListContainer .activeLink')[0].offsetHeight;
+                            $('#fullTreeMenuListContainer').scrollTop(nodeOffsetTop - treeOffsetTop - lineHeight);
+                        }
     
                         navWrap = document.getElementById("fullTreeMenuListContainer");
                         var liAry = navWrap.getElementsByTagName("li");
