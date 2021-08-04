@@ -1,3 +1,7 @@
+---
+layout: default
+---
+
 {%- if site.useVersionTree -%}
     <div id="version_tree_list">
         {%- assign validVerInfo = site.data.product_version.version_info_list -%}
