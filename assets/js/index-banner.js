@@ -67,7 +67,7 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                 GenerateContentByHead(needh3);
                 //GenerateContentByHead(false);
             }
-    
+            $('#fullTreeMenuListContainer').scrollTop($('#fullTreeMenuListContainer .activeLink').offset().top)
             var hiddenLayout = $('.docContainer, .sideBar, .history');
             for (var i = 0; i < hiddenLayout.length; i++) {
                 hiddenLayout[i].style.visibility = "visible";
