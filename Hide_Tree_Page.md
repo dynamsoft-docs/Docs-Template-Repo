@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: tree-layout
 ---
 
 {%- if site.useVersionTree -%}
