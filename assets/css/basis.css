@@ -317,7 +317,8 @@ div::-webkit-scrollbar-corner, ul::-webkit-scrollbar-corner{
 @media (min-width: 992px) {
 	.markdown-body h1 { font-size: 40px; }
 	.markdown-body h2 { font-size: 30px; }
-	.markdown-body h3 { font-size: 24px; }
+	.markdown-body h3 { font-size: 20px; }
+    .markdown-body h4 { font-size: 18px; }
 	.markdown-body { padding-right: 40px; }
 	.docContainer { border-left: 1px solid #ddd;padding-left: 40px;min-height: calc(100vh - 181px); }
 	.subHeadWrapper .subHeaderMenuUl li { margin-right: 0px; }
@@ -329,7 +330,8 @@ div::-webkit-scrollbar-corner, ul::-webkit-scrollbar-corner{
 @media (min-width: 1200px) {
 	.markdown-body h1 { font-size: 40px; }
 	.markdown-body h2 { font-size: 30px; }
-	.markdown-body h3 { font-size: 24px; }
+	.markdown-body h3 { font-size: 20px; }
+    .markdown-body h4 { font-size: 18px; }
 	.markdown-body { padding-right: 40px; }
 	.docContainer { border-left: 1px solid #ddd;padding-left: 40px; }
 	.subHeadWrapper .subHeaderMenuUl li { margin-right: 20px; }
@@ -341,6 +343,10 @@ div::-webkit-scrollbar-corner, ul::-webkit-scrollbar-corner{
 }
 
 @media (min-width: 1680px) {
+    .markdown-body h1 { font-size: 50px; }
+	.markdown-body h2 { font-size: 40px; }
+	.markdown-body h3 { font-size: 30px; }
+    .markdown-body h4 { font-size: 20px; }
 	.subHeadWrapper .subHeaderMenuUl li.title { margin-right: 230px; padding: 0; }
     .sideBar { max-width: 280px; }
 	.docContainer { width: calc(100% - 280px);border-left: 1px solid #ddd;padding-left: 15px;min-height: calc(100vh - 203px); }
