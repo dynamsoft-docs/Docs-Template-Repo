@@ -60,6 +60,7 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
             if (generateDocHead) {
                 if (needh3 == 'true') {
                     needh3 = true;
+                    $('#fullTreeMenuListContainer').addClass('needh3')
                 }
                 else if (needh3 == 'false') {
                     needh3 = false;
@@ -165,6 +166,7 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                         if (generateDocHead) {
                             if (needh3 == 'true') {
                                 needh3 = true;
+                                $('#fullTreeMenuListContainer').addClass('needh3');
                             }
                             else if (needh3 == 'false') {
                                 needh3 = false;

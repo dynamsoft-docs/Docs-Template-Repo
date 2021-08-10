@@ -72,7 +72,10 @@ $(document).ready(function(){
         }
 
         // right menu active link
-        var title = document.querySelectorAll('.markdown-body h2, .markdown-body h3');
+        var title = document.querySelectorAll('.markdown-body h2');
+        if ($('#fullTreeMenuListContainer').hasClass('needh3')) {
+            title = document.querySelectorAll('.markdown-body h2, .markdown-body h3');
+        }
         var rightNavItem = $('#AutoGenerateSidebar a');
         var flag = false
         for(i=0; i<title.length; i++){
