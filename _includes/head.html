@@ -37,10 +37,12 @@
 
     {%- if page.noTitleIndex or page.url contains 'release-notes' -%}
         <style>
-            .headCounter h2:before { content: ''!important; }
+            .headCounter h2:before { content: ''!important; padding-right: 0px!important; }
             .headCounter h2 { counter-reset: none!important; counter-increment: none!important; }
-            .headCounter h3:before { content: ''!important; }
-            .headCounter h3 { counter-increment: none!important; }
+            .headCounter h3:before { content: ''!important; padding-right: 0px!important; }
+            .headCounter h3 { counter-reset: none!important; counter-increment: none!important; }
+            .headCounter h4:before { content: ''!important; padding-right: 0px!important; }
+            .headCounter h4 { counter-increment: none!important; }
         </style>
     {%- endif -%}
 </head>
