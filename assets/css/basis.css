@@ -39,10 +39,13 @@ ul.circle > li p:hover, ul.circle li.on p, ul.square > li.on p, ul.square > li p
 
 .mainPage { padding-left: 0px; line-height: 28px; margin: 0; margin-top:10px; overflow: auto; }
 
-.headCounter h2:before { content: counter(h2counter) ".	"; }
-.headCounter h2 { counter-reset: h3counter; counter-increment: h2counter; }
+.headCounter h2:before { content: counter(h2counter) "	"; }
+.headCounter h2 { counter-reset: h4counter; counter-reset: h3counter; counter-increment: h2counter; }
 .headCounter h3:before { content: counter(h2counter) "." counter(h3counter) "	"; }
-.headCounter h3 { counter-increment: h3counter; }
+.headCounter h3 { counter-reset: h4counter; counter-increment: h3counter; }
+.headCounter h4:before { content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) "	"; }
+.headCounter h4 { counter-increment: h4counter; }
+
 
 /* default-layout.html   ---- subHeadWrapper */
 
