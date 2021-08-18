@@ -79,8 +79,8 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
             var treeHeight = $('#fullTreeMenuListContainer')[0].clientHeight;
             var treeOffsetTop = $('#fullTreeMenuListContainer').offset().top;
             var nodeOffsetTop = $('#fullTreeMenuListContainer .activeLink').offset().top;
-            if (nodeOffsetTop > treeHeight + treeOffsetTop) {
-                var lineHeight = $('#fullTreeMenuListContainer .activeLink')[0].offsetHeight;
+            var lineHeight = $('#fullTreeMenuListContainer .activeLink')[0].offsetHeight;
+            if (nodeOffsetTop > treeHeight + treeOffsetTop - lineHeight) {
                 $('#fullTreeMenuListContainer').scrollTop(nodeOffsetTop - treeOffsetTop - lineHeight);
             }
             
@@ -187,8 +187,8 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                         var treeHeight = $('#fullTreeMenuListContainer')[0].clientHeight;
                         var treeOffsetTop = $('#fullTreeMenuListContainer').offset().top;
                         var nodeOffsetTop = $('#fullTreeMenuListContainer .activeLink').offset().top;
-                        if (nodeOffsetTop > treeHeight + treeOffsetTop) {
-                            var lineHeight = $('#fullTreeMenuListContainer .activeLink')[0].offsetHeight;
+                        var lineHeight = $('#fullTreeMenuListContainer .activeLink')[0].offsetHeight;
+                        if (nodeOffsetTop > treeHeight + treeOffsetTop - lineHeight) {
                             $('#fullTreeMenuListContainer').scrollTop(nodeOffsetTop - treeOffsetTop - lineHeight);
                         }
     
