@@ -44,7 +44,7 @@ jobs:
         run: |
           cd /home/ubuntu
           [ ! -d DLRDoc ] && mkdir -p DLRDoc
-          [ ! -d label-recognition-docs ] && git clone --depth 1 https://github.com/Dynamsoft/label-recognition-docs.git
+          [ ! -d label-recognition-docs ] && git clone --depth 1 https://github.com/dynamsoft-docs/label-recognition-docs.git
           cd label-recognition-docs && git pull && cd .. && cp -rfp ./label-recognition-docs/* ./DLRDoc/
           cp -rfp ./Docs-Template-Repo/* ./DLRDoc/
           cd DLRDoc && bundle exec jekyll build
@@ -54,7 +54,7 @@ jobs:
         run: |
           cd /home/ubuntu
           [ ! -d DLSDoc ] && mkdir -p DLSDoc
-          [ ! -d license-server-docs ] && git clone --depth 1 https://github.com/Dynamsoft/license-server-docs.git
+          [ ! -d license-server-docs ] && git clone --depth 1 https://github.com/dynamsoft-docs/license-server-docs.git
           cd license-server-docs && git pull && cd .. && cp -rfp ./license-server-docs/* ./DLSDoc/
           cp -rfp ./Docs-Template-Repo/* ./DLSDoc/
           cd DLSDoc && bundle exec jekyll build
@@ -64,7 +64,7 @@ jobs:
         run: |
           cd /home/ubuntu
           [ ! -d DNTDoc ] && mkdir -p DNTDoc
-          [ ! -d dotnet-twain-docs ] && git clone --depth 1 https://github.com/Dynamsoft/dotnet-twain-docs.git
+          [ ! -d dotnet-twain-docs ] && git clone --depth 1 https://github.com/dynamsoft-docs/dotnet-twain-docs.git
           cd dotnet-twain-docs && git pull && cd .. && cp -rfp ./dotnet-twain-docs/* ./DNTDoc/
           cp -rfp ./Docs-Template-Repo/* ./DNTDoc/
           cd DNTDoc && bundle exec jekyll build
@@ -74,7 +74,7 @@ jobs:
         run: |
           cd /home/ubuntu
           [ ! -d DWTDoc ] && mkdir -p DWTDoc
-          [ ! -d web-twain-docs ] && git clone --depth 1 https://github.com/Dynamsoft/web-twain-docs.git
+          [ ! -d web-twain-docs ] && git clone --depth 1 https://github.com/dynamsoft-docs/web-twain-docs.git
           cd web-twain-docs && git pull && cd .. && cp -rfp ./web-twain-docs/* ./DWTDoc/
           cp -rfp ./Docs-Template-Repo/* ./DWTDoc/
           cd DWTDoc && bundle exec jekyll build
@@ -84,7 +84,7 @@ jobs:
         run: |
           cd /home/ubuntu
           [ ! -d CompanyDoc ] && mkdir -p CompanyDoc
-          [ ! -d company-docs ] && git clone --depth 1 https://github.com/Dynamsoft/company-docs.git
+          [ ! -d company-docs ] && git clone --depth 1 https://github.com/dynamsoft-docs/company-docs.git
           cd company-docs && git pull && cd .. && cp -rfp ./company-docs/* ./CompanyDoc/
           cp -rfp ./Docs-Template-Repo/* ./CompanyDoc/
           cd CompanyDoc && bundle exec jekyll build
