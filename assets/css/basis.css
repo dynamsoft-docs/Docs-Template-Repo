@@ -1084,3 +1084,4 @@ i.dbr-white-logo { display: inline-block; width: 221px; height: 30px; background
 
 .markdown-body .fold-panel-prefix + * { cursor: pointer; }
 
+.markdown-body .fold-panel-prefix + * i { font-size: 18px; color: #606060; vertical-align: middle; margin-left: 10px;  }

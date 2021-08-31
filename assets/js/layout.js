@@ -141,7 +141,7 @@ $(document).ready(function(){
     })
 
     $('.fold-panel-prefix + *').on('click', function() {
-        $('.fold-panel-prefix + *').find('.fa-caret-down').toggleClass('fa-caret-up')
+        $(this).find('.fa-caret-down').toggleClass('fa-caret-up')
         if ($(this).next().hasClass('fold-panel-start')) {
             var foldPanel = $(this).next();
             while(!foldPanel.hasClass('fold-panel-end')) {
@@ -219,11 +219,5 @@ function init() {
 }
 
 function initFoldPanel() {
-    if ($('.fold-panel-prefix').length > 0) {
-        var foldPanel = $('.fold-panel-prefix + * + .fold-panel-start').next();
-        while(!foldPanel.hasClass('fold-panel-end')) {
-            $(foldPanel).hide()
-            foldPanel = $(foldPanel).next()
-        }
-    }
+    $(".fold-panel-start").nextUntil(".fold-panel-end").hide()
 }
