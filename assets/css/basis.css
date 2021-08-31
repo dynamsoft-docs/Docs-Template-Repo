@@ -1081,3 +1081,6 @@ i.dbr-white-logo { display: inline-block; width: 221px; height: 30px; background
 }
 
 #sideBarIframe { display: none; }
+
+.markdown-body .fold-panel-prefix + * { cursor: pointer; }
+

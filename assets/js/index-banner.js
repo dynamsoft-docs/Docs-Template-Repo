@@ -74,6 +74,7 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
             for (var i = 0; i < hiddenLayout.length; i++) {
                 hiddenLayout[i].style.visibility = "visible";
             }
+            initFoldPanel();
             init();
 
             var treeHeight = $('#fullTreeMenuListContainer')[0].clientHeight;
@@ -182,6 +183,7 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                         for (var i = 0; i < hiddenLayout.length; i++) {
                             hiddenLayout[i].style.visibility = "visible";
                         }
+                        initFoldPanel();
                         init();
 
                         var treeHeight = $('#fullTreeMenuListContainer')[0].clientHeight;
