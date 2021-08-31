@@ -140,12 +140,14 @@ $(document).ready(function(){
         $('.docContainer .main, .rightSideMenu, .markdown-body').toggleClass('showRightSideMenu')
     })
 
-    $('.fold-panel-prefix + *').on('click', function() {
-        $(this).find('.fa-caret-down').toggleClass('fa-caret-up')
-        if ($(this).next().hasClass('fold-panel-start')) {
-            var foldPanel = $(this).next();
+    $('.fold-panel-prefix + * i').on('click', function() {
+        $(this).parent().find('.fa-caret-down').toggleClass('fa-caret-up')
+        if ($(this).parent().next().hasClass('fold-panel-start')) {
+            var foldPanel = $(this).parent().next();
             while(!foldPanel.hasClass('fold-panel-end')) {
-                $(foldPanel).toggle()
+                if (!foldPanel.hasClass('fold-panel-start')) {
+                    $(foldPanel).toggle()
+                }
                 foldPanel = $(foldPanel).next()
             }
         }
@@ -219,5 +221,14 @@ function init() {
 }
 
 function initFoldPanel() {
+    var objs = $(".fold-panel-prefix")
+    for(var i = 0; i<objs.length; i++) {
+        var obj = $(".fold-panel-prefix").eq(i)
+        $(obj).next().find('i').css({'width': ($(obj).next().width() - 74) + 'px'})
+        $(obj).next().find('i').css({'height': $(obj).next().height() + 'px'})
+        $(obj).next().find('i').css({'line-height': $(obj).next().height() + 'px'})
+        console.log($(obj).next().height(), $(obj).next().width())
+    }
     $(".fold-panel-start").nextUntil(".fold-panel-end").hide()
 }
+
