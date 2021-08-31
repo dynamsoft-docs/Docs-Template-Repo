@@ -1084,7 +1084,7 @@ i.dbr-white-logo { display: inline-block; width: 221px; height: 30px; background
 
 .markdown-body .fold-panel-prefix + * { position: relative; display: inline;}
 
-.markdown-body .fold-panel-prefix + * i { cursor: pointer;  font-size: 18px; color: #606060; vertical-align: middle; text-align: right; position: absolute; left: 0; z-index: 11;}
+.markdown-body .fold-panel-prefix + * i { cursor: pointer;  font-size: 18px; color: #606060; vertical-align: middle; text-align: right; position: absolute; left: 0; z-index: 11; opacity: 0;}
 
 .markdown-body .fold-panel-prefix + * .anchorjs-link { padding-left: 24px!important; }
 

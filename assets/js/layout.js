@@ -10,6 +10,17 @@ $(document).ready(function(){
         $('#AutoGenerateSidebar a').eq(0).addClass('active')
     }
 
+    setTimeout(function() {
+        var objs = $(".fold-panel-prefix")
+        for(var i = 0; i<objs.length; i++) {
+            var obj = $(".fold-panel-prefix").eq(i)
+            $(obj).next().find('i').css({'width': ($(obj).next().width() - 24) + 'px'})
+            $(obj).next().find('i').css({'height': $(obj).next().height() + 'px'})
+            $(obj).next().find('i').css({'line-height': $(obj).next().height() + 'px'})
+            $(obj).next().find('i').css({'opacity': 1})
+        }
+    }, 500)
+
     $(window).resize(function() {
         var objs = $(".fold-panel-prefix")
         for(var i = 0; i<objs.length; i++) {
