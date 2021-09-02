@@ -14,6 +14,7 @@ strong {color:#444; font-family: OpenSans-Semibold;}
 .h4, h4 {font-size:16px;font-size:1.6rem;line-height:26px}
 .h5, h5 {font-family: OpenSans-Semibold; font-size:14px;font-size:1.4rem;line-height:24px}
 .markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4, .markdown-body h5, .markdown-body h6 { font-weight: normal; }
+.markdown-body h4 { font-family: Oswald-Regular; margin-bottom: 10px; }
 *{ box-sizing: border-box; margin: 0; padding: 0; }
 .fontOswald { font-family: Oswald-Regular; }
 a.orangeLink { color: #FE8E14 !important; }
@@ -319,7 +320,7 @@ div::-webkit-scrollbar-corner, ul::-webkit-scrollbar-corner{
 @media (min-width: 992px) {
 	.markdown-body h1 { font-size: 40px; }
 	.markdown-body h2 { font-size: 30px; }
-	.markdown-body h3 { font-size: 20px; }
+	.markdown-body h3 { font-size: 22px; }
     .markdown-body h4 { font-size: 18px; }
 	.markdown-body { padding-right: 40px; }
 	.docContainer { border-left: 1px solid #ddd;padding-left: 40px;min-height: calc(100vh - 181px); }
@@ -332,7 +333,7 @@ div::-webkit-scrollbar-corner, ul::-webkit-scrollbar-corner{
 @media (min-width: 1200px) {
 	.markdown-body h1 { font-size: 40px; }
 	.markdown-body h2 { font-size: 30px; }
-	.markdown-body h3 { font-size: 20px; }
+	.markdown-body h3 { font-size: 22px; }
     .markdown-body h4 { font-size: 18px; }
 	.markdown-body { padding-right: 40px; }
 	.docContainer { border-left: 1px solid #ddd;padding-left: 40px; }
@@ -348,7 +349,7 @@ div::-webkit-scrollbar-corner, ul::-webkit-scrollbar-corner{
     .markdown-body h1 { font-size: 50px; }
 	.markdown-body h2 { font-size: 40px; }
 	.markdown-body h3 { font-size: 30px; }
-    .markdown-body h4 { font-size: 20px; }
+    .markdown-body h4 { font-size: 22px; }
 	.subHeadWrapper .subHeaderMenuUl li.title { margin-right: 230px; padding: 0; }
     .sideBar { max-width: 280px; }
 	.docContainer { width: calc(100% - 280px);border-left: 1px solid #ddd;padding-left: 15px;min-height: calc(100vh - 203px); }
