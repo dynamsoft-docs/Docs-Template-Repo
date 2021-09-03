@@ -22,6 +22,7 @@
 		{%- endif -%}
 	{%- endfor -%}
     {%- endif -%}
+    {%- assign targetUrl = targetUrl | remove: 'index.html' | strip -%}
 
     <link href="{{ site.docFullPath }}{{ targetUrl }}" rel="canonical">
     
