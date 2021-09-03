@@ -7,7 +7,23 @@
     <meta name="description" content="{{ page.description }}" />
     <meta name="keywords" content="{{ page.keywords }}" />
 
-    <link href="{{ site.docFullPath }}{{ page.url }}" rel="canonical">
+    {%- assign targetUrl = page.url -%}
+    {%- if page.url contains '-v' -%}
+	{%- assign candidateVersionStr = page.url |  split: '-v' -%}
+	{%- for tmpStr in candidateVersionStr offset:1 -%}
+		{%- assign tmpVer = tmpStr | split: '/' | first | replace: '.html', '' | strip -%}
+		{%- capture firstChar -%}
+			{{ tmpVer | truncate: 4 | replace:"...", "" }}
+		{%- endcapture -%}
+		{%- if firstChar >= "0" and firstChar <= "9" -%}
+            {%- assign needRemoveStr = "-v" | append: tmpVer -%}
+            {%- assign targetUrl = page.url | remove: needRemoveStr | strip -%}
+			{%- break -%}
+		{%- endif -%}
+	{%- endfor -%}
+    {%- endif -%}
+
+    <link href="{{ site.docFullPath }}{{ targetUrl }}" rel="canonical">
     
     {%- if page.hasCustomLdJson -%}
         {{page.customLdJsonScript}}

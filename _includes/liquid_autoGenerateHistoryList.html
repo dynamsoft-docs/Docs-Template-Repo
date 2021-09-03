@@ -3,7 +3,7 @@
 {%- if page.url contains '-v' -%}
 	{%- assign candidateVersionStr = page.url |  split: '-v' -%}
 	{%- for tmpStr in candidateVersionStr offset:1 -%}
-		{%- assign tmpVer = tmpStr | split: '/' | first | replace: '.html', '' | rstrip -%}
+		{%- assign tmpVer = tmpStr | split: '/' | first | replace: '.html', '' | strip -%}
 		{%- capture firstChar -%}
 			{{ tmpVer | truncate: 4 | replace:"...", "" }}
 		{%- endcapture -%}
@@ -48,7 +48,7 @@
 	{%- if my_page.url contains '-v' -%}
 		{%- assign candidateVersionStr = my_page.url |  split: '-v' -%}
 		{%- for tmpStr in candidateVersionStr offset:1 -%}
-			{%- assign tmpVer = tmpStr | split: '/' | first | replace: '.html', '' | rstrip -%}
+			{%- assign tmpVer = tmpStr | split: '/' | first | replace: '.html', '' | strip -%}
 			{%- capture firstChar -%}
 				{{ tmpVer | truncate: 4 | replace:"...", "" }}
 			{%- endcapture -%}
