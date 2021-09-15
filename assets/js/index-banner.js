@@ -48,7 +48,7 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
     }
     var verArray = SearchVersion();
     if (!useVersionTree) {
-        var allHerf1 = $(".docContainer .content, #docHead, #AutoGenerateSidebar, .sideBar").find("a");
+        var allHerf1 = $(".docContainer .content, #docHead, #AutoGenerateSidebar, .sideBar, #crumbs").find("a");
         for (var i = 0; i < allHerf1.length; i++)
         {
             allHerf1[i].onclick = function(){addParam(this, verArray[0]); return false;};
@@ -157,7 +157,7 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                             $('#fullTreeMenuListContainer').html($(version_tree_list[i]).html());
                         }
                     }
-                    var allHerf1 = $(".docContainer .content, #docHead, #AutoGenerateSidebar, .sideBar").find("a");
+                    var allHerf1 = $(".docContainer .content, #docHead, #AutoGenerateSidebar, .sideBar, #crumbs").find("a");
                     for (var i = 0; i < allHerf1.length; i++)
                     {
                         allHerf1[i].onclick = function(){addParam(this, verArray[0]); return false;};
