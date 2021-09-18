@@ -8,7 +8,7 @@ layout: tree-layout
         {%- for verInfo in validVerInfo -%}
             {%- assign curId = "version_tree_" | append: verInfo | replace: " ", "_" | downcase -%}
             <ul class="version-tree-container" id="{{ curId }}">
-                {%- include liquid_searchVersionTreeFile.html ver=verInfo curPath="" targetRelativePath="sidelist-full-tree.html" -%}
+            {%- include liquid_searchVersionTreeFile.html ver=verInfo curPath="" targetRelativePath="sidelist-full-tree.html" -%}
             </ul>
         {%- endfor -%}
         <span id="complete_loading_tree"></span>
