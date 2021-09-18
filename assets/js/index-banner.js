@@ -148,7 +148,7 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                 var curPageVersion = verArray[0];
                 curPageVersion = curPageVersion == 'latest' || curPageVersion == null ? 'latest_version' : curPageVersion;
                 console.log(version_tree_list, curPageVersion);
-                version_tree_list = $('#sideBarIframe').contents().find('#version_tree_list span');
+                version_tree_list = $('#sideBarIframe').contents().find('#version_tree_list ul.version-tree-container');
                 console.log(version_tree_list, curPageVersion);
                 if (version_tree_list && version_tree_list.length > 0  && curPageVersion) {
                     for(var i = 0; i<version_tree_list.length; i++) {
