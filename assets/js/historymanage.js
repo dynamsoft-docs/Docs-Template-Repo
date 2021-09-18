@@ -71,7 +71,7 @@ function RedirToGivenVersionPage(inputVer)
                 if (aTag.length > 0) {
                     var exp = new RegExp(/[?]+([^=]+)=/gi)
                     if (exp.exec(aTag[0].href) != null){
-                        window.location.replace(aTag[0].href + "&&ver=" +inputVer+"&&matchVer=true"+changeVer);
+                        window.location.replace(aTag[0].href + "&&ver=" +inputVer+"&&matchVer=true" + changeVer + anchorVal);
                         return;
                     }
                     else{
@@ -102,15 +102,15 @@ function RedirToGivenVersionPage(inputVer)
         if (aTag.length > 0) {
             var exp = new RegExp(/[?]+([^=]+)=/gi)
             if (exp.exec(aTag[0].href) != null){
-                window.location.replace(aTag[0].href + "&&ver=" +inputVer+"&&matchVer=true");
+                window.location.replace(aTag[0].href + "&&ver=" +inputVer+"&&matchVer=true"+ changeVer + anchorVal);
                 return;
             }
             else{
                 if (getUrlVars(document.URL)["src"] != undefined){
-                    window.location.replace(aTag[0].href + "?src="+ getUrlVars(document.URL)["src"] + "&&ver=" +inputVer+"&&matchVer=true");
+                    window.location.replace(aTag[0].href + "?src="+ getUrlVars(document.URL)["src"] + "&&ver=" +inputVer+"&&matchVer=true"+ changeVer + anchorVal);
                 }
                 else{
-                    window.location.replace(aTag[0].href + "?ver=" +inputVer+"&&matchVer=true");
+                    window.location.replace(aTag[0].href + "?ver=" +inputVer+"&&matchVer=true"+ changeVer + anchorVal);
                 }
                 return;
             }
