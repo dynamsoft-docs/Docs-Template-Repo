@@ -1,9 +1,9 @@
 $(document).ready(function(){ 
-    init();
+    init(true);
     $('.markdown-body .sample-code-prefix + blockquote > ul > li:first-child').addClass('on')
     $('.markdown-body .sample-code-prefix + blockquote > ol > li:first-child').addClass('on')
 
-    var sd = $(window).scrollTop()
+    var sd = $(document).scrollTop()
     if(sd > 0) {
         realFunc()
     } else {
@@ -34,8 +34,6 @@ $(document).ready(function(){
         realFunc()
     })
 
-    window.addEventListener('scroll', realFunc);
-
     function realFunc() {
         $('.rightSideMenu').css({'padding-top': $('#docHead').outerHeight()+'px'});
         if (breakpoint() == 'lg') {
@@ -46,7 +44,7 @@ $(document).ready(function(){
                 subHeight = $('.productMenu').height();
             }
             var menuHeight = $('#overall-header').height() + subHeight;
-            var sd = $(window).scrollTop();
+            var sd = $(document).scrollTop();
             var dcHeight = $('.docContainer').height() + menuHeight - sd;
             var clientHeight = document.body.clientHeight;
             if (sd >= $('#overall-header').height()) {
@@ -183,7 +181,7 @@ function copy(data) {
     oInput.remove()
 }
 
-function init() {
+function init(isFirstIn = false) {
     var subHeight = 0;
     if ($('.subHeadWrapper').length > 0) {
         subHeight = $('.subHeadWrapper').height();
@@ -236,7 +234,7 @@ function init() {
             $('.markdown-body h5').css({'margin-top': '-90px'})
         }
     }
-
+    isFirstIn&&document.addEventListener('scroll', realFunc);
 }
 
 function initFoldPanel() {
