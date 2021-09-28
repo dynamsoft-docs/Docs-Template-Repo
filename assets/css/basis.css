@@ -101,7 +101,7 @@ ul.circle > li p:hover, ul.circle li.on p, ul.square > li.on p, ul.square > li p
 .markdown-body ol, .markdown-body ol li  { list-style: decimal; }
 .markdown-body ul { padding-left: 20px; }
 .markdown-body ul, .markdown-body ul li { list-style: disc; margin-left: 0; }
-.markdown-body a, .markdown-body a:active { color:#50a8e1;text-decoration:none!important }
+.markdown-body a, .markdown-body a:active { color:#50a8e1;text-decoration:none!important;position: relative; z-index: 1; }
 .markdown-body a:hover { color:#61c2ec }
 #crumbs { font-size: 14px; }
 #crumbs ul { list-style: none; padding-inline-start: 0px; margin-left: 0px; }
