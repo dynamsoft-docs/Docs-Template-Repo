@@ -6,7 +6,7 @@
 
 /*  NORMAL STYLE  */
 html {font-size:10px;color:#606060;font-family:OpenSans-Regular}
-.h1, .h2, .h3, .h4, .h5, h1, h2, h3, h4, h5 {color:#444; font-family: Oswald-Light; font-weight: normal; position: relative; z-index: 0;}
+.h1, .h2, .h3, .h4, .h5, h1, h2, h3, h4, h5 {color:#444; font-family: Oswald-Light; font-weight: normal;}
 strong {color:#444; font-family: OpenSans-Semibold;}
 .h1, h1 {font-size:30px;font-size:3rem;line-height:42px}
 .h2, h2 {font-size:24px;font-size:2.4rem;line-height:36px}
