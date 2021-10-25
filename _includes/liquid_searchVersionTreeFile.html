@@ -76,11 +76,10 @@
 {%- endfor -%}
 
 {%- if findTargetFile -%}
-        {%- assign relativePath = nearestFile | remove: include.curPath -%}
         {%- assign curDirPath = "" -%}
         {%- if nearestFile contains '/' -%}
                 {%- assign needRemoveStr = nearestFile |  split: '/' | last | strip -%}
-                {%- assign currentPath = page.url | remove: needRemoveStr -%}
+                {%- assign curDirPath = nearestFile | remove: needRemoveStr -%}
         {%- endif -%}
-        {%- include {{ relativePath }} ver=include.ver curPath=curDirPath -%}
+        {%- include {{ nearestFile }} ver=include.ver curPath=curDirPath -%}
 {%- endif -%}
