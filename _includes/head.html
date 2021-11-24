@@ -7,6 +7,10 @@
     <meta name="description" content="{{ page.description }}" />
     <meta name="keywords" content="{{ page.keywords }}" />
 
+    {%- if page.url contains '-v' -%}
+    <meta name="robots" content="noindex">
+    {%- endif -%}
+    
     {%- assign targetUrl = page.url -%}
     {%- if page.url contains '-v' -%}
 	{%- assign candidateVersionStr = page.url |  split: '-v' -%}
