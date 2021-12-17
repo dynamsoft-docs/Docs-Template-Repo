@@ -5,7 +5,7 @@ regenerate: true
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 {%- for page in site.pages -%}
-{%- unless page.url contains '-v' or page.url contains 'Hide_Tree_Page' -%}
+{%- unless page.url contains '-v' or page.url contains 'Hide_Tree_Page' or page.url contains '.css' or page.url contains '.xml' -%}
   <url>
     <loc>{{ site.docFullPath }}{{page.url}}</loc> 
   </url>
