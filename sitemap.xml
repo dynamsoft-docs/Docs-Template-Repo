@@ -5,7 +5,21 @@ regenerate: true
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 {%- for page in site.pages -%}
-{%- unless page.url contains '-v' or page.url contains 'Hide_Tree_Page' or page.url contains '.css' or page.url contains '.xml' -%}
+{%- assign excludeFlag = false -%}
+{%- if page.url contains '-v' -%}
+	{%- assign candidateVersionStr = page.url |  split: '-v' -%}
+	{%- for tmpStr in candidateVersionStr offset:1 -%}
+		{%- assign tmpVer = tmpStr | split: '/' | first | replace: '.html', '' | strip -%}
+		{%- capture firstChar -%}
+			{{ tmpVer | truncate: 4 | replace:"...", "" }}
+		{%- endcapture -%}
+		{%- if firstChar >= "0" and firstChar <= "9" -%}
+      {%- assign excludeFlag = true -%}
+			{%- break -%}
+		{%- endif -%}
+	{%- endfor -%}
+{%- endif -%}
+{%- unless excludeFlag or page.url contains 'Hide_Tree_Page' or page.url contains '.css' or page.url contains '.xml' -%}
   <url>
     <loc>{{ site.docFullPath }}{{page.url}}</loc> 
   </url>
