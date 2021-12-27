@@ -7,10 +7,7 @@
     <meta name="description" content="{{ page.description }}" />
     <meta name="keywords" content="{{ page.keywords }}" />
 
-    {%- if page.url contains '-v' -%}
-    <meta name="robots" content="noindex">
-    {%- endif -%}
-    
+    {%- assign excludeFlag = false -%}
     {%- assign targetUrl = page.url -%}
     {%- if page.url contains '-v' -%}
 	{%- assign candidateVersionStr = page.url |  split: '-v' -%}
@@ -20,6 +17,7 @@
 			{{ tmpVer | truncate: 4 | replace:"...", "" }}
 		{%- endcapture -%}
 		{%- if firstChar >= "0" and firstChar <= "9" -%}
+            {%- assign excludeFlag = true -%}
             {%- assign needRemoveStr = "-v" | append: tmpVer -%}
             {%- assign targetUrl = page.url | remove: needRemoveStr | strip -%}
 			{%- break -%}
@@ -27,6 +25,10 @@
 	{%- endfor -%}
     {%- endif -%}
     {%- assign targetUrl = targetUrl | remove: 'index.html' | strip -%}
+
+    {%- unless excludeFlag -%}
+    <meta name="robots" content="noindex">
+    {%- endunless -%}
 
     <link href="{{ site.docFullPath }}{{ targetUrl }}" rel="canonical">
     
