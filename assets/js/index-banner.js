@@ -381,9 +381,11 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
                     addParam(curListATag[0], ver);
                 }
             }
-        
-            curListATag[0].style.color = '#fe8e14';
-            curListATag[0].className = "otherLinkColour activeLink"
+            
+            if (document.URL.indexOf("web-twain/docs/faq/") < 0 || document.URL.indexOf("web-twain/docs/faq/?ver") > 0) {
+                curListATag[0].style.color = '#fe8e14';
+                curListATag[0].className = "otherLinkColour activeLink"
+            }
 
             if (firstTime) {
                 var crumbul = $($('#crumbs')).children("ul")

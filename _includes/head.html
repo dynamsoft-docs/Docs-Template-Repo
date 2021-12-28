@@ -26,9 +26,9 @@
     {%- endif -%}
     {%- assign targetUrl = targetUrl | remove: 'index.html' | strip -%}
 
-    {%- unless excludeFlag -%}
+    {%- if excludeFlag -%}
     <meta name="robots" content="noindex">
-    {%- endunless -%}
+    {%- endif -%}
 
     <link href="{{ site.docFullPath }}{{ targetUrl }}" rel="canonical">
     
