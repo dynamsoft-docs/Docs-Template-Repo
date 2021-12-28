@@ -34,10 +34,6 @@
     
     {%- if page.hasCustomLdJson -%}
         {{page.customLdJsonScript}}
-    {%- else -%}
-    <script type="application/ld+json">
-        {"@type":"WebPage","description":"user guide layout.","@context":"https://schema.org"}
-    </script>
     {%- endif -%}
 
     <link rel="stylesheet" href="{{ site.assets }}css/dm-style.css?v=b8601a47f85e9c71565aa6c079c8988cd98cc1e7">
