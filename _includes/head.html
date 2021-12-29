@@ -32,10 +32,6 @@
 
     <link href="{{ site.docFullPath }}{{ targetUrl }}" rel="canonical">
     
-    {%- if page.hasCustomLdJson -%}
-        {{page.customLdJsonScript}}
-    {%- endif -%}
-
     <link rel="stylesheet" href="{{ site.assets }}css/dm-style.css?v=b8601a47f85e9c71565aa6c079c8988cd98cc1e7">
 
     <link rel="stylesheet" href="{{ site.assets }}css/bootstrap.min.css">
@@ -46,14 +42,6 @@
 
     <link rel="stylesheet" href="{{ site.assets }}css/basis.min.css?v=b202001019">
 
-    <script type="text/javascript" src="{{ site.assets }}js/jquery-3.5.0.min.js"></script>
-    <script type="text/javascript" src="{{ site.assets }}js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="{{ site.assets }}js/ds-jquery-bs.min.js"></script>
-    <script type="text/javascript" src="{{ site.assets }}js/index-banner.min.js"></script>
-    <script type="text/javascript" src="{{ site.assets }}js/historymanage.min.js"></script>
-    <script type="text/javascript" src="{{ site.assets }}js/layout.min.js"></script>
-    <script type="text/javascript" src="{{ site.assets }}js/anchor.min.js"></script>
-
     {%- if page.noTitleIndex or page.url contains 'release-notes' -%}
         <style>
             .headCounter h2:before { content: ''!important; padding-right: 0px!important; }
@@ -63,5 +51,17 @@
             .headCounter h4:before { content: ''!important; padding-right: 0px!important; }
             .headCounter h4 { counter-increment: none!important; }
         </style>
+    {%- endif -%}
+
+    <script type="text/javascript" src="{{ site.assets }}js/jquery-3.5.0.min.js"></script>
+    <script type="text/javascript" src="{{ site.assets }}js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{{ site.assets }}js/ds-jquery-bs.min.js"></script>
+    <script type="text/javascript" src="{{ site.assets }}js/index-banner.min.js"></script>
+    <script type="text/javascript" src="{{ site.assets }}js/historymanage.min.js"></script>
+    <script type="text/javascript" src="{{ site.assets }}js/layout.min.js"></script>
+    <script type="text/javascript" src="{{ site.assets }}js/anchor.min.js"></script>
+
+    {%- if page.hasCustomLdJson -%}
+        {{page.customLdJsonScript}}
     {%- endif -%}
 </head>

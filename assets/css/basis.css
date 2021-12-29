@@ -798,7 +798,7 @@ li, ul { list-style: none; margin: 0; padding: 0; }
 .orangeBorderBtn:hover, .orangeBorderBtn:visited, .orangeBorderBtn:active { border-color: #FEA543; color: #FEA543; }
 
 i.dbr-logo { display: inline-block; width: 267px; height: 36px; background: url(../img-icon/DBR_Horizontal_REV_White.svg) no-repeat left; background-size: contain; }i.dnt-logo { display: inline-block; width: 219px; height: 37px; background: url(../img-icon/logo-dnt-206x40.png) no-repeat left; background-size: contain; }
-i.dwt-logo { display: inline-block; width: 218px; height: 37px; background: url(../img-icon/DWT_Logo.png.png) no-repeat left; background-size: contain; }
+i.dwt-logo { display: inline-block; width: 218px; height: 37px; background: url(../img-icon/DWT_Logo.png) no-repeat left; background-size: contain; }
 i.dwt-white-logo { display: inline-block; width: 218px; height: 37px; background: url(../img-icon/DWT_Horizontal_POS_White.png) no-repeat left; background-size: contain; }
 i.dnt-white-logo { display: inline-block; width: 218px; height: 37px; background: url(../img-icon/DNT_Horizontal_POS_White.png) no-repeat left; background-size: contain; }
 i.dbr-white-logo { display: inline-block; width: 221px; height: 30px; background: url(../img-icon/DBR_Horizontal_REV_White.svg) no-repeat left; background-size: contain; }
@@ -810,6 +810,7 @@ i.dbr-white-logo { display: inline-block; width: 221px; height: 30px; background
 @media (max-width: 767px) {
     .show-block-sm { display: block; }
     .hide-block-sm { display: none; }
+    i.dwt-white-logo { display: inline-block; width: 163px; height: 27px; background: url(../img-icon/DWT_Horizontal_POS_White.png) no-repeat left; background-size: contain; }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
@@ -891,6 +892,7 @@ i.dbr-white-logo { display: inline-block; width: 221px; height: 30px; background
     .mobileProductMenu { display: block !important; }
     .mobileProductMenu .productLogo { display: inline-block; height: 36px; line-height: 36px; font-family: Oswald-Regular; font-size: 20px; margin-top: 12px; cursor: pointer; }
     .mobileProductMenu .productLogo i.dbr-logo, .mobileProductMenu .productLogo i.dwt-logo, .mobileProductMenu .productLogo i.dnt-logo { height: 36px; }
+    .mobileProductMenu .productLogo i.dwt-logo { display: inline-block; width: 218px; height: 37px; background: url(../img-icon/DWT_Horizontal_POS_White.png) no-repeat left; background-size: contain; }
     .mobileProductMenu .productLogo i.icon-orange-angle { vertical-align: top; margin-top: 16px; margin-left: 15px; }
     #DLRMenu .mobileProductMenu .productLogo i.icon-orange-angle { vertical-align: top; margin-top: 14px; margin-left: 7px; }
     #SourceAnyWhereMenu .mobileProductMenu .productLogo i.icon-orange-angle { vertical-align: top; margin-top: 10px; margin-left: 15px; }
@@ -914,6 +916,7 @@ i.dbr-white-logo { display: inline-block; width: 221px; height: 30px; background
     .mobileProductDetailMenu { padding: 20px 10px; }
     .mobileProductMenu .productLogo { margin-top: 8px; }
     .mobileProductMenu .productLogo i.dbr-logo, .mobileProductMenu .productLogo i.dwt-logo, .mobileProductMenu .productLogo i.dnt-logo { height: 25px; width: 188px; }
+    .mobileProductMenu .productLogo i.dwt-logo { display: inline-block; width: 163px; height: 27px; background: url(../img-icon/DWT_Horizontal_POS_White.png) no-repeat left; background-size: contain; }
     .mobileProductMenu .productLogo i.icon-orange-angle { vertical-align: top; margin-top: 8px; margin-left: 15px; }
     .mobileProductMenu .currentPage { height: 42px; line-height: 42px; font-size: 16px; }
     .mobileProductDetailMenu .menuList .item a, .mobileProductDetailMenu .menuList .item .showMenuMore { font-size: 16px; }
