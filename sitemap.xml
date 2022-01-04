@@ -19,7 +19,7 @@ regenerate: true
 		{%- endif -%}
 	{%- endfor -%}
 {%- endif -%}
-{%- unless excludeFlag or page.url contains 'Hide_Tree_Page' or page.url contains '.css' or page.url contains '.xml' -%}
+{%- unless excludeFlag or page.url contains 'Hide_Tree_Page' or page.url contains '.css' or page.url contains '.xml' or page.url contains '.txt' -%}
   <url>
     <loc>{{ site.docFullPath }}{{page.url}}</loc> 
   </url>
