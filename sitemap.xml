@@ -4,7 +4,8 @@ regenerate: true
 ---
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-{%- for page in site.pages -%}
+{% assign pages = site.html_pages | where_exp:'doc','doc.sitemap != false' | where_exp:'doc','doc.url != "/Hide_Tree_Page.html"' %}
+{%- for page in pages -%}
 {%- assign excludeFlag = false -%}
 {%- if page.url contains '-v' -%}
 	{%- assign candidateVersionStr = page.url |  split: '-v' -%}
@@ -19,9 +20,12 @@ regenerate: true
 		{%- endif -%}
 	{%- endfor -%}
 {%- endif -%}
-{%- unless excludeFlag or page.url contains 'Hide_Tree_Page' or page.url contains '.css' or page.url contains '.xml' or page.url contains '.txt' -%}
+{%- unless excludeFlag -%}
   <url>
-    <loc>{{ site.docFullPath }}{{page.url}}</loc> 
+    <loc>{{ site.docFullPath }}{{page.url | replace:'/index.html','/' | xml_escape}}</loc> 
+		{% if page.last_modified_at %}
+			<lastmod>{{ page.last_modified_at | date_to_xmlschema }}</lastmod>
+		{% endif %}
   </url>
 {%- endunless -%}
 {%- endfor -%}
