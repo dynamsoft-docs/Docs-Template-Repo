@@ -20,7 +20,7 @@ regenerate: true
 		{%- endif -%}
 	{%- endfor -%}
 {%- endif -%}
-{%- unless excludeFlag -%}
+{%- unless excludeFlag or page.layout == "" or page.layout == "default" -%}
   <url>
     <loc>{{ site.docFullPath }}{{page.url | replace:'/index.html','/' | xml_escape}}</loc> 
   </url>
