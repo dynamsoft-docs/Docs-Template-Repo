@@ -9,8 +9,11 @@
             {%- else -%}
                 {%- assign curVerText = "Version " | append: verInfo -%}
             {%- endif -%}
-
+            {%- if site.firstLevelUrl == "/barcode-reader" -%}
+            <li onclick="changeVersion(this)" class="dbr_changeVersion_li">{{ curVerText }}</li>
+            {%- else -%}
             <li onclick="changeVersion(this)">{{ curVerText }}</li>
+            {%- endif -%}
         {%- endfor -%}
     </ul>
     <a class="fvChange fontOswald" href="javascript:;">Change +</a>
