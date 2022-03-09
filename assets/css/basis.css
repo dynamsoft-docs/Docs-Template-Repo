@@ -4637,3 +4637,5 @@ i.dbr-white-logo {
 .availability+table tr:first-child td {
     background: #f6f8fa;
 }
+
+.subtitle { font-size: 16px; color: #606060; font-family: 'OpenSans-Regular'; margin-top: 5px; }

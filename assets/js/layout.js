@@ -1,5 +1,6 @@
 $(document).ready(function(){ 
     init();
+    $('h1').append('<p class="subtitle">Last Modified Date: <span id="LastModifiedDate">' + formatDate(document.lastModified) + '</span></p>')
     $('.markdown-body .sample-code-prefix + blockquote > ul > li:first-child').addClass('on')
     $('.markdown-body .sample-code-prefix + blockquote > ol > li:first-child').addClass('on')
 
@@ -253,5 +254,14 @@ function initFoldPanel() {
         $(obj).next().find('i').css({'line-height': $(obj).next().height() + 'px'})
     }
     $(".fold-panel-start").nextUntil(".fold-panel-end").hide()
+}
+
+function formatDate(date) {
+    var weekdayList = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    var monthList = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    var newDate = new Date(date)
+    var weekday = weekdayList[newDate.getDay()]
+    var month = monthList[newDate.getMonth()]
+    return weekday + ', ' + month + ' ' + newDate.getDate() + ', ' + newDate.getFullYear()
 }
 
