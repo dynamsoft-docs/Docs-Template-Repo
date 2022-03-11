@@ -4638,4 +4638,4 @@ i.dbr-white-logo {
     background: #f6f8fa;
 }
 
-.subtitle { font-size: 16px; color: #606060; font-family: 'OpenSans-Regular'; margin-top: 5px; }
+.markdown-body p.subtitle { font-size: 14px; color: #606060; font-family: 'OpenSans-Regular'; margin-top: 5px; margin-bottom: 0; }

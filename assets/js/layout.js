@@ -4,6 +4,10 @@ $(document).ready(function(){
     $('.markdown-body .sample-code-prefix + blockquote > ul > li:first-child').addClass('on')
     $('.markdown-body .sample-code-prefix + blockquote > ol > li:first-child').addClass('on')
 
+    if (document.URL.indexOf("web-twain/docs/faq/") > 0  && document.URL.indexOf("web-twain/docs/faq/?ver") < 0) {
+        $("#breadcrumbLastNode").text($("h1").text().split("Last Modified")[0])
+    }
+
     var sd = $(window).scrollTop()
     if(sd > 0) {
         realFunc()
