@@ -406,7 +406,12 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
                         appendText += '<li><a class="bluelink" href = "' + curListATag[0].href + '">'+ curListATag[0].textContent + '</a></li>';
                     }
                     else {
-                        appendText += '<li id="breadcrumbLastNode">' + curListATag[0].textContent + '</li>'
+                        if (document.URL.indexOf("/barcode-reader/faq/") > 0) {
+                            appendText += '<li id="breadcrumbLastNode"><a class="bluelink" href = "' + curListATag[0].href + '">'+ curListATag[0].textContent + '</a></li>'
+                        } else {
+                            appendText += '<li id="breadcrumbLastNode">' + curListATag[0].textContent + '</li>'
+                        }
+                        // appendText += '<li id="breadcrumbLastNode">' + curListATag[0].textContent + '</li>'
                     }
                     $(crumbul[0]).append(appendText);
                 }
