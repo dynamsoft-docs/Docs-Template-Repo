@@ -34,7 +34,8 @@
                         {%- if curTreeFileVerArray.size < minSize -%}
                                 {%- assign minSize = curTreeFileVerArray.size -%}
                         {%- endif -%}
-                        {%- for i in (0..minSize-1) -%}
+                        {%- assign arrayMaxIndex = minSize | minus: 1 -%}
+                        {%- for i in (0..arrayMaxIndex) -%}
                                 {%- assign curVal = curTreeFileVerArray[i] | plus: 0 -%}
                                 {%- assign targetVal = targetVerArray[i] | plus: 0 -%}
                                 {%- if curVal > targetVal -%}
