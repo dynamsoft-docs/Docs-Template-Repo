@@ -55,7 +55,11 @@
                                 {%- if needCheckSize and curTreeFileVerArray.size > targetVerArray.size -%}
                                         {%- assign validVer = true -%}
                                         {%- assign curVal = curTreeFileVerArray[minSize] | plus: 0 -%}
-                                        {%- assign verDiff = curVal | divided_by: 10 | divided_by: minSize  -%}   
+                                        {%- if minSize == 0 -%}
+                                                {%- assign verDiff = curVal | divided_by: 10 -%}
+                                        {%- else -%}
+                                                {%- assign verDiff = curVal | divided_by: 10 | divided_by: minSize -%}
+                                        {%- endif -%}  
                                 {%- endif -%}
                         {% endunless %}
                         {%- if validVer -%}
