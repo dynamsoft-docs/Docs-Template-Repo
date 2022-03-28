@@ -4550,7 +4550,7 @@ i.dbr-white-logo {
 }
 
 .markdown-body .sample-code-prefix+blockquote ol li.on {
-    padding: 25px 20px;
+    padding: 0;
     opacity: 1;
     height: auto;
 }
@@ -4559,6 +4559,10 @@ i.dbr-white-logo {
     margin-bottom: 0;
     border: 0;
     padding: 0;
+}
+
+.markdown-body .sample-code-prefix+blockquote ol li pre.highlight {
+    padding: 20px 25px;
 }
 
 .markdown-body .sample-code-prefix+blockquote ol li img {
