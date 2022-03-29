@@ -11,8 +11,10 @@ function UrlReplace()
             // console.log(replaceUrl)
             window.location.replace(replaceUrl);
         }
+        // console.log(ver)
     }
     if (matchVer == undefined && ver != undefined) {
+        // console.log("go to redirct")
         RedirToGivenVersionPage(ver);
     }
 }
@@ -272,13 +274,9 @@ function findNearestVersion(ver) {
             return tempVer
         } else {
             var tmpDiff = GetVersionDiff(ver, tempVer);
-            if (verDiff == null) {
-                verDiff = tmpDiff
-            } else { 
-                if (tmpDiff >= 0 && (tmpDiff < verDiff || verDiff < 0)){
-                    verDiff = tmpDiff;
-                    bestVer = tempVer;
-                }
+            if (verDiff == null || (tmpDiff >= 0 && (tmpDiff < verDiff || verDiff < 0))){
+                verDiff = tmpDiff;
+                bestVer = tempVer;
             }
             // console.log('tmpDiff: ' + tmpDiff)
             // console.log('verDiff: ' + verDiff)
