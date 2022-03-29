@@ -3,6 +3,15 @@ function UrlReplace()
     var docUrl = document.URL;
     var ver = getUrlVars(docUrl)["ver"];
     var matchVer = getUrlVars(docUrl)["matchVer"];
+    if (ver != "latest") {
+        var tempVer = findNearestVersion(ver);
+        if (tempVer != ver) {
+            // matchVer = undefined
+            var replaceUrl = docUrl.replace(ver, tempVer)
+            // console.log(replaceUrl)
+            window.location.replace(replaceUrl);
+        }
+    }
     if (matchVer == undefined && ver != undefined) {
         RedirToGivenVersionPage(ver);
     }
@@ -245,4 +254,36 @@ function changeVersion (liTag)
 	}
 	window.location.href = curUrl;
 	return;
+}
+
+function findNearestVersion(ver) {
+    var versionList = $(".fullVersionInfo li")
+    var bestVer = ver, verDiff=null
+    // console.log("versionList: " + versionList)
+    for (var i=0; i<versionList.length; i++) {
+        var tempVer = $(versionList[i]).text().toLowerCase()
+        if (tempVer == "latest version"){
+            tempVer = "latest"
+        } else{
+            tempVer = tempVer.replace('version ','');
+        }
+        // console.log("tempVer: " + tempVer)
+        if (tempVer == ver) {
+            return tempVer
+        } else {
+            var tmpDiff = GetVersionDiff(ver, tempVer);
+            if (verDiff == null) {
+                verDiff = tmpDiff
+            } else { 
+                if (tmpDiff >= 0 && (tmpDiff < verDiff || verDiff < 0)){
+                    verDiff = tmpDiff;
+                    bestVer = tempVer;
+                }
+            }
+            // console.log('tmpDiff: ' + tmpDiff)
+            // console.log('verDiff: ' + verDiff)
+            // console.log('bestVersion: ' + bestVer)
+        }
+    }
+    if (verDiff) {return bestVer} else {return "latest"}
 }
