@@ -3,18 +3,14 @@ function UrlReplace()
     var docUrl = document.URL;
     var ver = getUrlVars(docUrl)["ver"];
     var matchVer = getUrlVars(docUrl)["matchVer"];
-    if (ver != "latest") {
+    if (ver != undefined && ver != "latest") {
         var tempVer = findNearestVersion(ver);
         if (tempVer != ver) {
-            // matchVer = undefined
             var replaceUrl = docUrl.replace(ver, tempVer)
-            // console.log(replaceUrl)
             window.location.replace(replaceUrl);
         }
-        // console.log(ver)
     }
     if (matchVer == undefined && ver != undefined) {
-        // console.log("go to redirct")
         RedirToGivenVersionPage(ver);
     }
 }
