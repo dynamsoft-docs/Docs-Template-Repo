@@ -4643,3 +4643,17 @@ i.dbr-white-logo {
 }
 
 .markdown-body p.subtitle { font-size: 14px; color: #606060; font-family: 'OpenSans-Regular'; margin-top: 5px; margin-bottom: 0; }
+
+a#toTop {
+    display: none;
+    position: fixed;
+    z-index: 9;
+    bottom: 30px;
+    right: 40px;
+    bottom: 70px;
+    width: 46px;
+    height: 45px;
+    float: right;
+    background: url(../img-icon/icn-toTop-45X45.png) no-repeat top;
+    transition: ease-in-out .2s;
+}

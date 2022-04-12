@@ -42,6 +42,12 @@ $(document).ready(function(){
     window.addEventListener('scroll', realFunc);
 
     function realFunc() {
+        if ($(window).scrollTop() > 0) {
+            $("a#toTop").show()
+        } else {
+            $("a#toTop").hide()
+        }
+        
         $('.rightSideMenu').css({'padding-top': $('#docHead').outerHeight()+'px'});
         if (breakpoint() == 'lg') {
             var subHeight = 0;
@@ -181,6 +187,10 @@ $(document).ready(function(){
                 foldPanel = $(foldPanel).next()
             }
         }
+    })
+
+    $('#toTop').click(function () {
+        window.scrollTo(0, 0)
     })
 })
 
