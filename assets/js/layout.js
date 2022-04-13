@@ -257,24 +257,6 @@ function init() {
         }
     }
 
-    $("#fullTreeMenuListContainer > li.expandListStyle > a").each((i, e) => {
-        let span = document.createElement("span");
-        span.innerText = ">"
-        $(e).append(span);
-    });
-
-    $("#fullTreeMenuListContainer > li.collapseListStyle > a").each((i, e) => {
-        let span = document.createElement("span");
-        span.innerText = ">"
-        $(e).append(span);
-    });
-
-    $("#fullTreeMenuListContainer > li > a > span").on('click', function (e) {
-        e.stopPropagation();
-        e.preventDefault();
-        $(this).parent().parent().toggleClass("expandListStyle").toggleClass("collapseListStyle");
-        $($(this).parent().parent().children()[1]).toggle();
-    });
 }
 
 function initFoldPanel() {
@@ -296,5 +278,4 @@ function formatDate(date) {
     var month = monthList[newDate.getMonth()]
     return weekday + ', ' + month + ' ' + newDate.getDate() + ', ' + newDate.getFullYear()
 }
-
 
