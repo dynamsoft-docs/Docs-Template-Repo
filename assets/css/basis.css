@@ -660,13 +660,45 @@ ul.disc>li p:hover {
 #fullTreeMenuListContainer li.collapseListStyle>a {
     display: inline-block;
     padding-left: 15px;
-    background: url(../img-icon/collapse-list.png) left 2px no-repeat;
+    position: relative;
+    /* background: url(../img-icon/collapse-list.png) left 2px no-repeat; */
+}
+
+#fullTreeMenuListContainer li.collapseListStyle > a > span {
+    position: absolute;
+    cursor: pointer;
+    /* background: url(../img-icon/collapse-list.png) left 2px no-repeat; */
+    content: "";
+    display: inline-block;
+    width: 10px;
+    height: fit-content;
+    transform: rotate(0deg);
+    transform-origin: center center;
+    transition: all 0.2s;
+    line-height: 20px;
+    left: 0px;
 }
 
 #fullTreeMenuListContainer li.expandListStyle>a {
     display: inline-block;
     padding-left: 15px;
-    background: url(../img-icon/expand-list.png) left 2px no-repeat;
+    position: relative;
+    /* background: url(../img-icon/expand-list.png) left 2px no-repeat; */
+}
+
+#fullTreeMenuListContainer li.expandListStyle > a > span {
+    cursor: pointer;
+    position: absolute;
+    /* background: url(../img-icon/expand-list.png) left 2px no-repeat; */
+    content: "";
+    display: inline-block;
+    width: 10px;
+    height: fit-content;
+    transform: rotate(90deg);
+    transform-origin: center center;
+    transition: all 0.2s;
+    line-height: 20px;
+    left: 0px;
 }
 
 #AutoGenerateSidebar li a:hover,
