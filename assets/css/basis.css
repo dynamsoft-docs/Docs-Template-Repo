@@ -1271,6 +1271,10 @@ ul::-webkit-scrollbar-corner {
         min-height: calc(100vh - 181px);
     }
 
+    .noSubMenuDoc .docContainer {
+        min-height: calc(100vh - 133px);
+    }
+
     .subHeadWrapper .subHeaderMenuUl li {
         margin-right: 0px;
     }
@@ -1371,6 +1375,10 @@ ul::-webkit-scrollbar-corner {
         border-left: 1px solid #ddd;
         padding-left: 15px;
         min-height: calc(100vh - 203px);
+    }
+
+    .noSubMenuDoc .docContainer {
+        min-height: calc(100vh - 155px);
     }
 
     .docContainer .main {
