@@ -232,7 +232,7 @@ ul.disc>li p:hover {
 }
 
 .headCounter h3:before {
-    content: counter(h2counter) "."counter(h3counter) "  ";
+    content: counter(h2counter) "." counter(h3counter) "  ";
     padding-right: 10px;
 }
 
@@ -242,7 +242,7 @@ ul.disc>li p:hover {
 }
 
 .headCounter h4:before {
-    content: counter(h2counter) "."counter(h3counter) "."counter(h4counter) "  ";
+    content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) "  ";
     padding-right: 10px;
 }
 
@@ -271,6 +271,8 @@ ul.disc>li p:hover {
     padding: 20px 0 20px 0;
     margin-top: 0px;
 }
+
+.noSubMenuDoc #docHead { top: 95px;}
 
 #docHead .crumbsBox {
     display: inline-block;
@@ -880,6 +882,8 @@ ul::-webkit-scrollbar-corner {
         top: 133px;
         width: calc(100% - 360px);
     }
+    
+    .noSubMenuDoc #docHead { top: 73px }
 
     .dlrDoc #docHead {
         top: 154px;
@@ -4488,6 +4492,9 @@ i.dbr-white-logo {
         top: 130px !important;
         left: calc(50% - 160px);
     }
+    .noSubMenuDoc .history.history-absolute {
+        top: 70px !important;
+    }
 }
 
 @media (max-width: 767px) {
@@ -4499,6 +4506,9 @@ i.dbr-white-logo {
         position: absolute;
         top: 110px !important;
         left: 185px;
+    }
+    .noSubMenuDoc .history.history-absolute {
+        top: 65px !important;
     }
 }
 
