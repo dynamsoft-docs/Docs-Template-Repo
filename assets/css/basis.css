@@ -659,17 +659,52 @@ ul.disc>li p:hover {
     display: none;
 }
 
-#fullTreeMenuListContainer li.collapseListStyle>a {
+#fullTreeMenuListContainer li.collapseListStyle>a:not(.noListStyle) {
     display: inline-block;
     padding-left: 15px;
     background: url(../img-icon/collapse-list.png) left 2px no-repeat;
+    cursor: pointer;
 }
 
-#fullTreeMenuListContainer li.expandListStyle>a {
+#fullTreeMenuListContainer li.collapseListStyle .listStyleIcon {
+    display: inline-block;
+    vertical-align: top;
+    width: 15px;
+    height: 15px;
+    background: url(../img-icon/collapse-list.png) left 2px no-repeat;
+    cursor: pointer;
+}
+
+#fullTreeMenuListContainer li.expandListStyle>a:not(.noListStyle) {
     display: inline-block;
     padding-left: 15px;
     background: url(../img-icon/expand-list.png) left 2px no-repeat;
+    cursor: pointer;
 }
+
+#fullTreeMenuListContainer li.expandListStyle .listStyleIcon {
+    display: inline-block;
+    vertical-align: top;
+    width: 15px;
+    height: 15px;
+    background: url(../img-icon/expand-list.png) left 2px no-repeat;
+    cursor: pointer;
+}
+
+#fullTreeMenuListContainer li span.noPathItem { cursor: pointer; }
+
+#fullTreeMenuListContainer a, #fullTreeMenuListContainer a:active {
+    color: #323234;
+}
+
+#fullTreeMenuListContainer a.activeLink, #fullTreeMenuListContainer a.activeLink:active {
+    color: #FE8E14;
+}
+
+#fullTreeMenuListContainer a.activeLink.childHashItemsLink {
+    color: #323234;
+}
+
 
 #AutoGenerateSidebar li a:hover,
 #fullTreeMenuListContainer li a:hover {
@@ -4683,4 +4718,9 @@ a#toTop {
     float: right;
     background: url(../img-icon/icn-toTop-45X45.png) no-repeat top;
     transition: ease-in-out .2s;
+}
+
+
+#fullTreeMenuListContainer li.notCurVersionItem {
+    display: none;
 }

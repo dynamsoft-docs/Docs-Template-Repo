@@ -13,6 +13,13 @@ function UrlReplace()
     if (matchVer == undefined && ver != undefined) {
         RedirToGivenVersionPage(ver);
     }
+    if (ver == undefined) {
+        if(docUrl.indexOf("?") > 0) {
+            window.location.replace(docUrl + "&&ver=latest");
+        } else {
+            window.location.replace(docUrl + "?ver=latest");
+        }
+    }
 }
 
 function allHerfClick(_this, ver) {

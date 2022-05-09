@@ -56,7 +56,13 @@
     <script type="text/javascript" src="{{ site.assets }}js/jquery-3.5.0.min.js"></script>
     <script type="text/javascript" src="{{ site.assets }}js/bootstrap.min.js"></script>
     <script type="text/javascript" src="{{ site.assets }}js/ds-jquery-bs.min.js"></script>
+
+    {%- if site.useVersionTreeV2 -%}
+    <script type="text/javascript" src="{{ site.assets }}js/index-banner-two.min.js"></script>
+    {%- else -%}
     <script type="text/javascript" src="{{ site.assets }}js/index-banner.min.js"></script>
+    {%- endif -%}
+
     <script type="text/javascript" src="{{ site.assets }}js/historymanage.min.js"></script>
     <script type="text/javascript" src="{{ site.assets }}js/layout.min.js"></script>
     <script type="text/javascript" src="{{ site.assets }}js/anchor.min.js"></script>
