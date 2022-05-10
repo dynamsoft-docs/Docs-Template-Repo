@@ -7,18 +7,33 @@ function FullTreeMenuList(generateDocHead) {
   }
   var navWrap = document.getElementById("fullTreeMenuListContainer");
   if (navWrap != null) {
-    AddCanonicalLinkOnPage(document.URL);
-    FilterCurrentVersionTree($("#fullTreeMenuListContainer > li"), verArray[0]);
-    var curLiItem = $('#fullTreeMenuListContainer').find('.activeLink').parent()
-    if (curLiItem.length > 0 && !isPageInVersionTree(curLiItem[0], verArray[0])) {
-      var replaceUrl = document.URL
-      if ($(curLiItem[0]).parent().hasClass("mainPage")) {
-        replaceUrl = $('#fullTreeMenuListContainer > li').not(".notCurVersionItem").find("a")[0].href
-      } else {
-        replaceUrl = $(curLiItem[0]).parent().parent().find("a").not(".activeLink")[0].href
+    var activeLinks = $('#fullTreeMenuListContainer').find('.activeLink')
+    if (activeLinks.length > 1) {
+      FilterCurrentVersionTree($("#fullTreeMenuListContainer > li"), verArray[0]);
+      var curLiItem = $('#fullTreeMenuListContainer').find('.activeLink').parent();
+      if (curLiItem.length > 0 && !isPageInVersionTree(curLiItem[0], verArray[0])) {
+        var replaceUrl = document.URL
+        if ($(curLiItem[0]).parent().hasClass("mainPage")) {
+          replaceUrl = $('#fullTreeMenuListContainer > li').not(".notCurVersionItem").find("a")[0].href
+        } else {
+          replaceUrl = $(curLiItem[0]).parent().parent().find("a").not(".activeLink")[0].href
+        }
+        window.location.replace(replaceUrl)
       }
-      window.location.replace(replaceUrl)
+    } else {
+      var curLiItem = $('#fullTreeMenuListContainer').find('.activeLink').parent();
+      if (curLiItem.length > 0 && !isPageInVersionTree(curLiItem[0], verArray[0])) {
+        var replaceUrl = document.URL
+        if ($(curLiItem[0]).parent().hasClass("mainPage")) {
+          replaceUrl = $('#fullTreeMenuListContainer > li').not(".notCurVersionItem").find("a")[0].href
+        } else {
+          replaceUrl = $(curLiItem[0]).parent().parent().find("a").not(".activeLink")[0].href
+        }
+        window.location.replace(replaceUrl)
+      }
+      FilterCurrentVersionTree($("#fullTreeMenuListContainer > li"), verArray[0]);
     }
+    AddCanonicalLinkOnPage(document.URL);
     ExpandCurrentPageTree("fullTreeMenuListContainer");
   }
 }
@@ -51,7 +66,6 @@ function isPageInVersionTree(treeItem, curVersion) {
   var startVersion = treeItem.dataset.startversion || "0", endVersion = treeItem.dataset.endversion  || null;
   var startDiff = GetVersionDiff(startVersion, curVersion)
   var endDiff = endVersion && endVersion!="" ? GetVersionDiff(curVersion, endVersion) : 100
-
   if (startDiff <= 0 || endDiff == -1) {
     return false
   } else {
