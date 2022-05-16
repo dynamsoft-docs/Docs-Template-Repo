@@ -1,4 +1,4 @@
-function FullTreeMenuList(generateDocHead) {
+function FullTreeMenuList(generateDocHead, needh3=true) {
   var verArray = SearchVersion();
   var allHerf1 = $(".docContainer .content, #docHead, #AutoGenerateSidebar, .sideBar, #crumbs").find("a");
   for (var i = 0; i < allHerf1.length; i++)
@@ -35,6 +35,14 @@ function FullTreeMenuList(generateDocHead) {
     }
     AddCanonicalLinkOnPage(document.URL);
     ExpandCurrentPageTree("fullTreeMenuListContainer");
+    generateDocHead = generateDocHead == true || generateDocHead == 'true' ? true : false
+    if (generateDocHead) {
+      needh3 = needh3 == 'true' || needh3 == true ? true : false
+      if (needh3) {
+          $('#fullTreeMenuListContainer').addClass('needh3');
+      }               
+      GenerateContentByHead(needh3);
+    }
   }
 }
 
@@ -59,6 +67,41 @@ function AddCanonicalLinkOnPage(searchUrl = document.URL) {
       linkTag.href = oriUrl;
       linkTag.rel = 'canonical';
       dochead.appendChild(linkTag);
+  }
+}
+
+function GenerateContentByHead(needh3 = true) {
+  var titleList, appendHtml='<ul>';
+  if (needh3) {
+      titleList = document.querySelectorAll('.content h2, .content h3');
+  } else {
+      titleList = document.querySelectorAll('.content h2');
+  }
+  for(var i = 0; i < titleList.length; i++) {
+      var curH2Text = $(titleList[i]).text();
+      var curH2Href =  $(titleList[i]).attr("id");
+      var curliContent = '<li style="list-style-image: none; list-style-type: circle;"><a href="#' + curH2Href + '" class="otherLinkColour">' + curH2Text + '</a>';
+      if (i + 1 < titleList.length && titleList[i].localName == 'h2' && titleList[i+1].localName == 'h3') {
+          curliContent += '<ul name="listLevel2">';
+          for (var j = i+1; j < titleList.length; j++) {
+              if (titleList[j].localName == 'h3') {
+                  i = j
+                  var curH3Text = $(titleList[j]).text();
+                  var curH3Href = $(titleList[j]).attr("id");
+                  curliContent += '<li style="list-style-image: none; list-style-type: disc;"><a href="#' + curH3Href + '" class="otherLinkColour">' + curH3Text + '</a></li>';
+              } else {
+                  break;
+              }
+          }
+          curliContent += '</ul>'
+      } else {
+          curliContent += '</li>'
+      }
+      appendHtml += curliContent
+  }
+  appendHtml += '</ul>'
+  if ($('#AutoGenerateSidebar').length != 0) {
+      $('#AutoGenerateSidebar').append(appendHtml);
   }
 }
 
