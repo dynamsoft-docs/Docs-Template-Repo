@@ -35,6 +35,7 @@ function FullTreeMenuList(generateDocHead, needh3=true) {
     }
     AddCanonicalLinkOnPage(document.URL);
     ExpandCurrentPageTree("fullTreeMenuListContainer");
+    initCrumbs()
     generateDocHead = generateDocHead == true || generateDocHead == 'true' ? true : false
     if (generateDocHead) {
       needh3 = needh3 == 'true' || needh3 == true ? true : false
@@ -225,5 +226,25 @@ function UsefulRecord(isUseful) {
 
   if(feedbackTag!=null) {
       feedbackTag.innerHTML = "Thanks!";
+  }
+}
+
+function initCrumbs() {
+  var crumbul = $('#crumbs').children("ul")
+  if (crumbul.length != 0) {
+    var appendText = "";
+    var expandList = $("#fullTreeMenuListContainer .expandListStyle > a")
+    for (var i=0; i<expandList.length; i++) {
+      if ($(expandList[i]).hasClass("activeLink")) {
+        appendText += '<li id="breadcrumbLastNode">' + $(expandList[i])[0].textContent + '</li>'
+      } else {
+        appendText += '<li><a class="bluelink" href = "' + $(expandList[i])[0].href + '">'+ $(expandList[i])[0].textContent + '</a></li>'
+      }
+    }
+    var activeLis = $("#fullTreeMenuListContainer a.activeLink")
+    if (activeLis.length > 0 && !$(activeLis[0]).parent().hasClass("expandListStyle")) {
+      appendText += '<li id="breadcrumbLastNode">' + $(activeLis[0]).text() + '</li>'
+    }
+    $(crumbul[0]).append(appendText);
   }
 }
