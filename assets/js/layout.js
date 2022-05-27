@@ -34,7 +34,6 @@ $(document).ready(function(){
             $(obj).next().find('i').css({'width': ($(obj).next().width() - 24) + 'px'})
             $(obj).next().find('i').css({'height': $(obj).next().height() + 'px'})
             $(obj).next().find('i').css({'line-height': $(obj).next().height() + 'px'})
-            console.log($(obj).next().height(), $(obj).next().width())
         }
         init()
         realFunc()
@@ -204,7 +203,99 @@ $(document).ready(function(){
             $(this).parent().addClass("collapseListStyle").removeClass("expandListStyle")
         }
     })
+
+    if($(".markdown-body .sample-code-prefix").length > 0 && getUrlVars(document.URL)["lang"]) {
+        var langs = getUrlVars(document.URL)["lang"].toLowerCase().trim().split(",")
+        if (langs) {
+            if (langs.length == 1) {
+                sampleCodeSingleLangInit(langs[0])
+            } else {
+                sampleCodeLangsInit(langs)
+            }
+        }
+    }
 })
+
+function sampleCodeLangsInit(langs) {
+    var langTexts = langs.map(function(lang) {
+        return getlangText(lang, null, null)
+    }).filter(function(lang) {
+        return lang
+    })
+    for (var i=0; i<langTexts.length; i++) {
+        var langText = langTexts[i]
+        if (langText) {
+            sampleCodeSingleLangInit(null, langText, i+1)
+        }
+    }
+    $(".scChoosedLi").removeClass("scHiddenLi")
+}
+
+function sampleCodeSingleLangInit(lang, langText, index) {
+    langText = langText || getlangText(lang)
+    var sampleCodeList = $(".markdown-body .sample-code-prefix + blockquote")
+    if (langText) {
+        for (var i=0; i < sampleCodeList.length; i++) {
+            var scLis = $(sampleCodeList[i]).find("ul li")
+            for(var j=0;j<scLis.length;j++) {
+                if (scLis[j].textContent.toLowerCase() == langText.toLowerCase()) {
+                    $(scLis[j]).addClass("scChoosedLi")
+                    if (!index || index == 1) {
+                        $(scLis[j]).click()
+                        $(sampleCodeList[i]).find("ul li, ol li").addClass("scHiddenLi")
+                        if ($(sampleCodeList[i]).parent().hasClass("template2")) {
+                            $(sampleCodeList[i]).parent().find("blockquote > div").addClass("scHiddenLi")
+                        }
+                    }
+                    if (!index && $(sampleCodeList[i]).find("ul .scHiddenLi.on").length == 1) {
+                        $(sampleCodeList[i]).find("ul").hide()
+                    }
+                }
+            }
+        }
+    }
+}
+
+function getlangText(lang) {
+    var langText = null
+    switch(lang) {
+        case 'javascript':
+        case 'js':
+            langText = 'JavaScript'
+            break;
+        case 'c':
+            langText = 'C'
+            break;
+        case 'cpp':
+        case 'c++':
+            langText = 'C++'
+            break;
+        case 'csharp':
+            langText = 'C#'
+            break;
+        case 'java':
+            langText = 'Java'
+            break;
+        case 'android':
+            langText = 'Android'
+            break;
+        case 'objective-c':
+        case 'objc':
+            langText = 'Objective-C'
+            break;
+        case 'swift':
+            langText = 'Swift'
+            break;
+        case 'python':
+            langText = 'Python'
+            break;
+        default:
+            langText = null
+            break;
+    }
+
+    return langText
+}
 
 function copy(data) {
     let url = data;
@@ -267,8 +358,7 @@ function init() {
             $('.markdown-body h5').css({'padding-top': '90px'})
             $('.markdown-body h5').css({'margin-top': '-90px'})
         }
-    }
-
+    } 
 }
 
 function initFoldPanel() {

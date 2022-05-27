@@ -4634,6 +4634,18 @@ i.dbr-white-logo {
     border: 0;
 }
 
+.markdown-body .sample-code-prefix+blockquote ul li.scHiddenLi, .markdown-body .sample-code-prefix+blockquote ol li.scHiddenLi, .markdown-body .sample-code-prefix.template2+blockquote > div.scHiddenLi {
+    display: none;
+}
+
+.markdown-body .sample-code-prefix+blockquote ul li.scHiddenLi.on {
+    display: inline-block;
+}
+
+.markdown-body .sample-code-prefix+blockquote ol li.scHiddenLi.on, .markdown-body .sample-code-prefix.template2+blockquote > div.scHiddenLi.on {
+    display: block;
+}
+
 .copy-prefix+p {
     text-align: right;
     margin-bottom: -25px;
