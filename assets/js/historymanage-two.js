@@ -5,26 +5,22 @@ function UrlReplace()
     var matchVer = getUrlVars(docUrl)["matchVer"];
     if (ver != undefined && ver != "latest") {
         var tempVer = findNearestVersion(ver);
-        if (tempVer != ver) {
+        if (tempVer!="latest" && tempVer != ver) {
             var replaceUrl = docUrl.replace(ver, tempVer)
-            window.location.replace(replaceUrl);
+            if (replaceUrl.indexOf("/docs/") >0) {
+                replaceUrl = replaceUrl.replace("/docs/", "/docs-archive/")
+                window.location.replace(replaceUrl);
+            }
         }
     }
     if (matchVer == undefined && ver != undefined) {
         // RedirToGivenVersionPage(ver);
         // change link to doc-archive
         if (docUrl.indexOf("/docs/") >0) {
-            docUrl.replace("/docs/", "/docs-archive/")
+            docUrl = docUrl.replace("/docs/", "/docs-archive/")
             window.location.replace(docUrl);
         }
     }
-    // if (ver == undefined) {
-    //     if(docUrl.indexOf("?") > 0) {
-    //         window.location.replace(docUrl + "&&ver=latest");
-    //     } else {
-    //         window.location.replace(docUrl + "?ver=latest");
-    //     }
-    // }
 }
 
 function allHerfClick(_this, ver) {
@@ -265,6 +261,7 @@ function RequestNewPage(aTag, paramLink) {
 
 function changeVersion (liTag)
 {
+
 	var innertext = (liTag.innerText).toLowerCase();
 	var ver = null;
 	if (innertext == "latest version"){
@@ -274,7 +271,7 @@ function changeVersion (liTag)
 		ver = innertext.replace('version ','');
 	}
 	var curUrl = document.URL;
-    curUrl.replace("/docs/", "/docs-archive/")
+    curUrl = curUrl.replace("/docs/", "/docs-archive/")
 	var srcVal = getUrlVars(curUrl)["src"];
 	var anchorVar = undefined;
 	if (curUrl.indexOf("#") != -1){
