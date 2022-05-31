@@ -1,17 +1,46 @@
 function FullTreeMenuList(generateDocHead, needh3=true) {
+  var verArray = SearchVersion();
   var allHerf1 = $(".docContainer .content, #docHead, #AutoGenerateSidebar, .sideBar, #crumbs").find("a");
-  for (var i = 0; i < allHerf1.length; i++) {
+  for (var i = 0; i < allHerf1.length; i++)
+  {
       allHerf1[i].onclick = function(){
-        if ($(this).parents(".sideBar").length > 0) {
-          addParam(this, null, 'sidebar'); 
+        if ($(this).parents(".sideBar").length > 0 && (getUrlVars(document.URL)["ver"]==undefined|| getUrlVars(document.URL)["ver"]=="latest")) {
+          addParam(this, verArray[0], 'sidebar'); 
         } else {
-          addParam(this, null); 
+          addParam(this, verArray[0]); 
         }
         return false;
       };
   }
   var navWrap = document.getElementById("fullTreeMenuListContainer");
   if (navWrap != null) {
+    var activeLinks = $('#fullTreeMenuListContainer').find('.activeLink')
+    var fullTreeMenuList = $("#collectionMenuDoc").length > 0 ? $("#fullTreeMenuListContainer > ul.collectionUL > li") : $("#fullTreeMenuListContainer > li")
+    if (activeLinks.length > 1) {
+      FilterCurrentVersionTree(fullTreeMenuList, verArray[0]);
+      var curLiItem = $('#fullTreeMenuListContainer').find('.activeLink').parent();
+      if (curLiItem.length > 0 && !isPageInVersionTree(curLiItem[0], verArray[0])) {
+        var replaceUrl = document.URL
+        if ($(curLiItem[0]).parent().hasClass("mainPage")) {
+          replaceUrl = $(fullTreeMenuList).not(".notCurVersionItem").find("a")[0].href
+        } else {
+          replaceUrl = $(curLiItem[0]).parent().parent().find("a").not(".activeLink")[0].href
+        }
+        window.location.replace(replaceUrl)
+      }
+    } else {
+      var curLiItem = $('#fullTreeMenuListContainer').find('.activeLink').parent();
+      if (curLiItem.length > 0 && !isPageInVersionTree(curLiItem[0], verArray[0])) {
+        var replaceUrl = document.URL
+        if ($(curLiItem[0]).parent().hasClass("mainPage")) {
+          replaceUrl = $(fullTreeMenuList).not(".notCurVersionItem").find("a")[0].href
+        } else {
+          replaceUrl = $(curLiItem[0]).parent().parent().find("a").not(".activeLink")[0].href
+        }
+        window.location.replace(replaceUrl)
+      }
+      FilterCurrentVersionTree(fullTreeMenuList, verArray[0]);
+    }
     AddCanonicalLinkOnPage(document.URL);
     ExpandCurrentPageTree("fullTreeMenuListContainer");
     initCrumbs()
@@ -85,6 +114,31 @@ function GenerateContentByHead(needh3 = true) {
   }
 }
 
+function isPageInVersionTree(treeItem, curVersion) {
+  var startVersion = treeItem.dataset.startversion || "0", endVersion = treeItem.dataset.endversion  || null;
+  var startDiff = GetVersionDiff(startVersion, curVersion)
+  var endDiff = endVersion && endVersion!="" ? GetVersionDiff(curVersion, endVersion) : 100
+  if (startDiff <= 0 || endDiff == -1) {
+    return false
+  } else {
+    return true
+  }
+}
+
+function FilterCurrentVersionTree(treeList, curVersion) {
+  for(var i=0; i<treeList.length; i++) {
+    var treeItem = treeList[i];
+    if (!isPageInVersionTree(treeItem, curVersion)) {
+      $(treeItem).addClass('notCurVersionItem')
+      $(treeItem).find("a").removeClass("activeLink")
+    } else {
+      if ($(treeItem).find('ul').length > 0) {
+        FilterCurrentVersionTree($(treeItem).find('ul > li'), curVersion)
+      }
+    }
+  }
+}
+
 function ExpandCurrentPageTree(searchListId) {
   $('#' + searchListId).find('.activeLink').parent().parents("li").removeClass("collapseListStyle").addClass("expandListStyle")
   if ($('#' + searchListId).find('.activeLink').parent()[0].dataset.ishashnode) {
@@ -105,6 +159,58 @@ function ExpandCurrentPageTree(searchListId) {
       $(this).addClass("activeLink")
     })
   }
+}
+
+function SearchVersion() {
+  var docUrl = document.URL;    
+  var ver = getUrlVars(docUrl)["ver"];
+  var curVerFromUrl = "";
+  var tmpExp = new RegExp(/-v[0-9]+[^\/^?^#]*((\/)|(.html))/g);
+  var searchAry = tmpExp.exec(docUrl);
+  if (searchAry != null){
+      curVerFromUrl = searchAry[0].replace('-v','');
+      curVerFromUrl = curVerFromUrl.replace('.html','');
+      curVerFromUrl = curVerFromUrl.replace('/', '');
+  }
+  else{
+      curVerFromUrl = "latest"
+  }
+
+  var compatiableDiv = document.getElementById( "compatibleInfo");
+  if (ver == undefined){
+      ver = curVerFromUrl;
+      if(compatiableDiv != null){
+          compatiableDiv.style.display = "none";
+      }
+  }
+  else if (ver != curVerFromUrl){
+      var curVerTag = $(".currentVersion ");
+      var compatibleTag = $(".compatibleCurVersion")
+      if (curVerTag != null) {
+          if (ver == "latest"){
+              curVerTag[0].innerText = "latest version";
+          }
+          else{
+              curVerTag[0].innerText = "version "+ver;
+          }
+      }
+      if(compatiableDiv != null){
+          
+      }
+      if (compatiableDiv != null && compatibleTag != null){
+          compatiableDiv.style.display = "block";
+          compatibleTag[0].innerText = "Version "+ver;
+      }
+      else if (compatiableDiv != null){
+          compatiableDiv.style.display = "none";
+      }
+  }
+  else if (compatiableDiv != null){
+      compatiableDiv.style.display = "none";
+  }
+
+  var verArray = new Array(ver, curVerFromUrl);
+  return verArray;
 }
 
 function getUrlVars(inputUrl) {
