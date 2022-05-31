@@ -4742,12 +4742,10 @@ a#toTop {
 }
 
 #loadingContent {
-    background: #f5f5f5;
     position: absolute;
     top: 141px;
     width: 100%;
     height: calc(100vh - 190px);
-    z-index: 111;
 }
 
 #loadingLogin.loading {
