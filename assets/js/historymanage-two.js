@@ -218,7 +218,7 @@ function addParam (aTag, verText, fromSourse)
 }
 
 function RequestNewPage(aTag, paramLink) {
-    $("#articleContent").hide()
+    $("#articleContent").addClass("hidden")
     $("#loadingContent").show()
     fetch(aTag.href).then(function(response) {
         return response.text()
@@ -230,7 +230,7 @@ function RequestNewPage(aTag, paramLink) {
         }
         $("#fullTreeMenuListContainer .activeLink").removeClass("activeLink")
         $(aTag).addClass("activeLink")
-        $("#articleContent").html($(data).find("#articleContent").html()).show()
+        $("#articleContent").html($(data).find("#articleContent").html()).removeClass("hidden")
         $("#loadingContent").hide()
 
         if ($("#AutoGenerateSidebar").length > 0) {
