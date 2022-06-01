@@ -203,7 +203,9 @@ function addParam (aTag, verText, fromSourse)
     //         changeHref = hrefVal+verStr
     //     }
     // }
-	
+	if (aTag.href.split("?")[0].split("#")[0].toLowerCase() == document.URL.split("?")[0].split("#")[0].toLowerCase()) {
+        fromSourse = null
+    }
     if (fromSourse == "sidebar") {
         // request link
         RequestNewPage(aTag, changeHref)
@@ -239,6 +241,11 @@ function RequestNewPage(aTag, paramLink) {
             initCrumbs()
         }
 
+        var sd = $(window).scrollTop()
+        if (sd > 0) {
+            window.scrollTo(0, sd > $('#overall-header').height() ? $('#overall-header').height() : sd)
+        }
+    
         if($(".markdown-body .sample-code-prefix").length > 0 && getUrlVars(document.URL)["lang"]) {
             var langs = getUrlVars(document.URL)["lang"].toLowerCase().trim().split(",")
             if (langs) {

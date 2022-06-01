@@ -4739,6 +4739,7 @@ a#toTop {
 
 #articleContent.hidden {
     opacity: 0!important;
+    display: block!important;
 }
 
 #loadingContent {
