@@ -3772,6 +3772,46 @@ i.dbr-logo {
     background-size: contain;
 }
 
+i.ddn-logo {
+    display: inline-block;
+    width: 314px;
+    height: 36px;
+    background: url(../img-icon/ddn.png) no-repeat left;
+    background-size: contain;
+}
+
+i.dlr-logo {
+    display: inline-block;
+    width: 275px;
+    height: 36px;
+    background: url(../img-icon/dlr.png) no-repeat left;
+    background-size: contain;
+}
+
+i.dce-logo {
+    display: inline-block;
+    width: 193px;
+    height: 24px;
+    background: url(../img-icon/dce.png) no-repeat left;
+    background-size: contain;
+}
+
+i.dcp-logo {
+    display: inline-block;
+    width: 154px;
+    height: 24px;
+    background: url(../img-icon/dcp.png) no-repeat left;
+    background-size: contain;
+}
+
+i.dcv-logo {
+    display: inline-block;
+    width: 172px;
+    height: 24px;
+    background: url(../img-icon/dcv.png) no-repeat left;
+    background-size: contain;
+}
+
 i.dnt-logo {
     display: inline-block;
     width: 219px;
@@ -4298,7 +4338,12 @@ i.dbr-white-logo {
 
     .mobileProductMenu .productLogo i.dbr-logo,
     .mobileProductMenu .productLogo i.dwt-logo,
-    .mobileProductMenu .productLogo i.dnt-logo {
+    .mobileProductMenu .productLogo i.dnt-logo,
+    .mobileProductMenu .productLogo i.dce-logo,
+    .mobileProductMenu .productLogo i.ddn-logo,
+    .mobileProductMenu .productLogo i.dcp-logo,
+    .mobileProductMenu .productLogo i.dcv-logo,
+    .mobileProductMenu .productLogo i.dlr-logo {
         height: 25px;
         width: 188px;
     }
