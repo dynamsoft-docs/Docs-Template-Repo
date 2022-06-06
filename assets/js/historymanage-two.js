@@ -3,21 +3,20 @@ function UrlReplace()
     var docUrl = document.URL;
     var ver = getUrlVars(docUrl)["ver"];
     var matchVer = getUrlVars(docUrl)["matchVer"];
+    var verFileName = "/v17.2.1/"
     if (ver != undefined && ver != "latest") {
         var tempVer = findNearestVersion(ver);
         if (tempVer!="latest" && tempVer != ver) {
             var replaceUrl = docUrl.replace(ver, tempVer)
             if (replaceUrl.indexOf("/docs/") >0) {
-                replaceUrl = replaceUrl.replace("/docs/", "/docs-archive/")
+                replaceUrl = replaceUrl.replace("/docs/", "/docs-archive" + verFileName)
                 window.location.replace(replaceUrl);
             }
         }
     }
-    if (matchVer == undefined && ver != undefined) {
-        // RedirToGivenVersionPage(ver);
-        // change link to doc-archive
+    if (matchVer == undefined && ver != undefined && ver != "latest") {
         if (docUrl.indexOf("/docs/") >0) {
-            docUrl = docUrl.replace("/docs/", "/docs-archive/")
+            docUrl = docUrl.replace("/docs/", "/docs-archive" + verFileName)
             window.location.replace(docUrl);
         }
     }
@@ -27,113 +26,6 @@ function allHerfClick(_this, ver) {
     addParam(_this, ver);
     return false;
 }
-
-// function RedirToGivenVersionPage(inputVer)
-// {
-//     var curVerTag = $(".currentVersion ");
-//     var bestVerIndex = -1;
-//     var verDiff = -1;
-//     var curVer = null;
-//     var bestVersion = null;
-//     if (curVerTag != null) {
-//         var verText = (curVerTag[0].innerHTML).toLowerCase();
-//         if (verText == "latest version"){
-//             curVer = "latest"
-//         }
-//         else{
-//             curVer = verText.replace('version ','');
-//         }
-//         if (curVer == inputVer){
-//             return;
-//         }
-//         else {
-//             bestVerIndex = -1;
-//             verDiff = GetVersionDiff(inputVer, curVer);
-//             bestVersion = curVer;
-//         }
-//     }
-//     var anchorVal = "";
-//     var curDocUrl = document.URL;
-//     if (curDocUrl.indexOf("#") != -1){
-// 		var urlAry = curDocUrl.split("#");
-// 		if (urlAry.length == 2){
-//             anchorVal = "#" + urlAry[1];
-// 		}
-// 	}
-
-//     var changeVer = "";
-//     var ifChangeVersion = getUrlVars(document.URL)["cVer"];
-//     if (ifChangeVersion != undefined) {
-//         changeVer = "&&cVer=true";
-//     }
-
-//     var historyList = $(".otherVersions");
-//     if (historyList != null)
-//     {
-//         var listAry = historyList[0].getElementsByTagName("li");
-
-//         for (var i = 0; i < listAry.length; i++) {
-//             var tmpVerText = listAry[i].innerText;
-//             var tmpVer = null;
-//             if (tmpVerText == "latest version"){
-//                 tmpVer = "latest"
-//             }
-//             else{
-//                 tmpVer = tmpVerText.replace('version ','');
-//             }
-//             if (tmpVer == inputVer){
-//                 var aTag = $(listAry[i]).children("a");
-//                 if (aTag.length > 0) {
-//                     var exp = new RegExp(/[?]+([^=]+)=/gi)
-//                     if (exp.exec(aTag[0].href) != null){
-//                         window.location.replace(aTag[0].href + "&&ver=" +inputVer+"&&matchVer=true" + changeVer + anchorVal);
-//                         return;
-//                     }
-//                     else{
-//                     	if (getUrlVars(document.URL)["src"] != undefined){
-//                     		window.location.replace(aTag[0].href + "?src=" + getUrlVars(document.URL)["src"] + "&&ver=" +inputVer+"&&matchVer=true" + changeVer + anchorVal);
-//                     	}
-//                     	else{
-//                         	window.location.replace(aTag[0].href + "?ver=" +inputVer+"&&matchVer=true" + changeVer + anchorVal);
-//                     	}
-//                        return;
-//                     }
-//                 }
-//             }
-//             else {
-//                 var tmpDiff = GetVersionDiff(inputVer, tmpVer);
-//                 if (tmpDiff >= 0 && (tmpDiff < verDiff || verDiff < 0)){
-//                     bestVerIndex = i;
-//                     verDiff = tmpDiff;
-//                     bestVersion = tmpVer;
-//                 }
-//             }
-//         }
-//     }
- 
-    
-//     if (bestVerIndex >= 0){
-//         var aTag = $(listAry[bestVerIndex]).children("a");
-//         if (aTag.length > 0) {
-//             var exp = new RegExp(/[?]+([^=]+)=/gi)
-//             if (exp.exec(aTag[0].href) != null){
-//                 window.location.replace(aTag[0].href + "&&ver=" +inputVer+"&&matchVer=true"+ changeVer + anchorVal);
-//                 return;
-//             }
-//             else{
-//                 if (getUrlVars(document.URL)["src"] != undefined){
-//                     window.location.replace(aTag[0].href + "?src="+ getUrlVars(document.URL)["src"] + "&&ver=" +inputVer+"&&matchVer=true"+ changeVer + anchorVal);
-//                 }
-//                 else{
-//                     window.location.replace(aTag[0].href + "?ver=" +inputVer+"&&matchVer=true"+ changeVer + anchorVal);
-//                 }
-//                 return;
-//             }
-//         }
-//     }
-
-//     return;
-// }
 
 function GetVersionDiff(inputVer, compareVer)
 {
@@ -278,7 +170,8 @@ function changeVersion (liTag)
 		ver = innertext.replace('version ','');
 	}
 	var curUrl = document.URL;
-    curUrl = curUrl.replace("/docs/", "/docs-archive/")
+    var verFileName = "/v17.2.1/"
+    curUrl = curUrl.replace("/docs/", "/docs-archive" + verFileName)
 	var srcVal = getUrlVars(curUrl)["src"];
 	var anchorVar = undefined;
 	if (curUrl.indexOf("#") != -1){
