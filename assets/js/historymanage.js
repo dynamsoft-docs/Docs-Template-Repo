@@ -255,9 +255,13 @@ function changeVersion (liTag)
             curUrl = curUrl + "&&src=" + srcVal;
         }
     } else {
+        if (curUrl.indexOf("-v"))
         if (srcVal != undefined){
             curUrl = curUrl + "?src=" + srcVal;
         }
+        curUrl = curUrl.replace(/\/index-v[0-9]+[^\/]*.html/g,"/");
+        curUrl = curUrl.replace(/-v[0-9]+[^\/]*\//g,"/");
+        curUrl = curUrl.replace(/-v[0-9]+[^\/]*.html/g,".html");
         curUrl = curUrl.replace('/docs-archive/v17.2.1/', '/docs/')
     }
 	if(anchorVar != undefined){
