@@ -311,6 +311,8 @@ function copy(data) {
 }
 
 function init() {
+    $("#versionNoteOldVersion").text($(".currentVersion").text())
+
     var subHeight = 0;
     if ($('.subHeadWrapper').length > 0) {
         subHeight = $('.subHeadWrapper').height();

@@ -3,7 +3,9 @@ function FullTreeMenuList(generateDocHead, needh3=true) {
   var allHerf1 = $(".docContainer .content, #docHead, #AutoGenerateSidebar, .sideBar, #crumbs").find("a");
   for (var i = 0; i < allHerf1.length; i++)
   {
+    if (!$(allHerf1[i]).hasClass("noVersionAdd")) {
       allHerf1[i].onclick = function(){addParam(this, verArray[0]); return false;};
+    }
   }
   var navWrap = document.getElementById("fullTreeMenuListContainer");
   if (navWrap != null) {
@@ -165,7 +167,7 @@ function SearchVersion() {
       curVerFromUrl = curVerFromUrl.replace('/', '');
   }
   else{
-      curVerFromUrl = "latest"
+      curVerFromUrl = "17.2.1"
   }
 
   var compatiableDiv = document.getElementById( "compatibleInfo");
@@ -179,8 +181,8 @@ function SearchVersion() {
       var curVerTag = $(".currentVersion ");
       var compatibleTag = $(".compatibleCurVersion")
       if (curVerTag != null) {
-          if (ver == "latest"){
-              curVerTag[0].innerText = "latest version";
+          if (ver == "17.2.1"){
+              curVerTag[0].innerText = "17.2.1";
           }
           else{
               curVerTag[0].innerText = "version "+ver;

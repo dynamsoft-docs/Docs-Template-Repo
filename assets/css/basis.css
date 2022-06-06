@@ -59,7 +59,7 @@ h3,
 h4,
 h5 {
     color: #444;
-    font-family: Oswald-Light, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
+    font-family: Oswald-Light;
     font-weight: normal;
 }
 
@@ -114,7 +114,7 @@ h5 {
 }
 
 .markdown-body h4 {
-    font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
+    font-family: Oswald-Regular;
     margin-bottom: 10px;
 }
 
@@ -125,7 +125,7 @@ h5 {
 }
 
 .fontOswald {
-    font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
+    font-family: Oswald-Regular;
 }
 
 a.orangeLink {
@@ -463,14 +463,14 @@ ul.disc>li p:hover {
     background-color: #323234;
     text-align: left;
     color: #FFFFFF;
-    font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
+    font-family: Oswald-Regular;
     font-size: 16px !important;
     font-weight: normal !important;
 }
 
 .markdown-body table thead th strong {
     color: #FFFFFF;
-    font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
+    font-family: Oswald-Regular;
     font-weight: normal;
 }
 
@@ -515,7 +515,7 @@ ul.disc>li p:hover {
 }
 
 .markdown-body h3 code {
-    font-family: Oswald-Light, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
+    font-family: Oswald-Light;
     font-weight: normal;
 }
 
@@ -784,11 +784,11 @@ ul.disc>li p:hover {
 
 #compatibleInfo p {
     margin-bottom: 0;
-    font-family: Oswald-Light, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
+    font-family: Oswald-Light;
 }
 
 #compatibleInfo p.compatibleCurVersion {
-    font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
+    font-family: Oswald-Regular;
 }
 
 /*修改滚动条样式*/
@@ -863,7 +863,7 @@ ul::-webkit-scrollbar-corner {
     font-size: 24px;
     line-height: 36px;
     margin-bottom: 5px;
-    font-family: Oswald-Light, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
+    font-family: Oswald-Light;
 }
 
 
@@ -2045,7 +2045,7 @@ header-signin {
     #xsNav li.menuItem .menuName a {
         color: #FFFFFF;
         font-size: 20px;
-        font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
+        font-family: Oswald-Regular;
     }
 
     #xsNav li.menuItem .menuDetail {
@@ -2059,7 +2059,7 @@ header-signin {
     #xsNav li.menuItem .menuDetail .menu-left,
     #xsNav li.menuItem .menuDetail .menu-right {
         display: inline-block;
-        font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
+        font-family: Oswald-Regular;
     }
 
     #xsNav li.menuItem .menuDetail .menu-left {
@@ -2082,7 +2082,7 @@ header-signin {
     }
 
     #xsNav li.menuItem .menuDetail .menu-right .subMenuList li.subTitle {
-        font-family: Oswald-Light, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
+        font-family: Oswald-Light;
         font-size: 16px;
     }
 
@@ -2482,7 +2482,7 @@ header-signin {
         line-height: 71px;
         font-size: 18px;
         color: #444;
-        font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
+        font-family: Oswald-Regular;
     }
 
     #mdMenu .icon-orange-angle {
@@ -2600,7 +2600,7 @@ header-signin {
 
     .headSubMenu .menu-top .menu-right .subMenuList li.subTitle {
         color: #323234;
-        font-family: Oswald-Light, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
+        font-family: Oswald-Light;
         font-size: 18px;
     }
 
@@ -2611,7 +2611,7 @@ header-signin {
     .headSubMenu .menu-top .subMenuList li.item a {
         color: #323234;
         font-size: 18px;
-        font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
+        font-family: Oswald-Regular;
     }
 
     .headSubMenu .menu-top .subMenuList li.item a:hover,
@@ -2633,7 +2633,7 @@ header-signin {
         color: #ffffff;
         text-align: center;
         font-size: 24px;
-        font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
+        font-family: Oswald-Regular;
     }
 
     #companySubMenu {
@@ -2649,7 +2649,7 @@ header-signin {
     #companySubMenu .subMenuList li.item a {
         color: #323234;
         font-size: 16px;
-        font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
+        font-family: Oswald-Regular;
     }
 
     #companySubMenu .subMenuList li.item a:visited,
@@ -2678,7 +2678,7 @@ header-signin {
     #useCaseSubMenu .subMenuList li.item a {
         color: #323234;
         font-size: 16px;
-        font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
+        font-family: Oswald-Regular;
     }
 
     #useCaseSubMenu .subMenuList li.item a:visited,
@@ -3072,7 +3072,7 @@ header-signin {
 
     .headSubMenu .menu-top .menu-right .subMenuList li.subTitle {
         color: #323234;
-        font-family: Oswald-Light, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
+        font-family: Oswald-Light;
         font-size: 18px;
     }
 
@@ -3083,7 +3083,7 @@ header-signin {
     .headSubMenu .menu-top .subMenuList li.item a {
         color: #323234;
         font-size: 18px;
-        font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
+        font-family: Oswald-Regular;
     }
 
     .headSubMenu .menu-top .subMenuList li.item a:hover,
@@ -3105,7 +3105,7 @@ header-signin {
         color: #ffffff;
         text-align: center;
         font-size: 24px;
-        font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
+        font-family: Oswald-Regular;
     }
 
     #companySubMenu {
@@ -3121,7 +3121,7 @@ header-signin {
     #companySubMenu .subMenuList li.item a {
         color: #323234;
         font-size: 16px;
-        font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
+        font-family: Oswald-Regular;
     }
 
     #companySubMenu .subMenuList li.item a:visited,
@@ -3150,7 +3150,7 @@ header-signin {
     #useCaseSubMenu .subMenuList li.item a {
         color: #323234;
         font-size: 16px;
-        font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
+        font-family: Oswald-Regular;
     }
 
     #useCaseSubMenu .subMenuList li.item a:visited,
@@ -3731,7 +3731,7 @@ header-signin {
     cursor: pointer;
     color: #FFFFFF !important;
     background: #FE8E14 !important;
-    font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
+    font-family: Oswald-Regular;
     vertical-align: top;
 }
 
@@ -3753,7 +3753,7 @@ header-signin {
     color: #FE8E14 !important;
     background: transparent !important;
     border: 2px solid #FE8E14;
-    font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
+    font-family: Oswald-Regular;
     vertical-align: top;
 }
 
@@ -3769,46 +3769,6 @@ i.dbr-logo {
     width: 267px;
     height: 36px;
     background: url(../img-icon/DBR_Horizontal_REV_White.svg) no-repeat left;
-    background-size: contain;
-}
-
-i.ddn-logo {
-    display: inline-block;
-    width: 314px;
-    height: 36px;
-    background: url(../img-icon/ddn.png) no-repeat left;
-    background-size: contain;
-}
-
-i.dlr-logo {
-    display: inline-block;
-    width: 275px;
-    height: 36px;
-    background: url(../img-icon/dlr.png) no-repeat left;
-    background-size: contain;
-}
-
-i.dce-logo {
-    display: inline-block;
-    width: 193px;
-    height: 24px;
-    background: url(../img-icon/dce.png) no-repeat left;
-    background-size: contain;
-}
-
-i.dcp-logo {
-    display: inline-block;
-    width: 154px;
-    height: 24px;
-    background: url(../img-icon/dcp.png) no-repeat left;
-    background-size: contain;
-}
-
-i.dcv-logo {
-    display: inline-block;
-    width: 172px;
-    height: 24px;
-    background: url(../img-icon/dcv.png) no-repeat left;
     background-size: contain;
 }
 
@@ -3966,7 +3926,7 @@ i.dbr-white-logo {
     font-size: 18px;
     cursor: pointer;
     vertical-align: top;
-    font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
+    font-family: Oswald-Regular;
 }
 
 /*.productMenu .menuList li:first-child { font-size: 26px; margin-right: 50px; padding: 0; }*/
@@ -3975,7 +3935,7 @@ i.dbr-white-logo {
 }
 
 .productMenu .menuList li a {
-    font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
+    font-family: Oswald-Regular;
 }
 
 .productMenu .menuList li a,
@@ -4011,7 +3971,7 @@ i.dbr-white-logo {
     margin-top: 20px;
     color: #FFFFFF;
     background: #FE8E14;
-    font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
+    font-family: Oswald-Regular;
     transition: ease-in-out 0.2s all;
     box-shadow: 0px 0px 0 0 #FFFFFF;
 }
@@ -4212,7 +4172,7 @@ i.dbr-white-logo {
         display: inline-block;
         height: 36px;
         line-height: 36px;
-        font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
+        font-family: Oswald-Regular;
         font-size: 20px;
         margin-top: 12px;
         cursor: pointer;
@@ -4287,7 +4247,7 @@ i.dbr-white-logo {
         font-size: 18px;
         color: #FFFFFF;
         cursor: pointer;
-        font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
+        font-family: Oswald-Regular;
         text-transform: uppercase;
     }
 
@@ -4297,7 +4257,7 @@ i.dbr-white-logo {
 
     .mobileProductDetailMenu .menuList .item .ct-more .item a {
         font-size: 14px;
-        font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
+        font-family: Oswald-Regular;
     }
 
     .mobileProductDetailMenu .menuList>.item {
@@ -4338,12 +4298,7 @@ i.dbr-white-logo {
 
     .mobileProductMenu .productLogo i.dbr-logo,
     .mobileProductMenu .productLogo i.dwt-logo,
-    .mobileProductMenu .productLogo i.dnt-logo,
-    .mobileProductMenu .productLogo i.dce-logo,
-    .mobileProductMenu .productLogo i.ddn-logo,
-    .mobileProductMenu .productLogo i.dcp-logo,
-    .mobileProductMenu .productLogo i.dcv-logo,
-    .mobileProductMenu .productLogo i.dlr-logo {
+    .mobileProductMenu .productLogo i.dnt-logo {
         height: 25px;
         width: 188px;
     }

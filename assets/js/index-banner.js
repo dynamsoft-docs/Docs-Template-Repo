@@ -146,7 +146,7 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
 
                 var version_tree_list = null
                 var curPageVersion = verArray[0];
-                curPageVersion = curPageVersion == 'latest' || curPageVersion == null ? 'latest_version' : curPageVersion;
+                curPageVersion = curPageVersion == '17.2.1' || curPageVersion == null ? '17.2.1' : curPageVersion;
                 // console.log(version_tree_list, curPageVersion);
                 version_tree_list = $('#sideBarIframe').contents().find('#version_tree_list ul.version-tree-container');
                 // console.log(version_tree_list, curPageVersion);
@@ -261,7 +261,7 @@ function SearchVersion() {
         curVerFromUrl = curVerFromUrl.replace('/', '');
     }
     else{
-        curVerFromUrl = "latest"
+        curVerFromUrl = "17.2.1"
     }
 
     var compatiableDiv = document.getElementById( "compatibleInfo");
@@ -275,8 +275,8 @@ function SearchVersion() {
         var curVerTag = $(".currentVersion ");
         var compatibleTag = $(".compatibleCurVersion")
         if (curVerTag != null) {
-            if (ver == "latest"){
-                curVerTag[0].innerText = "latest version";
+            if (ver == "17.2.1"){
+                curVerTag[0].innerText = "17.2.1";
             }
             else{
                 curVerTag[0].innerText = "version "+ver;
@@ -375,8 +375,8 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
                 // }
                 var ifChangeVersion = getUrlVars(document.URL)["cVer"];
                 if (ifChangeVersion != undefined || (ver != undefined &&
-                    ((ver != "latest" && pageStartVer != undefined && pageStartVer != "" && pageStartVer > ver) 
-                    || (curPageRealVer != undefined && curPageRealVer != "" && ((ver == "latest" && ver != curPageRealVer) || (ver != "latest" && ver > curPageRealVer)))
+                    ((ver != "17.2.1" && pageStartVer != undefined && pageStartVer != "" && pageStartVer > ver) 
+                    || (curPageRealVer != undefined && curPageRealVer != "" && ((ver == "17.2.1" && ver != curPageRealVer) || (ver != "17.2.1" && ver > curPageRealVer)))
                     ))) {
                     addParam(curListATag[0], ver);
                 }

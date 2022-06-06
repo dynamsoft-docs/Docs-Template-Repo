@@ -3,7 +3,7 @@ function UrlReplace()
     var docUrl = document.URL;
     var ver = getUrlVars(docUrl)["ver"];
     var matchVer = getUrlVars(docUrl)["matchVer"];
-    if (ver != undefined && ver != "latest") {
+    if (ver != undefined && ver != "17.2.1") {
         var tempVer = findNearestVersion(ver);
         if (tempVer != ver) {
             var replaceUrl = docUrl.replace(ver, tempVer)
@@ -15,9 +15,9 @@ function UrlReplace()
     }
     if (ver == undefined) {
         if(docUrl.indexOf("?") > 0) {
-            window.location.replace(docUrl + "&&ver=latest");
+            window.location.replace(docUrl + "&&ver=17.2.1");
         } else {
-            window.location.replace(docUrl + "?ver=latest");
+            window.location.replace(docUrl + "?ver=17.2.1");
         }
     }
 }
@@ -36,8 +36,8 @@ function RedirToGivenVersionPage(inputVer)
     var bestVersion = null;
     if (curVerTag != null) {
         var verText = (curVerTag[0].innerHTML).toLowerCase();
-        if (verText == "latest version"){
-            curVer = "latest"
+        if (verText == "17.2.1"){
+            curVer = "17.2.1"
         }
         else{
             curVer = verText.replace('version ','');
@@ -74,8 +74,8 @@ function RedirToGivenVersionPage(inputVer)
         for (var i = 0; i < listAry.length; i++) {
             var tmpVerText = listAry[i].innerText;
             var tmpVer = null;
-            if (tmpVerText == "latest version"){
-                tmpVer = "latest"
+            if (tmpVerText == "17.2.1"){
+                tmpVer = "17.2.1"
             }
             else{
                 tmpVer = tmpVerText.replace('version ','');
@@ -136,7 +136,7 @@ function RedirToGivenVersionPage(inputVer)
 
 function GetVersionDiff(inputVer, compareVer)
 {
-    if (compareVer == "latest"){
+    if (compareVer == "17.2.1"){
         return 100;
     }
 
@@ -230,8 +230,8 @@ function changeVersion (liTag)
 {
 	var innertext = (liTag.innerText).toLowerCase();
 	var ver = null;
-	if (innertext == "latest version"){
-		ver = "latest"
+	if (innertext == "17.2.1"){
+		ver = "17.2.1"
 	}
 	else{
 		ver = innertext.replace('version ','');
@@ -267,8 +267,8 @@ function findNearestVersion(ver) {
     // console.log("versionList: " + versionList)
     for (var i=0; i<versionList.length; i++) {
         var tempVer = $(versionList[i]).text().toLowerCase()
-        if (tempVer == "latest version"){
-            tempVer = "latest"
+        if (tempVer == "17.2.1"){
+            tempVer = "17.2.1"
         } else{
             tempVer = tempVer.replace('version ','');
         }
@@ -286,5 +286,5 @@ function findNearestVersion(ver) {
             // console.log('bestVersion: ' + bestVer)
         }
     }
-    if (verDiff) {return bestVer} else {return "latest"}
+    if (verDiff) {return bestVer} else {return "17.2.1"}
 }
