@@ -230,8 +230,8 @@ function changeVersion (liTag)
 {
 	var innertext = (liTag.innerText).toLowerCase();
 	var ver = null;
-	if (innertext == "17.2.1"){
-		ver = "17.2.1"
+	if (innertext == "latest version"){
+		ver = "latest"
 	}
 	else{
 		ver = innertext.replace('version ','');
@@ -249,11 +249,17 @@ function changeVersion (liTag)
 	if (curUrl.indexOf("#") != -1){
 		curUrl = curUrl.substring(0, curUrl.indexOf("#"));
 	}
-	
-	curUrl = curUrl + "?ver=" + ver + "&&cVer=true";
-	if (srcVal != undefined){
-		curUrl = curUrl + "&&src=" + srcVal;
-	}
+	if (ver !== 'latest') {
+        curUrl = curUrl + "?ver=" + ver + "&&cVer=true";
+        if (srcVal != undefined){
+            curUrl = curUrl + "&&src=" + srcVal;
+        }
+    } else {
+        if (srcVal != undefined){
+            curUrl = curUrl + "?src=" + srcVal;
+        }
+        curUrl = curUrl.replace('/docs-archive/v17.2.1/', '/docs/')
+    }
 	if(anchorVar != undefined){
 		curUrl = curUrl + "#" + anchorVar;
 	}
