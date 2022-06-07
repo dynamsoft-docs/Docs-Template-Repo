@@ -7,7 +7,7 @@ $(document).ready(function(){
     for (var i=0; i<template2Objs.length; i++) {
         $(template2Objs[i]).find(">div").eq(0).addClass('on')
     }
-    
+
     if (document.URL.indexOf("web-twain/docs/faq/") > 0  && document.URL.indexOf("web-twain/docs/faq/?ver") < 0) {
         $("#breadcrumbLastNode").text($("h1").text())
     }
@@ -158,7 +158,8 @@ $(document).ready(function(){
         stopPropagation(e);
     })
 
-    $('.markdown-body .sample-code-prefix + blockquote ul li').on('click', function() {
+
+    $(document).delegate(".markdown-body .sample-code-prefix + blockquote ul li", 'click', function() {
         var index = $(this).index()
         var sIndex = $($(this).parent().parent()[0].previousSibling.previousSibling).index('.sample-code-prefix')
         $('.markdown-body .sample-code-prefix').eq(sIndex).find('+ blockquote ul li').removeClass('on')
@@ -170,19 +171,19 @@ $(document).ready(function(){
         $('.markdown-body .sample-code-prefix').eq(sIndex).find('+ blockquote > div').eq(index).addClass('on')
     })
 
-    $('.markdown-body .sample-code-prefix + blockquote ol li a').on('click', function() {
+    $(document).delegate(".markdown-body .sample-code-prefix + blockquote ol li a", 'click', function() {
         copy($(this).parent().find('code').text())
     })
 
-    $('.copy-prefix + p a').on('click', function() {
+    $(document).delegate(".copy-prefix + p a", 'click', function() {
         copy($(this).parent().find('+ div code').text())
     })
 
-    $('.rightMenuControlBtn').on('click', function() {
+    $(document).delegate(".rightMenuControlBtn", 'click', function() {
         $('.docContainer .main, .rightSideMenu, .markdown-body').toggleClass('showRightSideMenu')
     })
 
-    $('.fold-panel-prefix + * i').on('click', function() {
+    $(document).delegate(".fold-panel-prefix + * i", 'click', function() {
         $(this).parent().find('.fa-caret-down').toggleClass('fa-caret-up')
         if ($(this).parent().next().hasClass('fold-panel-start')) {
             var foldPanel = $(this).parent().next();
@@ -383,4 +384,3 @@ function formatDate(date) {
     var month = monthList[newDate.getMonth()]
     return weekday + ', ' + month + ' ' + newDate.getDate() + ', ' + newDate.getFullYear()
 }
-

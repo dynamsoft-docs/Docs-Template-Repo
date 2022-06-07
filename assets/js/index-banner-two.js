@@ -1,38 +1,17 @@
 function FullTreeMenuList(generateDocHead, needh3=true) {
-  var verArray = SearchVersion();
   var allHerf1 = $(".docContainer .content, #docHead, #AutoGenerateSidebar, .sideBar, #crumbs").find("a");
-  for (var i = 0; i < allHerf1.length; i++)
-  {
-      allHerf1[i].onclick = function(){addParam(this, verArray[0]); return false;};
+  for (var i = 0; i < allHerf1.length; i++) {
+      allHerf1[i].onclick = function(){
+        if ($(this).parents(".sideBar").length > 0) {
+          addParam(this, null, 'sidebar'); 
+        } else {
+          addParam(this, null); 
+        }
+        return false;
+      };
   }
   var navWrap = document.getElementById("fullTreeMenuListContainer");
   if (navWrap != null) {
-    var activeLinks = $('#fullTreeMenuListContainer').find('.activeLink')
-    if (activeLinks.length > 1) {
-      FilterCurrentVersionTree($("#fullTreeMenuListContainer > li"), verArray[0]);
-      var curLiItem = $('#fullTreeMenuListContainer').find('.activeLink').parent();
-      if (curLiItem.length > 0 && !isPageInVersionTree(curLiItem[0], verArray[0])) {
-        var replaceUrl = document.URL
-        if ($(curLiItem[0]).parent().hasClass("mainPage")) {
-          replaceUrl = $('#fullTreeMenuListContainer > li').not(".notCurVersionItem").find("a")[0].href
-        } else {
-          replaceUrl = $(curLiItem[0]).parent().parent().find("a").not(".activeLink")[0].href
-        }
-        window.location.replace(replaceUrl)
-      }
-    } else {
-      var curLiItem = $('#fullTreeMenuListContainer').find('.activeLink').parent();
-      if (curLiItem.length > 0 && !isPageInVersionTree(curLiItem[0], verArray[0])) {
-        var replaceUrl = document.URL
-        if ($(curLiItem[0]).parent().hasClass("mainPage")) {
-          replaceUrl = $('#fullTreeMenuListContainer > li').not(".notCurVersionItem").find("a")[0].href
-        } else {
-          replaceUrl = $(curLiItem[0]).parent().parent().find("a").not(".activeLink")[0].href
-        }
-        window.location.replace(replaceUrl)
-      }
-      FilterCurrentVersionTree($("#fullTreeMenuListContainer > li"), verArray[0]);
-    }
     AddCanonicalLinkOnPage(document.URL);
     ExpandCurrentPageTree("fullTreeMenuListContainer");
     initCrumbs()
@@ -41,7 +20,7 @@ function FullTreeMenuList(generateDocHead, needh3=true) {
       needh3 = needh3 == 'true' || needh3 == true ? true : false
       if (needh3) {
           $('#fullTreeMenuListContainer').addClass('needh3');
-      }               
+      }              
       GenerateContentByHead(needh3);
     }
   }
@@ -106,31 +85,6 @@ function GenerateContentByHead(needh3 = true) {
   }
 }
 
-function isPageInVersionTree(treeItem, curVersion) {
-  var startVersion = treeItem.dataset.startversion || "0", endVersion = treeItem.dataset.endversion  || null;
-  var startDiff = GetVersionDiff(startVersion, curVersion)
-  var endDiff = endVersion && endVersion!="" ? GetVersionDiff(curVersion, endVersion) : 100
-  if (startDiff <= 0 || endDiff == -1) {
-    return false
-  } else {
-    return true
-  }
-}
-
-function FilterCurrentVersionTree(treeList, curVersion) {
-  for(var i=0; i<treeList.length; i++) {
-    var treeItem = treeList[i];
-    if (!isPageInVersionTree(treeItem, curVersion)) {
-      $(treeItem).addClass('notCurVersionItem')
-      $(treeItem).find("a").removeClass("activeLink")
-    } else {
-      if ($(treeItem).find('ul').length > 0) {
-        FilterCurrentVersionTree($(treeItem).find('ul > li'), curVersion)
-      }
-    }
-  }
-}
-
 function ExpandCurrentPageTree(searchListId) {
   $('#' + searchListId).find('.activeLink').parent().parents("li").removeClass("collapseListStyle").addClass("expandListStyle")
   if ($('#' + searchListId).find('.activeLink').parent()[0].dataset.ishashnode) {
@@ -151,58 +105,6 @@ function ExpandCurrentPageTree(searchListId) {
       $(this).addClass("activeLink")
     })
   }
-}
-
-function SearchVersion() {
-  var docUrl = document.URL;    
-  var ver = getUrlVars(docUrl)["ver"];
-  var curVerFromUrl = "";
-  var tmpExp = new RegExp(/-v[0-9]+[^\/^?^#]*((\/)|(.html))/g);
-  var searchAry = tmpExp.exec(docUrl);
-  if (searchAry != null){
-      curVerFromUrl = searchAry[0].replace('-v','');
-      curVerFromUrl = curVerFromUrl.replace('.html','');
-      curVerFromUrl = curVerFromUrl.replace('/', '');
-  }
-  else{
-      curVerFromUrl = "latest"
-  }
-
-  var compatiableDiv = document.getElementById( "compatibleInfo");
-  if (ver == undefined){
-      ver = curVerFromUrl;
-      if(compatiableDiv != null){
-          compatiableDiv.style.display = "none";
-      }
-  }
-  else if (ver != curVerFromUrl){
-      var curVerTag = $(".currentVersion ");
-      var compatibleTag = $(".compatibleCurVersion")
-      if (curVerTag != null) {
-          if (ver == "latest"){
-              curVerTag[0].innerText = "latest version";
-          }
-          else{
-              curVerTag[0].innerText = "version "+ver;
-          }
-      }
-      if(compatiableDiv != null){
-          
-      }
-      if (compatiableDiv != null && compatibleTag != null){
-          compatiableDiv.style.display = "block";
-          compatibleTag[0].innerText = "Version "+ver;
-      }
-      else if (compatiableDiv != null){
-          compatiableDiv.style.display = "none";
-      }
-  }
-  else if (compatiableDiv != null){
-      compatiableDiv.style.display = "none";
-  }
-
-  var verArray = new Array(ver, curVerFromUrl);
-  return verArray;
 }
 
 function getUrlVars(inputUrl) {
@@ -232,19 +134,22 @@ function UsefulRecord(isUseful) {
 function initCrumbs() {
   var crumbul = $('#crumbs').children("ul")
   if (crumbul.length != 0) {
-    var appendText = "";
-    var expandList = $("#fullTreeMenuListContainer .expandListStyle > a")
-    for (var i=0; i<expandList.length; i++) {
-      if ($(expandList[i]).hasClass("activeLink")) {
-        appendText += '<li id="breadcrumbLastNode">' + $(expandList[i])[0].textContent + '</li>'
-      } else {
-        appendText += '<li><a class="bluelink" href = "' + $(expandList[i])[0].href + '">'+ $(expandList[i])[0].textContent + '</a></li>'
+      var appendText = "";
+      var expandList = $("#fullTreeMenuListContainer .expandListStyle")
+      for (var i=0; i<expandList.length; i++) {
+          if ($(expandList[i]).find(".activeLink").length > 0) {
+              var atag = $(expandList[i]).find("> a")
+              if ($(atag).hasClass("activeLink")) {
+                  appendText += '<li id="breadcrumbLastNode">' + $(atag)[0].textContent + '</li>'
+              } else {
+                  appendText += '<li><a class="bluelink" href = "' + $(atag)[0].href + '">'+ $(atag)[0].textContent + '</a></li>'
+              }
+          }
       }
-    }
-    var activeLis = $("#fullTreeMenuListContainer a.activeLink")
-    if (activeLis.length > 0 && !$(activeLis[0]).parent().hasClass("expandListStyle")) {
-      appendText += '<li id="breadcrumbLastNode">' + $(activeLis[0]).text() + '</li>'
-    }
-    $(crumbul[0]).append(appendText);
+      var activeLis = $("#fullTreeMenuListContainer a.activeLink")
+      if (activeLis.length > 0 && !$(activeLis[0]).parent().hasClass("expandListStyle")) {
+          appendText += '<li id="breadcrumbLastNode">' + $(activeLis[0]).text() + '</li>'
+      }
+      $(crumbul[0]).append(appendText);
   }
 }
