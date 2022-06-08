@@ -52,7 +52,7 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
         for (var i = 0; i < allHerf1.length; i++)
         {
             allHerf1[i].onclick = function(){
-                if ($(this).parents(".sideBar").length > 0 && $("#articleContent").length > 0) {
+                if (!$(this).hasClass("refreshLink") && $(this).parents(".sideBar").length > 0 && $("#articleContent").length > 0) {
                   addParam(this, verArray[0], 'sidebar', needh3); 
                 } else {
                   addParam(this, verArray[0]); 
