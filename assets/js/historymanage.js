@@ -177,7 +177,7 @@ function GetVersionDiff(inputVer, compareVer)
     return diff;
 }
 
-function addParam (aTag, verText, fromSourse)
+function addParam (aTag, verText, fromSourse=null, needh3=false)
 {
     var hrefVal = aTag.href;
     var changeHref = hrefVal
@@ -203,9 +203,9 @@ function addParam (aTag, verText, fromSourse)
         }
     }
 	
-    if (fromSourse == "sidebar") {
+	if (fromSourse == "sidebar") {
         // request link
-        RequestNewPage(aTag, changeHref)
+        RequestNewPage(aTag, changeHref, needh3)
     } else {
         if (aTag.target == '_blank') {
             window.open(changeHref);
@@ -213,10 +213,12 @@ function addParam (aTag, verText, fromSourse)
             window.location.href = changeHref;
         }
     }
+
 	return;
 }
 
-function RequestNewPage(aTag, paramLink) {
+function RequestNewPage(aTag, paramLink, needh3=false) {
+    console.log(aTag.href)
     $("#articleContent").hide()
     $("#loadingContent").show()
     fetch(aTag.href).then(function(response) {
@@ -233,7 +235,7 @@ function RequestNewPage(aTag, paramLink) {
         $("#loadingContent").hide()
 
         if ($("#AutoGenerateSidebar").length > 0) {
-            GenerateContentByHead(false);
+            GenerateContentByHead(needh3);
             $('#crumbs > ul').html($('#crumbs > ul > li').eq(0))
             initCrumbs()
         }
@@ -254,6 +256,25 @@ function RequestNewPage(aTag, paramLink) {
             for (var i=0; i<template2Objs.length; i++) {
                 $(template2Objs[i]).find(">div").eq(0).addClass('on')
             }
+        }
+
+        if ($("#articleContent").find("script").length>0) {
+            window.MathJax = null
+            window.MathJax = {
+                tex: {
+                    inlineMath: [['$', '$'], ['\\(', '\\)']],
+                },
+                chtml:{
+                    scale: 1
+                }
+            };
+            
+            (function () {
+                var script = document.createElement('script');
+                script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js';
+                script.async = true;
+                document.head.appendChild(script);
+            })();
         }
     })
 }
@@ -296,6 +317,7 @@ function changeVersion (liTag)
 function findNearestVersion(ver) {
     var versionList = $(".fullVersionInfo li")
     var bestVer = ver, verDiff=null
+    // console.log("versionList: " + versionList)
     for (var i=0; i<versionList.length; i++) {
         var tempVer = $(versionList[i]).text().toLowerCase()
         if (tempVer == "latest version"){
@@ -303,6 +325,7 @@ function findNearestVersion(ver) {
         } else{
             tempVer = tempVer.replace('version ','');
         }
+        // console.log("tempVer: " + tempVer)
         if (tempVer == ver) {
             return tempVer
         } else {
@@ -311,6 +334,9 @@ function findNearestVersion(ver) {
                 verDiff = tmpDiff;
                 bestVer = tempVer;
             }
+            // console.log('tmpDiff: ' + tmpDiff)
+            // console.log('verDiff: ' + verDiff)
+            // console.log('bestVersion: ' + bestVer)
         }
     }
     if (verDiff) {return bestVer} else {return "latest"}

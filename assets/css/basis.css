@@ -749,17 +749,20 @@ ul.disc>li p:hover {
     position: absolute;
     background: url(https://www.dynamsoft.com/assets/img-icon/icon-search-9-16x16.png) no-repeat center center;
     display: block;
-    top: 7px;
-    left: 5px;
+    top: 8px;
+    left: 6px;
     z-index: 11;
+    opacity: 0.5;
 }
 
 #sideBarCnt .docSearchPart .search {
     position: relative;
-    height: 30px;
+    height: 32px;
     width: 100%;
     max-width: 250px;
     padding: 5px 5px 5px 27px;
+    border-radius: 0;
+    border-color: #CCCCCC;
 }
 
 .btn {
@@ -3150,7 +3153,7 @@ header-signin {
     #useCaseSubMenu .subMenuList li.item a {
         color: #323234;
         font-size: 16px;
-        font-family: Oswald-Regular;
+        font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
     }
 
     #useCaseSubMenu .subMenuList li.item a:visited,
@@ -3772,6 +3775,46 @@ i.dbr-logo {
     background-size: contain;
 }
 
+i.ddn-logo {
+    display: inline-block;
+    width: 314px;
+    height: 36px;
+    background: url(../img-icon/ddn.png) no-repeat left;
+    background-size: contain;
+}
+
+i.dlr-logo {
+    display: inline-block;
+    width: 275px;
+    height: 36px;
+    background: url(../img-icon/dlr.png) no-repeat left;
+    background-size: contain;
+}
+
+i.dce-logo {
+    display: inline-block;
+    width: 193px;
+    height: 24px;
+    background: url(../img-icon/dce.png) no-repeat left;
+    background-size: contain;
+}
+
+i.dcp-logo {
+    display: inline-block;
+    width: 154px;
+    height: 24px;
+    background: url(../img-icon/dcp.png) no-repeat left;
+    background-size: contain;
+}
+
+i.dcv-logo {
+    display: inline-block;
+    width: 172px;
+    height: 24px;
+    background: url(../img-icon/dcv.png) no-repeat left;
+    background-size: contain;
+}
+
 i.dnt-logo {
     display: inline-block;
     width: 219px;
@@ -4298,7 +4341,12 @@ i.dbr-white-logo {
 
     .mobileProductMenu .productLogo i.dbr-logo,
     .mobileProductMenu .productLogo i.dwt-logo,
-    .mobileProductMenu .productLogo i.dnt-logo {
+    .mobileProductMenu .productLogo i.dnt-logo,
+    .mobileProductMenu .productLogo i.dce-logo,
+    .mobileProductMenu .productLogo i.ddn-logo,
+    .mobileProductMenu .productLogo i.dcp-logo,
+    .mobileProductMenu .productLogo i.dcv-logo,
+    .mobileProductMenu .productLogo i.dlr-logo {
         height: 25px;
         width: 188px;
     }
@@ -4403,8 +4451,8 @@ i.dbr-white-logo {
     width: 250px;
     height: 32px;
     background: #ffffff;
-    border: 1px solid #ddd;
-    border-radius: 3px;
+    border: 1px solid #CCCCCC;
+    border-radius: 0px;
     color: #323234;
     padding: 0;
     top: 219px;
@@ -4422,16 +4470,15 @@ i.dbr-white-logo {
 }
 
 .history .currentVersion {
-    margin-bottom: 0;
-    text-transform: capitalize;
-    font-size: 16px;
     display: block;
-    padding-right: 30px;
+    font-size: 16px;
     color: #323234;
-    margin-bottom: 0;
-    line-height: 32px;
     text-align: left;
+    text-transform: capitalize;
+    line-height: 30px;
+    padding-right: 30px;
     padding-left: 10px;
+    margin-bottom: 0;
     cursor: pointer;
 }
 
@@ -4797,9 +4844,210 @@ a#toTop {
 @keyframes lds-ring {
     0% {
         transform: rotate(0deg);
-    }
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+}
 
     100% {
         transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+}
+}
+
+
+/* start left menu style 2.0   id: categoryMenuTree */
+/* font-family: OpenSans-Semibold; */
+#categoryMenuTree_history {
+    width: 265px;
+}
+#categoryMenuTree {
+    width: 100%;
+    margin-right: 0;
+    margin-left: 0;
+    padding-right: 0;
+    padding-left: 0;
+}
+#categoryMenuTree > .row {
+    margin-right: 0;
+    margin-left: 0;
+}
+#categoryMenuTree .sideBar.col-xs-12, #categoryMenuTree sideBar.col-md-3
+#categoryMenuTree .docContainer.col-xs-12, #categoryMenuTree .docContainer.col-md-9 {
+    padding-right: 0;
+    padding-left: 0;
+}
+#categoryMenuTree .docSearchPart {
+    margin-left: 35px;
+}
+#categoryMenuTree  #sideBarCnt .docSearchPart .search {
+    max-width: 265px;
+}
+#categoryMenuTree .mainPage {
+    margin-top: 30px;
+}
+#categoryMenuTree #fullTreeMenuListContainer ul {
+    margin: 0;
+}
+#categoryMenuTree #fullTreeMenuListContainer li {
+    position: relative;
+    /* line-height: 32px; */
+    margin-bottom: 0;
+    padding-left: 0;
+}
+
+#categoryMenuTree #fullTreeMenuListContainer a, #categoryMenuTree #fullTreeMenuListContainer a:active {
+    color: #606060;
+}
+
+#categoryMenuTree #fullTreeMenuListContainer li > a {
+    display: block;
+    padding: 6px 35px;
+}
+
+#categoryMenuTree #fullTreeMenuListContainer > li {
+    font-size: 14px;
+    color: #606060;
+}
+
+#categoryMenuTree #fullTreeMenuListContainer > li > a {
+    font-family: OpenSans-Semibold;
+    color: #323234;
+}
+
+#categoryMenuTree #fullTreeMenuListContainer li.category {
+    font-size: 14px;
+    color: #606060;
+    font-family: OpenSans-Semibold;
+    height: 45px;
+    line-height: 45px;
+    padding-left: 0;
+    margin-left: 35px;
+    margin-top: 30px;
+    border: 1px solid #CCCCCC;
+    border-left: 0;
+    border-right: 0;
+}
+#categoryMenuTree #fullTreeMenuListContainer li.category + li {
+    padding-top: 10px;
+}
+#categoryMenuTree #fullTreeMenuListContainer li:before {
+    display: none;
+}
+#categoryMenuTree #fullTreeMenuListContainer li.expandListStyle {
+    background: #F5F5F5;
+    padding-top: 7px;
+    padding-bottom: 7px;
+}
+#categoryMenuTree #fullTreeMenuListContainer li.collapseListStyle>a:not(.noListStyle),
+#categoryMenuTree #fullTreeMenuListContainer li.expandListStyle>a:not(.noListStyle) {
+    background: none;
+    padding-left: 35px;
+    font-family: OpenSans-Semibold;
+    color: #323234;
+}
+
+#categoryMenuTree #fullTreeMenuListContainer a:hover {
+    background: #D6D3D3!important;
+    color: inherit!important;
+}
+
+#categoryMenuTree #fullTreeMenuListContainer a.activeLink {
+    color: rgb(254, 142, 20)!important;
+}
+
+#categoryMenuTree #fullTreeMenuListContainer li.expandListStyle > ul {
+    display: block!important;
+}
+
+#categoryMenuTree #fullTreeMenuListContainer li.collapseListStyle > ul {
+    display: none!important;
+}
+
+#categoryMenuTree #fullTreeMenuListContainer li i.icon-arrow {
+    position: absolute;
+    right: 15px;
+    top: 0;
+    width: 20px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    cursor: pointer;
+    z-index: 11;
+}
+#categoryMenuTree #fullTreeMenuListContainer li i.icon-arrow::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border: 2px solid #323234;
+    border-left: 0;
+    border-top: 0;
+    transform: rotate(-45deg);
+    display: inline-block;
+}
+
+#categoryMenuTree #fullTreeMenuListContainer li.collapseListStyle > i.icon-arrow::before {
+    transform: rotate(-45deg);
+}
+#categoryMenuTree #fullTreeMenuListContainer li.expandListStyle > i.icon-arrow {
+    top: 7px;
+}
+#categoryMenuTree #fullTreeMenuListContainer li.expandListStyle > i.icon-arrow::before {
+    border-color: #AAAAAA;
+    transform: rotate(-135deg);
+}
+#categoryMenuTree #fullTreeMenuListContainer li i.icon-arrow:hover::before {
+    border-color: #AAAAAA;
+}
+
+#categoryMenuTree #fullTreeMenuListContainer > li.expandListStyle > ul > li > a:not(.noListStyle) {
+    padding-left: 50px;
+}
+
+#categoryMenuTree #fullTreeMenuListContainer > li.expandListStyle > ul > li.expandListStyle > ul > li > a:not(.noListStyle) {
+    padding-left: 65px;
+}
+
+#categoryMenuTree #fullTreeMenuListContainer > li.expandListStyle > ul > li.expandListStyle > ul > li.expandListStyle > ul > li > a:not(.noListStyle) {
+    padding-left: 80px;
+}
+
+@media (min-width: 1680px) {
+    #categoryMenuTree .sideBar {
+        max-width: 320px;
+        width: 320px;
+    }
+
+    #categoryMenuTree .docContainer {
+        width: calc(100% - 320px);
+        border-left: 1px solid #ddd;
+        padding-left: 15px;
+        min-height: calc(100vh - 203px);
     }
 }
+
+@media (max-width: 1679px) {
+    #categoryMenuTree #sideBarCnt .docSearchPart .search {
+        max-width: 225px;
+    }
+
+    #categoryMenuTree #docHead {
+        left: 320px;
+    }
+}
+
+@media (max-width: 1199px) {
+    #categoryMenuTree #sideBarCnt .docSearchPart .search {
+        max-width: 190px;
+    }
+
+    #categoryMenuTree #docHead {
+        left: 270px;
+    }
+}
+
+/* end left menu style 2.0 */

@@ -20,7 +20,7 @@ function FullTreeMenuList(generateDocHead, needh3=true) {
       needh3 = needh3 == 'true' || needh3 == true ? true : false
       if (needh3) {
           $('#fullTreeMenuListContainer').addClass('needh3');
-      }               
+      }              
       GenerateContentByHead(needh3);
     }
   }

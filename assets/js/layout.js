@@ -37,7 +37,6 @@ $(document).ready(function(){
             $(obj).next().find('i').css({'width': ($(obj).next().width() - 24) + 'px'})
             $(obj).next().find('i').css({'height': $(obj).next().height() + 'px'})
             $(obj).next().find('i').css({'line-height': $(obj).next().height() + 'px'})
-            console.log($(obj).next().height(), $(obj).next().width())
         }
         init()
         realFunc()
@@ -202,11 +201,18 @@ $(document).ready(function(){
     })
 
     $("#fullTreeMenuListContainer li > span.noPathItem, #fullTreeMenuListContainer li .listStyleIcon").on("click", function() {
-        if ($(this).parent().hasClass("collapseListStyle")) {
-            $(this).parent().removeClass("collapseListStyle").addClass("expandListStyle")
-        } else {
-            $(this).parent().addClass("collapseListStyle").removeClass("expandListStyle")
+        openChildMenuTree($(this))
+    })
+
+    $(document).delegate("#categoryMenuTree li > a", "click", function(e) {
+        console.log($(this)[0].href)
+        if ($(this)[0].href == undefined || $(this)[0].href.trim() == "") {
+            openChildMenuTree($(this), true)
         }
+    })
+
+    $(document).delegate("#categoryMenuTree i.icon-arrow", "click", function(e) {
+        openChildMenuTree($(this), true)
     })
 
     if($(".markdown-body .sample-code-prefix").length > 0 && getUrlVars(document.URL)["lang"]) {
@@ -221,6 +227,28 @@ $(document).ready(function(){
     }
 })
 
+function openChildMenuTree(obj, needIcon) {
+    if (needIcon && $(obj).parent().hasClass("collapseListStyle")) {
+        var childLis = $(obj).parent().find(">ul>li")
+        for(var i=0; i<childLis.length;i++) {
+            if ($(childLis[i]).find("ul").length > 0) {
+                $(childLis[i]).addClass("collapseListStyle")
+                if ($(childLis[i]).find(".icon-arrow").length == 0) {
+                    var iconItem = document.createElement("i")
+                    iconItem.className = "icon-arrow"
+                    childLis[i].appendChild(iconItem)
+                }
+            }
+        }
+    }
+
+    if ($(obj).parent().hasClass("collapseListStyle")) {
+        $(obj).parent().removeClass("collapseListStyle").addClass("expandListStyle")
+    } else {
+        $(obj).parent().addClass("collapseListStyle").removeClass("expandListStyle")
+    }
+}
+
 function sampleCodeLangsInit(langs) {
     var langTexts = langs.map(function(lang) {
         return getlangText(lang, null, null)
@@ -234,7 +262,6 @@ function sampleCodeLangsInit(langs) {
         }
     }
     $(".scChoosedLi").removeClass("scHiddenLi")
-    console.log(langText)
 }
 
 function sampleCodeSingleLangInit(lang, langText, index) {
@@ -386,4 +413,3 @@ function formatDate(date) {
     var month = monthList[newDate.getMonth()]
     return weekday + ', ' + month + ' ' + newDate.getDate() + ', ' + newDate.getFullYear()
 }
-
