@@ -377,7 +377,6 @@ function changeVersion (liTag)
 function findNearestVersion(ver) {
     var versionList = $(".fullVersionInfo li")
     var bestVer = ver, verDiff=null
-    // console.log("versionList: " + versionList)
     for (var i=0; i<versionList.length; i++) {
         var tempVer = $(versionList[i]).text().toLowerCase()
         if (tempVer == "latest version"){
@@ -385,7 +384,6 @@ function findNearestVersion(ver) {
         } else{
             tempVer = tempVer.replace('version ','');
         }
-        // console.log("tempVer: " + tempVer)
         if (tempVer == ver) {
             return tempVer
         } else {
@@ -394,9 +392,6 @@ function findNearestVersion(ver) {
                 verDiff = tmpDiff;
                 bestVer = tempVer;
             }
-            // console.log('tmpDiff: ' + tmpDiff)
-            // console.log('verDiff: ' + verDiff)
-            // console.log('bestVersion: ' + bestVer)
         }
     }
     if (verDiff) {return bestVer} else {return "latest"}

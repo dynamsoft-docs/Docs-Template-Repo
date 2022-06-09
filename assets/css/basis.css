@@ -1310,7 +1310,7 @@ ul::-webkit-scrollbar-corner {
     .docContainer {
         border-left: 1px solid #ddd;
         padding-left: 40px;
-        min-height: calc(100vh - 181px);
+        min-height: calc(100vh - 86px);
     }
 
     .noSubMenuDoc .docContainer {
@@ -4888,7 +4888,7 @@ a#toTop {
     max-width: 265px;
 }
 #categoryMenuTree .mainPage {
-    margin-top: 30px;
+    padding-top: 20px;
 }
 #categoryMenuTree #fullTreeMenuListContainer ul {
     margin: 0;
