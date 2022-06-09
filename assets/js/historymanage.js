@@ -202,8 +202,8 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
             changeHref = hrefVal+verStr
         }
     }
-    //
-	if (fromSourse == "sidebar" && (verText == "latest" || verText == undefined)) {
+    // && (verText == "latest" || verText == undefined)
+	if (fromSourse == "sidebar") {
         // request link
         if (!$(aTag).hasClass("activeLink")) {
             RequestNewPage(aTag, changeHref, needh3)
@@ -219,16 +219,18 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
 	return;
 }
 
-function RequestNewPage(aTag, paramLink, needh3=false, isCurTag = false) {
-    console.log(aTag.href)
+function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null) {
     $("#articleContent").hide()
     $("#loadingContent").show()
-    fetch(aTag.href).then(function(response) {
+    var fetchUrl = redirectUrl ? redirectUrl : aTag.href
+    fetch(fetchUrl).then(function(response) {
         return response.text()
     }).then(function(data) {
         var inputVer = getUrlVars(paramLink)["ver"]
         var otherVersions = $(data).find(".otherVersions > li")
-        if (inputVer == "latest" || inputVer == undefined || otherVersions.length == 0 || isCurTag) {
+
+        if (inputVer == "latest" || inputVer == undefined || otherVersions.length == 0 || redirectUrl) {
+            
             document.title = $(data)[1].innerText
             history.replaceState(null, null, paramLink)
             if($(aTag).parents("li.collapseListStyle").length > 0) {
@@ -283,43 +285,15 @@ function RequestNewPage(aTag, paramLink, needh3=false, isCurTag = false) {
                 })();
             }
         } else {
-            var curVerTag = $(".currentVersion");
             var bestVerIndex = -1;
             var verDiff = -1;
-            var curVer = null;
-            var bestVersion = null;
-            if (curVerTag != null) {
-                var verText = (curVerTag[0].innerHTML).toLowerCase();
-                if (verText == "latest version"){
-                    curVer = "latest"
-                }
-                else{
-                    curVer = verText.replace('version ','');
-                }
-                bestVerIndex = -1;
-                verDiff = GetVersionDiff(inputVer, curVer);
-                bestVersion = curVer;
-            }
-            var anchorVal = "";
-            var curDocUrl = document.URL;
-            if (curDocUrl.indexOf("#") != -1){
-                var urlAry = curDocUrl.split("#");
-                if (urlAry.length == 2){
-                    anchorVal = "#" + urlAry[1];
-                }
-            }
-
-            var changeVer = "";
-            var ifChangeVersion = getUrlVars(aTag.href)["cVer"];
-            if (ifChangeVersion != undefined) {
-                changeVer = "&&cVer=true";
-            }
+            var bestVersion = inputVer;
+            
             var historyList = $(data).find(".otherVersions");
-            var redirectUTag = aTag
-            if (historyList != null)
-            {
+            var redirectTag = aTag
+            var matchSuccess = false
+            if (historyList != null) {
                 var listAry = historyList[0].getElementsByTagName("li");
-
                 for (var i = 0; i < listAry.length; i++) {
                     var tmpVerText = listAry[i].innerText;
                     var tmpVer = null;
@@ -329,27 +303,18 @@ function RequestNewPage(aTag, paramLink, needh3=false, isCurTag = false) {
                     else{
                         tmpVer = tmpVerText.replace('version ','');
                     }
-                    if (tmpVer == inputVer){
+                    if (tmpVer == inputVer) {
                         var curTag = $(listAry[i]).children("a");
-                        redirectUTag = curTag[0]
-                        if (curTag.length > 0) {
-                            var exp = new RegExp(/[?]+([^=]+)=/gi)
-                            if (exp.exec(curTag[0].href) != null){
-                                paramLink = curTag[0].href + "&&ver=" +inputVer+"&&matchVer=true" + changeVer + anchorVal
-                            }
-                            else{
-                                if (getUrlVars(document.URL)["src"] != undefined){
-                                    paramLink = curTag[0].href + "?src=" + getUrlVars(document.URL)["src"] + "&&ver=" +inputVer+"&&matchVer=true" + changeVer + anchorVal
-                                }
-                                else{
-                                    paramLink = curTag[0].href + "?ver=" +inputVer+"&&matchVer=true" + changeVer + anchorVal
-                                }
-                            }
+                        redirectTag = curTag[0]
+                        if (paramLink.indexOf("?") > 0) {
+                            paramLink = redirectTag.href + "?" + paramLink.split("?")[1]
+                        } else if (paramLink.indexOf("#") > 0) {
+                            paramLink = redirectTag.href + "#" + paramLink.split("#")[1]
                         }
-
-                        RequestNewPage(redirectUTag, paramLink, needh3, true)
-                    }
-                    else {
+                        matchSuccess = true
+                        RequestNewPage(aTag, paramLink, needh3, redirectTag.href)
+                        return
+                    } else {
                         var tmpDiff = GetVersionDiff(inputVer, tmpVer);
                         if (tmpDiff >= 0 && (tmpDiff < verDiff || verDiff < 0)){
                             bestVerIndex = i;
@@ -358,27 +323,17 @@ function RequestNewPage(aTag, paramLink, needh3=false, isCurTag = false) {
                         }
                     }
                 }
-            }
-        
-            if (bestVerIndex >= 0){
-                var curTag = $(listAry[bestVerIndex]).children("a");
-                redirectUTag = curTag[0]
-                if (curTag.length > 0) {
-                    var exp = new RegExp(/[?]+([^=]+)=/gi)
-                    if (exp.exec(curTag[0].href) != null){
-                        paramLink = curTag[0].href + "&&ver=" +inputVer+"&&matchVer=true"+ changeVer + anchorVal
-                    }
-                    else{
-                        if (getUrlVars(document.URL)["src"] != undefined){
-                            paramLink = curTag[0].href + "?src="+ getUrlVars(document.URL)["src"] + "&&ver=" +inputVer+"&&matchVer=true"+ changeVer + anchorVal
-                        }
-                        else{
-                            paramLink = curTag[0].href + "?ver=" +inputVer+"&&matchVer=true"+ changeVer + anchorVal
-                        }
-                    }
-                }
 
-                RequestNewPage(redirectUTag, paramLink, needh3, true)
+                if (bestVerIndex >= 0 && !matchSuccess){
+                    var curTag = $(listAry[bestVerIndex]).children("a");
+                    redirectTag = curTag[0]
+                    if (paramLink.indexOf("?") > 0) {
+                        paramLink = redirectTag.href + "?" + paramLink.split("?")[1]
+                    } else if (paramLink.indexOf("#") > 0) {
+                        paramLink = redirectTag.href + "#" + paramLink.split("#")[1]
+                    }
+                    RequestNewPage(aTag, paramLink, needh3, redirectTag.href)
+                }
             }
         }
     })
