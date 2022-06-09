@@ -202,10 +202,12 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
             changeHref = hrefVal+verStr
         }
     }
-	
-	if (fromSourse == "sidebar") {
+    //
+	if (fromSourse == "sidebar" && (verText == "latest" || verText == undefined)) {
         // request link
-        RequestNewPage(aTag, changeHref, needh3)
+        if (!$(aTag).hasClass("activeLink")) {
+            RequestNewPage(aTag, changeHref, needh3)
+        }
     } else {
         if (aTag.target == '_blank') {
             window.open(changeHref);
@@ -217,64 +219,167 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
 	return;
 }
 
-function RequestNewPage(aTag, paramLink, needh3=false) {
+function RequestNewPage(aTag, paramLink, needh3=false, isCurTag = false) {
     console.log(aTag.href)
     $("#articleContent").hide()
     $("#loadingContent").show()
     fetch(aTag.href).then(function(response) {
         return response.text()
     }).then(function(data) {
-        document.title = $(data)[1].innerText
-        history.replaceState(null, null, paramLink)
-        if($(aTag).parents("li.collapseListStyle").length > 0) {
-            $(aTag).parents("li.collapseListStyle").addClass("expandListStyle").removeClass("collapseListStyle")
-        }
-        $("#fullTreeMenuListContainer .activeLink").removeClass("activeLink")
-        $(aTag).addClass("activeLink")
-        $("#articleContent").html($(data).find("#articleContent").html()).show()
-        $("#loadingContent").hide()
+        var inputVer = getUrlVars(paramLink)["ver"]
+        var otherVersions = $(data).find(".otherVersions > li")
+        if (inputVer == "latest" || inputVer == undefined || otherVersions.length == 0 || isCurTag) {
+            document.title = $(data)[1].innerText
+            history.replaceState(null, null, paramLink)
+            if($(aTag).parents("li.collapseListStyle").length > 0) {
+                $(aTag).parents("li.collapseListStyle").addClass("expandListStyle").removeClass("collapseListStyle")
+                $(aTag).parents("li.expandListStyle").find(" > ul").slideDown()
+            }
+            $("#fullTreeMenuListContainer .activeLink").removeClass("activeLink")
+            $(aTag).addClass("activeLink")
+            $("#articleContent").html($(data).find("#articleContent").html()).show()
+            $("#loadingContent").hide()
 
-        if ($("#AutoGenerateSidebar").length > 0) {
-            GenerateContentByHead(needh3);
-            $('#crumbs > ul').html($('#crumbs > ul > li').eq(0))
-            initCrumbs()
-        }
+            if ($("#AutoGenerateSidebar").length > 0) {
+                GenerateContentByHead(needh3);
+                $('#crumbs > ul').html($('#crumbs > ul > li').eq(0))
+                initCrumbs()
+            }
 
-        if($(".markdown-body .sample-code-prefix").length > 0 && getUrlVars(document.URL)["lang"]) {
-            var langs = getUrlVars(document.URL)["lang"].toLowerCase().trim().split(",")
-            if (langs) {
-                if (langs.length == 1) {
-                    sampleCodeSingleLangInit(langs[0])
-                } else {
-                    sampleCodeLangsInit(langs)
+            if($(".markdown-body .sample-code-prefix").length > 0 && getUrlVars(document.URL)["lang"]) {
+                var langs = getUrlVars(document.URL)["lang"].toLowerCase().trim().split(",")
+                if (langs) {
+                    if (langs.length == 1) {
+                        sampleCodeSingleLangInit(langs[0])
+                    } else {
+                        sampleCodeLangsInit(langs)
+                    }
+                }
+            } else if ($(".markdown-body .sample-code-prefix").length > 0) {
+                $('.markdown-body .sample-code-prefix + blockquote > ul > li:first-child').addClass('on')
+                $('.markdown-body .sample-code-prefix + blockquote > ol > li:first-child').addClass('on')
+                var template2Objs = $('.markdown-body .sample-code-prefix.template2 + blockquote')
+                for (var i=0; i<template2Objs.length; i++) {
+                    $(template2Objs[i]).find(">div").eq(0).addClass('on')
                 }
             }
-        } else if ($(".markdown-body .sample-code-prefix").length > 0) {
-            $('.markdown-body .sample-code-prefix + blockquote > ul > li:first-child').addClass('on')
-            $('.markdown-body .sample-code-prefix + blockquote > ol > li:first-child').addClass('on')
-            var template2Objs = $('.markdown-body .sample-code-prefix.template2 + blockquote')
-            for (var i=0; i<template2Objs.length; i++) {
-                $(template2Objs[i]).find(">div").eq(0).addClass('on')
-            }
-        }
 
-        if ($("#articleContent").find("script").length>0) {
-            window.MathJax = null
-            window.MathJax = {
-                tex: {
-                    inlineMath: [['$', '$'], ['\\(', '\\)']],
-                },
-                chtml:{
-                    scale: 1
+            if ($("#articleContent").find("script").length>0) {
+                window.MathJax = null
+                window.MathJax = {
+                    tex: {
+                        inlineMath: [['$', '$'], ['\\(', '\\)']],
+                    },
+                    chtml:{
+                        scale: 1
+                    }
+                };
+                
+                (function () {
+                    var script = document.createElement('script');
+                    script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js';
+                    script.async = true;
+                    document.head.appendChild(script);
+                })();
+            }
+        } else {
+            var curVerTag = $(".currentVersion");
+            var bestVerIndex = -1;
+            var verDiff = -1;
+            var curVer = null;
+            var bestVersion = null;
+            if (curVerTag != null) {
+                var verText = (curVerTag[0].innerHTML).toLowerCase();
+                if (verText == "latest version"){
+                    curVer = "latest"
                 }
-            };
-            
-            (function () {
-                var script = document.createElement('script');
-                script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js';
-                script.async = true;
-                document.head.appendChild(script);
-            })();
+                else{
+                    curVer = verText.replace('version ','');
+                }
+                bestVerIndex = -1;
+                verDiff = GetVersionDiff(inputVer, curVer);
+                bestVersion = curVer;
+            }
+            var anchorVal = "";
+            var curDocUrl = document.URL;
+            if (curDocUrl.indexOf("#") != -1){
+                var urlAry = curDocUrl.split("#");
+                if (urlAry.length == 2){
+                    anchorVal = "#" + urlAry[1];
+                }
+            }
+
+            var changeVer = "";
+            var ifChangeVersion = getUrlVars(aTag.href)["cVer"];
+            if (ifChangeVersion != undefined) {
+                changeVer = "&&cVer=true";
+            }
+            var historyList = $(data).find(".otherVersions");
+            var redirectUTag = aTag
+            if (historyList != null)
+            {
+                var listAry = historyList[0].getElementsByTagName("li");
+
+                for (var i = 0; i < listAry.length; i++) {
+                    var tmpVerText = listAry[i].innerText;
+                    var tmpVer = null;
+                    if (tmpVerText == "latest version"){
+                        tmpVer = "latest"
+                    }
+                    else{
+                        tmpVer = tmpVerText.replace('version ','');
+                    }
+                    if (tmpVer == inputVer){
+                        var curTag = $(listAry[i]).children("a");
+                        redirectUTag = curTag[0]
+                        if (curTag.length > 0) {
+                            var exp = new RegExp(/[?]+([^=]+)=/gi)
+                            if (exp.exec(curTag[0].href) != null){
+                                paramLink = curTag[0].href + "&&ver=" +inputVer+"&&matchVer=true" + changeVer + anchorVal
+                            }
+                            else{
+                                if (getUrlVars(document.URL)["src"] != undefined){
+                                    paramLink = curTag[0].href + "?src=" + getUrlVars(document.URL)["src"] + "&&ver=" +inputVer+"&&matchVer=true" + changeVer + anchorVal
+                                }
+                                else{
+                                    paramLink = curTag[0].href + "?ver=" +inputVer+"&&matchVer=true" + changeVer + anchorVal
+                                }
+                            }
+                        }
+
+                        RequestNewPage(redirectUTag, paramLink, needh3, true)
+                    }
+                    else {
+                        var tmpDiff = GetVersionDiff(inputVer, tmpVer);
+                        if (tmpDiff >= 0 && (tmpDiff < verDiff || verDiff < 0)){
+                            bestVerIndex = i;
+                            verDiff = tmpDiff;
+                            bestVersion = tmpVer;
+                        }
+                    }
+                }
+            }
+        
+            if (bestVerIndex >= 0){
+                var curTag = $(listAry[bestVerIndex]).children("a");
+                redirectUTag = curTag[0]
+                if (curTag.length > 0) {
+                    var exp = new RegExp(/[?]+([^=]+)=/gi)
+                    if (exp.exec(curTag[0].href) != null){
+                        paramLink = curTag[0].href + "&&ver=" +inputVer+"&&matchVer=true"+ changeVer + anchorVal
+                    }
+                    else{
+                        if (getUrlVars(document.URL)["src"] != undefined){
+                            paramLink = curTag[0].href + "?src="+ getUrlVars(document.URL)["src"] + "&&ver=" +inputVer+"&&matchVer=true"+ changeVer + anchorVal
+                        }
+                        else{
+                            paramLink = curTag[0].href + "?ver=" +inputVer+"&&matchVer=true"+ changeVer + anchorVal
+                        }
+                    }
+                }
+
+                RequestNewPage(redirectUTag, paramLink, needh3, true)
+            }
         }
     })
 }

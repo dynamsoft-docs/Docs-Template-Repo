@@ -4933,15 +4933,13 @@ a#toTop {
     border-right: 0;
 }
 #categoryMenuTree #fullTreeMenuListContainer li.category + li {
-    padding-top: 10px;
+    margin-top: 10px;
 }
 #categoryMenuTree #fullTreeMenuListContainer li:before {
     display: none;
 }
 #categoryMenuTree #fullTreeMenuListContainer li.expandListStyle {
     background: #F5F5F5;
-    padding-top: 7px;
-    padding-bottom: 7px;
 }
 #categoryMenuTree #fullTreeMenuListContainer li.collapseListStyle>a:not(.noListStyle),
 #categoryMenuTree #fullTreeMenuListContainer li.expandListStyle>a:not(.noListStyle) {
@@ -4960,13 +4958,16 @@ a#toTop {
     color: rgb(254, 142, 20)!important;
 }
 
-#categoryMenuTree #fullTreeMenuListContainer li.expandListStyle > ul {
+/* #categoryMenuTree #fullTreeMenuListContainer li.expandListStyle > ul {
     display: block!important;
+    height: auto;
 }
 
 #categoryMenuTree #fullTreeMenuListContainer li.collapseListStyle > ul {
     display: none!important;
-}
+    overflow: none;
+    height: 0;
+} */
 
 #categoryMenuTree #fullTreeMenuListContainer li i.icon-arrow {
     position: absolute;
@@ -4993,9 +4994,6 @@ a#toTop {
 #categoryMenuTree #fullTreeMenuListContainer li.collapseListStyle > i.icon-arrow::before {
     transform: rotate(-45deg);
 }
-#categoryMenuTree #fullTreeMenuListContainer li.expandListStyle > i.icon-arrow {
-    top: 7px;
-}
 #categoryMenuTree #fullTreeMenuListContainer li.expandListStyle > i.icon-arrow::before {
     border-color: #AAAAAA;
     transform: rotate(-135deg);
@@ -5004,16 +5002,16 @@ a#toTop {
     border-color: #AAAAAA;
 }
 
-#categoryMenuTree #fullTreeMenuListContainer > li.expandListStyle > ul > li > a:not(.noListStyle) {
-    padding-left: 50px;
+#categoryMenuTree #fullTreeMenuListContainer > li > ul > li > a:not(.noListStyle) {
+    padding-left: 50px!important;
 }
 
-#categoryMenuTree #fullTreeMenuListContainer > li.expandListStyle > ul > li.expandListStyle > ul > li > a:not(.noListStyle) {
-    padding-left: 65px;
+#categoryMenuTree #fullTreeMenuListContainer > li > ul > li > ul > li > a:not(.noListStyle) {
+    padding-left: 65px!important;
 }
 
-#categoryMenuTree #fullTreeMenuListContainer > li.expandListStyle > ul > li.expandListStyle > ul > li.expandListStyle > ul > li > a:not(.noListStyle) {
-    padding-left: 80px;
+#categoryMenuTree #fullTreeMenuListContainer > li > ul > li > ul > li > ul > li > a:not(.noListStyle) {
+    padding-left: 80px!important;
 }
 
 @media (min-width: 1680px) {
