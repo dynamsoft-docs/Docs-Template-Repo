@@ -54,6 +54,8 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
             allHerf1[i].onclick = function(){
                 if (!$(this).hasClass("refreshLink") && $(this).parents(".sideBar").length > 0 && $("#articleContent").length > 0) {
                   addParam(this, verArray[0], 'sidebar', needh3); 
+                } else if (!$(this).hasClass("refreshLink") && $(this).parents(".markdown-body").length > 0 && $("#articleContent").length > 0) {
+                    addParam(this, verArray[0], 'docContainer', needh3); 
                 } else {
                   addParam(this, verArray[0]); 
                 }
@@ -168,6 +170,8 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                         allHerf1[i].onclick = function(){
                             if (!$(this).hasClass("refreshLink") && $(this).parents(".sideBar").length > 0 && $("#articleContent").length > 0) {
                               addParam(this, verArray[0], 'sidebar', needh3); 
+                            } else if (!$(this).hasClass("refreshLink") && $(this).parents(".markdown-body").length > 0 && $("#articleContent").length > 0) {
+                                addParam(this, verArray[0], 'docContainer', needh3); 
                             } else {
                               addParam(this, verArray[0]); 
                             }

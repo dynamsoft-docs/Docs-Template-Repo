@@ -208,6 +208,14 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
         if (!$(aTag).hasClass("activeLink")) {
             RequestNewPage(aTag, changeHref, needh3)
         }
+    } else if (fromSourse == "docContainer") {
+        console.log(fromSourse, aTag.target)
+        if (aTag.target == '_blank') {
+            window.open(changeHref);
+        } else {
+            console.log(aTag, changeHref, needh3)
+            findCurLinkOnFullTree(aTag, changeHref, needh3)
+        }
     } else {
         if (aTag.target == '_blank') {
             window.open(changeHref);
@@ -232,26 +240,55 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null) {
         if (inputVer == "latest" || inputVer == undefined || otherVersions.length == 0 || redirectUrl) {
             document.title = $(data)[1].innerText
             history.replaceState(null, null, paramLink)
+
+            // remove old active link and li style
+            for(var i=0; i < $("#fullTreeMenuListContainer .activeLink").parents("li").length;i++) {
+                var obj = $("#fullTreeMenuListContainer .activeLink").parents("li")[i]
+                if ($(obj).hasClass("hasActiveLinkList")) {
+                    $(obj).removeClass("hasActiveLinkList")
+                }
+            }
+            $("#fullTreeMenuListContainer .activeLink").removeClass("activeLink")
+            // add current active link and li style
+            $(aTag).addClass("activeLink")
             if($(aTag).parents("li.collapseListStyle").length > 0) {
                 $(aTag).parents("li.collapseListStyle").addClass("expandListStyle").removeClass("collapseListStyle")
                 $(aTag).parents("li.expandListStyle").find(" > ul").slideDown()
             }
-            $("#fullTreeMenuListContainer .activeLink").removeClass("activeLink")
-            $(aTag).addClass("activeLink")
+            $(aTag).parents("li.expandListStyle").addClass("hasActiveLinkList")
+            // show article content
             $("#articleContent").html($(data).find("#articleContent").html()).removeClass("hidden")
             $("#loadingContent").hide()
-
+            // if full tree has scroll bar, scroll to activelink position
+            var scrollDiv = document.getElementsByClassName("mainPage")[0]
+            if (scrollDiv.scrollHeight > scrollDiv.clientHeight) {
+                var activeLinkOffsetTop = $(".activeLink").offset().top - $(".mainPage").offset().top
+                if (activeLinkOffsetTop - scrollDiv.scrollTop + 40 > scrollDiv.clientHeight) {
+                    scrollDiv.scrollTop = activeLinkOffsetTop - 200
+                }
+            }
+            // add addParam click function for all a tags in article content
+            var articleContentATags = $("#articleContent").find("a")
+            var verArray = SearchVersion();
+            for (var i = 0; i < articleContentATags.length; i++)
+            {
+                articleContentATags[i].onclick = function(){
+                    addParam(this, verArray[0], 'docContainer', needh3); 
+                    return false;
+                };
+            }
+            // load breadcrumbs add right side menu
             if ($("#AutoGenerateSidebar").length > 0) {
                 GenerateContentByHead(needh3);
                 $('#crumbs > ul').html($('#crumbs > ul > li').eq(0))
                 initCrumbs()
             }
-
+            // scroll to the start of article
             var sd = $(window).scrollTop()
             if (sd > 0) {
                 window.scrollTo(0, sd > $('#overall-header').height() ? $('#overall-header').height() : sd)
             }
-
+            // load sample-code style
             if($(".markdown-body .sample-code-prefix").length > 0 && getUrlVars(document.URL)["lang"]) {
                 var langs = getUrlVars(document.URL)["lang"].toLowerCase().trim().split(",")
                 if (langs) {
@@ -269,7 +306,7 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null) {
                     $(template2Objs[i]).find(">div").eq(0).addClass('on')
                 }
             }
-
+            // load MathJax style
             if ($("#articleContent").find("script").length>0) {
                 window.MathJax = null
                 window.MathJax = {
@@ -345,6 +382,18 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null) {
             }
         }
     })
+}
+
+function findCurLinkOnFullTree(aTag, paramLink, needh3=false) {
+    var fullTreeATags = $("#fullTreeMenuListContainer").find("a")
+    var targetHref = aTag.href.toLowerCase()
+    targetHref = targetHref.indexOf("?") > 0 ? targetHref.split("?")[0] : (targetHref.indexOf("#") > 0 ? targetHref.split("#")[0] : targetHref) 
+    
+    for(var i=0; i<fullTreeATags.length; i++) {
+        if(fullTreeATags[i].href && fullTreeATags[i].href.toLowerCase() == targetHref) {
+            RequestNewPage(fullTreeATags[i], paramLink, needh3)
+        }
+    }
 }
 
 function changeVersion (liTag)

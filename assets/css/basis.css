@@ -4961,6 +4961,7 @@ a#toTop {
 }
 #categoryMenuTree .mainPage {
     padding-top: 20px;
+    overflow-x: hidden;
 }
 #categoryMenuTree #fullTreeMenuListContainer ul {
     margin: 0;
@@ -5019,6 +5020,10 @@ a#toTop {
     padding-left: 35px;
     /* font-family: OpenSans-Semibold;
     color: #323234; */
+}
+
+#categoryMenuTree #fullTreeMenuListContainer li.collapseListStyle.hasActiveLinkList > a:not(.activeLink) {
+    background: #EAEAEA;
 }
 
 #categoryMenuTree #fullTreeMenuListContainer a:hover {
