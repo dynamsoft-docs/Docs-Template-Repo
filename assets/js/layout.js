@@ -56,7 +56,7 @@ $(document).ready(function(){
             var subHeight = $('.subHeadWrapper').length > 0 ? $('.subHeadWrapper').height() : $('.productMenu').height();
             var menuHeight = $('#overall-header').height() + subHeight;
             var sd = $(window).scrollTop();
-            var basicFullTreeIncrease = $(window).outerWidth() > 1680 ? 130 : 160
+            var basicFullTreeIncrease = $(window).outerWidth() > 1680 ? 130 : 140
             if (sd > $('#overall-header').height()) {
                 if ($('#footerWrapper').offset().top - $(document).scrollTop() < $(window).height()) {
                     var offset = $('#footerWrapper').offset().top - $(document).scrollTop() - $(window).height()
@@ -68,11 +68,11 @@ $(document).ready(function(){
                 if ($('.subHeadWrapper').length > 0) {
                     $('.subHeadWrapper').css({'top': '0px'});
                     $('#docHead').css({'top': ($('.subHeadWrapper').height() + 1) + 'px'});
-                    $('.history').css({'top': '119px'})
+                    $('.history').css({'top': $(window).outerWidth() > 1680 ? '119px' : '99px'})
                 } else if ($('.productMenu').length > 0) {
                     $('.productMenu').css({'top': '0px'});
                     $('#docHead').css({'top': ($('.productMenu').height()) + 'px'});
-                    $('.history').css({'top': '119px'})
+                    $('.history').css({'top': $(window).outerWidth() > 1680 ? '119px' : '99px'})
                 } else {
                     $('#docHead').css({'top': '0px'});
                     $('.history').css({'top': '30px'})
@@ -357,7 +357,7 @@ function init() {
     var subHeight = $('.subHeadWrapper').length > 0 ? $('.subHeadWrapper').height() : $('.productMenu').height();
     var menuHeight = $('#overall-header').height() + subHeight;
     var sd = $(window).scrollTop();
-    var basicFullTreeIncrease = $(window).outerWidth() > 1680 ? 130 : 160
+    var basicFullTreeIncrease = $(window).outerWidth() > 1680 ? 130 : 140
     $('#sideBarCnt').css({'width': $('.sideBar').width() + 'px'});
     $('.mainPage').css({'min-height': 'calc(100vh - '+(menuHeight + basicFullTreeIncrease) +'px)'});
     $('.mainPage').css({'max-height': 'calc(100vh - '+(menuHeight + basicFullTreeIncrease) +'px)'});

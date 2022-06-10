@@ -5132,6 +5132,10 @@ a#toTop {
     #categoryMenuTree .docContainer {
         min-height: calc(100vh - 72px);
     }
+
+    #sideBarCnt.sidebar-fixed {
+        top: 115px !important;
+    }
 }
 
 @media (max-width: 1199px) {
