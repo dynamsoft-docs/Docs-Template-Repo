@@ -1,9 +1,11 @@
 <span class="fullVersionHistory">
     <ul class="fullVersionInfo">
-        {%- if page.editon -%}
-            {%- if page.editon == 'js' -%}
+        {%- if page.edition -%}
+            {%- if page.edition == 'algorithm' -%}
+                {%- assign validVerInfo = site.data.product_version.version_info_list_algorithm -%}
+            {%- elsif page.edition == 'js' -%}
                 {%- assign validVerInfo = site.data.product_version.version_info_list_js -%}
-            {%- elsif page.editon == 'mobile' -%}
+            {%- elsif page.edition == 'mobile' -%}
                 {%- assign validVerInfo = site.data.product_version.version_info_list_mobile -%}
             {%- else -%}
                 {%- assign validVerInfo = site.data.product_version.version_info_list_desktop -%}
