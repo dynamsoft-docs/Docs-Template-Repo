@@ -5103,7 +5103,7 @@ a#toTop {
         width: calc(100% - 320px);
         border-left: 1px solid #ddd;
         padding-left: 15px;
-        min-height: calc(100vh - 203px);
+        min-height: calc(100vh - 95px);
     }
 
     #categoryMenuTree #fullTreeMenuListContainer {
@@ -5123,6 +5123,10 @@ a#toTop {
     #categoryMenuTree #fullTreeMenuListContainer {
         width: 280px;
     }
+
+    #categoryMenuTree .docContainer {
+        min-height: calc(100vh - 72px);
+    }
 }
 
 @media (max-width: 1199px) {
@@ -5137,6 +5141,8 @@ a#toTop {
     #categoryMenuTree #fullTreeMenuListContainer {
         width: 230px;
     }
+
+    #articleContent { padding-left: 20px; padding-right: 20px; }
 }
 
 @media (max-width: 991px) {
