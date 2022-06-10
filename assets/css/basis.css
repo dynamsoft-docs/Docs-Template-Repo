@@ -795,11 +795,15 @@ ul.disc>li p:hover {
 }
 
 /*修改滚动条样式*/
+div, .sideBar .mainPage {
+    scrollbar-color: #bfbfbf rgb(239, 239, 239);
+    scrollbar-width: thin;
+}
 div::-webkit-scrollbar,
 ul::-webkit-scrollbar {
     width: 8px;
     height: 8px;
-    /**/
+    position: absolute;
 }
 
 div::-webkit-scrollbar-track,
@@ -812,6 +816,10 @@ div::-webkit-scrollbar-thumb,
 ul::-webkit-scrollbar-thumb {
     background: #bfbfbf;
     border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
 }
 
 div::-webkit-scrollbar-thumb:hover,
@@ -4511,7 +4519,7 @@ i.dbr-white-logo {
 .fullVersionHistory .fullVersionInfo {
     position: absolute;
     display: none;
-    top: -1px;
+    top: 1px;
     background: #fff;
     left: 0;
     right: unset;
@@ -4529,9 +4537,69 @@ i.dbr-white-logo {
     cursor: pointer;
     color: #323234;
     text-align: left;
-    padding: 3px 10px;
+    padding: 0 10px;
     font-size: 14px;
+    line-height: 32px;
 }
+
+.fullVersionHistory .fullVersionInfo li:not(.hasChildLi):hover, .fullVersionHistory .fullVersionInfo .hasChildLi > div:hover {
+    background: #D6D3D3;
+}
+.fullVersionHistory .fullVersionInfo .hasChildLi {
+    padding: 0;
+}
+
+.fullVersionHistory .fullVersionInfo .hasChildLi > ul {
+    margin: 0;
+    padding: 0;
+}
+.fullVersionHistory .fullVersionInfo .hasChildLi > div {
+    padding: 0 10px;
+    position: relative;
+}
+.fullVersionHistory .fullVersionInfo .hasChildLi > ul > li {
+    padding-left: 30px;
+    padding-right: 10px;
+}
+.fullVersionHistory .fullVersionInfo .hasChildLi.expand {
+    background: #f5f5f5;
+}
+.fullVersionHistory .fullVersionInfo .hasChildLi > ul { 
+    display: none;
+}
+.fullVersionHistory .fullVersionInfo .hasChildLi > div i.icon-arrow {
+    position: absolute;
+    right: 15px;
+    top: 0;
+    width: 20px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    cursor: pointer;
+    z-index: 11;
+}
+.fullVersionHistory .fullVersionInfo .hasChildLi > div i.icon-arrow::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border: 2px solid #323234;
+    border-left: 0;
+    border-top: 0;
+    transform: rotate(-45deg);
+    display: inline-block;
+}
+
+.fullVersionHistory .fullVersionInfo .hasChildLi > div i.icon-arrow::before {
+    transform: rotate(-45deg);
+}
+.fullVersionHistory .fullVersionInfo .hasChildLi.expand > div i.icon-arrow::before {
+    border-color: #AAAAAA;
+    transform: rotate(-135deg);
+}
+.fullVersionHistory .fullVersionInfo .hasChildLi > div i.icon-arrow:hover::before {
+    border-color: #AAAAAA;
+}
+
 
 .fullVersionHistory .fvChange {
     display: none;
@@ -4876,6 +4944,9 @@ a#toTop {
     margin-right: 0;
     margin-left: 0;
 }
+#categoryMenuTree .sideBar {
+    background: #f5f5f5;
+}
 #categoryMenuTree .sideBar.col-xs-12, #categoryMenuTree sideBar.col-md-3
 #categoryMenuTree .docContainer.col-xs-12, #categoryMenuTree .docContainer.col-md-9 {
     padding-right: 0;
@@ -4939,14 +5010,14 @@ a#toTop {
     display: none;
 }
 #categoryMenuTree #fullTreeMenuListContainer li.expandListStyle {
-    background: #F5F5F5;
+    background: #FFFFFF;
 }
 #categoryMenuTree #fullTreeMenuListContainer li.collapseListStyle>a:not(.noListStyle),
 #categoryMenuTree #fullTreeMenuListContainer li.expandListStyle>a:not(.noListStyle) {
     background: none;
     padding-left: 35px;
-    font-family: OpenSans-Semibold;
-    color: #323234;
+    /* font-family: OpenSans-Semibold;
+    color: #323234; */
 }
 
 #categoryMenuTree #fullTreeMenuListContainer a:hover {
@@ -4980,6 +5051,9 @@ a#toTop {
     cursor: pointer;
     z-index: 11;
 }
+#categoryMenuTree #fullTreeMenuListContainer.scrolled i.icon-arrow {
+    right: 7px;
+}
 #categoryMenuTree #fullTreeMenuListContainer li i.icon-arrow::before {
     content: "";
     width: 8px;
@@ -5003,21 +5077,21 @@ a#toTop {
 }
 
 #categoryMenuTree #fullTreeMenuListContainer > li > ul > li > a:not(.noListStyle) {
-    padding-left: 50px!important;
+    padding-left: 35px!important;
 }
 
 #categoryMenuTree #fullTreeMenuListContainer > li > ul > li > ul > li > a:not(.noListStyle) {
-    padding-left: 65px!important;
+    padding-left: 50px!important;
 }
 
 #categoryMenuTree #fullTreeMenuListContainer > li > ul > li > ul > li > ul > li > a:not(.noListStyle) {
-    padding-left: 80px!important;
+    padding-left: 65px!important;
 }
 
 @media (min-width: 1680px) {
     #categoryMenuTree .sideBar {
         max-width: 320px;
-        width: 320px;
+        width: 330px;
     }
 
     #categoryMenuTree .docContainer {
@@ -5025,6 +5099,10 @@ a#toTop {
         border-left: 1px solid #ddd;
         padding-left: 15px;
         min-height: calc(100vh - 203px);
+    }
+
+    #categoryMenuTree #fullTreeMenuListContainer {
+        width: 310px;
     }
 }
 
@@ -5036,6 +5114,10 @@ a#toTop {
     #categoryMenuTree #docHead {
         left: 320px;
     }
+
+    #categoryMenuTree #fullTreeMenuListContainer {
+        width: 280px;
+    }
 }
 
 @media (max-width: 1199px) {
@@ -5045,6 +5127,16 @@ a#toTop {
 
     #categoryMenuTree #docHead {
         left: 270px;
+    }
+
+    #categoryMenuTree #fullTreeMenuListContainer {
+        width: 230px;
+    }
+}
+
+@media (max-width: 991px) {
+    #categoryMenuTree #fullTreeMenuListContainer {
+        width: 300px;
     }
 }
 

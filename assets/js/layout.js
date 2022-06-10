@@ -56,7 +56,6 @@ $(document).ready(function(){
             var subHeight = $('.subHeadWrapper').length > 0 ? $('.subHeadWrapper').height() : $('.productMenu').height();
             var menuHeight = $('#overall-header').height() + subHeight;
             var sd = $(window).scrollTop();
-            console.log($('#overall-header').height(), menuHeight, sd)
             if (sd > $('#overall-header').height()) {
                 if ($('#footerWrapper').offset().top - $(document).scrollTop() < $(window).height()) {
                     $('#fullTreeMenuListContainer').css({'max-height': 'calc(100vh - '+(menuHeight + 130) +'px)'});
@@ -220,6 +219,12 @@ $(document).ready(function(){
             }
         }
     }
+
+    $(".fullVersionHistory .fullVersionInfo .hasChildLi").on("click", function(e) {
+        $(this).toggleClass("expand")
+        $(this).find("ul").slideToggle()
+        e.stopPropagation()
+    })
 })
 
 function openChildMenuTree(obj, needIcon) {
@@ -392,7 +397,7 @@ function init() {
             $('.markdown-body h5').css({'padding-top': '90px'})
             $('.markdown-body h5').css({'margin-top': '-90px'})
         }
-    } 
+    }
 }
 
 function initFoldPanel() {
