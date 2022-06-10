@@ -4939,6 +4939,7 @@ a#toTop {
     margin-left: 0;
     padding-right: 0;
     padding-left: 0;
+    background: #F5F5F5;
 }
 #categoryMenuTree > .row {
     margin-right: 0;
@@ -5086,6 +5087,10 @@ a#toTop {
 
 #categoryMenuTree #fullTreeMenuListContainer > li > ul > li > ul > li > ul > li > a:not(.noListStyle) {
     padding-left: 65px!important;
+}
+
+#categoryMenuTree .docContainer {
+    background: #FFFFFF;
 }
 
 @media (min-width: 1680px) {
