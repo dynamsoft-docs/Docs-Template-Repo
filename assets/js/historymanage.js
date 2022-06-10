@@ -220,7 +220,7 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
 }
 
 function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null) {
-    $("#articleContent").hide()
+    $("#articleContent").addClass("hidden")
     $("#loadingContent").show()
     var fetchUrl = redirectUrl ? redirectUrl : aTag.href
     fetch(fetchUrl).then(function(response) {
@@ -230,7 +230,6 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null) {
         var otherVersions = $(data).find(".otherVersions > li")
 
         if (inputVer == "latest" || inputVer == undefined || otherVersions.length == 0 || redirectUrl) {
-            
             document.title = $(data)[1].innerText
             history.replaceState(null, null, paramLink)
             if($(aTag).parents("li.collapseListStyle").length > 0) {
@@ -239,13 +238,18 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null) {
             }
             $("#fullTreeMenuListContainer .activeLink").removeClass("activeLink")
             $(aTag).addClass("activeLink")
-            $("#articleContent").html($(data).find("#articleContent").html()).show()
+            $("#articleContent").html($(data).find("#articleContent").html()).removeClass("hidden")
             $("#loadingContent").hide()
 
             if ($("#AutoGenerateSidebar").length > 0) {
                 GenerateContentByHead(needh3);
                 $('#crumbs > ul').html($('#crumbs > ul > li').eq(0))
                 initCrumbs()
+            }
+
+            var sd = $(window).scrollTop()
+            if (sd > 0) {
+                window.scrollTo(0, sd > $('#overall-header').height() ? $('#overall-header').height() : sd)
             }
 
             if($(".markdown-body .sample-code-prefix").length > 0 && getUrlVars(document.URL)["lang"]) {
