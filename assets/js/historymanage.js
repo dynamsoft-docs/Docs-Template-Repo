@@ -323,7 +323,7 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null) {
                         }
                     }
                 }
-
+                
                 if (bestVerIndex >= 0 && !matchSuccess){
                     var curTag = $(listAry[bestVerIndex]).children("a");
                     redirectTag = curTag[0]
@@ -333,6 +333,10 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null) {
                         paramLink = redirectTag.href + "#" + paramLink.split("#")[1]
                     }
                     RequestNewPage(aTag, paramLink, needh3, redirectTag.href)
+                    return
+                } else if (!matchSuccess) {
+                    RequestNewPage(aTag, paramLink, needh3, aTag.href)
+                    return
                 }
             }
         }
