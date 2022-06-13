@@ -325,6 +325,42 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null) {
                     document.head.appendChild(script);
                 })();
             }
+
+            // file tree
+            if ($(".filetree h3").length > 0) {
+                if ($(window).outerWidth() > 1680) {
+                    if (breakpoint() == 'lg') {
+                        $('.markdown-body h2').css({'padding-top': $('#docHead').outerHeight() + 110 + 'px'})
+                        $('.markdown-body h2').css({'margin-top': -$('#docHead').outerHeight() - 80 + 'px'})
+                        $('.markdown-body h3').css({'padding-top': $('#docHead').outerHeight() + 110 + 'px'})
+                        $('.markdown-body h3').css({'margin-top': -$('#docHead').outerHeight() - 110 + 'px'})
+                        $('.markdown-body h4').css({'padding-top': $('#docHead').outerHeight() + 110 + 'px'})
+                        $('.markdown-body h4').css({'margin-top': -$('#docHead').outerHeight() - 110 + 'px'})
+                        $('.markdown-body h5').css({'padding-top': $('#docHead').outerHeight() + 110 + 'px'})
+                        $('.markdown-body h5').css({'margin-top': -$('#docHead').outerHeight() - 110 + 'px'})
+                    }
+                } else {
+                    if (breakpoint() == 'lg') {
+                        $('.markdown-body h2').css({'padding-top': $('#docHead').outerHeight() + 90 + 'px'})
+                        $('.markdown-body h2').css({'margin-top': -$('#docHead').outerHeight() - 60 + 'px'})
+                        $('.markdown-body h3').css({'padding-top': $('#docHead').outerHeight() + 90 + 'px'})
+                        $('.markdown-body h3').css({'margin-top': -$('#docHead').outerHeight() - 90 + 'px'})
+                        $('.markdown-body h4').css({'padding-top': $('#docHead').outerHeight() + 90 + 'px'})
+                        $('.markdown-body h4').css({'margin-top': -$('#docHead').outerHeight() - 90 + 'px'})
+                        $('.markdown-body h5').css({'padding-top': $('#docHead').outerHeight() + 90 + 'px'})
+                        $('.markdown-body h5').css({'margin-top': -$('#docHead').outerHeight() - 90 + 'px'})
+                    } else {
+                        $('.markdown-body h2').css({'padding-top': '90px'})
+                        $('.markdown-body h2').css({'margin-top': '-60px'})
+                        $('.markdown-body h3').css({'padding-top': '90px'})
+                        $('.markdown-body h3').css({'margin-top': '-60px'})
+                        $('.markdown-body h4').css({'padding-top': '90px'})
+                        $('.markdown-body h4').css({'margin-top': '-90px'})
+                        $('.markdown-body h5').css({'padding-top': '90px'})
+                        $('.markdown-body h5').css({'margin-top': '-90px'})
+                    }
+                }
+            }
         } else {
             var bestVerIndex = -1;
             var verDiff = -1;
