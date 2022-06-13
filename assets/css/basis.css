@@ -415,7 +415,7 @@ ul.disc>li p:hover {
 }
 
 #AutoGenerateSidebar a.active {
-    color: #fe8e14;
+    color: #fe8e14!important;
 }
 
 .markdown-body {
@@ -5083,15 +5083,15 @@ a#toTop {
 }
 
 #categoryMenuTree #fullTreeMenuListContainer > li > ul > li > a:not(.noListStyle) {
-    padding-left: 35px!important;
-}
-
-#categoryMenuTree #fullTreeMenuListContainer > li > ul > li > ul > li > a:not(.noListStyle) {
     padding-left: 50px!important;
 }
 
-#categoryMenuTree #fullTreeMenuListContainer > li > ul > li > ul > li > ul > li > a:not(.noListStyle) {
+#categoryMenuTree #fullTreeMenuListContainer > li > ul > li > ul > li > a:not(.noListStyle) {
     padding-left: 65px!important;
+}
+
+#categoryMenuTree #fullTreeMenuListContainer > li > ul > li > ul > li > ul > li > a:not(.noListStyle) {
+    padding-left: 80px!important;
 }
 
 #categoryMenuTree .docContainer {
