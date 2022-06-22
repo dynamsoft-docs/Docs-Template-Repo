@@ -209,7 +209,6 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
             RequestNewPage(aTag, changeHref, needh3)
         }
     } else if (fromSourse == "docContainer") {
-        console.log(fromSourse, aTag.target)
         if (aTag.target == '_blank') {
             window.open(changeHref);
         } else {
@@ -423,11 +422,27 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null) {
 function findCurLinkOnFullTree(aTag, paramLink, needh3=false) {
     var fullTreeATags = $("#fullTreeMenuListContainer").find("a")
     var targetHref = aTag.href.toLowerCase()
+    var curDocUrl = document.URL.toLowerCase()
     targetHref = targetHref.indexOf("?") > 0 ? targetHref.split("?")[0] : (targetHref.indexOf("#") > 0 ? targetHref.split("#")[0] : targetHref) 
+    curDocUrl = curDocUrl.indexOf("?") > 0 ? curDocUrl.split("?")[0] : (curDocUrl.indexOf("#") > 0 ? curDocUrl.split("#")[0] : curDocUrl)
+    if (curDocUrl == targetHref && aTag.href.split("#").length > 1) {
+        var hash = aTag.href.split("#")[1]
+        var sd = $(window).scrollTop()
+        if (sd > 0) {
+            window.scrollTo(0, $("#" + hash).offset().top)
+        }
+        history.replaceState(null, null, paramLink)
+    } else {
+        var flag = false
+        for(var i=0; i<fullTreeATags.length; i++) {
+            if(fullTreeATags[i].href && fullTreeATags[i].href.toLowerCase() == targetHref) {
+                flag = true
+                RequestNewPage(fullTreeATags[i], paramLink, needh3)
+            }
+        }
     
-    for(var i=0; i<fullTreeATags.length; i++) {
-        if(fullTreeATags[i].href && fullTreeATags[i].href.toLowerCase() == targetHref) {
-            RequestNewPage(fullTreeATags[i], paramLink, needh3)
+        if (!flag) {
+            window.location.href = paramLink;
         }
     }
 }
