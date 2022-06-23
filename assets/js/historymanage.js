@@ -246,7 +246,7 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null) {
 
         if (inputVer == "latest" || inputVer == undefined || otherVersions.length == 0 || redirectUrl) {
             document.title = $(data)[1].innerText
-            history.replaceState(null, null, paramLink)
+            history.pushState(null, null, paramLink)
 
             // remove old active link and li style
             for(var i=0; i < $("#fullTreeMenuListContainer .activeLink").parents("li").length;i++) {
@@ -439,7 +439,7 @@ function findCurLinkOnFullTree(aTag, paramLink, needh3=false) {
         if (sd > 0) {
             window.scrollTo(0, $("#" + hash).offset().top)
         }
-        history.replaceState(null, null, paramLink)
+        history.pushState(null, null, paramLink)
     } else {
         var flag = false
         for(var i=0; i<fullTreeATags.length; i++) {
