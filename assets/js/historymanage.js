@@ -204,6 +204,14 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
     }
     // && (verText == "latest" || verText == undefined)
 	if (fromSourse == "sidebar") {
+        var currentDocDomain = document.URL.split("/docs/")[0] + '/docs/';
+        console.log(currentDocDomain, aTag.href)
+        console.log(aTag.href.indexOf(currentDocDomain) < 0)
+        if (aTag.href.indexOf(currentDocDomain) < 0) {
+            console.log("1111")
+            window.location.href = aTag.href;
+            return;
+        }
         // request link
         if (!$(aTag).hasClass("activeLink")) {
             RequestNewPage(aTag, changeHref, needh3)
