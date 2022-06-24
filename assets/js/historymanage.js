@@ -205,10 +205,7 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
     // && (verText == "latest" || verText == undefined)
 	if (fromSourse == "sidebar") {
         var currentDocDomain = document.URL.split("/docs/")[0] + '/docs/';
-        console.log(currentDocDomain, aTag.href)
-        console.log(aTag.href.indexOf(currentDocDomain) < 0)
         if (aTag.href.indexOf(currentDocDomain) < 0) {
-            console.log("1111")
             window.location.href = aTag.href;
             return;
         }
@@ -220,7 +217,6 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
         if (aTag.target == '_blank') {
             window.open(changeHref);
         } else {
-            console.log(aTag, changeHref, needh3)
             findCurLinkOnFullTree(aTag, changeHref, needh3)
         }
     } else {
@@ -433,12 +429,12 @@ function findCurLinkOnFullTree(aTag, paramLink, needh3=false) {
     var curDocUrl = document.URL.toLowerCase()
     targetHref = targetHref.indexOf("?") > 0 ? targetHref.split("?")[0] : (targetHref.indexOf("#") > 0 ? targetHref.split("#")[0] : targetHref) 
     curDocUrl = curDocUrl.indexOf("?") > 0 ? curDocUrl.split("?")[0] : (curDocUrl.indexOf("#") > 0 ? curDocUrl.split("#")[0] : curDocUrl)
+    
+    console.log(curDocUrl, targetHref)
+    console.log(aTag.href.split("#")[1])
     if (curDocUrl == targetHref && aTag.href.split("#").length > 1) {
         var hash = aTag.href.split("#")[1]
-        var sd = $(window).scrollTop()
-        if (sd > 0) {
-            window.scrollTo(0, $("#" + hash).offset().top)
-        }
+        window.scrollTo(0, $("#" + hash).offset().top)
         history.pushState(null, null, paramLink)
     } else {
         var flag = false
