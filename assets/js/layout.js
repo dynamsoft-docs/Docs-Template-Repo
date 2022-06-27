@@ -232,6 +232,10 @@ $(document).ready(function(){
         $(this).find("ul").slideToggle()
         e.stopPropagation()
     })
+
+    window.addEventListener("popstate", function(e) {
+        findCurLinkOnFullTree(location, location.href, false, true)
+    }, false)
 })
 
 function openChildMenuTree(obj, needIcon) {
