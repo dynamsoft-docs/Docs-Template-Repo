@@ -204,13 +204,14 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
     }
     // && (verText == "latest" || verText == undefined)
 	if (fromSourse == "sidebar") {
+        console.log(aTag.href)
         var currentDocDomain = document.URL.split("/docs/")[0] + '/docs/';
         if (aTag.href.indexOf(currentDocDomain) < 0) {
             window.location.href = aTag.href;
             return;
         }
         // request link
-        if (!$(aTag).hasClass("activeLink")) {
+        if (!$(aTag).hasClass("activeLink") || aTag.href.indexOf("/faq/") > 0) {
             RequestNewPage(aTag, changeHref, needh3)
         }
     } else if (fromSourse == "docContainer") {
@@ -282,6 +283,11 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
             }
             // load breadcrumbs add right side menu
             if ($("#AutoGenerateSidebar").length > 0) {
+                needh3 =  $(data).find("#articleContent").data("needh3") == true ? true : false
+                $('#fullTreeMenuListContainer').removeClass('needh3');
+                if (needh3) {
+                    $('#fullTreeMenuListContainer').addClass('needh3');
+                }
                 GenerateContentByHead(needh3);
                 $('#crumbs > ul').html($('#crumbs > ul > li').eq(0))
                 initCrumbs()
