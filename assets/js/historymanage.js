@@ -287,10 +287,16 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
                 initCrumbs()
             }
             // scroll to the start of article
+            var hash = paramLink.split("#").length > 1 ? paramLink.split("#")[1] : null
             var sd = $(window).scrollTop()
-            if (sd > 0) {
-                window.scrollTo(0, sd > $('#overall-header').height() ? $('#overall-header').height() : sd)
+            if (hash) {
+                window.scrollTo(0, $("#" + hash).offset().top)
+            } else {
+                if (sd > 0) {
+                    window.scrollTo(0, sd > $('#overall-header').height() ? $('#overall-header').height() : sd)
+                }
             }
+            
             // load sample-code style
             if($(".markdown-body .sample-code-prefix").length > 0 && getUrlVars(document.URL)["lang"]) {
                 var langs = getUrlVars(document.URL)["lang"].toLowerCase().trim().split(",")
@@ -437,7 +443,10 @@ function findCurLinkOnFullTree(aTag, paramLink, needh3=false, onlyLoadContent=fa
     } else {
         var flag = false
         for(var i=0; i<fullTreeATags.length; i++) {
-            if(fullTreeATags[i].href && fullTreeATags[i].href.toLowerCase() == targetHref) {
+            var searchHref = fullTreeATags[i].href
+            searchHref = searchHref.indexOf("index.html") > 0 ? searchHref.replace("index.html", "") : searchHref
+            targetHref = targetHref.indexOf("index.html") > 0 ? targetHref.replace("index.html", "") : targetHref
+            if(searchHref && searchHref.toLowerCase() == targetHref) {
                 flag = true
                 RequestNewPage(fullTreeATags[i], paramLink, needh3, null, onlyLoadContent)
             }
