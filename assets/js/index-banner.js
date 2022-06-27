@@ -47,6 +47,7 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
         generateDocHead = false;
     }
     var verArray = SearchVersion();
+    // console.log(123, useVersionTree)
     if (!useVersionTree) {
         var allHerf1 = $(".docContainer .content, #docHead, #AutoGenerateSidebar, .sideBar, #crumbs").find("a");
         for (var i = 0; i < allHerf1.length; i++)
@@ -147,6 +148,7 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
     }
     else {
         var versionListInterval = setInterval(function() {
+            // console.log("waiting...")
             var completeTag = $('#sideBarIframe').contents().find('#complete_loading_tree');
             if (completeTag && completeTag.length > 0) {
                 clearInterval(versionListInterval);
@@ -180,6 +182,7 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                     }
         
                     var navWrap = document.getElementById("fullTreeMenuListContainer");
+                    // console.log("navWrap: " + navWrap)
                     if (navWrap != null) {
                         HighlightCurrentListForFullTree("fullTreeMenuListContainer", true, document.URL, pageStartVer, verArray[1]);
                         if (generateDocHead) {
@@ -196,6 +199,7 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                             //GenerateContentByHead(false);
                         }
                         var hiddenLayout = $('.docContainer, .sideBar, .history');
+                        // console.log("hiddenLayout: " + hiddenLayout)
                         for (var i = 0; i < hiddenLayout.length; i++) {
                             hiddenLayout[i].style.visibility = "visible";
                         }
@@ -356,7 +360,7 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
         for (var i = 0, len = listAry.length; i < len; i++) {
             var curLi = listAry[i];
             var curListATag =  $(curLi).children("a");
-            if (curListATag.length > 0 && curListATag[0].getAttribute("href") != null) {
+            if (curListATag.length > 0 && curListATag[0].getAttribute("href") != null && curListATag[0].getAttribute("href") != "#") {
                 var returnVal = UrlSearch(searchUrl, curListATag[0].href);
                 if (returnVal == 2) {
                     bestReturnVal = returnVal;
