@@ -410,33 +410,32 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
             }
 
             if (firstTime) {
-                var crumbul = $($('#crumbs')).children("ul")
-                if (crumbul.length != 0) {
-                    var parentsLi = $(curLi).parents("li");
-                    var appendText = "";
-                    if (parentsLi.length > 0) {
-                        for (var j = parentsLi.length - 1; j >= 0 ; j--) {
-                            var tmpATag = $(parentsLi[j]).children("a");
-                            if (tmpATag.length > 0) {
-                                appendText += '<li><a class="bluelink" href = "' + tmpATag[0].href + '">'+ tmpATag[0].textContent + '</a></li>';
-                            }
-                        }
-                    }
+                // var crumbul = $($('#crumbs')).children("ul")
+                // if (crumbul.length != 0) {
+                //     var parentsLi = $(curLi).parents("li");
+                //     var appendText = "";
+                //     if (parentsLi.length > 0) {
+                //         for (var j = parentsLi.length - 1; j >= 0 ; j--) {
+                //             var tmpATag = $(parentsLi[j]).children("a");
+                //             if (tmpATag.length > 0) {
+                //                 appendText += '<li><a class="bluelink" href = "' + tmpATag[0].href + '">'+ tmpATag[0].textContent + '</a></li>';
+                //             }
+                //         }
+                //     }
 
-                    var childUl = $(curLi).children("ul");
-                    if (childUl.length > 0) {
-                        appendText += '<li><a class="bluelink" href = "' + curListATag[0].href + '">'+ curListATag[0].textContent + '</a></li>';
-                    }
-                    else {
-                        if (document.URL.indexOf("/barcode-reader/faq/") > 0) {
-                            appendText += '<li id="breadcrumbLastNode"><a class="bluelink" href = "' + curListATag[0].href + '">'+ curListATag[0].textContent + '</a></li>'
-                        } else {
-                            appendText += '<li id="breadcrumbLastNode">' + curListATag[0].textContent + '</li>'
-                        }
-                        // appendText += '<li id="breadcrumbLastNode">' + curListATag[0].textContent + '</li>'
-                    }
-                    $(crumbul[0]).append(appendText);
-                }
+                //     var childUl = $(curLi).children("ul");
+                //     if (childUl.length > 0) {
+                //         appendText += '<li><a class="bluelink" href = "' + curListATag[0].href + '">'+ curListATag[0].textContent + '</a></li>';
+                //     }
+                //     else {
+                //         if (document.URL.indexOf("/barcode-reader/faq/") > 0) {
+                //             appendText += '<li id="breadcrumbLastNode"><a class="bluelink" href = "' + curListATag[0].href + '">'+ curListATag[0].textContent + '</a></li>'
+                //         } else {
+                //             appendText += '<li id="breadcrumbLastNode">' + curListATag[0].textContent + '</li>'
+                //         }
+                //     }
+                //     $(crumbul[0]).append(appendText);
+                // }
                 var parentsUL = $(curLi).parents("ul");
                 for (var j = 0, lenUL = parentsUL.length; j < lenUL; j++) {
                     var curUL =  parentsUL[j];
@@ -506,6 +505,8 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
                     parentsLi[j].appendChild(iconItem)
                     // parentsLi[j].style.listStyleImage = "url('/assets/img-icon/expand-list.png')";
                 }
+
+                initCrumbs()
             }
         }
     }

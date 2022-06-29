@@ -204,7 +204,6 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
     }
     // && (verText == "latest" || verText == undefined)
 	if (fromSourse == "sidebar") {
-        console.log(aTag.href)
         var currentDocDomain = document.URL.split("/docs/")[0] + '/docs/';
         if (aTag.href.indexOf(currentDocDomain) < 0) {
             window.location.href = aTag.href;
@@ -263,6 +262,7 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
             // show article content
             $("#articleContent").html($(data).find("#articleContent").html()).removeClass("hidden")
             $("#loadingContent").hide()
+            needh3 =  $(data).find("#articleContent").data("needh3") == true ? true : false
             // if full tree has scroll bar, scroll to activelink position
             var scrollDiv = document.getElementsByClassName("mainPage")[0]
             if (scrollDiv.scrollHeight > scrollDiv.clientHeight) {
@@ -283,15 +283,14 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
             }
             // load breadcrumbs add right side menu
             if ($("#AutoGenerateSidebar").length > 0) {
-                needh3 =  $(data).find("#articleContent").data("needh3") == true ? true : false
                 $('#fullTreeMenuListContainer').removeClass('needh3');
                 if (needh3) {
                     $('#fullTreeMenuListContainer').addClass('needh3');
                 }
                 GenerateContentByHead(needh3);
-                $('#crumbs > ul').html($('#crumbs > ul > li').eq(0))
-                initCrumbs()
             }
+            $('#crumbs > ul').html($('#crumbs > ul > li').eq(0))
+            initCrumbs()
             // scroll to the start of article
             var hash = paramLink.split("#").length > 1 ? paramLink.split("#")[1] : null
             var sd = $(window).scrollTop()
@@ -452,7 +451,8 @@ function findCurLinkOnFullTree(aTag, paramLink, needh3=false, onlyLoadContent=fa
             var searchHref = fullTreeATags[i].href
             searchHref = searchHref.indexOf("index.html") > 0 ? searchHref.replace("index.html", "") : searchHref
             targetHref = targetHref.indexOf("index.html") > 0 ? targetHref.replace("index.html", "") : targetHref
-            if(searchHref && searchHref.toLowerCase() == targetHref) {
+            searchHref = searchHref.indexOf("?") > 0 ? searchHref.split("?")[0] : (searchHref.indexOf("#") > 0 ? searchHref.split("#")[0] : searchHref) 
+            if (searchHref && searchHref.toLowerCase() == targetHref) {
                 flag = true
                 RequestNewPage(fullTreeATags[i], paramLink, needh3, null, onlyLoadContent)
             }
