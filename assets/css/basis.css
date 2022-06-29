@@ -1002,9 +1002,17 @@ ul::-webkit-scrollbar-corner {
         max-height: calc(100vh - 140px);
     }
 
+    #categoryMenuTree .rightSideMenu.showRightSideMenu.rsm-fixed {
+        right: 0;
+    }
+
     .markdown-body.showRightSideMenu {
         max-width: 985px;
         width: calc(100% - 260px);
+    }
+
+    #categoryMenuTree .markdown-body.showRightSideMenu {
+        padding-left: 25px;
     }
 }
 
@@ -1060,6 +1068,10 @@ ul::-webkit-scrollbar-corner {
     .rightSideMenu.showRightSideMenu.rsm-fixed {
         left: auto;
         right: 35px;
+    }
+    
+    #categoryMenuTree .rightSideMenu.showRightSideMenu.rsm-fixed {
+        right: 0;
     }
 
     .markdown-body.showRightSideMenu {

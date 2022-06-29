@@ -110,6 +110,10 @@ $(document).ready(function(){
             $('.sideBar').css({'padding-top': '20px!important'});
         }
 
+        if ($(window).outerWidth() < 992) {
+            $('.docContainer .main, .rightSideMenu, .markdown-body').removeClass('showRightSideMenu')
+        }
+
         // right menu active link
         var title = document.querySelectorAll('.markdown-body h2');
         if ($('#fullTreeMenuListContainer').hasClass('needh3')) {
@@ -415,6 +419,10 @@ function init() {
             $('.markdown-body h5').css({'padding-top': '90px'})
             $('.markdown-body h5').css({'margin-top': '-90px'})
         }
+    }
+
+    if ($(window).outerWidth() < 992) {
+        $('.docContainer .main, .rightSideMenu, .markdown-body').removeClass('showRightSideMenu')
     }
 
     if ($("#categoryMenuTree").length > 0) {
