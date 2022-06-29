@@ -260,7 +260,11 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
             }
             $(aTag).parents("li.expandListStyle").addClass("hasActiveLinkList")
             // show article content
+            var showRightSideMenu = $("#articleContent").hasClass("showRightSideMenu")
             $("#articleContent").html($(data).find("#articleContent").html()).removeClass("hidden")
+            if (!showRightSideMenu) {
+                $("#articleContent").find(".rightSideMenu, .markdown-body").removeClass("showRightSideMenu")
+            }
             $("#loadingContent").hide()
             needh3 =  $(data).find("#articleContent").data("needh3") == true ? true : false
             // if full tree has scroll bar, scroll to activelink position
