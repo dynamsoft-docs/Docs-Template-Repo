@@ -251,12 +251,12 @@ ul.disc>li p:hover {
     counter-increment: h4counter;
 }
 
-.noTitleIndex .headCounter h2:before { content: ''!important; padding-right: 0px!important; }
-.noTitleIndex .headCounter h2 { counter-reset: none!important; counter-increment: none!important; }
-.noTitleIndex .headCounter h3:before { content: ''!important; padding-right: 0px!important; }
-.noTitleIndex .headCounter h3 { counter-reset: none!important; counter-increment: none!important; }
-.noTitleIndex .headCounter h4:before { content: ''!important; padding-right: 0px!important; }
-.noTitleIndex .headCounter h4 { counter-increment: none!important; }
+.noTitleIndex.headCounter h2:before { content: ''!important; padding-right: 0px!important; }
+.noTitleIndex.headCounter h2 { counter-reset: none!important; counter-increment: none!important; }
+.noTitleIndex.headCounter h3:before { content: ''!important; padding-right: 0px!important; }
+.noTitleIndex.headCounter h3 { counter-reset: none!important; counter-increment: none!important; }
+.noTitleIndex.headCounter h4:before { content: ''!important; padding-right: 0px!important; }
+.noTitleIndex.headCounter h4 { counter-increment: none!important; }
 
 /* default-layout.html   ---- subHeadWrapper */
 
