@@ -4875,3 +4875,19 @@ a#toTop {
         transform: rotate(360deg);
     }
 }
+
+/* template-table */
+.markdown-body .sample-code-prefix.template-table + blockquote {
+    display: inline-block;
+    width: auto;
+    border: 0;
+}
+
+.markdown-body .sample-code-prefix.template-table + blockquote ul {
+    padding: 0;
+    margin-bottom: 15px;
+}
+
+.markdown-body .sample-code-prefix.template-table + blockquote ul > li:last-child {
+    margin-right: 0;
+}
