@@ -118,7 +118,7 @@ function RequestNewPage(aTag, paramLink) {
         return response.text()
     }).then(function(data) {
         document.title = $(data)[1].innerText
-        history.replaceState(null, null, paramLink)
+        history.pushState(null, null, paramLink)
         if($(aTag).parents("li.collapseListStyle").length > 0) {
             $(aTag).parents("li.collapseListStyle").addClass("expandListStyle").removeClass("collapseListStyle")
         }
@@ -155,6 +155,8 @@ function RequestNewPage(aTag, paramLink) {
                 $(template2Objs[i]).find(">div").eq(0).addClass('on')
             }
         }
+
+        anchors.add();
     })
 }
 

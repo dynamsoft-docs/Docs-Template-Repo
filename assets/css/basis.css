@@ -4881,6 +4881,7 @@ a#toTop {
     display: inline-block;
     width: auto;
     border: 0;
+    margin-top: 0;
 }
 
 .markdown-body .sample-code-prefix.template-table + blockquote ul {
