@@ -234,6 +234,7 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
     $("#articleContent").addClass("hidden")
     $("#loadingContent").show()
     var fetchUrl = redirectUrl ? redirectUrl : aTag.href
+    var oldLang = getCurrentUrlLang(document.URL)
     fetch(fetchUrl).then(function(response) {
         return response.text()
     }).then(function(data) {
@@ -259,6 +260,12 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
                 $(aTag).parents("li.expandListStyle").find(" > ul").slideDown()
             }
             $(aTag).parents("li.expandListStyle").addClass("hasActiveLinkList")
+
+            var newLang = getCurrentUrlLang(document.URL)
+            if (oldLang != newLang) {
+                FilterLangFullTree()
+            }
+            
             // show article content
             var showRightSideMenu = $("#articleContent").hasClass("showRightSideMenu")
             $("#articleContent").html($(data).find("#articleContent").html()).removeClass("hidden")
@@ -379,6 +386,8 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
                     }
                 }
             }
+
+            anchors.add();
         } else {
             var bestVerIndex = -1;
             var verDiff = -1;
