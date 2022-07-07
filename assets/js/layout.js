@@ -434,8 +434,6 @@ function init() {
             }
         }
     }
-
-    FilterLangFullTree()
 }
 
 function initFoldPanel() {
@@ -458,28 +456,4 @@ function formatDate(date) {
     return weekday + ', ' + month + ' ' + newDate.getDate() + ', ' + newDate.getFullYear()
 }
 
-function FilterLangFullTree() {
-    var curUrl = document.URL
-    if (curUrl.indexOf("/docs/server/") > 0 || curUrl.indexOf("/docs/mobile/") > 0) {
-        var lang = getCurrentUrlLang(curUrl);
-        console.log(lang)
-        var fullTreeLis = $("#fullTreeMenuListContainer > li")
-        for(var i=0;i<fullTreeLis.length;i++) {
-            var liItemLang = fullTreeLis[i].getAttribute("lang")
-            if (liItemLang&&liItemLang!=""&&liItemLang.toLowerCase()!=lang) {
-                $(fullTreeLis[i]).hide()
-            } else {
-                $(fullTreeLis[i]).show()
-            }
-        }
-    }
-}
 
-function getCurrentUrlLang(url) {
-    if (url.indexOf("/docs/server/") > 0 || url.indexOf("/docs/mobile/") > 0) {
-        var arr = url.indexOf("/docs/server/") > 0 ? url.split("/docs/server/")[1].split("/") : url.split("/docs/mobile/")[1].split("/")
-        return arr[1]
-    } else {
-        return ""
-    }
-}

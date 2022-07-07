@@ -357,24 +357,28 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
         var bestMatchList = -1;
         var bestReturnVal = -1;
 
+        FilterLangFullTree()
+
         for (var i = 0, len = listAry.length; i < len; i++) {
             var curLi = listAry[i];
-            var curListATag =  $(curLi).children("a");
-            if (curListATag.length > 0 && curListATag[0].getAttribute("href") != null && curListATag[0].getAttribute("href") != "#") {
-                var returnVal = UrlSearch(searchUrl, curListATag[0].href);
-                if (returnVal == 2) {
-                    bestReturnVal = returnVal;
-                    bestMatchList = i;
-                    break;               
-                }
-                else {
-                    if (returnVal > bestReturnVal || ( returnVal == 0 && bestReturnVal == 0)) {
+            if ($(curLi).is(":visible")) {
+                var curListATag =  $(curLi).children("a");
+                if (curListATag.length > 0 && curListATag[0].getAttribute("href") != null && curListATag[0].getAttribute("href") != "#") {
+                    var returnVal = UrlSearch(searchUrl, curListATag[0].href);
+                    if (returnVal == 2) {
                         bestReturnVal = returnVal;
                         bestMatchList = i;
+                        break;               
                     }
-                    
-                    if (!firstTime) {
-                        curListATag[0].style.fontWeight = 'normal';
+                    else {
+                        if (returnVal > bestReturnVal || ( returnVal == 0 && bestReturnVal == 0)) {
+                            bestReturnVal = returnVal;
+                            bestMatchList = i;
+                        }
+                        
+                        if (!firstTime) {
+                            curListATag[0].style.fontWeight = 'normal';
+                        }
                     }
                 }
             }
@@ -620,5 +624,31 @@ function initCrumbs() {
             appendText += '<li id="breadcrumbLastNode">' + $(activeLis[0]).text() + '</li>'
         }
         $(crumbul[0]).append(appendText);
+    }
+}
+
+function FilterLangFullTree() {
+    var curUrl = document.URL
+    if (curUrl.indexOf("/docs/server/") > 0 || curUrl.indexOf("/docs/mobile/") > 0) {
+        var lang = getCurrentUrlLang(curUrl);
+        console.log(lang)
+        var fullTreeLis = $("#fullTreeMenuListContainer > li")
+        for(var i=0;i<fullTreeLis.length;i++) {
+            var liItemLang = fullTreeLis[i].getAttribute("lang")
+            if (liItemLang&&liItemLang!=""&&liItemLang.toLowerCase()!=lang) {
+                $(fullTreeLis[i]).hide()
+            } else {
+                $(fullTreeLis[i]).show()
+            }
+        }
+    }
+}
+
+function getCurrentUrlLang(url) {
+    if (url.indexOf("/docs/server/") > 0 || url.indexOf("/docs/mobile/") > 0) {
+        var arr = url.indexOf("/docs/server/") > 0 ? url.split("/docs/server/")[1].split("/") : url.split("/docs/mobile/")[1].split("/")
+        return arr[1]
+    } else {
+        return ""
     }
 }

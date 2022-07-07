@@ -465,7 +465,7 @@ function findCurLinkOnFullTree(aTag, paramLink, needh3=false, onlyLoadContent=fa
             searchHref = searchHref.indexOf("index.html") > 0 ? searchHref.replace("index.html", "") : searchHref
             targetHref = targetHref.indexOf("index.html") > 0 ? targetHref.replace("index.html", "") : targetHref
             searchHref = searchHref.indexOf("?") > 0 ? searchHref.split("?")[0] : (searchHref.indexOf("#") > 0 ? searchHref.split("#")[0] : searchHref) 
-            if (searchHref && searchHref.toLowerCase() == targetHref) {
+            if (fullTreeATags[i].offsetParent !== null && searchHref && searchHref.toLowerCase() == targetHref) {
                 flag = true
                 RequestNewPage(fullTreeATags[i], paramLink, needh3, null, onlyLoadContent)
             }
