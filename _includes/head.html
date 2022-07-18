@@ -44,8 +44,14 @@
 
     <link rel="stylesheet" href="{{ site.assets }}css/header_bs.css">
 
-
+    {%- assign showNoIndexStyle = false -%}
     {%- if page.noTitleIndex or page.url contains 'release-notes' -%}
+        {%- assign showNoIndexStyle = true -%}
+    {%- endif -%}
+    {%- if site.docFullPath contains 'barcode-reader' -%}
+        {%- assign showNoIndexStyle = false -%}
+    {%- endif -%}
+    {%- if showNoIndexStyle -%}
         <style>
             .headCounter h2:before { content: ''!important; padding-right: 0px!important; }
             .headCounter h2 { counter-reset: none!important; counter-increment: none!important; }

@@ -47,11 +47,21 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
         generateDocHead = false;
     }
     var verArray = SearchVersion();
+    // console.log(123, useVersionTree)
     if (!useVersionTree) {
         var allHerf1 = $(".docContainer .content, #docHead, #AutoGenerateSidebar, .sideBar, #crumbs").find("a");
         for (var i = 0; i < allHerf1.length; i++)
         {
-            allHerf1[i].onclick = function(){addParam(this, verArray[0]); return false;};
+            allHerf1[i].onclick = function(){
+                if (!$(this).hasClass("refreshLink") && $(this).parents(".sideBar").length > 0 && $("#articleContent").length > 0) {
+                  addParam(this, verArray[0], 'sidebar', needh3); 
+                } else if (!$(this).hasClass("refreshLink") && $(this).parents(".markdown-body").length > 0 && $("#articleContent").length > 0) {
+                    addParam(this, verArray[0], 'docContainer', needh3); 
+                } else {
+                  addParam(this, verArray[0]); 
+                }
+                return false;
+            };
         }
 
         var navWrap = document.getElementById("fullTreeMenuListContainer");
@@ -138,9 +148,8 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
     }
     else {
         var versionListInterval = setInterval(function() {
-            // console.log('enter full tree menu list function...')
+            // console.log("waiting...")
             var completeTag = $('#sideBarIframe').contents().find('#complete_loading_tree');
-            
             if (completeTag && completeTag.length > 0) {
                 clearInterval(versionListInterval);
 
@@ -160,10 +169,20 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                     var allHerf1 = $(".docContainer .content, #docHead, #AutoGenerateSidebar, .sideBar, #crumbs").find("a");
                     for (var i = 0; i < allHerf1.length; i++)
                     {
-                        allHerf1[i].onclick = function(){addParam(this, verArray[0]); return false;};
+                        allHerf1[i].onclick = function(){
+                            if (!$(this).hasClass("refreshLink") && $(this).parents(".sideBar").length > 0 && $("#articleContent").length > 0) {
+                              addParam(this, verArray[0], 'sidebar', needh3); 
+                            } else if (!$(this).hasClass("refreshLink") && $(this).parents(".markdown-body").length > 0 && $("#articleContent").length > 0) {
+                                addParam(this, verArray[0], 'docContainer', needh3); 
+                            } else {
+                              addParam(this, verArray[0]); 
+                            }
+                            return false;
+                        };
                     }
         
                     var navWrap = document.getElementById("fullTreeMenuListContainer");
+                    // console.log("navWrap: " + navWrap)
                     if (navWrap != null) {
                         HighlightCurrentListForFullTree("fullTreeMenuListContainer", true, document.URL, pageStartVer, verArray[1]);
                         if (generateDocHead) {
@@ -180,6 +199,7 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                             //GenerateContentByHead(false);
                         }
                         var hiddenLayout = $('.docContainer, .sideBar, .history');
+                        // console.log("hiddenLayout: " + hiddenLayout)
                         for (var i = 0; i < hiddenLayout.length; i++) {
                             hiddenLayout[i].style.visibility = "visible";
                         }
@@ -196,50 +216,52 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
     
                         navWrap = document.getElementById("fullTreeMenuListContainer");
                         var liAry = navWrap.getElementsByTagName("li");
-        
-                        for (var i = 0, len = liAry.length; i < len; i++) {
-                            liAry[i].onclick = (function (i) {
-                                return function (event) {
-                                    if ($(liAry[i]).children("a").length == 0 || $(liAry[i]).children("a")[0].getAttribute("href") == null) {
-                                        var subUl = $(liAry[i]).children("ul");
-                                        if (subUl.length > 0) {
-                                            for (var j = 0; j < subUl.length; j++) {
-                                                if (subUl[j].style.display == "block") {
-                                                    var parentL = $(subUl[j]).parents("li");
-                                                    if (parentL.length > 0) {
-                                                        parentL[0].className = "collapseListStyle"
-                                                        // parentL[0].style.listStyleImage = "url('/assets/img-icon/collapse-list.png')";
+                        
+                        if ($("#categoryMenuTree").length == 0) {
+                            for (var i = 0, len = liAry.length; i < len; i++) {
+                                liAry[i].onclick = (function (i) {
+                                    return function (event) {
+                                        if ($(liAry[i]).children("a").length == 0 || $(liAry[i]).children("a")[0].getAttribute("href") == null) {
+                                            var subUl = $(liAry[i]).children("ul");
+                                            if (subUl.length > 0) {
+                                                for (var j = 0; j < subUl.length; j++) {
+                                                    if (subUl[j].style.display == "block") {
+                                                        var parentL = $(subUl[j]).parents("li");
+                                                        if (parentL.length > 0) {
+                                                            parentL[0].className = "collapseListStyle"
+                                                            // parentL[0].style.listStyleImage = "url('/assets/img-icon/collapse-list.png')";
+                                                        }
+                                                        subUl[j].style.display = "none";
                                                     }
-                                                    subUl[j].style.display = "none";
-                                                }
-                                                else {
-                                                    subUl[j].style.display = "block";
-                                                    var parentL = $(subUl[j]).parents("li");
-                                                    if (parentL.length > 0) {
-                                                        parentL[0].className = "expandListStyle"
-                                                        // parentL[0].style.listStyleImage = "url('/assets/img-icon/expand-list.png')";
-                                                    }
-                                                    var parentUl = $(liAry[i]).parents("ul");
-                                                    for (var m = 0; m < parentUl.length; m++) {
-                                                        if (parentUl[m].style.display != "block") {
-                                                            var parentL = $(parentUl[m]).parents("li");
-                                                            if (parentL.length > 0) {
-                                                                parentL[0].className = "expandListStyle"
-                                                                // parentL[0].style.listStyleImage = "url('/assets/img-icon/expand-list.png')";
+                                                    else {
+                                                        subUl[j].style.display = "block";
+                                                        var parentL = $(subUl[j]).parents("li");
+                                                        if (parentL.length > 0) {
+                                                            parentL[0].className = "expandListStyle"
+                                                            // parentL[0].style.listStyleImage = "url('/assets/img-icon/expand-list.png')";
+                                                        }
+                                                        var parentUl = $(liAry[i]).parents("ul");
+                                                        for (var m = 0; m < parentUl.length; m++) {
+                                                            if (parentUl[m].style.display != "block") {
+                                                                var parentL = $(parentUl[m]).parents("li");
+                                                                if (parentL.length > 0) {
+                                                                    parentL[0].className = "expandListStyle"
+                                                                    // parentL[0].style.listStyleImage = "url('/assets/img-icon/expand-list.png')";
+                                                                }
+                                                                parentUl[m].style.display = "block";
                                                             }
-                                                            parentUl[m].style.display = "block";
                                                         }
                                                     }
                                                 }
                                             }
                                         }
+                                        else {
+                                            //HighlightCurrentListForFullTree("fullTreeMenuListContainer", false, ($(liAry[i]).children("a"))[0].href);
+                                        }
+                                        event.stopPropagation();
                                     }
-                                    else {
-                                        //HighlightCurrentListForFullTree("fullTreeMenuListContainer", false, ($(liAry[i]).children("a"))[0].href);
-                                    }
-                                    event.stopPropagation();
-                                }
-                            })(i)
+                                })(i)
+                            }
                         }
                     }
                 }
@@ -335,24 +357,28 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
         var bestMatchList = -1;
         var bestReturnVal = -1;
 
+        FilterLangFullTree()
+
         for (var i = 0, len = listAry.length; i < len; i++) {
             var curLi = listAry[i];
-            var curListATag =  $(curLi).children("a");
-            if (curListATag.length > 0 && curListATag[0].getAttribute("href") != null) {
-                var returnVal = UrlSearch(searchUrl, curListATag[0].href);
-                if (returnVal == 2) {
-                    bestReturnVal = returnVal;
-                    bestMatchList = i;
-                    break;               
-                }
-                else {
-                    if (returnVal > bestReturnVal || ( returnVal == 0 && bestReturnVal == 0)) {
+            if ($(curLi).is(":visible")) {
+                var curListATag =  $(curLi).children("a");
+                if (curListATag.length > 0 && curListATag[0].getAttribute("href") != null && curListATag[0].getAttribute("href") != "#") {
+                    var returnVal = UrlSearch(searchUrl, curListATag[0].href);
+                    if (returnVal == 2) {
                         bestReturnVal = returnVal;
                         bestMatchList = i;
+                        break;               
                     }
-                    
-                    if (!firstTime) {
-                        curListATag[0].style.fontWeight = 'normal';
+                    else {
+                        if (returnVal > bestReturnVal || ( returnVal == 0 && bestReturnVal == 0)) {
+                            bestReturnVal = returnVal;
+                            bestMatchList = i;
+                        }
+                        
+                        if (!firstTime) {
+                            curListATag[0].style.fontWeight = 'normal';
+                        }
                     }
                 }
             }
@@ -383,38 +409,37 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
             }
             
             if (document.URL.indexOf("web-twain/docs/faq/") < 0 || document.URL.indexOf("web-twain/docs/faq/?ver") > 0) {
-                curListATag[0].style.color = '#fe8e14';
+                // curListATag[0].style.color = '#fe8e14';
                 curListATag[0].className = "otherLinkColour activeLink"
             }
 
             if (firstTime) {
-                var crumbul = $($('#crumbs')).children("ul")
-                if (crumbul.length != 0) {
-                    var parentsLi = $(curLi).parents("li");
-                    var appendText = "";
-                    if (parentsLi.length > 0) {
-                        for (var j = parentsLi.length - 1; j >= 0 ; j--) {
-                            var tmpATag = $(parentsLi[j]).children("a");
-                            if (tmpATag.length > 0) {
-                                appendText += '<li><a class="bluelink" href = "' + tmpATag[0].href + '">'+ tmpATag[0].textContent + '</a></li>';
-                            }
-                        }
-                    }
+                // var crumbul = $($('#crumbs')).children("ul")
+                // if (crumbul.length != 0) {
+                //     var parentsLi = $(curLi).parents("li");
+                //     var appendText = "";
+                //     if (parentsLi.length > 0) {
+                //         for (var j = parentsLi.length - 1; j >= 0 ; j--) {
+                //             var tmpATag = $(parentsLi[j]).children("a");
+                //             if (tmpATag.length > 0) {
+                //                 appendText += '<li><a class="bluelink" href = "' + tmpATag[0].href + '">'+ tmpATag[0].textContent + '</a></li>';
+                //             }
+                //         }
+                //     }
 
-                    var childUl = $(curLi).children("ul");
-                    if (childUl.length > 0) {
-                        appendText += '<li><a class="bluelink" href = "' + curListATag[0].href + '">'+ curListATag[0].textContent + '</a></li>';
-                    }
-                    else {
-                        if (document.URL.indexOf("/barcode-reader/faq/") > 0) {
-                            appendText += '<li id="breadcrumbLastNode"><a class="bluelink" href = "' + curListATag[0].href + '">'+ curListATag[0].textContent + '</a></li>'
-                        } else {
-                            appendText += '<li id="breadcrumbLastNode">' + curListATag[0].textContent + '</li>'
-                        }
-                        // appendText += '<li id="breadcrumbLastNode">' + curListATag[0].textContent + '</li>'
-                    }
-                    $(crumbul[0]).append(appendText);
-                }
+                //     var childUl = $(curLi).children("ul");
+                //     if (childUl.length > 0) {
+                //         appendText += '<li><a class="bluelink" href = "' + curListATag[0].href + '">'+ curListATag[0].textContent + '</a></li>';
+                //     }
+                //     else {
+                //         if (document.URL.indexOf("/barcode-reader/faq/") > 0) {
+                //             appendText += '<li id="breadcrumbLastNode"><a class="bluelink" href = "' + curListATag[0].href + '">'+ curListATag[0].textContent + '</a></li>'
+                //         } else {
+                //             appendText += '<li id="breadcrumbLastNode">' + curListATag[0].textContent + '</li>'
+                //         }
+                //     }
+                //     $(crumbul[0]).append(appendText);
+                // }
                 var parentsUL = $(curLi).parents("ul");
                 for (var j = 0, lenUL = parentsUL.length; j < lenUL; j++) {
                     var curUL =  parentsUL[j];
@@ -427,10 +452,16 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
                         if (curULTag.length > 0) {
                             if (curULTag[0].style.display != "block") {
                                 curULChildrenListAry[k].className = "collapseListStyle"
+                                var iconItem = document.createElement("i")
+                                iconItem.className = "icon-arrow"
+                                curULChildrenListAry[k].appendChild(iconItem)
                                 // curULChildrenListAry[k].style.listStyleImage = "url('/assets/img-icon/collapse-list.png')";  
                             }
                             else {
                                 curULChildrenListAry[k].className = "expandListStyle"
+                                var iconItem = document.createElement("i")
+                                iconItem.className = "icon-arrow"
+                                curULChildrenListAry[k].appendChild(iconItem)
                                 // curULChildrenListAry[k].style.listStyleImage = "url('/assets/img-icon/expand-list.png')";
                             }
                         }
@@ -444,18 +475,27 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
                     if (childUL[0].style.display != "block") {
                         childUL[0].style.display = "block";
                     }
-                    curListATag[0].removeAttribute("href");
 
+                    if ($("#categoryMenuTree").length == 0) {
+                        curListATag[0].removeAttribute("href");
+                    }
+                    
                     var childrenLi = $(childUL[0]).children("li");
                     for (var j = 0; j < childrenLi.length; j++) {
                         var curULTag = $(childrenLi[j]).children("ul");
                         if (curULTag.length > 0) {
                             if (curULTag[0].style.display != "block") {
                                 childrenLi[j].className = "collapseListStyle"
+                                var iconItem = document.createElement("i")
+                                iconItem.className = "icon-arrow"
+                                childrenLi[j].appendChild(iconItem)
                                 // childrenLi[j].style.listStyleImage = "url('/assets/img-icon/collapse-list.png')";  
                             }
                             else {
                                 childrenLi[j].className = "expandListStyle"
+                                var iconItem = document.createElement("i")
+                                iconItem.className = "icon-arrow"
+                                childrenLi[j].appendChild(iconItem)
                                 // childrenLi[j].style.listStyleImage = "url('/assets/img-icon/expand-list.png')";
                             }
                         }
@@ -464,8 +504,13 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
                 var parentsLi = $(curLi).parents("li");
                 for (var j = 0, lenLi = parentsLi.length; j < lenLi; j++) {
                     parentsLi[j].className = "expandListStyle"
+                    var iconItem = document.createElement("i")
+                    iconItem.className = "icon-arrow"
+                    parentsLi[j].appendChild(iconItem)
                     // parentsLi[j].style.listStyleImage = "url('/assets/img-icon/expand-list.png')";
                 }
+
+                initCrumbs()
             }
         }
     }
@@ -555,5 +600,55 @@ function UsefulRecord(isUseful) {
 
     if(feedbackTag!=null) {
         feedbackTag.innerHTML = "Thanks!";
+    }
+}
+
+
+function initCrumbs() {
+    var crumbul = $('#crumbs').children("ul")
+    if (crumbul.length != 0) {
+        var appendText = "";
+        var expandList = $("#fullTreeMenuListContainer .expandListStyle")
+        for (var i=0; i<expandList.length; i++) {
+            if ($(expandList[i]).find(".activeLink").length > 0) {
+                var atag = $(expandList[i]).find("> a")
+                if ($(atag).hasClass("activeLink")) {
+                    appendText += '<li id="breadcrumbLastNode">' + $(atag)[0].textContent + '</li>'
+                } else {
+                    appendText += '<li><a class="bluelink" href = "' + $(atag)[0].href + '">'+ $(atag)[0].textContent + '</a></li>'
+                }
+            }
+        }
+        var activeLis = $("#fullTreeMenuListContainer a.activeLink")
+        if (activeLis.length > 0 && !$(activeLis[0]).parent().hasClass("expandListStyle")) {
+            appendText += '<li id="breadcrumbLastNode">' + $(activeLis[0]).text() + '</li>'
+        }
+        $(crumbul[0]).append(appendText);
+    }
+}
+
+function FilterLangFullTree() {
+    var curUrl = document.URL
+    if (curUrl.indexOf("/docs/server/") > 0 || curUrl.indexOf("/docs/mobile/") > 0) {
+        var lang = getCurrentUrlLang(curUrl);
+        console.log(lang)
+        var fullTreeLis = $("#fullTreeMenuListContainer > li")
+        for(var i=0;i<fullTreeLis.length;i++) {
+            var liItemLang = fullTreeLis[i].getAttribute("lang")
+            if (liItemLang&&liItemLang!=""&&liItemLang.toLowerCase()!=lang) {
+                $(fullTreeLis[i]).hide()
+            } else {
+                $(fullTreeLis[i]).show()
+            }
+        }
+    }
+}
+
+function getCurrentUrlLang(url) {
+    if (url.indexOf("/docs/server/") > 0 || url.indexOf("/docs/mobile/") > 0) {
+        var arr = url.indexOf("/docs/server/") > 0 ? url.split("/docs/server/")[1].split("/") : url.split("/docs/mobile/")[1].split("/")
+        return arr[1]
+    } else {
+        return ""
     }
 }
