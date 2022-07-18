@@ -1,0 +1,46 @@
+#demoSubMenu { width: 850px; background-color: #F5F5F5; position: absolute; display: none; left: 240px; padding: 43px 69px 25px 69px; }
+    #demoSubMenu a:last-child { font-size: 18px; display: block; text-align: center; }
+    #demoSubMenu .webDemo { border-bottom: 1px solid #CCCCCC; margin-bottom: 31px; }
+    #demoSubMenu .demos > p:first-child { color: #888888; font-size: 20px; margin-bottom: 20px; }
+    #demoSubMenu .demos .demosContainer { display: flex; flex-wrap: wrap; justify-content: space-between; }
+        #demoSubMenu .demos .demosContainer > div { width: 50%; margin-bottom: 26px; position: relative; }
+            #demoSubMenu .demos .demosContainer > div > a { width: 100%; height: 100%; position: absolute; top: 0; left: 0; }
+            #demoSubMenu .demos .demosContainer > div > p { font-size: 20px; font-family: Oswald-Regular; color: #323234; }
+                #demoSubMenu .demos .demosContainer > div > p:nth-child(2) { font-size: 14px; font-family: OpenSans-Regular; line-height: 20px; }
+    #demoSubMenu .webDemo.demos .demosContainer > div:first-of-type p.demoDesc { width: 78%; }
+    #demoSubMenu .webDemo.demos .demosContainer > div:nth-of-type(2) p.demoDesc { width: 87%; }
+    #demoSubMenu .webDemo.demos .demosContainer > div:nth-of-type(3) p.demoDesc { width: 80%; }
+    #demoSubMenu .webDemo.demos .demosContainer > div:last-of-type p.demoDesc { width: 100%; }
+
+    #demoSubMenu .demos .demosContainer > div:hover > p:nth-child(2) { color: #fe8e14; }
+    #demoSubMenu .appDemo.demos .demosContainer > div:hover > p { color: #fe8e14; }
+
+  @media (max-width: 1679px) {
+      #demoSubMenu { left: 207px; }
+          #demoSubMenu a:last-child { font-size: 16px; }
+          #demoSubMenu .demos > p:first-child { font-size: 18px; }
+          #demoSubMenu .demos .demosContainer > div > p { font-size: 18px; }
+  }
+  
+  @media (min-width: 1360px) {
+      #cp-header .action-buttons.hideSmall { display: inline-block; }
+      #cp-header .action-buttons.showSmall { display: none; }
+  }
+  
+  @media (max-width: 1359px) {
+      #cp-header .action-buttons.hideSmall { display: none; }
+      #cp-header .action-buttons.showSmall { display: inline-block; }
+  }
+  
+  @media (max-width: 1259px) {
+      #mdMenu { padding-left: 170px; }
+          #mdMenu li { margin-right: 30px; }
+  
+      #demoSubMenu { left: 187px; }
+  }
+  
+  @media (max-width: 1199px) {
+      #demoSubMenu { left: 50%; transform: translateX(-50%); }
+          #demoSubMenu .demos > p:first-child { font-size: 16px; }
+          #demoSubMenu .demos .demosContainer > div > p { font-size: 16px; }
+  }

@@ -29,52 +29,73 @@ $(function(){
 	});
 		
 	/*mdMenu*/
-	$("#mdMenu .mdMenuToggle").click(function(){
-		if ($(this).parent().hasClass('on')) {
-			$("#mdMenu li").removeClass('on');
-			$('body').removeClass('overviewHidden');
-			$("#menuMask").hide();
-		} else {
-			$("#menuMask").show();
-			$("#mdMenu li").removeClass('on');
-			$(this).parent().addClass('on');
-		}
-		if ($(this).hasClass('dbrMenu')) {
-			$("#subMenu").slideUp();
-			$('#docSubMenu').slideUp();
-			$('#companySubMenu').slideUp();
-			$('#useCaseSubMenu').slideUp();
-			$('#dbrSubMenu').slideToggle(300);
-		}
-		if ($(this).hasClass('docMenu')) {
-			$("#subMenu").slideUp();
-			$('#dbrSubMenu').slideUp();
-			$('#companySubMenu').slideUp();
-			$('#useCaseSubMenu').slideUp();
-			$('#docSubMenu').slideToggle(300);
-		}
-		if ($(this).hasClass('companyMenu')) {
-			$("#subMenu").slideUp();
-			$('#dbrSubMenu').slideUp();
-			$('#docSubMenu').slideUp();
-			$('#useCaseSubMenu').slideUp();
-			$('#companySubMenu').slideToggle(300);
-		}
-		if ($(this).hasClass('proMenu')) {
-			$('#dbrSubMenu').slideUp();
-			$('#docSubMenu').slideUp();
-			$('#companySubMenu').slideUp();
-			$('#useCaseSubMenu').slideUp();
-			$("#subMenu").slideToggle(300);
-		}
-		if ($(this).hasClass('useCaseMenu')) {
-			$("#subMenu").slideUp(300);
-			$('#dbrSubMenu').slideUp();
-			$('#docSubMenu').slideUp();
-			$('#companySubMenu').slideUp();
-			$('#useCaseSubMenu').slideToggle(300);
-		}
-	});
+	let mdMenuTimer = null;
+    $("#mdMenu .mdMenuToggle").click(function () {
+        if (!mdMenuTimer) {
+            if ($(this).parent().hasClass('on')) {
+                $("#mdMenu li").removeClass('on');
+                $('body').removeClass('overviewHidden');
+                $("#menuMask").hide();
+            } else {
+                $("#menuMask").show();
+                $("#mdMenu li").removeClass('on');
+                $(this).parent().addClass('on');
+            }
+            if ($(this).hasClass('dbrMenu')) {
+                $("#subMenu").slideUp();
+                $('#docSubMenu').slideUp();
+                $('#companySubMenu').slideUp();
+                $('#useCaseSubMenu').slideUp();
+                $('#demoSubMenu').slideUp();
+                $('#dbrSubMenu').slideToggle(300);
+            }
+            if ($(this).hasClass('docMenu')) {
+                $("#subMenu").slideUp();
+                $('#dbrSubMenu').slideUp();
+                $('#companySubMenu').slideUp();
+                $('#useCaseSubMenu').slideUp();
+                $('#demoSubMenu').slideUp();
+                $('#docSubMenu').slideToggle(300);
+            }
+            if ($(this).hasClass('companyMenu')) {
+                $("#subMenu").slideUp();
+                $('#dbrSubMenu').slideUp();
+                $('#docSubMenu').slideUp();
+                $('#useCaseSubMenu').slideUp();
+                $('#demoSubMenu').slideUp();
+                $('#companySubMenu').slideToggle(300);
+            }
+            if ($(this).hasClass('proMenu')) {
+                $('#dbrSubMenu').slideUp();
+                $('#docSubMenu').slideUp();
+                $('#companySubMenu').slideUp();
+                $('#useCaseSubMenu').slideUp();
+                $('#demoSubMenu').slideUp();
+                $("#subMenu").slideToggle(300);
+            }
+            if ($(this).hasClass('useCaseMenu')) {
+                $("#subMenu").slideUp(300);
+                $('#dbrSubMenu').slideUp();
+                $('#docSubMenu').slideUp();
+                $('#companySubMenu').slideUp();
+                $('#demoSubMenu').slideUp();
+                $('#useCaseSubMenu').slideToggle(300);
+            }
+            if ($(this).hasClass('demoMenu')) {
+                $("#subMenu").slideUp(300);
+                $('#dbrSubMenu').slideUp();
+                $('#docSubMenu').slideUp();
+                $('#companySubMenu').slideUp();
+                $('#useCaseSubMenu').slideUp();
+                $('#demoSubMenu').slideToggle(300);
+            }
+
+            mdMenuTimer = setTimeout(() => {
+                mdMenuTimer = null;
+            }, 500);
+        }
+    });
+	
 	
 	/*subNav*/
 	$("#subNav .subNav-xsToggle").click(function(){

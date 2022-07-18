@@ -42,6 +42,8 @@
 
     <link rel="stylesheet" href="{{ site.assets }}css/basis.min.css?v=b202001019">
 
+    <link rel="stylesheet" href="{{ site.assets }}css/header_bs.css">
+
     {%- assign showNoIndexStyle = false -%}
     {%- if page.noTitleIndex or page.url contains 'release-notes' -%}
         {%- assign showNoIndexStyle = true -%}
@@ -72,7 +74,6 @@
     <script type="text/javascript" src="{{ site.assets }}js/historymanage.min.js"></script>
     {%- endif -%}
 
-    
     <script type="text/javascript" src="{{ site.assets }}js/layout.min.js"></script>
     <script type="text/javascript" src="{{ site.assets }}js/anchor.min.js"></script>
 

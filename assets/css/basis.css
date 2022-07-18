@@ -59,7 +59,7 @@ h3,
 h4,
 h5 {
     color: #444;
-    font-family: Oswald-Light, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
+    font-family: Oswald-Light, 'Myriad Pro', 'Gloucester MT', myriad-pro, 'Agency FB';
     font-weight: normal;
 }
 
@@ -115,7 +115,7 @@ h5 {
 }
 
 .markdown-body h4 {
-    font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
+    font-family: Oswald-Regular, 'Myriad Pro', 'Gloucester MT', myriad-pro, 'Agency FB';
     margin-bottom: 10px;
 }
 
@@ -126,7 +126,7 @@ h5 {
 }
 
 .fontOswald {
-    font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
+    font-family: Oswald-Regular, 'Myriad Pro', 'Gloucester MT', myriad-pro, 'Agency FB';
 }
 
 a.orangeLink {
@@ -233,7 +233,7 @@ ul.disc>li p:hover {
 }
 
 .headCounter h3:before {
-    content: counter(h2counter) "." counter(h3counter) "  ";
+    content: counter(h2counter) "."counter(h3counter) "  ";
     padding-right: 10px;
 }
 
@@ -243,7 +243,7 @@ ul.disc>li p:hover {
 }
 
 .headCounter h4:before {
-    content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) "  ";
+    content: counter(h2counter) "."counter(h3counter) "."counter(h4counter) "  ";
     padding-right: 10px;
 }
 
@@ -279,7 +279,9 @@ ul.disc>li p:hover {
     margin-top: 0px;
 }
 
-.noSubMenuDoc #docHead { top: 95px;}
+.noSubMenuDoc #docHead {
+    top: 95px;
+}
 
 #docHead .crumbsBox {
     display: inline-block;
@@ -470,14 +472,14 @@ ul.disc>li p:hover {
     background-color: #323234;
     text-align: left;
     color: #FFFFFF;
-    font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
+    font-family: Oswald-Regular, 'Myriad Pro', 'Gloucester MT', myriad-pro, 'Agency FB';
     font-size: 16px !important;
     font-weight: normal !important;
 }
 
 .markdown-body table thead th strong {
     color: #FFFFFF;
-    font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
+    font-family: Oswald-Regular, 'Myriad Pro', 'Gloucester MT', myriad-pro, 'Agency FB';
     font-weight: normal;
 }
 
@@ -522,7 +524,7 @@ ul.disc>li p:hover {
 }
 
 .markdown-body h3 code {
-    font-family: Oswald-Light, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
+    font-family: Oswald-Light, 'Myriad Pro', 'Gloucester MT', myriad-pro, 'Agency FB';
     font-weight: normal;
 }
 
@@ -698,13 +700,17 @@ ul.disc>li p:hover {
     cursor: pointer;
 }
 
-#fullTreeMenuListContainer li span.noPathItem { cursor: pointer; }
+#fullTreeMenuListContainer li span.noPathItem {
+    cursor: pointer;
+}
 
-#fullTreeMenuListContainer a, #fullTreeMenuListContainer a:active {
+#fullTreeMenuListContainer a,
+#fullTreeMenuListContainer a:active {
     color: #323234;
 }
 
-#fullTreeMenuListContainer a.activeLink, #fullTreeMenuListContainer a.activeLink:active {
+#fullTreeMenuListContainer a.activeLink,
+#fullTreeMenuListContainer a.activeLink:active {
     color: #FE8E14;
 }
 
@@ -881,7 +887,7 @@ ul::-webkit-scrollbar-corner {
     font-size: 24px;
     line-height: 36px;
     margin-bottom: 5px;
-    font-family: Oswald-Light, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
+    font-family: Oswald-Light, 'Myriad Pro', 'Gloucester MT', myriad-pro, 'Agency FB';
 }
 
 
@@ -935,8 +941,10 @@ ul::-webkit-scrollbar-corner {
         top: 133px;
         width: calc(100% - 360px);
     }
-    
-    .noSubMenuDoc #docHead { top: 73px }
+
+    .noSubMenuDoc #docHead {
+        top: 73px
+    }
 
     .dlrDoc #docHead {
         top: 154px;
@@ -1556,7 +1564,7 @@ ul {
     text-decoration: none;
 }
 
-#subMenu .subMenuContent .ct-bt a {
+#subMenu .subMenuContent .ct-bt>div {
     width: 100%;
     height: 52px;
     line-height: 52px;
@@ -1567,6 +1575,11 @@ ul {
     bottom: 0;
     text-align: center;
     font-size: 18px;
+}
+
+#subMenu .subMenuContent .ct-bt>div {
+    display: flex;
+    justify-content: center;
 }
 
 #subMenu .subMenuContent .ct-bt a span {
@@ -2075,7 +2088,7 @@ header-signin {
     #xsNav li.menuItem .menuName a {
         color: #FFFFFF;
         font-size: 20px;
-        font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
+        font-family: Oswald-Regular, 'Myriad Pro', 'Gloucester MT', myriad-pro, 'Agency FB';
     }
 
     #xsNav li.menuItem .menuDetail {
@@ -2089,7 +2102,7 @@ header-signin {
     #xsNav li.menuItem .menuDetail .menu-left,
     #xsNav li.menuItem .menuDetail .menu-right {
         display: inline-block;
-        font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
+        font-family: Oswald-Regular, 'Myriad Pro', 'Gloucester MT', myriad-pro, 'Agency FB';
     }
 
     #xsNav li.menuItem .menuDetail .menu-left {
@@ -4661,6 +4674,7 @@ i.dbr-white-logo {
         top: 130px !important;
         left: calc(50% - 160px);
     }
+
     .noSubMenuDoc .history.history-absolute {
         top: 70px !important;
     }
@@ -4676,6 +4690,7 @@ i.dbr-white-logo {
         top: 110px !important;
         left: 185px;
     }
+
     .noSubMenuDoc .history.history-absolute {
         top: 65px !important;
     }
@@ -4729,14 +4744,16 @@ i.dbr-white-logo {
     border-bottom: 3px solid #fe8e14;
 }
 
-.markdown-body .sample-code-prefix+blockquote ol li, .markdown-body .sample-code-prefix.template2+blockquote > div {
+.markdown-body .sample-code-prefix+blockquote ol li,
+.markdown-body .sample-code-prefix.template2+blockquote>div {
     position: relative;
     background: #f6f8fa;
     opacity: 0;
     height: 0;
 }
 
-.markdown-body .sample-code-prefix+blockquote ol li.on, .markdown-body .sample-code-prefix.template2+blockquote > div.on {
+.markdown-body .sample-code-prefix+blockquote ol li.on,
+.markdown-body .sample-code-prefix.template2+blockquote>div.on {
     padding: 0;
     opacity: 1;
     height: auto;
@@ -4759,16 +4776,18 @@ i.dbr-white-logo {
     width: 20px;
 }
 
-.markdown-body .sample-code-prefix.template2+blockquote > div div.highlight {
+.markdown-body .sample-code-prefix.template2+blockquote>div div.highlight {
     margin-bottom: 0;
-    border: 0;
-} 
-
-.markdown-body .sample-code-prefix.template2+blockquote > div pre.highlight {
     border: 0;
 }
 
-.markdown-body .sample-code-prefix+blockquote ul li.scHiddenLi, .markdown-body .sample-code-prefix+blockquote ol li.scHiddenLi, .markdown-body .sample-code-prefix.template2+blockquote > div.scHiddenLi {
+.markdown-body .sample-code-prefix.template2+blockquote>div pre.highlight {
+    border: 0;
+}
+
+.markdown-body .sample-code-prefix+blockquote ul li.scHiddenLi,
+.markdown-body .sample-code-prefix+blockquote ol li.scHiddenLi,
+.markdown-body .sample-code-prefix.template2+blockquote>div.scHiddenLi {
     display: none;
 }
 
@@ -4776,7 +4795,8 @@ i.dbr-white-logo {
     display: inline-block;
 }
 
-.markdown-body .sample-code-prefix+blockquote ol li.scHiddenLi.on, .markdown-body .sample-code-prefix.template2+blockquote > div.scHiddenLi.on {
+.markdown-body .sample-code-prefix+blockquote ol li.scHiddenLi.on,
+.markdown-body .sample-code-prefix.template2+blockquote>div.scHiddenLi.on {
     display: block;
 }
 
@@ -4850,7 +4870,13 @@ i.dbr-white-logo {
     background: #f6f8fa;
 }
 
-.markdown-body p.subtitle { font-size: 14px; color: #606060; font-family: 'OpenSans-Regular'; margin-top: 5px; margin-bottom: 0; }
+.markdown-body p.subtitle {
+    font-size: 14px;
+    color: #606060;
+    font-family: 'OpenSans-Regular';
+    margin-top: 5px;
+    margin-bottom: 0;
+}
 
 a#toTop {
     display: none;
@@ -5054,17 +5080,6 @@ a#toTop {
     color: rgb(254, 142, 20)!important;
 }
 
-/* #categoryMenuTree #fullTreeMenuListContainer li.expandListStyle > ul {
-    display: block!important;
-    height: auto;
-}
-
-#categoryMenuTree #fullTreeMenuListContainer li.collapseListStyle > ul {
-    display: none!important;
-    overflow: none;
-    height: 0;
-} */
-
 #categoryMenuTree #fullTreeMenuListContainer li i.icon-arrow {
     position: absolute;
     right: 15px;
@@ -5180,3 +5195,20 @@ a#toTop {
 }
 
 /* end left menu style 2.0 */
+
+/* template-table */
+.markdown-body .sample-code-prefix.template-table + blockquote {
+    display: inline-block;
+    width: auto;
+    border: 0;
+    margin-top: 0;
+}
+
+.markdown-body .sample-code-prefix.template-table + blockquote ul {
+    padding: 0;
+    margin-bottom: 15px;
+}
+
+.markdown-body .sample-code-prefix.template-table + blockquote ul > li:last-child {
+    margin-right: 0;
+}

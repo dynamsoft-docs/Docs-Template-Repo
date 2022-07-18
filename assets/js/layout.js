@@ -455,5 +455,3 @@ function formatDate(date) {
     var month = monthList[newDate.getMonth()]
     return weekday + ', ' + month + ' ' + newDate.getDate() + ', ' + newDate.getFullYear()
 }
-
-

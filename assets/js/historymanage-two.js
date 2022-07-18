@@ -111,14 +111,14 @@ function addParam (aTag, verText, fromSourse)
 	return;
 }
 
-function RequestNewPage(aTag, paramLink) {
+function RequestNewPage(aTag, paramLink, onlyLoadContent=false) {
     $("#articleContent").addClass("hidden")
     $("#loadingContent").show()
     fetch(aTag.href).then(function(response) {
         return response.text()
     }).then(function(data) {
         document.title = $(data)[1].innerText
-        history.pushState(null, null, paramLink)
+        !onlyLoadContent&&history.pushState(null, null, paramLink)
         if($(aTag).parents("li.collapseListStyle").length > 0) {
             $(aTag).parents("li.collapseListStyle").addClass("expandListStyle").removeClass("collapseListStyle")
         }
@@ -155,7 +155,39 @@ function RequestNewPage(aTag, paramLink) {
                 $(template2Objs[i]).find(">div").eq(0).addClass('on')
             }
         }
+
+        anchors.add();
     })
+}
+
+function findCurLinkOnFullTree(aTag, paramLink, onlyLoadContent=false) {
+    var fullTreeATags = $("#fullTreeMenuListContainer").find("a")
+    var targetHref = aTag.href.toLowerCase()
+    var curDocUrl = document.URL.toLowerCase()
+    targetHref = targetHref.indexOf("?") > 0 ? targetHref.split("?")[0] : (targetHref.indexOf("#") > 0 ? targetHref.split("#")[0] : targetHref) 
+    curDocUrl = curDocUrl.indexOf("?") > 0 ? curDocUrl.split("?")[0] : (curDocUrl.indexOf("#") > 0 ? curDocUrl.split("#")[0] : curDocUrl)
+    
+    if (curDocUrl == targetHref && (aTag.href.split("#").length > 1 || document.URL.split("#").length > 1)) {
+        var hash = aTag.href.split("#").length > 1 ? aTag.href.split("#")[1] : null
+        window.scrollTo(0, hash ? $("#" + hash).offset().top : 0)
+        !onlyLoadContent&&history.pushState(null, null, paramLink)
+    } else {
+        var flag = false
+        for(var i=0; i<fullTreeATags.length; i++) {
+            var searchHref = fullTreeATags[i].href
+            searchHref = searchHref.indexOf("index.html") > 0 ? searchHref.replace("index.html", "") : searchHref
+            targetHref = targetHref.indexOf("index.html") > 0 ? targetHref.replace("index.html", "") : targetHref
+            searchHref = searchHref.indexOf("?") > 0 ? searchHref.split("?")[0] : (searchHref.indexOf("#") > 0 ? searchHref.split("#")[0] : searchHref) 
+            if (searchHref && searchHref.toLowerCase() == targetHref) {
+                flag = true
+                RequestNewPage(fullTreeATags[i], paramLink, onlyLoadContent)
+            }
+        }
+    
+        if (!flag) {
+            window.location.href = paramLink;
+        }
+    }
 }
 
 function changeVersion (liTag)
@@ -218,3 +250,8 @@ function findNearestVersion(ver) {
     }
     if (verDiff) {return bestVer} else {return "latest"}
 }
+
+
+window.addEventListener("popstate", function(e) {
+    findCurLinkOnFullTree(location, location.href, true)
+}, false)
