@@ -534,3 +534,8 @@ function findNearestVersion(ver) {
     }
     if (verDiff) {return bestVer} else {return "latest"}
 }
+
+
+window.addEventListener("popstate", function(e) {
+    findCurLinkOnFullTree(location, location.href, false, true)
+}, false)

@@ -1,11 +1,14 @@
 function FullTreeMenuList(generateDocHead, needh3=true) {
   var allHerf1 = $(".docContainer .content, #docHead, #AutoGenerateSidebar, .sideBar, #crumbs").find("a");
   for (var i = 0; i < allHerf1.length; i++) {
+      var verArray = getUrlVars(document.URL)
       allHerf1[i].onclick = function(){
-        if ($(this).parents(".sideBar").length > 0) {
-          addParam(this, null, 'sidebar'); 
+        if (!$(this).hasClass("refreshLink") && $(this).parents(".sideBar").length > 0 && $("#articleContent").length > 0) {
+          addParam(this, 'sidebar', needh3); 
+        } else if (!$(this).hasClass("refreshLink") && $(this).parents(".markdown-body").length > 0 && $("#articleContent").length > 0) {
+            addParam(this, 'docContainer', needh3); 
         } else {
-          addParam(this, null); 
+          addParam(this); 
         }
         return false;
       };

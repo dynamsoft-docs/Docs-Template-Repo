@@ -23,7 +23,7 @@ function UrlReplace()
 }
 
 function allHerfClick(_this, ver) {
-    addParam(_this, ver);
+    addParam(_this);
     return false;
 }
 
@@ -70,7 +70,7 @@ function GetVersionDiff(inputVer, compareVer)
     return diff;
 }
 
-function addParam (aTag, verText, fromSourse)
+function addParam (aTag, fromSourse=null, needh3=false)
 {
     var hrefVal = aTag.href;
     var changeHref = hrefVal
@@ -78,29 +78,22 @@ function addParam (aTag, verText, fromSourse)
     if(hrefVal == "")
         return;
 
-    // var exp = new RegExp(/[?&]ver=[^&^#]+/gi);
-	// if (exp.exec(hrefVal) != null) {
-    //     changeHref = hrefVal
-	// } else {
-    //     var verStr = "";
-    //     exp = new RegExp(/[?]+([^=]+)=/gi);
-    //     verStr = exp.exec(hrefVal) != null ? ("&&ver=" + verText) : ("?ver=" + verText)
-    //     if (hrefVal.indexOf("#") != -1) {
-    //         var urlAry = hrefVal.split("#");
-    //         if (urlAry.length == 2){
-    //             changeHref = urlAry[0]+verStr+"#"+urlAry[1]
-    //         }
-    //     }
-    //     else{
-    //         changeHref = hrefVal+verStr
-    //     }
-    // }
-	if (aTag.href.split("?")[0].split("#")[0].toLowerCase() == document.URL.split("?")[0].split("#")[0].toLowerCase()) {
-        fromSourse = null
-    }
     if (fromSourse == "sidebar") {
-        // request link
-        RequestNewPage(aTag, changeHref)
+        var currentDocDomain = document.URL.split("/docs/")[0] + '/docs/';
+        if (aTag.href.indexOf(currentDocDomain) < 0) {
+            window.location.href = aTag.href;
+            return;
+        }
+        // request link   || aTag.href.indexOf("/faq/") > 0
+        if (!$(aTag).hasClass("activeLink")) {
+            RequestNewPage(aTag, changeHref)
+        }
+    } else if (fromSourse == "docContainer") {
+        if (aTag.target == '_blank') {
+            window.open(changeHref);
+        } else {
+            findCurLinkOnFullTree(aTag, changeHref)
+        }
     } else {
         if (aTag.target == '_blank') {
             window.open(changeHref);
@@ -117,25 +110,70 @@ function RequestNewPage(aTag, paramLink, onlyLoadContent=false) {
     fetch(aTag.href).then(function(response) {
         return response.text()
     }).then(function(data) {
-        document.title = $(data)[1].innerText
-        !onlyLoadContent&&history.pushState(null, null, paramLink)
-        if($(aTag).parents("li.collapseListStyle").length > 0) {
-            $(aTag).parents("li.collapseListStyle").addClass("expandListStyle").removeClass("collapseListStyle")
+        document.title = $(data)[1].innerText;
+        !onlyLoadContent&&history.pushState(null, null, paramLink);
+
+        // remove old active link and li style
+        for(var i=0; i < $("#fullTreeMenuListContainer .activeLink").parents("li").length;i++) {
+            var obj = $("#fullTreeMenuListContainer .activeLink").parents("li")[i]
+            if ($(obj).hasClass("hasActiveLinkList")) {
+                $(obj).removeClass("hasActiveLinkList")
+            }
         }
+
         $("#fullTreeMenuListContainer .activeLink").removeClass("activeLink")
         $(aTag).addClass("activeLink")
+        // add current active link and li style
+        $(aTag).addClass("activeLink")
+        if($(aTag).parents("li.collapseListStyle").length > 0) {
+            $(aTag).parents("li.collapseListStyle").addClass("expandListStyle").removeClass("collapseListStyle")
+            $(aTag).parents("li.expandListStyle").find(" > ul").slideDown()
+        }
+        $(aTag).parents("li.expandListStyle").addClass("hasActiveLinkList")
+        // $("#articleContent").html($(data).find("#articleContent").html()).removeClass("hidden")
+        
+        // show article content
+        var showRightSideMenu = $("#articleContent").hasClass("showRightSideMenu")
         $("#articleContent").html($(data).find("#articleContent").html()).removeClass("hidden")
+        if (!showRightSideMenu) {
+            $("#articleContent").find(".rightSideMenu, .markdown-body").removeClass("showRightSideMenu")
+        }
         $("#loadingContent").hide()
+
+        // if full tree has scroll bar, scroll to activelink position
+        var scrollDiv = document.getElementsByClassName("mainPage")[0]
+        if (scrollDiv.scrollHeight > scrollDiv.clientHeight) {
+            var activeLinkOffsetTop = $(".activeLink").offset().top - $(".mainPage").offset().top
+            if (activeLinkOffsetTop - scrollDiv.scrollTop + 40 > scrollDiv.clientHeight) {
+                scrollDiv.scrollTop = activeLinkOffsetTop - 200
+            }
+        }
+
+        // add addParam click function for all a tags in article content
+        var articleContentATags = $("#articleContent").find("a")
+        for (var i = 0; i < articleContentATags.length; i++)
+        {
+            articleContentATags[i].onclick = function(){
+                addParam(this, 'docContainer'); 
+                return false;
+            };
+        }
 
         if ($("#AutoGenerateSidebar").length > 0) {
             GenerateContentByHead(false);
-            $('#crumbs > ul').html($('#crumbs > ul > li').eq(0))
-            initCrumbs()
         }
+        $('#crumbs > ul').html($('#crumbs > ul > li').eq(0))
+        initCrumbs()
 
+        // scroll to the start of article
+        var hash = paramLink.split("#").length > 1 ? paramLink.split("#")[1] : null
         var sd = $(window).scrollTop()
-        if (sd > 0) {
-            window.scrollTo(0, sd > $('#overall-header').height() ? $('#overall-header').height() : sd)
+        if (hash) {
+            window.scrollTo(0, $("#" + hash).offset().top)
+        } else {
+            if (sd > 0) {
+                window.scrollTo(0, sd > $('#overall-header').height() ? $('#overall-header').height() : sd)
+            }
         }
     
         if($(".markdown-body .sample-code-prefix").length > 0 && getUrlVars(document.URL)["lang"]) {
@@ -190,9 +228,7 @@ function findCurLinkOnFullTree(aTag, paramLink, onlyLoadContent=false) {
     }
 }
 
-function changeVersion (liTag)
-{
-
+function changeVersion (liTag) {
 	var innertext = (liTag.innerText).toLowerCase();
 	var ver = null;
 	if (innertext == "latest version"){
@@ -202,7 +238,10 @@ function changeVersion (liTag)
 		ver = innertext.replace('version ','');
 	}
 	var curUrl = document.URL;
-    var verFileName = "/v17.2.1/"
+    var verFileName = "/v" + ver + "/";
+    if (curUrl.indexOf("web-twain/docs/") > 0 && GetVersionDiff('17.2.1', ver) < 0) {
+        verFileName = '/v17.2.1/';
+    }
     curUrl = curUrl.replace("/docs/", "/docs-archive" + verFileName)
 	var srcVal = getUrlVars(curUrl)["src"];
 	var anchorVar = undefined;

@@ -204,9 +204,9 @@ $(document).ready(function(){
         window.scrollTo(0, 0)
     })
 
-    $("#fullTreeMenuListContainer li > span.noPathItem, #fullTreeMenuListContainer li .listStyleIcon").on("click", function() {
-        openChildMenuTree($(this))
-    })
+    // $("#fullTreeMenuListContainer li > span.noPathItem, #fullTreeMenuListContainer li .listStyleIcon").on("click", function() {
+    //     openChildMenuTree($(this))
+    // })
 
     $(document).delegate("#categoryMenuTree li > a", "click", function(e) {
         if ($(this)[0].href == undefined || $(this)[0].href.trim() == "" || $(this).parent().find(" > ul").length > 0) {
@@ -236,10 +236,6 @@ $(document).ready(function(){
         $(this).find("ul").slideToggle()
         e.stopPropagation()
     })
-
-    window.addEventListener("popstate", function(e) {
-        findCurLinkOnFullTree(location, location.href, false, true)
-    }, false)
 })
 
 function openChildMenuTree(obj, needIcon) {
