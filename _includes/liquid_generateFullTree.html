@@ -16,23 +16,24 @@
   {%- if treeItem.childList -%}
     {%- if matchUrl == curUrl -%}
     <li class="expandListStyle" data-startVersion="{{treeItem.startVersion}}" data-endVersion="{{treeItem.endVersion}}" data-isHashNode="{{treeItem.isHashNode}}">
-      <i class="listStyleIcon"></i>
-      <a href="{{docHomePage}}{{treeItem.path}}" class="noListStyle otherLinkColour activeLink">{{treeItem.name}}</a>
-      <ul>
+      <a href="{{docHomePage}}{{treeItem.path}}" class="otherLinkColour activeLink">{{treeItem.name}}</a>
+      <ul style="display: block;">
         {%- include liquid_generateFullTree.html treeList=treeItem.childList -%}
       </ul>
+      <i class="icon-arrow"></i>
     </li>
     {%- else -%}
     <li class="collapseListStyle" data-startVersion="{{treeItem.startVersion}}" data-endVersion="{{treeItem.endVersion}}" data-isHashNode="{{treeItem.isHashNode}}">
-      <i class="listStyleIcon"></i>
       {%- if curUrl and curUrl != "" -%}
-        <a href="{{docHomePage}}{{treeItem.path}}" class="noListStyle otherLinkColour">{{treeItem.name}}</a>
+        <a href="{{docHomePage}}{{treeItem.path}}" class="otherLinkColour">{{treeItem.name}}</a>
       {%- else -%}
-        <span class="noPathItem">{{treeItem.name}}</span>
+        <a class="otherLinkColour">{{treeItem.name}}</a>
+        <!-- <span class="noPathItem">{{treeItem.name}}</span> -->
       {%- endif -%}
       <ul>
         {%- include liquid_generateFullTree.html treeList=treeItem.childList -%}
       </ul>
+      <i class="icon-arrow"></i>
     </li>
     {%- endif -%}
   {%- else -%}
