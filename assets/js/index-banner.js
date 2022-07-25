@@ -646,11 +646,17 @@ function FilterLangFullTree() {
 function getCurrentUrlLang(url) {
     if (url.indexOf("/docs/server/") > 0 || url.indexOf("/docs/mobile/") > 0) {
         if (url.indexOf("/c-cplusplus/") > 0) {
-            var src = getUrlVars(url)["src"].toLowerCase().trim()
-            if (src == "c") {
-                return "c"
+            if (getUrlVars(url)["src"]) {
+                var src = getUrlVars(url)["src"].toLowerCase().trim()
+                if (src == "c") {
+                    return "c"
+                } else if (src == "cplusplus" || src == "cpp") {
+                    return "cplusplus"
+                } else {
+                    return "c"
+                }
             } else {
-                return "cplusplus"
+                return "c"
             }
         } else {
             var arr = url.indexOf("/docs/server/") > 0 ? url.split("/docs/server/")[1].split("/") : url.split("/docs/mobile/")[1].split("/")

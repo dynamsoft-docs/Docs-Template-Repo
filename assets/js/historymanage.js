@@ -192,16 +192,25 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
         var verStr = "";
         exp = new RegExp(/[?]+([^=]+)=/gi);
         verStr = exp.exec(hrefVal) != null ? ("&&ver=" + verText) : ("?ver=" + verText)
+        var srcString = ""
+        if (changeHref.indexOf("/server/programming/c-cplusplus/") > 0 && !getUrlVars(changeHref)["src"]) {
+            if (getUrlVars(document.URL)["src"]) {
+                srcString = "&&src=" + getUrlVars(document.URL)["src"]
+            } else {
+                srcString = "&&src="+getCurrentUrlLang(document.URL)
+            }
+        }
         if (hrefVal.indexOf("#") != -1) {
             var urlAry = hrefVal.split("#");
             if (urlAry.length == 2){
-                changeHref = urlAry[0]+verStr+"#"+urlAry[1]
+                changeHref = urlAry[0]+verStr+srcString+"#"+urlAry[1]
             }
         }
         else{
-            changeHref = hrefVal+verStr
+            changeHref = hrefVal+verStr+srcString
         }
     }
+    
     // && (verText == "latest" || verText == undefined)
 	if (fromSourse == "sidebar") {
         var currentDocDomain = document.URL.split("/docs/")[0] + '/docs/';
