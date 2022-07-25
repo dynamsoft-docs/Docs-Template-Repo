@@ -1,11 +1,9 @@
 <span class="fullVersionHistory">
     <ul class="fullVersionInfo">
-        {%- if page.edition -%}
-            {%- if page.edition == 'algorithm' -%}
-                {%- assign validVerInfo = site.data.product_version.version_info_list_algorithm -%}
-            {%- elsif page.edition == 'js' -%}
+        {%- if page.editon -%}
+            {%- if page.editon == 'js' -%}
                 {%- assign validVerInfo = site.data.product_version.version_info_list_js -%}
-            {%- elsif page.edition == 'mobile' -%}
+            {%- elsif page.editon == 'mobile' -%}
                 {%- assign validVerInfo = site.data.product_version.version_info_list_mobile -%}
             {%- else -%}
                 {%- assign validVerInfo = site.data.product_version.version_info_list_desktop -%}
@@ -13,48 +11,20 @@
         {%- else -%}
             {%- assign validVerInfo = site.data.product_version.version_info_list -%}
         {%- endif -%}
-        
-        {%- if site.data.product_version.useGroupedVersion -%}
-            {%- for verInfo in validVerInfo -%}
-                {%- assign curVerText = "" -%}
-                {%- assign ver = verInfo.value | downcase | strip -%}
-                {%- if ver == "latest version"-%}
-                    {%- assign curVerText = ver | capitalize -%}
-                {%- else -%}
-                    {%- assign curVerText = "Version " | append: ver -%}
-                {%- endif -%}
-                {%- if verInfo.child -%}
-                <li class="hasChildLi">
-                    <div>{{ curVerText }} <i class="icon-arrow"></i></div>
-                    <ul>
-                        {%- for childVersion in verInfo.child -%}
-                            {%- assign curVerText = "" -%}
-                            {%- assign childVersion = childVersion | downcase | strip -%}
-                            {%- if childVersion == "latest version"-%}
-                                {%- assign curVerText = childVersion | capitalize -%}
-                            {%- else -%}
-                                {%- assign curVerText = "Version " | append: childVersion -%}
-                            {%- endif -%}
-                            <li onclick="changeVersion(this)">{{ curVerText }}</li>
-                        {%- endfor -%}
-                    </ul>
-                </li>
-                {%- else -%}
-                <li onclick="changeVersion(this)">{{ curVerText }}</li>
-                {%- endif -%}
-            {%- endfor -%}
-        {%- else -%}
-            {%- for verInfo in validVerInfo -%}
-                {%- assign curVerText = "" -%}
-                {%- assign verInfo = verInfo | downcase | strip -%}
-                {%- if verInfo == "latest version"-%}
-                    {%- assign curVerText = verInfo | capitalize -%}
-                {%- else -%}
-                    {%- assign curVerText = "Version " | append: verInfo -%}
-                {%- endif -%}
-                <li onclick="changeVersion(this)">{{ curVerText }}</li>
-            {%- endfor -%}
-        {%- endif -%}
+        {%- for verInfo in validVerInfo -%}
+            {%- assign curVerText = "" -%}
+            {%- assign verInfo = verInfo | downcase | strip -%}
+            {%- if verInfo == "latest version"-%}
+                {%- assign curVerText = verInfo | capitalize -%}
+            {%- else -%}
+                {%- assign curVerText = "Version " | append: verInfo -%}
+            {%- endif -%}
+            {%- if site.firstLevelUrl == "/barcode-reader" -%}
+            <li onclick="changeVersion(this)" class="dbr_changeVersion_li">{{ curVerText }}</li>
+            {%- else -%}
+            <li onclick="changeVersion(this)">{{ curVerText }}</li>
+            {%- endif -%}
+        {%- endfor -%}
     </ul>
     <a class="fvChange fontOswald" href="javascript:;">Change +</a>
 </span>
