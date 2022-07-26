@@ -325,7 +325,7 @@ function SearchVersion() {
 
 function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = document.URL, pageStartVer = undefined, curPageRealVer = undefined) {
     var navWrap = document.getElementById(searchListId);
-    
+    // console.log(navWrap)
     if (navWrap != null) {
         var listAry = navWrap.getElementsByTagName("li");        
         var oriUrl = searchUrl;
@@ -359,9 +359,10 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
 
         FilterLangFullTree()
 
+        // console.log(listAry)
         for (var i = 0, len = listAry.length; i < len; i++) {
             var curLi = listAry[i];
-            if ($(curLi).is(":visible")) {
+            if (!$(curLi).attr("otherLang")) {
                 var curListATag =  $(curLi).children("a");
                 if (curListATag.length > 0 && curListATag[0].getAttribute("href") != null && curListATag[0].getAttribute("href") != "#") {
                     var returnVal = UrlSearch(searchUrl, curListATag[0].href);
@@ -387,18 +388,8 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
         if (bestMatchList != -1) {
             var curLi = listAry[bestMatchList];
             var curListATag =  $(curLi).children("a");
-            
             if (bestReturnVal == 0) {
                 var ver = getUrlVars(document.URL)["ver"];
-                // if (ver != undefined) {
-                //     addParam(curListATag[0], ver);
-                // }
-                // else if (curPageRealVer != undefined) {
-                //     addParam(curListATag[0], curPageRealVer);
-                // }
-                // else {
-                //     window.location.href = curListATag[0].href;
-                // }
                 var ifChangeVersion = getUrlVars(document.URL)["cVer"];
                 if (ifChangeVersion != undefined || (ver != undefined &&
                     ((ver != "latest" && pageStartVer != undefined && pageStartVer != "" && pageStartVer > ver) 
@@ -409,37 +400,10 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
             }
             
             if (document.URL.indexOf("web-twain/docs/faq/") < 0 || document.URL.indexOf("web-twain/docs/faq/?ver") > 0) {
-                // curListATag[0].style.color = '#fe8e14';
                 curListATag[0].className = "otherLinkColour activeLink"
             }
 
             if (firstTime) {
-                // var crumbul = $($('#crumbs')).children("ul")
-                // if (crumbul.length != 0) {
-                //     var parentsLi = $(curLi).parents("li");
-                //     var appendText = "";
-                //     if (parentsLi.length > 0) {
-                //         for (var j = parentsLi.length - 1; j >= 0 ; j--) {
-                //             var tmpATag = $(parentsLi[j]).children("a");
-                //             if (tmpATag.length > 0) {
-                //                 appendText += '<li><a class="bluelink" href = "' + tmpATag[0].href + '">'+ tmpATag[0].textContent + '</a></li>';
-                //             }
-                //         }
-                //     }
-
-                //     var childUl = $(curLi).children("ul");
-                //     if (childUl.length > 0) {
-                //         appendText += '<li><a class="bluelink" href = "' + curListATag[0].href + '">'+ curListATag[0].textContent + '</a></li>';
-                //     }
-                //     else {
-                //         if (document.URL.indexOf("/barcode-reader/faq/") > 0) {
-                //             appendText += '<li id="breadcrumbLastNode"><a class="bluelink" href = "' + curListATag[0].href + '">'+ curListATag[0].textContent + '</a></li>'
-                //         } else {
-                //             appendText += '<li id="breadcrumbLastNode">' + curListATag[0].textContent + '</li>'
-                //         }
-                //     }
-                //     $(crumbul[0]).append(appendText);
-                // }
                 var parentsUL = $(curLi).parents("ul");
                 for (var j = 0, lenUL = parentsUL.length; j < lenUL; j++) {
                     var curUL =  parentsUL[j];
@@ -455,14 +419,12 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
                                 var iconItem = document.createElement("i")
                                 iconItem.className = "icon-arrow"
                                 curULChildrenListAry[k].appendChild(iconItem)
-                                // curULChildrenListAry[k].style.listStyleImage = "url('/assets/img-icon/collapse-list.png')";  
                             }
                             else {
                                 curULChildrenListAry[k].className = "expandListStyle"
                                 var iconItem = document.createElement("i")
                                 iconItem.className = "icon-arrow"
                                 curULChildrenListAry[k].appendChild(iconItem)
-                                // curULChildrenListAry[k].style.listStyleImage = "url('/assets/img-icon/expand-list.png')";
                             }
                         }
                     }
@@ -471,7 +433,6 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
                 var childUL = $(curLi).children("ul");
                 if (childUL.length > 0) {
                     curLi.className = "expandListStyle"
-                    // curLi.style.listStyleImage = "url('/assets/img-icon/expand-list.png')";
                     if (childUL[0].style.display != "block") {
                         childUL[0].style.display = "block";
                     }
@@ -489,14 +450,12 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
                                 var iconItem = document.createElement("i")
                                 iconItem.className = "icon-arrow"
                                 childrenLi[j].appendChild(iconItem)
-                                // childrenLi[j].style.listStyleImage = "url('/assets/img-icon/collapse-list.png')";  
                             }
                             else {
                                 childrenLi[j].className = "expandListStyle"
                                 var iconItem = document.createElement("i")
                                 iconItem.className = "icon-arrow"
                                 childrenLi[j].appendChild(iconItem)
-                                // childrenLi[j].style.listStyleImage = "url('/assets/img-icon/expand-list.png')";
                             }
                         }
                     }
@@ -507,7 +466,6 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
                     var iconItem = document.createElement("i")
                     iconItem.className = "icon-arrow"
                     parentsLi[j].appendChild(iconItem)
-                    // parentsLi[j].style.listStyleImage = "url('/assets/img-icon/expand-list.png')";
                 }
 
                 initCrumbs()
@@ -603,7 +561,6 @@ function UsefulRecord(isUseful) {
     }
 }
 
-
 function initCrumbs() {
     var crumbul = $('#crumbs').children("ul")
     if (crumbul.length != 0) {
@@ -635,9 +592,11 @@ function FilterLangFullTree() {
         for(var i=0;i<fullTreeLis.length;i++) {
             var liItemLang = fullTreeLis[i].getAttribute("lang")
             if (liItemLang&&liItemLang!=""&&liItemLang.toLowerCase()!=lang) {
-                $(fullTreeLis[i]).hide()
+                $(fullTreeLis[i]).attr("otherLang", true).hide()
+                $(fullTreeLis[i]).find("li").attr("otherLang", true)
             } else {
-                $(fullTreeLis[i]).show()
+                $(fullTreeLis[i]).removeAttr("otherLang").show()
+                $(fullTreeLis[i]).find("li").removeAttr("otherLang")
             }
         }
     }
