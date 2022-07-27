@@ -617,6 +617,8 @@ function getCurrentUrlLang(url) {
             } else {
                 return "c"
             }
+        } else if (getUrlVars(url)["lang"]) {
+            return getUrlVars(url)["lang"].toLowerCase().trim()
         } else {
             var arr = url.indexOf("/docs/server/") > 0 ? url.split("/docs/server/")[1].split("/") : url.split("/docs/mobile/")[1].split("/")
             return arr[1]
