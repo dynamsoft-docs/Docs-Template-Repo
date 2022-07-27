@@ -618,7 +618,7 @@ function getCurrentUrlLang(url) {
                 return "c"
             }
         } else if (getUrlVars(url)["lang"]) {
-            var result = getUrlVars(url)["lang"].toLowerCase().trim()
+            var result = getUrlVars(url)["lang"].toLowerCase().trim().split(",")[0]
             if (result == "ios" || result == "objective-c" || result == "objc" || result == "swift") {
                 result = "objectivec-swift"
             }
@@ -628,7 +628,11 @@ function getCurrentUrlLang(url) {
             return result
         } else {
             var arr = url.indexOf("/docs/server/") > 0 ? url.split("/docs/server/")[1].split("/") : url.split("/docs/mobile/")[1].split("/")
-            return arr[1]
+            if (url.indexOf("/docs/mobile/") > 0 && arr[1]!="objectivec-swift" && arr[1]!="android") {
+                return "objectivec-swift"
+            } else {
+                return arr[1]
+            }
         }
     } else {
         return ""
