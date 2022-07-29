@@ -291,6 +291,11 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
                     scrollDiv.scrollTop = activeLinkOffsetTop - 200
                 }
             }
+
+            // replace edit url link
+            var editMdFileLink = $(data).find("#docHead").find(".iconsBox a")[0].href
+            $("#docHead .iconsBox a").attr("href", editMdFileLink)
+            
             // add addParam click function for all a tags in article content
             var articleContentATags = $("#articleContent").find("a")
             var verArray = SearchVersion();
@@ -308,6 +313,11 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
                     $('#fullTreeMenuListContainer').addClass('needh3');
                 }
                 GenerateContentByHead(needh3);
+                if ($("#AutoGenerateSidebar > ul > li").length == 0) {
+                    $(".rightSideMenu > p").hide()
+                } else {
+                    $(".rightSideMenu > p").show()
+                }
             }
             $('#crumbs > ul').html($('#crumbs > ul > li').eq(0))
             initCrumbs()

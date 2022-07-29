@@ -5148,6 +5148,10 @@ a#toTop {
     #categoryMenuTree #fullTreeMenuListContainer {
         width: 320px;
     }
+
+    #categoryMenuTree .rightSideMenu.rsm-fixed {
+        margin-left: 20px;
+    }
 }
 
 @media (max-width: 1679px) {
@@ -5170,6 +5174,10 @@ a#toTop {
     #sideBarCnt.sidebar-fixed {
         top: 115px !important;
     }
+
+    #categoryMenuTree .rightSideMenu.rsm-fixed {
+        margin-left: 20px;
+    }
 }
 
 @media (max-width: 1199px) {
@@ -5186,6 +5194,11 @@ a#toTop {
     }
 
     #articleContent { padding-left: 20px; padding-right: 20px; }
+
+    #categoryMenuTree .rightSideMenu.rsm-fixed {
+        margin-left: 0px;
+        right: 20px;
+    }
 }
 
 @media (max-width: 991px) {

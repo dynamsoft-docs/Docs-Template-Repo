@@ -30,6 +30,11 @@ function GenerateContentByHead(needh3 = true) {
     appendHtml += '</ul>'
     if ($('#AutoGenerateSidebar').length != 0) {
         $('#AutoGenerateSidebar').append(appendHtml);
+        if ($("#AutoGenerateSidebar > ul > li").length == 0) {
+            $(".rightSideMenu > p").hide()
+        } else {
+            $(".rightSideMenu > p").show()
+        }
     }
 }
 
