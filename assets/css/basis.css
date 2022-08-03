@@ -5128,6 +5128,14 @@ a#toTop {
     padding-left: 80px!important;
 }
 
+#categoryMenuTree #fullTreeMenuListContainer > li > ul > li > ul > li > ul > li > ul > li > a:not(.noListStyle) {
+    padding-left: 95px!important;
+}
+
+#categoryMenuTree #fullTreeMenuListContainer > li > ul > li > ul > li > ul > li > ul > li > ul > li > a:not(.noListStyle) {
+    padding-left: 110px!important;
+}
+
 #categoryMenuTree .docContainer {
     background: #FFFFFF;
 }
