@@ -273,6 +273,22 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
                         var iconItem = document.createElement("i")
                         iconItem.className = "icon-arrow"
                         childLis[i].appendChild(iconItem)
+                        if ($(childLis[i]).find("> a").hasClass("activeLink")) {
+                            $(childLis[i]).addClass("expandListStyle")
+                            $(childLis[i]).find(">ul").show()
+                            var secondChild = $(childLis[i]).find("> ul > li")
+                            for(var j=0;j<secondChild.length;j++) {
+                                if ($(secondChild[j]).find(">ul").length > 0 && $(secondChild[j]).find("> i.icon-arrow").length <= 0) {
+                                    var iconItem = document.createElement("i")
+                                    iconItem.className = "icon-arrow"
+                                    secondChild[j].appendChild(iconItem)
+                                    $(secondChild[j]).addClass("collapseListStyle")
+                                }
+                            }
+                        } else {
+                            $(childLis[i]).addClass("collapseListStyle")
+                        }
+                        
                     }
                 }
             }
