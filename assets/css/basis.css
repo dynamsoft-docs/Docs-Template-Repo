@@ -4711,6 +4711,31 @@ i.dbr-white-logo {
     border: 0;
 }
 
+.markdown-body .highlight pre {
+    max-height: 400px;
+}
+
+.markdown-body .highlight pre .copyIcon {
+    color: #323234;
+    z-index: 100;
+    font-size: 24px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    font-style: normal;
+}
+
+.markdown-body .highlight pre .copyIcon:hover {
+    opacity: 0.7;
+}
+
+.markdown-body .highlight pre .copyIcon.copied::after {
+    content: 'Copied!';
+    color: #179a16;
+    font-size: 14px;
+}
+
 .markdown-body .sample-code-prefix+blockquote {
     padding: 0;
     margin: 20px 0;
@@ -4767,6 +4792,7 @@ i.dbr-white-logo {
 
 .markdown-body .sample-code-prefix+blockquote ol li pre.highlight {
     padding: 20px 25px;
+    max-height: 400px;
 }
 
 .markdown-body .sample-code-prefix+blockquote ol li img {
@@ -4783,6 +4809,7 @@ i.dbr-white-logo {
 
 .markdown-body .sample-code-prefix.template2+blockquote>div pre.highlight {
     border: 0;
+    max-height: 400px;
 }
 
 .markdown-body .sample-code-prefix+blockquote ul li.scHiddenLi,

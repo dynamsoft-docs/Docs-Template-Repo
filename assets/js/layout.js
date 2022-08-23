@@ -3,6 +3,14 @@ $(document).ready(function(){
     // $('h1').append('<p class="subtitle">Last Modified Date: <span id="LastModifiedDate">' + formatDate(document.lastModified) + '</span></p>')
     $('.markdown-body .sample-code-prefix + blockquote > ul > li:first-child').addClass('on')
     $('.markdown-body .sample-code-prefix + blockquote > ol > li:first-child').addClass('on')
+
+    var preList = $('.markdown-body .highlight pre')
+    for (var i=0; i<preList.length; i++) {
+        var iconItem = document.createElement("i")
+        iconItem.className = "copyIcon fa fa-copy"
+        preList[i].appendChild(iconItem)
+    }
+
     var template2Objs = $('.markdown-body .sample-code-prefix.template2 + blockquote')
     for (var i=0; i<template2Objs.length; i++) {
         $(template2Objs[i]).find(">div").eq(0).addClass('on')
@@ -185,6 +193,15 @@ $(document).ready(function(){
 
     $(document).delegate(".rightMenuControlBtn", 'click', function() {
         $('.docContainer .main, .rightSideMenu, .markdown-body').toggleClass('showRightSideMenu')
+    })
+
+    $(document).delegate(".markdown-body .highlight pre .copyIcon", 'click', function() {
+        copy($(this).parent().find('code').text())
+        $(this).addClass("copied").removeClass("fa").removeClass("fa-copy")
+        let _this = $(this)
+        setTimeout(function() {
+            $(_this).removeClass("copied").addClass("fa").addClass("fa-copy")
+        }, 2000)
     })
 
     $(document).delegate(".fold-panel-prefix + * i", 'click', function() {
