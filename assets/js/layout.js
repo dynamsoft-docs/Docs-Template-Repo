@@ -8,6 +8,13 @@ $(document).ready(function(){
         $(template2Objs[i]).find(">div").eq(0).addClass('on')
     }
 
+    var preList = $('.markdown-body .highlight pre')
+    for (var i=0; i<preList.length; i++) {
+        var iconItem = document.createElement("i")
+        iconItem.className = "copyIcon fa fa-copy"
+        preList[i].appendChild(iconItem)
+    }
+
     if (document.URL.indexOf("web-twain/docs/faq/") > 0  && document.URL.indexOf("web-twain/docs/faq/?ver") < 0) {
         $("#breadcrumbLastNode").text($("h1").text())
     }
@@ -177,6 +184,15 @@ $(document).ready(function(){
 
     $(document).delegate(".copy-prefix + p a", 'click', function() {
         copy($(this).parent().find('+ div code').text())
+    })
+
+    $(document).delegate(".markdown-body .highlight pre .copyIcon", 'click', function() {
+        copy($(this).parent().find('code').text())
+        $(this).addClass("copied").removeClass("fa").removeClass("fa-copy")
+        let _this = $(this)
+        setTimeout(function() {
+            $(_this).removeClass("copied").addClass("fa").addClass("fa-copy")
+        }, 2000)
     })
 
     $(document).delegate(".rightMenuControlBtn", 'click', function() {
