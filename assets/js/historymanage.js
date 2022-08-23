@@ -219,7 +219,7 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
             return;
         }
         // request link
-        if (!$(aTag).hasClass("activeLink") || aTag.href.indexOf("/faq/") > 0) {
+        if (!$(aTag).hasClass("activeLink")) {
             RequestNewPage(aTag, changeHref, needh3)
         }
     } else if (fromSourse == "docContainer") {
