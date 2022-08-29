@@ -133,6 +133,13 @@ function RequestNewPage(aTag, paramLink, onlyLoadContent=false) {
             initCrumbs()
         }
 
+        var preList = $('.markdown-body .highlight pre')
+        for (var i=0; i<preList.length; i++) {
+            var iconItem = document.createElement("i")
+            iconItem.className = "copyIcon fa fa-copy"
+            preList[i].appendChild(iconItem)
+        }
+
         var sd = $(window).scrollTop()
         if (sd > 0) {
             window.scrollTo(0, sd > $('#overall-header').height() ? $('#overall-header').height() : sd)
