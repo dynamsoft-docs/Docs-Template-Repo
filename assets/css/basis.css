@@ -4714,6 +4714,7 @@ i.dbr-white-logo {
 .markdown-body .highlight pre {
     position: static;
     max-height: 400px;
+    padding: 25px 16px 25px;
 }
 
 .markdown-body .highlight pre .copyIcon {
@@ -4721,7 +4722,7 @@ i.dbr-white-logo {
     z-index: 100;
     font-size: 24px;
     position: absolute;
-    top: 20px;
+    top: 8px;
     right: 20px;
     cursor: pointer;
     font-style: normal;
