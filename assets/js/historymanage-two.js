@@ -165,6 +165,13 @@ function RequestNewPage(aTag, paramLink, onlyLoadContent=false) {
         $('#crumbs > ul').html($('#crumbs > ul > li').eq(0))
         initCrumbs()
 
+        var preList = $('.markdown-body .highlight pre')
+        for (var i=0; i<preList.length; i++) {
+            var iconItem = document.createElement("i")
+            iconItem.className = "copyIcon fa fa-copy"
+            preList[i].appendChild(iconItem)
+        }
+
         // scroll to the start of article
         var hash = paramLink.split("#").length > 1 ? paramLink.split("#")[1] : null
         var sd = $(window).scrollTop()
