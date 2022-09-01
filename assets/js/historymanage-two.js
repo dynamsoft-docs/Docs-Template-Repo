@@ -175,7 +175,7 @@ function findCurLinkOnFullTree(aTag, paramLink, onlyLoadContent=false) {
     curDocUrl = curDocUrl.indexOf("?") > 0 ? curDocUrl.split("?")[0] : (curDocUrl.indexOf("#") > 0 ? curDocUrl.split("#")[0] : curDocUrl)
     
     if (curDocUrl == targetHref && (aTag.href.split("#").length > 1 || document.URL.split("#").length > 1)) {
-        var hash = aTag.href.split("#").length > 1 ? aTag.href.split("#")[1] : null
+        var hash = aTag.href.split("#").length > 1 ? aTag.href.split("#")[1].toLowerCase() : null
         window.scrollTo(0, hash ? $("#" + hash).offset().top : 0)
         !onlyLoadContent&&history.pushState(null, null, paramLink)
     } else {
