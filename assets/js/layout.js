@@ -26,6 +26,11 @@ $(document).ready(function(){
         $('#AutoGenerateSidebar a').eq(0).addClass('active')
     }
 
+    var hash = document.URL.split("#").length > 1 ? document.URL.split("#")[1].toLowerCase() : null
+    if (hash) {
+        window.scrollTo(0, $("#" + hash.toLowerCase()).offset().top)
+    }
+
     setTimeout(function() {
         var objs = $(".fold-panel-prefix")
         for(var i = 0; i<objs.length; i++) {
