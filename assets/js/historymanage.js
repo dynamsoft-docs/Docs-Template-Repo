@@ -56,7 +56,7 @@ function RedirToGivenVersionPage(inputVer)
     if (curDocUrl.indexOf("#") != -1){
 		var urlAry = curDocUrl.split("#");
 		if (urlAry.length == 2){
-            anchorVal = "#" + urlAry[1];
+            anchorVal = "#" + urlAry[1].toLowerCase();
 		}
 	}
 
@@ -357,7 +357,7 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
             var hash = paramLink.split("#").length > 1 ? paramLink.split("#")[1].toLowerCase() : null
             var sd = $(window).scrollTop()
             if (hash) {
-                window.scrollTo(0, $("#" + hash).offset().top)
+                window.scrollTo(0, $("#" + hash.toLowerCase()).offset().top)
             } else {
                 if (sd > 0) {
                     window.scrollTo(0, sd > $('#overall-header').height() ? $('#overall-header').height() : sd)
@@ -507,7 +507,7 @@ function findCurLinkOnFullTree(aTag, paramLink, needh3=false, onlyLoadContent=fa
     
     if (curDocUrl == targetHref && (aTag.href.split("#").length > 1 || document.URL.split("#").length > 1)) {
         var hash = aTag.href.split("#").length > 1 ? aTag.href.split("#")[1].toLowerCase() : null
-        window.scrollTo(0, hash ? $("#" + hash).offset().top : 0)
+        window.scrollTo(0, hash ? $("#" + hash.toLowerCase()).offset().top : 0)
         !onlyLoadContent&&history.pushState(null, null, paramLink)
     } else {
         var flag = false
