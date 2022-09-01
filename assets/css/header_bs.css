@@ -149,6 +149,9 @@
         height: 64px;
     }
     #xsHeader {
+        position: fixed;
+        top: 0;
+        width: 100%;
         border-bottom: 1px solid #eee;
         background-color: #ffffff;
     }
