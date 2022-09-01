@@ -27,7 +27,7 @@ $(document).ready(function(){
     }
 
     var hash = document.URL.split("#").length > 1 ? document.URL.split("#")[1].toLowerCase() : null
-    if (hash) {
+    if (hash && $("#" + hash.toLowerCase()).length > 0) {
         window.scrollTo(0, $("#" + hash.toLowerCase()).offset().top)
     }
 
