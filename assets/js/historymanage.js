@@ -583,6 +583,8 @@ function loadActiveTagMenu(aTag) {
         }
         if ($(ulTag[0]).parent().parent().attr("id") != "fullTreeMenuListContainer") {
             loadActiveTagMenu($(ulTag[0]).parent().find(">a"))
+        } else {
+            $(ulTag[0]).parent().addClass("expandListStyle").addClass("hasActiveLinkList").removeClass("collapseListStyle")
         }
     }
     // if($(aTag).parents("li.collapseListStyle").length > 0) {
