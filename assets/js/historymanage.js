@@ -262,37 +262,11 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
                 }
             }
             $("#fullTreeMenuListContainer .activeLink").removeClass("activeLink")
+
             // add current active link and li style
             $(aTag).addClass("activeLink")
-            if($(aTag).parents("li.collapseListStyle").length > 0) {
-                $(aTag).parents("li.collapseListStyle").addClass("expandListStyle").removeClass("collapseListStyle")
-                $(aTag).parents("li.expandListStyle").find(" > ul").slideDown()
-                var childLis = $(aTag).parents("li.expandListStyle").find(" > ul > li")
-                for (var i = 0; i < childLis.length; i++) {
-                    if ($(childLis[i]).find(">ul").length > 0 && $(childLis[i]).find("> i.icon-arrow").length <= 0) {
-                        var iconItem = document.createElement("i")
-                        iconItem.className = "icon-arrow"
-                        childLis[i].appendChild(iconItem)
-                        if ($(childLis[i]).find("> a").hasClass("activeLink")) {
-                            $(childLis[i]).addClass("expandListStyle")
-                            $(childLis[i]).find(">ul").show()
-                            var secondChild = $(childLis[i]).find("> ul > li")
-                            for(var j=0;j<secondChild.length;j++) {
-                                if ($(secondChild[j]).find(">ul").length > 0 && $(secondChild[j]).find("> i.icon-arrow").length <= 0) {
-                                    var iconItem = document.createElement("i")
-                                    iconItem.className = "icon-arrow"
-                                    secondChild[j].appendChild(iconItem)
-                                    $(secondChild[j]).addClass("collapseListStyle")
-                                }
-                            }
-                        } else {
-                            $(childLis[i]).addClass("collapseListStyle")
-                        }
-                        
-                    }
-                }
-            }
-            $(aTag).parents("li.expandListStyle").addClass("hasActiveLinkList")
+            loadActiveTagMenu(aTag)
+            // $(aTag).parents("li.expandListStyle").addClass("hasActiveLinkList")
 
             var newLang = getCurrentUrlLang(document.URL)
             if (oldLang != newLang) {
@@ -584,6 +558,61 @@ function findNearestVersion(ver) {
         }
     }
     if (verDiff) {return bestVer} else {return "latest"}
+}
+
+function loadActiveTagMenu(aTag) {
+    let ulTag = $(aTag).parent().parent("ul")
+    $(aTag).parent("li").addClass("hasActiveLinkList")
+    if (ulTag.length>0) {
+        $(ulTag[0]).show()
+        let childLis = $(ulTag[0]).find(">li")
+        for (let i = 0; i < childLis.length; i++) {
+            if ($(childLis[i]).find(">ul").length > 0) {
+                if ($(childLis[i]).find("> i.icon-arrow").length <= 0) {
+                    var iconItem = document.createElement("i")
+                    iconItem.className = "icon-arrow"
+                    childLis[i].appendChild(iconItem)
+                }
+                if ($(childLis[i]).hasClass("hasActiveLinkList")) {
+                    $(childLis[i]).addClass("expandListStyle").removeClass("collapseListStyle")
+                    $(childLis[i]).find(">ul").show()
+                } else {
+                    $(childLis[i]).addClass("collapseListStyle")
+                }
+            }
+        }
+        if ($(ulTag[0]).parent().parent().attr("id") != "fullTreeMenuListContainer") {
+            loadActiveTagMenu($(ulTag[0]).parent().find(">a"))
+        }
+    }
+    // if($(aTag).parents("li.collapseListStyle").length > 0) {
+    //     $(aTag).parents("li.collapseListStyle").addClass("expandListStyle").removeClass("collapseListStyle")
+    //     $(aTag).parents("li.expandListStyle").find(" > ul").slideDown()
+    //     var childLis = $(aTag).parents("li.expandListStyle").find(" > ul > li")
+    //     for (var i = 0; i < childLis.length; i++) {
+    //         if ($(childLis[i]).find(">ul").length > 0 && $(childLis[i]).find("> i.icon-arrow").length <= 0) {
+    //             var iconItem = document.createElement("i")
+    //             iconItem.className = "icon-arrow"
+    //             childLis[i].appendChild(iconItem)
+    //             if ($(childLis[i]).find("> a").hasClass("activeLink")) {
+    //                 $(childLis[i]).addClass("expandListStyle")
+    //                 $(childLis[i]).find(">ul").show()
+    //                 var secondChild = $(childLis[i]).find("> ul > li")
+    //                 for(var j=0;j<secondChild.length;j++) {
+    //                     if ($(secondChild[j]).find(">ul").length > 0 && $(secondChild[j]).find("> i.icon-arrow").length <= 0) {
+    //                         var iconItem = document.createElement("i")
+    //                         iconItem.className = "icon-arrow"
+    //                         secondChild[j].appendChild(iconItem)
+    //                         $(secondChild[j]).addClass("collapseListStyle")
+    //                     }
+    //                 }
+    //             } else {
+    //                 $(childLis[i]).addClass("collapseListStyle")
+    //             }
+    //         }
+    //     }
+    // }
+    
 }
 
 
