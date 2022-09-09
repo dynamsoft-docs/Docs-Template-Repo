@@ -122,7 +122,6 @@ function RequestNewPage(aTag, paramLink, onlyLoadContent=false) {
         }
 
         $("#fullTreeMenuListContainer .activeLink").removeClass("activeLink")
-        $(aTag).addClass("activeLink")
         // add current active link and li style
         $(aTag).addClass("activeLink")
         if($(aTag).parents("li.collapseListStyle").length > 0) {
@@ -139,7 +138,7 @@ function RequestNewPage(aTag, paramLink, onlyLoadContent=false) {
             $("#articleContent").find(".rightSideMenu, .markdown-body").removeClass("showRightSideMenu")
         }
         $("#loadingContent").hide()
-
+        needh3 =  $(data).find("#articleContent").data("needh3") == true ? true : false
         // if full tree has scroll bar, scroll to activelink position
         var scrollDiv = document.getElementsByClassName("mainPage")[0]
         if (scrollDiv.scrollHeight > scrollDiv.clientHeight) {
@@ -148,6 +147,10 @@ function RequestNewPage(aTag, paramLink, onlyLoadContent=false) {
                 scrollDiv.scrollTop = activeLinkOffsetTop - 200
             }
         }
+
+        // replace edit url link
+        var editMdFileLink = $(data).find("#docHead").find(".iconsBox a")[0].href
+        $("#docHead .iconsBox a").attr("href", editMdFileLink)
 
         // add addParam click function for all a tags in article content
         var articleContentATags = $("#articleContent").find("a")
@@ -162,6 +165,7 @@ function RequestNewPage(aTag, paramLink, onlyLoadContent=false) {
         if ($("#AutoGenerateSidebar").length > 0) {
             GenerateContentByHead(false);
         }
+        
         $('#crumbs > ul').html($('#crumbs > ul > li').eq(0))
         initCrumbs()
 
