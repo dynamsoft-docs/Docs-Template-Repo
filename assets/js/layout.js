@@ -292,8 +292,10 @@ function openChildMenuTree(obj, needIcon) {
 
 function sampleCodeLangsInit(langs) {
     var langTexts = langs.map(function(lang) {
-        return getlangText(lang, null, null)
+        // lang to langText
+        return getlangText(lang)
     }).filter(function(lang) {
+        // delete null
         return lang
     })
     for (var i=0; i<langTexts.length; i++) {
@@ -345,6 +347,7 @@ function getlangText(lang) {
             langText = 'C++'
             break;
         case 'csharp':
+        case 'dotnet':
             langText = 'C#'
             break;
         case 'java':
