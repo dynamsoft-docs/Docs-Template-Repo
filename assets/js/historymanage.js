@@ -330,7 +330,7 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
             // scroll to the start of article
             var hash = paramLink.split("#").length > 1 ? paramLink.split("#")[1].toLowerCase() : null
             var sd = $(window).scrollTop()
-            if (hash) {
+            if (hash && $("#" + hash.toLowerCase()).length > 0) {
                 window.scrollTo(0, $("#" + hash.toLowerCase()).offset().top)
             } else {
                 if (sd > 0) {

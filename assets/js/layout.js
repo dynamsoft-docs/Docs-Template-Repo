@@ -28,10 +28,11 @@ $(document).ready(function(){
     }
 
     var hash = document.URL.split("#").length > 1 ? document.URL.split("#")[1].toLowerCase() : null
+    hash = hash.indexOf("?") > 0 ? hash.split("?")[0] : hash
     if (hash && $("#" + hash.toLowerCase()).length > 0) {
         window.scrollTo(0, $("#" + hash.toLowerCase()).offset().top)
     }
-
+    
     setTimeout(function() {
         var objs = $(".fold-panel-prefix")
         for(var i = 0; i<objs.length; i++) {
