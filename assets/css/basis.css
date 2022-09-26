@@ -4912,8 +4912,8 @@ a#toTop {
     position: fixed;
     z-index: 9;
     bottom: 30px;
-    right: 40px;
-    bottom: 70px;
+    right: 36px;
+    bottom: 120px;
     width: 46px;
     height: 45px;
     float: right;
