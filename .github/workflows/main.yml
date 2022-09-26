@@ -26,78 +26,177 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Pull source
         run: |
-          cd /home/ubuntu        
-          cd Docs-Template-Repo && git pull && cd ..
+          cd /home/ubuntu
+          [ -d Docs-Template-Repo-Preview ] && rm -rf Docs-Template-Repo-Preview
+          [ ! -d Docs-Template-Repo-Preview ] && git clone --depth 1 --branch preview https://github.com/dynamsoft-docs/Docs-Template-Repo.git Docs-Template-Repo-Preview
+          [ -d DBRDoc ] && rm -rf DBRDoc
           
-      - name: Build DBR Doc
+      - name: Build DBR Doc Core
         run: |
           cd /home/ubuntu
-          [ ! -d DBRDoc ] && mkdir -p DBRDoc
-          cd barcode-reader-docs && git pull && cd .. && cp -rfp ./barcode-reader-docs/* ./DBRDoc/
-          cd barcode-reader-docs-js && git pull && cd .. && cp -rfp ./barcode-reader-docs-js/* ./DBRDoc/
-          cd barcode-reader-docs-mobile && git pull && cd .. && cp -rfp ./barcode-reader-docs-mobile/* ./DBRDoc/
-          cp -rfp ./Docs-Template-Repo/* ./DBRDoc/
-          cd DBRDoc && bundle exec jekyll build
-          python3 /home/ubuntu/ftp.py /home/ubuntu/DBRDoc/_site/ ./www.dynamsoft.com/barcode-reader/ prod
+          [ -d DBRDocCore ] && rm -rf DBRDocCore
+          [ -d barcode-reader-docs ] && rm -rf barcode-reader-docs
+          mkdir -p DBRDocCore
+          git clone --depth 1 https://github.com/dynamsoft-docs/barcode-reader-docs.git barcode-reader-docs
+          cp -rfp ./barcode-reader-docs/* ./DBRDocCore/
+          cp -rfp ./Docs-Template-Repo-Preview/* ./DBRDocCore/
+          cd DBRDocCore && bundle exec jekyll build
+          
+      - name: Sync files
+        uses: SamKirkland/FTP-Deploy-Action@4.3.0
+        with:
+          server: ${{ secrets.FTP_DYNAMSOFT_LOCAL_SERVER }}
+          username: ${{ secrets.FTP_DYNAMSOFT_LOCAL_USER }}
+          password: ${{ secrets.FTP_DYNAMSOFT_LOCAL_PASSWORD }}
+          port: 21 
+          local-dir: /home/ubuntu/DBRDocCore/_site/
+          server-dir: /www.dynamsoft.com/barcode-reader/docs/core/
+
+      - name: Build DBR Doc Server
+        run: |
+          cd /home/ubuntu
+          [ -d DBRDocServer ] && rm -rf DBRDocServer 
+          [ -d barcode-reader-docs-server ] && rm -rf barcode-reader-docs-server
+          mkdir -p DBRDocServer
+          git clone --depth 1 https://github.com/dynamsoft-docs/barcode-reader-docs-server.git barcode-reader-docs-server
+          cp -rfp ./barcode-reader-docs-server/* ./DBRDocServer/
+          cp -rfp ./Docs-Template-Repo-preview/* ./DBRDocServer/
+          cd DBRDocServer && bundle exec jekyll build
+
+      - name: Sync files
+        uses: SamKirkland/FTP-Deploy-Action@4.3.0
+        with:
+          server: ${{ secrets.FTP_DYNAMSOFT_LOCAL_SERVER }}
+          username: ${{ secrets.FTP_DYNAMSOFT_LOCAL_USER }}
+          password: ${{ secrets.FTP_DYNAMSOFT_LOCAL_PASSWORD }}
+          port: 21 
+          local-dir: /home/ubuntu/DBRDocServer/_site/
+          server-dir: /www.dynamsoft.com/barcode-reader/docs/server/        
+
+      - name: Build DBR Doc JS
+        run: |
+          cd /home/ubuntu
+          [ -d DBRDocJS ] && rm -rf DBRDocJS 
+          [ -d barcode-reader-docs-js ] && rm -rf barcode-reader-docs-js
+          mkdir -p DBRDocJS
+          git clone --depth 1 https://github.com/dynamsoft-docs/barcode-reader-docs-js.git barcode-reader-docs-js
+          cp -rfp ./barcode-reader-docs-js/* ./DBRDocJS/
+          cp -rfp ./Docs-Template-Repo-preview/* ./DBRDocJS/
+          cd DBRDocJS && bundle exec jekyll build
+
+      - name: Sync files
+        uses: SamKirkland/FTP-Deploy-Action@4.3.0
+        with:
+          server: ${{ secrets.FTP_DYNAMSOFT_LOCAL_SERVER }}
+          username: ${{ secrets.FTP_DYNAMSOFT_LOCAL_USER }}
+          password: ${{ secrets.FTP_DYNAMSOFT_LOCAL_PASSWORD }}
+          port: 21 
+          local-dir: /home/ubuntu/DBRDocJS/_site/
+          server-dir: /www.dynamsoft.com/barcode-reader/docs/web/        
+
+      - name: Build DBR Doc Mobile
+        run: |
+          cd /home/ubuntu
+          [ -d DBRDocMobile ] && rm -rf DBRDocMobile 
+          [ -d barcode-reader-docs-mobile ] && rm -rf barcode-reader-docs-mobile
+          mkdir -p DBRDocMobile
+          git clone --depth 1 https://github.com/dynamsoft-docs/barcode-reader-docs-mobile.git barcode-reader-docs-mobile
+          cp -rfp ./barcode-reader-docs-mobile/* ./DBRDocMobile/
+          cp -rfp ./Docs-Template-Repo-preview/* ./DBRDocMobile/
+          cd DBRDocMobile && bundle exec jekyll build
+
+      - name: Sync files
+        uses: SamKirkland/FTP-Deploy-Action@4.3.0
+        with:
+          server: ${{ secrets.FTP_DYNAMSOFT_LOCAL_SERVER }}
+          username: ${{ secrets.FTP_DYNAMSOFT_LOCAL_USER }}
+          password: ${{ secrets.FTP_DYNAMSOFT_LOCAL_PASSWORD }}
+          port: 21 
+          local-dir: /home/ubuntu/DBRDocMobile/_site/
+          server-dir: /www.dynamsoft.com/barcode-reader/docs/mobile/        
 
       - name: Build DLR Doc
         run: |
           cd /home/ubuntu
-          [ ! -d DLRDoc ] && mkdir -p DLRDoc
-          [ ! -d label-recognition-docs ] && git clone --depth 1 https://github.com/dynamsoft-docs/label-recognition-docs.git
-          cd label-recognition-docs && git pull && cd .. && cp -rfp ./label-recognition-docs/* ./DLRDoc/
-          cp -rfp ./Docs-Template-Repo/* ./DLRDoc/
+          [ -d DLRDoc ] && rm -rf DLRDoc 
+          [ -d label-recognition-docs ] && rm -rf label-recognition-docs
+          mkdir -p DLRDoc
+          git clone --depth 1 https://github.com/dynamsoft-docs/label-recognition-docs.git label-recognition-docs
+          cp -rfp ./label-recognition-docs/* ./DLRDoc/
+          cp -rfp ./Docs-Template-Repo-preview/* ./DLRDoc/
           cd DLRDoc && bundle exec jekyll build
-          python3 /home/ubuntu/ftp.py /home/ubuntu/DLRDoc/_site/ ./www.dynamsoft.com/label-recognition/ prod
-          
-      - name: Build DLS Doc
-        run: |
-          cd /home/ubuntu
-          [ ! -d DLSDoc ] && mkdir -p DLSDoc
-          [ ! -d license-server-docs ] && git clone --depth 1 https://github.com/dynamsoft-docs/license-server-docs.git
-          cd license-server-docs && git pull && cd .. && cp -rfp ./license-server-docs/* ./DLSDoc/
-          cp -rfp ./Docs-Template-Repo/* ./DLSDoc/
-          cd DLSDoc && bundle exec jekyll build
-          python3 /home/ubuntu/ftp.py /home/ubuntu/DLSDoc/_site/ ./www.dynamsoft.com/license-server/docs/ prod
-          
-      - name: Build DNT Doc
-        run: |
-          cd /home/ubuntu
-          [ ! -d DNTDoc ] && mkdir -p DNTDoc
-          [ ! -d dotnet-twain-docs ] && git clone --depth 1 https://github.com/dynamsoft-docs/dotnet-twain-docs.git
-          cd dotnet-twain-docs && git pull && cd .. && cp -rfp ./dotnet-twain-docs/* ./DNTDoc/
-          cp -rfp ./Docs-Template-Repo/* ./DNTDoc/
-          cd DNTDoc && bundle exec jekyll build
-          python3 /home/ubuntu/ftp.py /home/ubuntu/DNTDoc/_site/ ./www.dynamsoft.com/dotnet-twain/docs/ prod
 
-      - name: Build DWT Doc
-        run: |
-          cd /home/ubuntu
-          [ ! -d DWTDoc ] && mkdir -p DWTDoc
-          [ ! -d web-twain-docs ] && git clone --depth 1 https://github.com/dynamsoft-docs/web-twain-docs.git
-          cd web-twain-docs && git pull && cd .. && cp -rfp ./web-twain-docs/* ./DWTDoc/
-          cp -rfp ./Docs-Template-Repo/* ./DWTDoc/
-          cd DWTDoc && bundle exec jekyll build
-          python3 /home/ubuntu/ftp.py /home/ubuntu/DWTDoc/_site/ ./www.dynamsoft.com/web-twain/docs/ prod
+      - name: Sync files
+        uses: SamKirkland/FTP-Deploy-Action@4.3.0
+        with:
+          server: ${{ secrets.FTP_DYNAMSOFT_LOCAL_SERVER }}
+          username: ${{ secrets.FTP_DYNAMSOFT_LOCAL_USER }}
+          password: ${{ secrets.FTP_DYNAMSOFT_LOCAL_PASSWORD }}
+          port: 21 
+          local-dir: /home/ubuntu/DLRDoc/_site/
+          server-dir: /www.dynamsoft.com/label-recognition/docs/        
 
-      - name: Build Company Doc
-        run: |
-          cd /home/ubuntu
-          [ ! -d CompanyDoc ] && mkdir -p CompanyDoc
-          [ ! -d company-docs ] && git clone --depth 1 https://github.com/dynamsoft-docs/company-docs.git
-          cd company-docs && git pull && cd .. && cp -rfp ./company-docs/* ./CompanyDoc/
-          cp -rfp ./Docs-Template-Repo/* ./CompanyDoc/
-          cd CompanyDoc && bundle exec jekyll build
-          python3 /home/ubuntu/ftp.py /home/ubuntu/CompanyDoc/_site/ ./www.dynamsoft.com/company/docs/ prod
+#      - name: Build DLS Doc
+#        run: |
+#          cd /home/ubuntu
+#          [ ! -d DLSDoc ] && mkdir -p DLSDoc
+#          [ ! -d license-server-docs ] && git clone --depth 1 https://github.com/dynamsoft-docs/license-server-docs.git
+#          cd license-server-docs && git pull && cd .. && cp -rfp ./license-server-docs/* ./DLSDoc/
+#          cp -rfp ./Docs-Template-Repo/* ./DLSDoc/
+#          cd DLSDoc && bundle exec jekyll build
+#          python3 /home/ubuntu/ftp.py /home/ubuntu/DLSDoc/_site/ ./www.dynamsoft.com/license-server/docs/ prod
+          
+#      - name: Build DNT Doc
+#        run: |
+#          cd /home/ubuntu
+#          [ ! -d DNTDoc ] && mkdir -p DNTDoc
+#          [ ! -d dotnet-twain-docs ] && git clone --depth 1 https://github.com/dynamsoft-docs/dotnet-twain-docs.git
+#          cd dotnet-twain-docs && git pull && cd .. && cp -rfp ./dotnet-twain-docs/* ./DNTDoc/
+#          cp -rfp ./Docs-Template-Repo/* ./DNTDoc/
+#          cd DNTDoc && bundle exec jekyll build
+#          python3 /home/ubuntu/ftp.py /home/ubuntu/DNTDoc/_site/ ./www.dynamsoft.com/dotnet-twain/docs/ prod
+#
+#      - name: Build DWT Doc
+#        run: |
+#          cd /home/ubuntu
+#          [ ! -d DWTDoc ] && mkdir -p DWTDoc
+#          [ ! -d web-twain-docs ] && git clone --depth 1 https://github.com/dynamsoft-docs/web-twain-docs.git
+#          cd web-twain-docs && git pull && cd .. && cp -rfp ./web-twain-docs/* ./DWTDoc/
+#          cp -rfp ./Docs-Template-Repo/* ./DWTDoc/
+#          cd DWTDoc && bundle exec jekyll build
+#          python3 /home/ubuntu/ftp.py /home/ubuntu/DWTDoc/_site/ ./www.dynamsoft.com/web-twain/docs/ prod
+#
+#      - name: Build Company Doc
+#        run: |
+#          cd /home/ubuntu
+#          [ ! -d CompanyDoc ] && mkdir -p CompanyDoc
+#          [ ! -d company-docs ] && git clone --depth 1 https://github.com/dynamsoft-docs/company-docs.git
+#          cd company-docs && git pull && cd .. && cp -rfp ./company-docs/* ./CompanyDoc/
+#          cp -rfp ./Docs-Template-Repo/* ./CompanyDoc/
+#          cd CompanyDoc && bundle exec jekyll build
+#          python3 /home/ubuntu/ftp.py /home/ubuntu/CompanyDoc/_site/ ./www.dynamsoft.com/company/docs/ prod
+
 
       - name: Build DCE Doc
         run: |
           cd /home/ubuntu
-          [ ! -d DCEDoc ] && mkdir -p DCEDoc
-          cd camera-enhancer-docs && git pull && cd .. && cp -rfp ./camera-enhancer-docs/* ./DCEDoc/
-          cp -rfp ./Docs-Template-Repo/* ./DCEDoc/
+          [ -d DCEDoc ] && rm -rf DCEDoc 
+          [ -d camera-enhancer-docs ] && rm -rf camera-enhancer-docs
+          mkdir -p DCEDoc
+          git clone --depth 1 https://github.com/dynamsoft-docs/camera-enhancer-docs.git camera-enhancer-docs
+          cp -rfp ./camera-enhancer-docs/* ./DCEDoc/
+          cp -rfp ./Docs-Template-Repo-preview/* ./DCEDoc/
           cd DCEDoc && bundle exec jekyll build
-          python3 /home/ubuntu/ftp.py /home/ubuntu/DCEDoc/_site/ ./www.dynamsoft.com/camera-enhancer/docs/ prod
+
+      - name: Sync files
+        uses: SamKirkland/FTP-Deploy-Action@4.3.0
+        with:
+          server: ${{ secrets.FTP_DYNAMSOFT_LOCAL_SERVER }}
+          username: ${{ secrets.FTP_DYNAMSOFT_LOCAL_USER }}
+          password: ${{ secrets.FTP_DYNAMSOFT_LOCAL_PASSWORD }}
+          port: 21 
+          local-dir: /home/ubuntu/DCEDoc/_site/
+          server-dir: /www.dynamsoft.com/camera-enhancer/docs/        
 
 
       #- name: Build DBR Doc Preview
