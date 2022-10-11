@@ -641,6 +641,9 @@ function getCurrentUrlLang(url, needFilterLang=false) {
             if (result == "c++" || result == "cpp") {
                 result = "cplusplus"
             }
+            if(result == 'csharp') {
+                result = "dotnet"
+            }
             return result
         } else {
             var arr = url.indexOf("/docs/server/") > 0 ? url.split("/docs/server/")[1].split("/") : url.split("/docs/mobile/")[1].split("/")
