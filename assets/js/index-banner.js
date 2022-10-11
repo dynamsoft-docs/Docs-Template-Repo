@@ -52,7 +52,6 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
         generateDocHead = false;
     }
     var verArray = SearchVersion();
-    // console.log(123, useVersionTree)
     if (!useVersionTree) {
         var allHerf1 = $(".docContainer .content, #docHead, #AutoGenerateSidebar, .sideBar, #crumbs").find("a");
         for (var i = 0; i < allHerf1.length; i++)
@@ -152,6 +151,12 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
         }
     }
     else {
+        // 判断是否 /docs/core && lang 存在， 修改 iframe 的 src
+        var pageUrl = document.URL;
+        if (pageUrl.indexOf("/docs/core/") > 0 && getUrlVars(pageUrl)["lang"]) {
+            var sideBarIframeSrc = getSideBarIframeSrc(getUrlVars(pageUrl)["lang"])
+            sideBarIframeSrc && $("#sideBarIframe").attr('src', sideBarIframeSrc)
+        }
         var versionListInterval = setInterval(function() {
             // console.log("waiting...")
             var completeTag = $('#sideBarIframe').contents().find('#complete_loading_tree');
@@ -642,4 +647,18 @@ function getCurrentUrlLang(url) {
     } else {
         return ""
     }
+}
+
+function getSideBarIframeSrc(lang) {
+    lang = lang.toLowerCase().trim().split(",")[0]
+    if (['javascript', 'js'].indexOf(lang) >= 0) {
+        return '/barcode-reader/docs/web/Hide_Tree_Page.html'
+    }
+    if (['android', 'objective-c', 'objc', 'swift'].indexOf(lang) >= 0) {
+        return '/barcode-reader/docs/mobile/Hide_Tree_Page.html'
+    }
+    if (['c', 'cpp', 'c++', 'csharp', 'dotnet', 'java', 'python'].indexOf(lang) >= 0) {
+        return '/barcode-reader/docs/server/Hide_Tree_Page.html'
+    }
+    return null
 }
