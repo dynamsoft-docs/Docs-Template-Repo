@@ -39,6 +39,10 @@ function GenerateContentByHead(needh3 = true) {
 }
 
 function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefined, useVersionTree = false) {
+    // 判断是否 /docs/core && lang 存在， 修改 iframe 的 src
+    var pageUrl = document.URL;
+    var needFilterLangTree = false;
+    
     if (useVersionTree == 'true') {
         useVersionTree = true;
     }
@@ -151,11 +155,12 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
         }
     }
     else {
-        // 判断是否 /docs/core && lang 存在， 修改 iframe 的 src
-        var pageUrl = document.URL;
         if (pageUrl.indexOf("/docs/core/") > 0 && getUrlVars(pageUrl)["lang"]) {
             var sideBarIframeSrc = getSideBarIframeSrc(getUrlVars(pageUrl)["lang"])
-            sideBarIframeSrc && $("#sideBarIframe").attr('src', sideBarIframeSrc)
+            if (sideBarIframeSrc) {
+                $("#sideBarIframe").attr('src', sideBarIframeSrc)
+                needFilterLangTree = true
+            } 
         }
         var versionListInterval = setInterval(function() {
             // console.log("waiting...")
@@ -194,7 +199,7 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                     var navWrap = document.getElementById("fullTreeMenuListContainer");
                     // console.log("navWrap: " + navWrap)
                     if (navWrap != null) {
-                        HighlightCurrentListForFullTree("fullTreeMenuListContainer", true, document.URL, pageStartVer, verArray[1]);
+                        HighlightCurrentListForFullTree("fullTreeMenuListContainer", true, document.URL, pageStartVer, verArray[1], needFilterLangTree);
                         if (generateDocHead) {
                             if (needh3 == 'true') {
                                 needh3 = true;
@@ -333,7 +338,7 @@ function SearchVersion() {
     return verArray;
 }
 
-function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = document.URL, pageStartVer = undefined, curPageRealVer = undefined) {
+function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = document.URL, pageStartVer = undefined, curPageRealVer = undefined, needFilterLangTree=false) {
     var navWrap = document.getElementById(searchListId);
     // console.log(navWrap)
     if (navWrap != null) {
@@ -367,7 +372,7 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
         var bestMatchList = -1;
         var bestReturnVal = -1;
 
-        FilterLangFullTree()
+        FilterLangFullTree(needFilterLangTree)
 
         // console.log(listAry)
         for (var i = 0, len = listAry.length; i < len; i++) {
@@ -594,10 +599,11 @@ function initCrumbs() {
     }
 }
 
-function FilterLangFullTree() {
+function FilterLangFullTree(needFilterLang=false) {
+    console.log(123, needFilterLang)
     var curUrl = document.URL
-    if (curUrl.indexOf("/docs/server/") > 0 || curUrl.indexOf("/docs/mobile/") > 0) {
-        var lang = getCurrentUrlLang(curUrl);
+    if (curUrl.indexOf("/docs/server/") > 0 || curUrl.indexOf("/docs/mobile/") > 0 || needFilterLang) {
+        var lang = getCurrentUrlLang(curUrl, needFilterLang);
         var fullTreeLis = $("#fullTreeMenuListContainer > li")
         for(var i=0;i<fullTreeLis.length;i++) {
             var liItemLang = fullTreeLis[i].getAttribute("lang")
@@ -612,8 +618,8 @@ function FilterLangFullTree() {
     }
 }
 
-function getCurrentUrlLang(url) {
-    if (url.indexOf("/docs/server/") > 0 || url.indexOf("/docs/mobile/") > 0) {
+function getCurrentUrlLang(url, needFilterLang=false) {
+    if (url.indexOf("/docs/server/") > 0 || url.indexOf("/docs/mobile/") > 0 || needFilterLang) {
         if (url.indexOf("/c-cplusplus/") > 0) {
             if (getUrlVars(url)["src"]) {
                 var src = getUrlVars(url)["src"].toLowerCase().trim()
