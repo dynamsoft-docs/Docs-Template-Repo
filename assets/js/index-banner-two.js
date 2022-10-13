@@ -90,7 +90,7 @@ function GenerateContentByHead(needh3 = true) {
 
 function ExpandCurrentPageTree(searchListId) {
   $('#' + searchListId).find('.activeLink').parent().parents("li").removeClass("collapseListStyle").addClass("expandListStyle")
-  if ($('#' + searchListId).find('.activeLink').parent()[0].dataset.ishashnode) {
+  if ($('#' + searchListId).find('.activeLink').parent().length > 0 && $('#' + searchListId).find('.activeLink').parent()[0].dataset.ishashnode) {
     var activeLinkItem = $('#' + searchListId).find('.activeLink')
     var urlItems = $(activeLinkItem).parent().find("a")
     if (document.URL.indexOf("#") > 0) {
@@ -107,6 +107,9 @@ function ExpandCurrentPageTree(searchListId) {
       $(urlItems).removeClass("activeLink")
       $(this).addClass("activeLink")
     })
+  }
+  if (document.URL.indexOf("/docs/faq/") > 0 && document.URL.indexOf(".html") > 0) {
+    $('#' + searchListId).find(">li:last-child").removeClass("collapseListStyle").addClass("expandListStyle")
   }
 }
 
@@ -152,6 +155,9 @@ function initCrumbs() {
       var activeLis = $("#fullTreeMenuListContainer a.activeLink")
       if (activeLis.length > 0 && !$(activeLis[0]).parent().hasClass("expandListStyle")) {
           appendText += '<li id="breadcrumbLastNode">' + $(activeLis[0]).text() + '</li>'
+      }
+      if (document.URL.indexOf("/docs/faq/") > 0 && document.URL.indexOf(".html") > 0) {
+        appendText += '<li><a class="bluelink" href = "https://www.dynamsoft.com/web-twain/docs/faq/">FAQ</a></li>'
       }
       $(crumbul[0]).append(appendText);
   }
