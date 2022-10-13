@@ -413,14 +413,16 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
             }
 
             // init fold-panel-prefix
-            var objs = $(".fold-panel-prefix")
-            for(var i = 0; i<objs.length; i++) {
-                var obj = $(".fold-panel-prefix").eq(i)
-                $(obj).next().find('i').css({'width': ($(obj).next().width() - 24) + 'px'})
-                $(obj).next().find('i').css({'height': $(obj).next().height() + 'px'})
-                $(obj).next().find('i').css({'line-height': $(obj).next().height() + 'px'})
-                $(obj).next().find('i').css({'opacity': 1})
-            }
+            setTimeout(function() {
+                var objs = $(".fold-panel-prefix")
+                for(var i = 0; i<objs.length; i++) {
+                    var obj = $(".fold-panel-prefix").eq(i)
+                    $(obj).next().find('i').css({'width': ($(obj).next().width() - 24) + 'px'})
+                    $(obj).next().find('i').css({'height': $(obj).next().height() + 'px'})
+                    $(obj).next().find('i').css({'line-height': $(obj).next().height() + 'px'})
+                    $(obj).next().find('i').css({'opacity': 1})
+                }
+            }, 500)
 
             anchors.add();
         } else {

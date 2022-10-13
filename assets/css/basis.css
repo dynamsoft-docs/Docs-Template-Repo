@@ -4883,6 +4883,7 @@ i.dbr-white-logo {
     text-align: right;
     position: absolute;
     left: 0;
+    bottom: -4px;
     z-index: 11;
     opacity: 0;
 }
