@@ -451,7 +451,7 @@ function init() {
 
     if ($("#categoryMenuTree").length > 0) {
         var scrollDiv = document.getElementsByClassName("mainPage")[0]
-        if (scrollDiv.scrollHeight > scrollDiv.clientHeight) {
+        if (scrollDiv.scrollHeight > scrollDiv.clientHeight && $(".activeLink").length > 0) {
             var activeLinkOffsetTop = $(".activeLink").offset().top - $(".mainPage").offset().top
             if (activeLinkOffsetTop - scrollDiv.scrollTop + 40 > scrollDiv.clientHeight) {
                 scrollDiv.scrollTop = activeLinkOffsetTop - 200
