@@ -797,7 +797,7 @@ ul.disc>li p:hover {
     font-family: Oswald-Regular, 'Myriad Pro', 'Gloucester MT', myriad-pro, 'Agency FB';
 }
 
-/*修改滚动条样式*/
+/*Modify Scroll Bar Style*/
 div::-webkit-scrollbar,
 ul::-webkit-scrollbar {
     width: 8px;
