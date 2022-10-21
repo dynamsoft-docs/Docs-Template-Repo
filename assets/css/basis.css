@@ -807,7 +807,7 @@ ul.disc>li p:hover {
     font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
 }
 
-/*修改滚动条样式*/
+/*Modify Scroll Bar Style*/
 div, .sideBar .mainPage {
     scrollbar-color: #bfbfbf rgb(239, 239, 239);
     scrollbar-width: thin;

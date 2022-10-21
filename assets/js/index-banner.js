@@ -39,7 +39,7 @@ function GenerateContentByHead(needh3 = true) {
 }
 
 function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefined, useVersionTree = false) {
-    // 判断是否 /docs/core && lang 存在， 修改 iframe 的 src
+    // check if /docs/core && lang exist, update iframe src
     var pageUrl = document.URL;
     var needFilterLangTree = false;
     
