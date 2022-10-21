@@ -1,6 +1,10 @@
 $(document).ready(function(){ 
     init();
-    // $('h1').append('<p class="subtitle">Last Modified Date: <span id="LastModifiedDate">' + formatDate(document.lastModified) + '</span></p>')
+    
+    if ($(".headCounter").hasClass("noTitleIndex")) {
+        $("#AutoGenerateSidebar").addClass("noTitleIndex")
+    }
+
     $('.markdown-body .sample-code-prefix + blockquote > ul > li:first-child').addClass('on')
     $('.markdown-body .sample-code-prefix + blockquote > ol > li:first-child').addClass('on')
 

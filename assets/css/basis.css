@@ -250,6 +250,41 @@ ul.disc>li p:hover {
 .headCounter h4 {
     counter-increment: h4counter;
 }
+#AutoGenerateSidebar:not(.noTitleIndex) > ul {
+    padding: 0;
+}
+#AutoGenerateSidebar:not(.noTitleIndex) > ul > li {
+    counter-reset: h3counter;
+    counter-increment: h2counter;
+    list-style: none !important;
+}
+#AutoGenerateSidebar:not(.noTitleIndex) > ul > li::before {
+    content: counter(h2counter) ". ";
+    padding-right: 5px;
+    display: inline-block;
+    vertical-align: top;
+}
+#AutoGenerateSidebar:not(.noTitleIndex) > ul > li > a {
+    display: inline-block;
+    width: calc(100% - 20px);
+}
+#AutoGenerateSidebar:not(.noTitleIndex) > ul > li > ul {
+    padding-left: 15px;
+}
+#AutoGenerateSidebar:not(.noTitleIndex) > ul > li > ul > li {
+    counter-increment: h3counter;
+    list-style: none !important;
+}
+#AutoGenerateSidebar:not(.noTitleIndex) > ul > li > ul > li::before {
+    content: counter(h2counter) "."counter(h3counter) " ";
+    padding-right: 5px;
+    display: inline-block;
+    vertical-align: top;
+}
+#AutoGenerateSidebar:not(.noTitleIndex) > ul > li > ul > li > a {
+    display: inline-block;
+    width: calc(100% - 40px);
+}
 
 .noTitleIndex.headCounter h2:before { content: ''!important; padding-right: 0px!important; }
 .noTitleIndex.headCounter h2 { counter-reset: none!important; counter-increment: none!important; }

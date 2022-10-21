@@ -290,6 +290,13 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
                 }
             }
 
+            //  noTitleIndex
+            if ($(".headCounter").hasClass("noTitleIndex")) {
+                $("#AutoGenerateSidebar").addClass("noTitleIndex")
+            } else {
+                $("#AutoGenerateSidebar").removeClass("noTitleIndex")
+            }
+
             // replace edit url link
             var editMdFileLink = $(data).find("#docHead").find(".iconsBox a")[0].href
             $("#docHead .iconsBox a").attr("href", editMdFileLink)
