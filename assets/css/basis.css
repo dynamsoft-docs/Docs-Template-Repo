@@ -266,7 +266,7 @@ ul.disc>li p:hover {
 }
 #AutoGenerateSidebar:not(.noTitleIndex) > ul > li > a {
     display: inline-block;
-    width: calc(100% - 20px);
+    width: calc(100% - 25px);
 }
 #AutoGenerateSidebar:not(.noTitleIndex) > ul > li > ul {
     padding-left: 15px;
