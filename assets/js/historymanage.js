@@ -281,6 +281,7 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
             }
             $("#loadingContent").hide()
             needh3 =  $(data).find("#articleContent").data("needh3") == true ? true : false
+
             // if full tree has scroll bar, scroll to activelink position
             var scrollDiv = document.getElementsByClassName("mainPage")[0]
             if (scrollDiv.scrollHeight > scrollDiv.clientHeight) {
@@ -298,8 +299,10 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
             }
 
             // replace edit url link
-            var editMdFileLink = $(data).find("#docHead").find(".iconsBox a")[0].href
-            $("#docHead .iconsBox a").attr("href", editMdFileLink)
+            if ($(data).find("#docHead").find(".iconsBox a").length > 0) {
+                var editMdFileLink = $(data).find("#docHead").find(".iconsBox a")[0].href
+                $("#docHead .iconsBox a").attr("href", editMdFileLink)
+            }
             
             // add addParam click function for all a tags in article content
             var articleContentATags = $("#articleContent").find("a")
@@ -326,7 +329,7 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
             }
             $('#crumbs > ul').html($('#crumbs > ul > li').eq(0))
             initCrumbs()
-
+            init()
             var preList = $('.markdown-body .highlight pre')
             for (var i=0; i<preList.length; i++) {
                 var iconItem = document.createElement("i")
