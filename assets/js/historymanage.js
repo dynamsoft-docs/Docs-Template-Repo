@@ -15,7 +15,14 @@ function UrlReplace()
     }
     if (ver == undefined) {
         if(docUrl.indexOf("?") > 0) {
-            window.location.replace(docUrl + "&&ver=latest");
+            if (docUrl.indexOf('#') >= 0) {
+                var anchorVal = "";
+                var urlAry = docUrl.split("#");
+                anchorVal = "#" + urlAry[1].toLowerCase();
+                window.location.replace(urlAry[0] + "&&ver=latest" + anchorVal);
+            } else {
+                window.location.replace(docUrl + "&&ver=latest");
+            }
         } else {
             window.location.replace(docUrl + "?ver=latest");
         }
