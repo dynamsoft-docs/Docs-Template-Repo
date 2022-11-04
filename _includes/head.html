@@ -48,7 +48,7 @@
     {%- if page.noTitleIndex or page.url contains 'release-notes' -%}
         {%- assign showNoIndexStyle = true -%}
     {%- endif -%}
-    {%- if site.docFullPath contains 'barcode-reader' -%}
+    {%- if site.docFullPath contains 'barcode-reader' or site.docFullPath contains 'web-twain' -%}
         {%- assign showNoIndexStyle = false -%}
     {%- endif -%}
     {%- if showNoIndexStyle -%}
