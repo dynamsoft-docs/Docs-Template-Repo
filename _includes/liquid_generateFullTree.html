@@ -3,46 +3,50 @@
 {%- assign docHomePage = site.docHomePage | slice: 0, truncateDocHomePageSize-%}
 
 {%- for treeItem in treeList -%}
-  {%- assign targetUrl = page.url | downcase -%}
-  {%- assign matchUrl = page.url | downcase -%}
-  {%- assign curUrl = treeItem.path | downcase -%}
-  {%- if targetUrl contains '-v' -%}
-    {%- assign curTreeFileVer = targetUrl |  split: '-v' | last | split: '/' | first | replace: '.html', '' | strip -%}
-    {%- assign matchUrl = targetUrl | remove: '-v' | remove: curTreeFileVer | strip -%}
-    {%- if matchUrl contains 'index.html' -%}
-      {%- assign matchUrl = matchUrl | remove: 'index.html' | strip -%}
-    {%- endif -%}
-  {%- endif -%}
-  {%- if treeItem.childList -%}
-    {%- if matchUrl == curUrl -%}
-    <li class="expandListStyle" data-startVersion="{{treeItem.startVersion}}" data-endVersion="{{treeItem.endVersion}}" data-isHashNode="{{treeItem.isHashNode}}">
-      <a href="{{docHomePage}}{{treeItem.path}}" class="otherLinkColour activeLink">{{treeItem.name}}</a>
-      <ul style="display: block;">
-        {%- include liquid_generateFullTree.html treeList=treeItem.childList -%}
-      </ul>
-      <i class="icon-arrow"></i>
-    </li>
-    {%- else -%}
-    <li class="collapseListStyle" data-startVersion="{{treeItem.startVersion}}" data-endVersion="{{treeItem.endVersion}}" data-isHashNode="{{treeItem.isHashNode}}">
-      {%- if curUrl and curUrl != "" -%}
-        <a href="{{docHomePage}}{{treeItem.path}}" class="otherLinkColour">{{treeItem.name}}</a>
-      {%- else -%}
-        <a class="otherLinkColour">{{treeItem.name}}</a>
-        <!-- <span class="noPathItem">{{treeItem.name}}</span> -->
-      {%- endif -%}
-      <ul>
-        {%- include liquid_generateFullTree.html treeList=treeItem.childList -%}
-      </ul>
-      <i class="icon-arrow"></i>
-    </li>
-    {%- endif -%}
+  {%- if treeItem.isCategory -%}
+    <li class="category">{{treeItem.name}}</li>
   {%- else -%}
-    <li data-startVersion="{{treeItem.startVersion}}" data-endVersion="{{treeItem.endVersion}}" data-isHashNode="{{treeItem.isHashNode}}">
-      {%- if matchUrl == curUrl -%}
-      <a href="{{docHomePage}}{{treeItem.path}}" class="otherLinkColour activeLink">{{treeItem.name}}</a>
-      {%- else -%}
-      <a href="{{docHomePage}}{{treeItem.path}}" class="otherLinkColour">{{treeItem.name}}</a>
+    {%- assign targetUrl = page.url | downcase -%}
+    {%- assign matchUrl = page.url | downcase -%}
+    {%- assign curUrl = treeItem.path | downcase -%}
+    {%- if targetUrl contains '-v' -%}
+      {%- assign curTreeFileVer = targetUrl |  split: '-v' | last | split: '/' | first | replace: '.html', '' | strip -%}
+      {%- assign matchUrl = targetUrl | remove: '-v' | remove: curTreeFileVer | strip -%}
+      {%- if matchUrl contains 'index.html' -%}
+        {%- assign matchUrl = matchUrl | remove: 'index.html' | strip -%}
       {%- endif -%}
-    </li>
+    {%- endif -%}
+    {%- if treeItem.childList -%}
+      {%- if matchUrl == curUrl -%}
+      <li class="expandListStyle" data-startVersion="{{treeItem.startVersion}}" data-endVersion="{{treeItem.endVersion}}" data-isHashNode="{{treeItem.isHashNode}}">
+        <a href="{{docHomePage}}{{treeItem.path}}" class="otherLinkColour activeLink">{{treeItem.name}}</a>
+        <ul style="display: block;">
+          {%- include liquid_generateFullTree.html treeList=treeItem.childList -%}
+        </ul>
+        <i class="icon-arrow"></i>
+      </li>
+      {%- else -%}
+      <li class="collapseListStyle" data-startVersion="{{treeItem.startVersion}}" data-endVersion="{{treeItem.endVersion}}" data-isHashNode="{{treeItem.isHashNode}}">
+        {%- if curUrl and curUrl != "" -%}
+          <a href="{{docHomePage}}{{treeItem.path}}" class="otherLinkColour">{{treeItem.name}}</a>
+        {%- else -%}
+          <a class="otherLinkColour">{{treeItem.name}}</a>
+          <!-- <span class="noPathItem">{{treeItem.name}}</span> -->
+        {%- endif -%}
+        <ul>
+          {%- include liquid_generateFullTree.html treeList=treeItem.childList -%}
+        </ul>
+        <i class="icon-arrow"></i>
+      </li>
+      {%- endif -%}
+    {%- else -%}
+      <li data-startVersion="{{treeItem.startVersion}}" data-endVersion="{{treeItem.endVersion}}" data-isHashNode="{{treeItem.isHashNode}}">
+        {%- if matchUrl == curUrl -%}
+        <a href="{{docHomePage}}{{treeItem.path}}" class="otherLinkColour activeLink">{{treeItem.name}}</a>
+        {%- else -%}
+        <a href="{{docHomePage}}{{treeItem.path}}" class="otherLinkColour">{{treeItem.name}}</a>
+        {%- endif -%}
+      </li>
+    {%- endif -%}
   {%- endif -%}
 {%- endfor -%}
