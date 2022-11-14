@@ -396,7 +396,7 @@ function init() {
     var sd = $(window).scrollTop();
     var basicFullTreeIncrease = $(window).outerWidth() > 1680 ? 130 : 140
     $('#sideBarCnt').css({'width': $('.sideBar').width() + 'px'});
-    $('.mainPage').css({'min-height': 'calc(100vh - '+(menuHeight + basicFullTreeIncrease) +'px)'});
+    $('.mainPage').css({'min-height': 'calc(100vh - '+(menuHeight + basicFullTreeIncrease - 60 + $("#footerWrapper").height()) +'px)'});
     $('.mainPage').css({'max-height': 'calc(100vh - '+(menuHeight + basicFullTreeIncrease) +'px)'});
     $('.rightSideMenu').css({'padding-top': $('#docHead').outerHeight()+'px'});
     $('.docContainer .markdown-body').css({'margin-top': ($('#docHead').outerHeight() + 0) + 'px'});
