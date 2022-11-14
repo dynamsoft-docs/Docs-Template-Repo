@@ -467,6 +467,7 @@ ul.disc>li p:hover {
     box-sizing: border-box;
     min-height: auto;
     padding-bottom: 50px;
+    font-family: OpenSans-Regular;
 }
 
 .markdown-body table th,
