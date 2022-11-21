@@ -259,6 +259,10 @@ function changeVersion (liTag) {
     var verFileName = "/v" + ver + "/";
     if (curUrl.indexOf("web-twain/docs/") > 0 && GetVersionDiff('17.2.1', ver) < 0) {
         verFileName = '/v17.2.1/';
+    } 
+    if (curUrl.indexOf("web-twain/docs/") > 0 && ver == "latest") {
+        window.location.href = curUrl
+        return
     }
     curUrl = curUrl.replace("/docs/", "/docs-archive" + verFileName)
 	var srcVal = getUrlVars(curUrl)["src"];
