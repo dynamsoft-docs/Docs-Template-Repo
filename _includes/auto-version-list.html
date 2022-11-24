@@ -29,13 +29,19 @@
                     <ul>
                         {%- for childVersion in verInfo.child -%}
                             {%- assign curVerText = "" -%}
-                            {%- assign childVersion = childVersion | downcase | strip -%}
-                            {%- if childVersion == "latest version"-%}
-                                {%- assign curVerText = childVersion | capitalize -%}
-                            {%- else -%}
-                                {%- assign curVerText = "Version " | append: childVersion -%}
+                            {%- assign c_version = childVersion | downcase | strip -%}
+                            {%- assign editions = "" -%}
+                            {%- if c_version contains '_' -%}
+                                {%- assign arr = childVersion | split: "_" -%}
+                                {%- assign c_version = arr.first -%}
+                                {%- assign editions = childVersion | remove: arr.first | remove_first: '_' -%}
                             {%- endif -%}
-                            <li onclick="changeVersion(this)">{{ curVerText }}</li>
+                            {%- if c_version == "latest version"-%}
+                                {%- assign curVerText = c_version | capitalize -%}
+                            {%- else -%}
+                                {%- assign curVerText = "Version " | append: c_version -%}
+                            {%- endif -%}
+                            <li onclick="changeVersion(this)" data-editions="{{editions}}">{{ curVerText }}</li>
                         {%- endfor -%}
                     </ul>
                 </li>

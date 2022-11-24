@@ -484,3 +484,14 @@ function formatDate(date) {
     var month = monthList[newDate.getMonth()]
     return weekday + ', ' + month + ' ' + newDate.getDate() + ', ' + newDate.getFullYear()
 }
+
+function initHistoryVersionList() {
+    let lang = getCurrentUrlLang(document.URL, true)
+    let obj = $(".fullVersionInfo li")
+    for (var i=0; i<obj.length; i++) {
+        let edition = $(obj[i]).data("editions")
+        if (edition && edition != "" && edition.indexOf(lang) < 0) {
+            $(obj[i]).hide()
+        }
+    }
+}
