@@ -51,7 +51,9 @@ layout: null
     <div class="headWrapper">
         {%- include page_header.html -%}
     </div>
-    
+    {%- if page.cx == '53a201f66061dfc84' -%}
+    {%- include dlrNav.html -%}
+    {%- endif -%}
     <div class="search-wrap">
       <h1 class="fontOswald">Search</h1>
       <div class="search-box">
@@ -65,7 +67,9 @@ layout: null
         </div>
       </div>
       <div class="search-pages"></div>
-      <img id="searchIcon" src="https://www.dynamsoft.com/webres/wwwroot/images/icons/googleSearch.png" style="float: right;">
+      <div class="clearfix" style="margin-bottom: 50px">
+        <img id="searchIcon" src="https://www.dynamsoft.com/webres/wwwroot/images/icons/googleSearch.png" style="float: right;">
+      </div>
     </div>
     {{content}}
     <div id="footerWrapper">
