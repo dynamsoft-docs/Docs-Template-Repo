@@ -1,5 +1,6 @@
 function UrlReplace()
 {
+    initHistoryVersionList()
     var docUrl = document.URL;
     var ver = getUrlVars(docUrl)["ver"];
     var matchVer = getUrlVars(docUrl)["matchVer"];
@@ -567,7 +568,7 @@ function changeVersion (liTag)
 }
 
 function findNearestVersion(ver) {
-    var versionList = $(".fullVersionInfo li")
+    var versionList = $(".fullVersionInfo li:not(.hideLi)")
     var bestVer = ver, verDiff=null
     for (var i=0; i<versionList.length; i++) {
         var tempVer = $(versionList[i]).text().toLowerCase()
@@ -614,6 +615,17 @@ function loadActiveTagMenu(aTag) {
             loadActiveTagMenu($(ulTag[0]).parent().find(">a"))
         } else {
             $(ulTag[0]).parent().addClass("expandListStyle").addClass("hasActiveLinkList").removeClass("collapseListStyle")
+        }
+    }
+}
+
+function initHistoryVersionList() {
+    let lang = getCurrentUrlLang(document.URL, true)
+    let obj = $(".fullVersionInfo li")
+    for (var i=0; i<obj.length; i++) {
+        let edition = $(obj[i]).data("editions")
+        if (edition && edition != "" && edition.indexOf(lang) < 0) {
+            $(obj[i]).addClass("hideLi").hide()
         }
     }
 }

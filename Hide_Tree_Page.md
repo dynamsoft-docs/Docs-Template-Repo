@@ -21,7 +21,12 @@ layout: tree-layout
             {%- for verInfo in validVerInfo -%}
                 {%- if verInfo.child -%}
                     {%- for childVersion in verInfo.child -%}
-                        {%- assign curId = "version_tree_" | append: childVersion | replace: " ", "_" | downcase -%}
+                        {%- assign c_version = childVersion | downcase | strip -%}
+                        {%- if c_version contains '_' -%}
+                            {%- assign arr = childVersion | split: "_" -%}
+                            {%- assign c_version = arr.first -%}
+                        {%- endif -%}
+                        {%- assign curId = "version_tree_" | append: c_version | replace: " ", "_" | downcase -%}
                         <ul class="version-tree-container " id="{{ curId }}">
                             {%- include liquid_searchVersionTreeFile.html ver=childVersion curPath="" targetRelativePath="sidelist-full-tree.html" -%}
                         </ul>
