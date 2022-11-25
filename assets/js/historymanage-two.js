@@ -186,7 +186,7 @@ function RequestNewPage(aTag, paramLink, onlyLoadContent=false) {
         // scroll to the start of article
         var hash = paramLink.split("#").length > 1 ? paramLink.split("#")[1].toLowerCase() : null
         var sd = $(window).scrollTop()
-        if (hash) {
+        if (hash && $("#" + hash).length > 0) {
             window.scrollTo(0, $("#" + hash).offset().top)
         } else {
             if (sd > 0) {
