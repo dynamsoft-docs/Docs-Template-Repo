@@ -621,6 +621,9 @@ function loadActiveTagMenu(aTag) {
 
 function initHistoryVersionList() {
     let lang = getCurrentUrlLang(document.URL, true)
+    if (lang == 'objectivec-swift') {
+        lang = 'ios'
+    }
     let obj = $(".fullVersionInfo li")
     for (var i=0; i<obj.length; i++) {
         let edition = $(obj[i]).data("editions")
