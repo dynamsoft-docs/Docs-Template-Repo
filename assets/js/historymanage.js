@@ -624,7 +624,7 @@ function initHistoryVersionList() {
     let obj = $(".fullVersionInfo li")
     for (var i=0; i<obj.length; i++) {
         let edition = $(obj[i]).data("editions")
-        if (edition && edition != "" && edition.indexOf(lang) < 0) {
+        if (edition && edition != "" && edition.split('_').indexOf(lang) < 0) {
             $(obj[i]).addClass("hideLi").hide()
         }
     }
