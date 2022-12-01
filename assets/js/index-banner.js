@@ -646,7 +646,7 @@ function getCurrentUrlLang(url, needFilterLang=false) {
             }
             return result
         } else {
-            var arr = url.indexOf("/docs/server/") > 0 ? url.split("/docs/server/")[1].split("/") : url.split("/docs/mobile/")[1].split("/")
+            var arr = url.indexOf("/docs/server/") > 0 ? url.split("/docs/server/")[1].split("/") : (url.indexOf("/docs/mobile/") > 0 ? url.split("/docs/mobile/")[1].split("/"): '')
             if (url.indexOf("/docs/mobile/") > 0 && arr[1]!="objectivec-swift" && arr[1]!="android") {
                 return "objectivec-swift"
             } else {
