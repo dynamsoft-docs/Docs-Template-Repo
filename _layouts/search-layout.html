@@ -95,14 +95,14 @@ layout: null
       function initSearchPage() {
         if (getUrlVars(document.URL)["q"]) {
           $(".search-box__input").val(getUrlVars(document.URL)["q"])
-          cseSearch({type: 'click'})
+          cseSearch({type: 'click'}, queryParam.refinement)
         }
       }
 
-      function cseSearch(e) {
+      function cseSearch(e, refinement=null) {
         if ((e.type === 'keyup' && e.keyCode === 13) || e.type === "click") {
           if (e.type === 'click') {
-            queryParam.refinement = $(e.target).attr("label")
+            queryParam.refinement = refinement ? refinement : $(e.target).attr("label")
           } 
           pagination.currentPage = 1
           pagination.total = 0
