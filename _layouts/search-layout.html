@@ -92,6 +92,9 @@ layout: null
       function initSearchPage() {
         if (getUrlVars(document.URL)["q"]) {
           $(".search-box__input").val(getUrlVars(document.URL)["q"])
+          if (getUrlVars(document.URL)["refinement"]) {
+            queryParam.refinement = getUrlVars(document.URL)["refinement"]
+          }
           cseSearch({type: 'click'}, queryParam.refinement)
         }
       }
