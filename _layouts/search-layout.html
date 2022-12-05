@@ -86,7 +86,7 @@ layout: null
         pageSize: 10,
         pages: 0
       }
-      let refinement = null
+      let refinement = facets ? facets : null
 
       initSearchPage()
 
@@ -99,7 +99,7 @@ layout: null
           cseSearch({type: 'click'}, queryParam.refinement)
         }
       }
-
+      
       function cseSearch(e, refinement=null) {
         if ((e.type === 'keyup' && e.keyCode === 13) || e.type === "click") {
           if (e.type === 'click') {
@@ -130,8 +130,10 @@ layout: null
             if (res.code == 0) {
                 let data = JSON.parse(res.data)
                 if (data.code == -1) {
-                    $(".search-result, .search-pages").hide()
-                    return
+                  $('.search-result__statistics').text(data.msg)
+                  $(".search-result").show()
+                  $(".search-pages").hide()
+                  return
                 }
                 
                 if (data.items && data.items.length > 0) {
