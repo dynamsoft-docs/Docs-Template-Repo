@@ -86,6 +86,7 @@ layout: null
         pageSize: 10,
         pages: 0
       }
+      let refinement = null
 
       initSearchPage()
 
@@ -132,24 +133,25 @@ layout: null
                     $(".search-result, .search-pages").hide()
                     return
                 }
-                // load refinement
-                let refinement = data.context.facets
-                if (refinement) {
-                  let refinementHtml = `<span label="" onclick="cseSearch(event)">All</span>`
-                  refinement.sort(function(a, b) {
-                      return a[0].label > b[0].label ? 1 : -1
-                  })
-                  for(let i=0; i<refinement.length; i++) {
-                      refinementHtml += `
-                      <span class="${refinement[i][0].label==queryParam.refinement?'on':''}" label="${refinement[i][0].label}" onclick="cseSearch(event)">${refinement[i][0].anchor}</span>
-                      `
-                  }
-                  $('.search-result__refinement').html("").append(refinementHtml)
-                  if (!queryParam.refinement || queryParam.refinement == "") {
-                      $('.search-result__refinement > span').eq(0).addClass('on')
-                  }
-                }
+                
                 if (data.items && data.items.length > 0) {
+                    // load refinement
+                    refinement = data.context.facets
+                    if (refinement) {
+                      let refinementHtml = `<span label="" onclick="cseSearch(event)">All</span>`
+                      refinement.sort(function(a, b) {
+                          return a[0].label > b[0].label ? 1 : -1
+                      })
+                      for(let i=0; i<refinement.length; i++) {
+                          refinementHtml += `
+                          <span class="${refinement[i][0].label==queryParam.refinement?'on':''}" label="${refinement[i][0].label}" onclick="cseSearch(event)">${refinement[i][0].anchor}</span>
+                          `
+                      }
+                      $('.search-result__refinement').html("").append(refinementHtml)
+                      if (!queryParam.refinement || queryParam.refinement == "") {
+                          $('.search-result__refinement > span').eq(0).addClass('on')
+                      }
+                    }
                     // load statistics
                     let statistics = data.searchInformation
                     $('.search-result__statistics').text(`About ${statistics.formattedTotalResults} results (${statistics.formattedSearchTime} seconds)`)
@@ -175,10 +177,25 @@ layout: null
                     }
                     $(".search-result, .search-pages").show()
                 } else {
-                    let statistics = data.searchInformation
-                    $('.search-result__statistics').text(`About ${statistics.formattedTotalResults} results (${statistics.formattedSearchTime} seconds)`)
-                    $('.search-result__list').html("")
-                    $(".search-result").show()
+                  if (refinement) {
+                    let refinementHtml = `<span label="" onclick="cseSearch(event)">All</span>`
+                    refinement.sort(function(a, b) {
+                        return a[0].label > b[0].label ? 1 : -1
+                    })
+                    for(let i=0; i<refinement.length; i++) {
+                        refinementHtml += `
+                        <span class="${refinement[i][0].label==queryParam.refinement?'on':''}" label="${refinement[i][0].label}" onclick="cseSearch(event)">${refinement[i][0].anchor}</span>
+                        `
+                    }
+                    $('.search-result__refinement').html("").append(refinementHtml)
+                    if (!queryParam.refinement || queryParam.refinement == "") {
+                        $('.search-result__refinement > span').eq(0).addClass('on')
+                    }
+                  }
+                  let statistics = data.searchInformation
+                  $('.search-result__statistics').text(`About ${statistics.formattedTotalResults} results (${statistics.formattedSearchTime} seconds)`)
+                  $('.search-result__list').html("")
+                  $(".search-result").show()
                 }
             } else {
               $(".search-result, .search-pages").hide()
