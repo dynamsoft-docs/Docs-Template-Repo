@@ -264,6 +264,17 @@ $(document).ready(function(){
         $(this).find("ul").slideToggle()
         e.stopPropagation()
     })
+
+    $(".mainPage").on("wheel mousewheel", function(ev) {
+        var $this = $(this),
+            scrollTop = this.scrollTop,
+            scrollHeight = this.scrollHeight,
+            height = $this.innerHeight(),
+            up = ev.originalEvent.wheelDelta > 0;
+        if ((up && scrollTop == 0) || (!up && (scrollTop + height) >= scrollHeight)) {
+            ev.preventDefault();
+        }
+    })
 })
 
 function openChildMenuTree(obj, needIcon) {
