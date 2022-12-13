@@ -5173,10 +5173,12 @@ a#toTop {
 
 #categoryMenuTree #fullTreeMenuListContainer li.collapseListStyle > i.icon-arrow::before {
     transform: rotate(-45deg);
+    transition: all ease-in-out 0.5s;
 }
 #categoryMenuTree #fullTreeMenuListContainer li.expandListStyle > i.icon-arrow::before {
     border-color: #AAAAAA;
     transform: rotate(-135deg);
+    transition: all ease-in-out 0.5s;
 }
 #categoryMenuTree #fullTreeMenuListContainer li i.icon-arrow:hover::before {
     border-color: #AAAAAA;

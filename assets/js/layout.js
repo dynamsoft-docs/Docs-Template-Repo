@@ -278,13 +278,12 @@ $(document).ready(function(){
 })
 
 function openChildMenuTree(obj, needIcon) {
-    console.log(obj, needIcon)
     if (needIcon && $(obj).parent().hasClass("collapseListStyle")) {
         var childLis = $(obj).parent().find(">ul>li")
         for(var i=0; i<childLis.length;i++) {
             if ($(childLis[i]).find("ul").length > 0) {
                 $(childLis[i]).removeClass("expandListStyle").addClass("collapseListStyle")
-                $(childLis[i]).find(">ul").hide()
+                $(childLis[i]).find(">ul").slideUp()
                 if ($(childLis[i]).find(".icon-arrow").length == 0) {
                     var iconItem = document.createElement("i")
                     iconItem.className = "icon-arrow"
