@@ -25,7 +25,17 @@ function UrlReplace()
                 window.location.replace(docUrl + "&&ver=latest");
             }
         } else {
-            window.location.replace(docUrl + "?ver=latest");
+            if (docUrl.indexOf("-v") >= 0) {
+                var docVer = docUrl.split("-v")[1]
+                if (parseInt(docVer[0]) <= 9 && parseInt(docVer[0]) >= 0 && docVer.indexOf('.html') > 0) {
+                    docVer = docVer.split(".html")[0]
+                    window.location.replace(docUrl + "?ver=" + docVer);
+                } else {
+                    window.location.replace(docUrl + "?ver=latest");
+                }
+            } else {
+                window.location.replace(docUrl + "?ver=latest");
+            }
         }
     }
 }
