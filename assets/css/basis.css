@@ -4178,9 +4178,21 @@ i.dbr-white-logo {
     text-transform: uppercase;
 }
 
+.productMenu .pcProductMenu .ct-more li a div {
+    color: #707070;
+    font-size: 14px;
+    text-transform: none;
+    font-family: OpenSans-Regular;
+}
+
 .productMenu .pcProductMenu .ct-more li a.on,
 .productMenu .pcProductMenu .ct-more li a:hover {
     color: #fe8e14;
+}
+
+.productMenu .pcProductMenu .ct-more li a.on div,
+.productMenu .pcProductMenu .ct-more li a:hover div {
+    color: #707070;
 }
 
 .productMenu .pcProductMenu .ct-more .icon-orange-angle {
