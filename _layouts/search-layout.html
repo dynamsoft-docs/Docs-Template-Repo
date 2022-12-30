@@ -95,7 +95,8 @@ layout: null
         pageSize: 10,
         pages: 0
       }
-      let refinement = null
+      let hasFacets = '{{page.hasFacets}}'
+      let refinement = hasFacets == 'true' ? facets : null
 
       initSearchPage()
 
