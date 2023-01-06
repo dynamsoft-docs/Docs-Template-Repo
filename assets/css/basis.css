@@ -1047,7 +1047,7 @@ ul::-webkit-scrollbar-corner {
     }
 
     #categoryMenuTree .rightSideMenu.showRightSideMenu.rsm-fixed {
-        right: 0;
+        right: 15px;
     }
 
     .markdown-body.showRightSideMenu {
@@ -1083,7 +1083,8 @@ ul::-webkit-scrollbar-corner {
     }
 
     .docContainer {
-        width: calc(100% - 240px);
+        width: 100%;
+        /* width: calc(100% - 240px); */
     }
 
     .docContainer .main {
@@ -1115,7 +1116,7 @@ ul::-webkit-scrollbar-corner {
     }
     
     #categoryMenuTree .rightSideMenu.showRightSideMenu.rsm-fixed {
-        right: 0;
+        right: 35px;
     }
 
     .markdown-body.showRightSideMenu {
@@ -1174,6 +1175,42 @@ ul::-webkit-scrollbar-corner {
     }
 }
 
+@media (max-width: 1199px) {
+    .sideBarIcon {
+        position: relative;
+        z-index: 11;
+        height: 40px;
+        line-height: 38px;
+        background: #EEEEEE;
+        color: #444;
+        text-align: right;
+        padding-right: 36px;
+        width: calc(50% - 175px);
+        cursor: pointer;
+        margin-top: 72px;
+    }
+
+    .sideBar,
+    .docContainer {
+        padding-top: 0px;
+    }
+
+    .sideBar {
+        position: absolute;
+        width: auto;
+        left: 0;
+        z-index: 12;
+        background: #eeeeee;
+        padding-left: calc(50% - 355px);
+    }
+
+    .markdown-body {
+        margin-top: 0px !important;
+    }
+
+    
+}
+
 @media (max-width: 991px) {
     .footerWrapper {
         margin-top: 100px;
@@ -1199,10 +1236,10 @@ ul::-webkit-scrollbar-corner {
         height: 60px;
     }
 
-    .sideBar,
+    /* .sideBar,
     .docContainer {
         padding-top: 0px;
-    }
+    } */
 
     #docHead {
         position: relative;
@@ -1211,16 +1248,7 @@ ul::-webkit-scrollbar-corner {
     }
 
     .sideBarIcon {
-        position: relative;
-        z-index: 11;
-        height: 40px;
-        line-height: 38px;
-        background: #EEEEEE;
-        color: #444;
-        text-align: right;
-        padding-right: 36px;
-        width: calc(50% - 175px);
-        cursor: pointer;
+        margin-top: 0px;
     }
 
     .sideBar {
@@ -1404,10 +1432,6 @@ ul::-webkit-scrollbar-corner {
         font-size: 14px;
     }
 
-    .sideBarIcon {
-        display: none;
-        overflow: auto;
-    }
 }
 
 @media (min-width: 1200px) {
@@ -1451,6 +1475,11 @@ ul::-webkit-scrollbar-corner {
 
     .sideBar .mainPage {
         font-size: 14px;
+    }
+
+    .sideBarIcon {
+        display: none;
+        overflow: auto;
     }
 
     /* .rightSideMenu { max-width: 212px; } */
@@ -4702,6 +4731,12 @@ i.dbr-white-logo {
 }
 
 @media (max-width: 1199px) {
+    .sideBar {
+        padding-top: 0px !important;
+        max-width: 320px;
+        width: 320px;
+    }
+
     .history {
         left: 35px;
         top: 175px;
@@ -4710,11 +4745,29 @@ i.dbr-white-logo {
     .noSubMenuDoc .history {
         top: 120px;
     }
+
+    .history.history-absolute {
+        position: absolute;
+        top: 148px !important;
+        left: calc(50% - 160px);
+    }
+
+    #articleContent {
+        padding-top: 40px;
+    }
+
+    .rightSideMenu.showRightSideMenu {
+        padding-top: 15px !important;
+    }
 }
 
 @media (max-width: 991px) {
     .sideBar {
         padding-top: 0 !important;
+    }
+
+    #articleContent {
+        padding-top: 0px;
     }
 
     .history.history-absolute {
@@ -5091,7 +5144,6 @@ a#toTop {
 }
 #categoryMenuTree #fullTreeMenuListContainer li {
     position: relative;
-    /* line-height: 32px; */
     margin-bottom: 0;
     padding-left: 0;
 }
@@ -5141,8 +5193,6 @@ a#toTop {
 #categoryMenuTree #fullTreeMenuListContainer li.expandListStyle>a:not(.noListStyle) {
     background: none;
     padding-left: 35px;
-    /* font-family: OpenSans-Semibold;
-    color: #323234; */
 }
 
 #categoryMenuTree #fullTreeMenuListContainer li.collapseListStyle.hasActiveLinkList > a:not(.activeLink) {
@@ -5269,17 +5319,17 @@ a#toTop {
 }
 
 @media (max-width: 1199px) {
-    #categoryMenuTree #sideBarCnt .docSearchPart .search {
+    /* #categoryMenuTree #sideBarCnt .docSearchPart .search {
         max-width: 190px;
-    }
+    } */
 
     #categoryMenuTree #docHead {
         left: 270px;
     }
 
-    #categoryMenuTree #fullTreeMenuListContainer {
+    /* #categoryMenuTree #fullTreeMenuListContainer {
         width: 240px;
-    }
+    } */
 
     #articleContent { padding-left: 20px; padding-right: 20px; }
 

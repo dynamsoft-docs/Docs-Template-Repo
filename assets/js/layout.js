@@ -96,7 +96,9 @@ $(document).ready(function(){
                     $('#docHead').css({'top': '0px'});
                     $('.history').css({'top': '30px'})
                 }
-                $('.sideBar #sideBarCnt').addClass('sidebar-fixed');
+                if ($(window).outerWidth() > 1679) {
+                    $('.sideBar #sideBarCnt').addClass('sidebar-fixed');
+                }
                 $('.rightSideMenu').addClass('rsm-fixed');
             } else {
                 if ($('#footerWrapper').offset().top - $(document).scrollTop() < $(window).height()) {
@@ -154,11 +156,20 @@ $(document).ready(function(){
     }
 
     $('.sideBarIcon').click(function() {
+        $(".sideBar").toggleClass('hide-md');
         $(".sideBar").toggleClass('hide-sm');
         $(".sideBar").toggleClass('hide-xs');
         setTimeout(function() {
             $('#sideBarCnt').css({'width': $('.sideBar').width() + 'px'});
         }, 100)
+    })
+
+    $('#articleContent').click(function() {
+        if ($(window).outerWidth() < 1200 && $(".sideBar").is(':visible')) {
+            $(".sideBar").toggleClass('hide-md');
+            $(".sideBar").toggleClass('hide-sm');
+            $(".sideBar").toggleClass('hide-xs');
+        }
     })
 
     $(document).click(function(){
@@ -409,8 +420,8 @@ function init() {
     $('.mainPage').css({'min-height': 'calc(100vh - '+(menuHeight + basicFullTreeIncrease - 60 + $("#footerWrapper").height()) +'px)'});
     $('.mainPage').css({'max-height': 'calc(100vh - '+(menuHeight + basicFullTreeIncrease) +'px)'});
     $('.rightSideMenu').css({'padding-top': $('#docHead').outerHeight()+'px'});
-    $('.docContainer .markdown-body').css({'margin-top': ($('#docHead').outerHeight() + 0) + 'px'});
-    if (breakpoint() == 'lg') {
+    $('.docContainer .markdown-body').css({'margin-top': ($('#docHead').outerHeight() + 0) + 'px'});2740
+    if ($(window).outerWidth() > 1200) {
         $('.history').css({'width': $('#txtSearch').outerWidth() + 'px'});
         $('.history').removeClass('history-absolute');
         if (sd > $('#overall-header').height()) {
@@ -424,6 +435,9 @@ function init() {
             $('.mainPage').css({'max-height': 'calc(100vh - '+(menuHeight + basicFullTreeIncrease -sd) +'px)'});
         }
     } else {
+        if ($(window).outerWidth() > 991) {
+            $('.mainPage').css({'min-height': 'calc(100vh - '+(menuHeight + basicFullTreeIncrease) +'px)'});
+        }
         $('.history').css({'width': '140px'});
         $('.history').addClass('history-absolute');
     }
