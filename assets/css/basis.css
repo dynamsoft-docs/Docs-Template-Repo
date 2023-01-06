@@ -1502,7 +1502,7 @@ ul::-webkit-scrollbar-corner {
     #docHead {
         width: 1300px;
         margin: 0 auto;
-        left: calc(50% - 495px);
+        left: calc(50% - 475px);
     }
 
     #docHead .rightMenuControlBtn {
@@ -5220,7 +5220,7 @@ a#toTop {
     background: #FFFFFF;
 }
 
-@media (min-width: 1680px) {
+@media (min-width: 1200px) {
     #categoryMenuTree .sideBar {
         max-width: 320px;
         width: 330px;
@@ -5243,17 +5243,17 @@ a#toTop {
 }
 
 @media (max-width: 1679px) {
-    #categoryMenuTree #sideBarCnt .docSearchPart .search {
+    /* #categoryMenuTree #sideBarCnt .docSearchPart .search {
         max-width: 225px;
-    }
+    } */
 
     #categoryMenuTree #docHead {
-        left: 320px;
+        left: 360px;
     }
 
-    #categoryMenuTree #fullTreeMenuListContainer {
+    /* #categoryMenuTree #fullTreeMenuListContainer {
         width: 280px;
-    }
+    } */
 
     #categoryMenuTree .docContainer {
         min-height: calc(100vh - 72px);
