@@ -97,7 +97,7 @@ $(document).ready(function(){
                     $('#docHead').css({'top': '0px'});
                     $('.history').css({'top': '30px'})
                 }
-                if ($(window).outerWidth() > 1679) {
+                if ($(window).outerWidth() > 1199) {
                     $('.sideBar #sideBarCnt').addClass('sidebar-fixed');
                 }
                 $('.rightSideMenu').addClass('rsm-fixed');
