@@ -5,6 +5,7 @@ $(document).ready(function(){
         $("#AutoGenerateSidebar").addClass("noTitleIndex")
     }
 
+    $('.sideBar, #docHead').addClass("hide-md")
     $('.markdown-body .sample-code-prefix + blockquote > ul > li:first-child').addClass('on')
     $('.markdown-body .sample-code-prefix + blockquote > ol > li:first-child').addClass('on')
 
