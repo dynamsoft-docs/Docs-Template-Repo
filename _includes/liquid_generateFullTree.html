@@ -18,13 +18,8 @@
     {%- endif -%}
     {%- if treeItem.childList -%}
       {%- if matchUrl == curUrl -%}
-      {%- if treeItem.path contains 'https://' -%}
-        {%- assign treeItemPath = treeItem.path -%}
-      {%- else -%}
-        {%- assign treeItemPath = docHomePage | append: treeItem.path -%}
-      {%- endif -%}
       <li class="expandListStyle" data-startVersion="{{treeItem.startVersion}}" data-endVersion="{{treeItem.endVersion}}" data-isHashNode="{{treeItem.isHashNode}}">
-        <a href="{{treeItemPath}}" class="otherLinkColour activeLink">{{treeItem.name}}</a>
+        <a href="{{docHomePage}}{{treeItem.path}}" class="otherLinkColour activeLink">{{treeItem.name}}</a>
         <ul style="display: block;">
           {%- include liquid_generateFullTree.html treeList=treeItem.childList -%}
         </ul>
@@ -33,7 +28,7 @@
       {%- else -%}
       <li class="collapseListStyle" data-startVersion="{{treeItem.startVersion}}" data-endVersion="{{treeItem.endVersion}}" data-isHashNode="{{treeItem.isHashNode}}">
         {%- if curUrl and curUrl != "" -%}
-          <a href="{{treeItemPath}}" class="otherLinkColour">{{treeItem.name}}</a>
+          <a href="{{docHomePage}}{{treeItem.path}}" class="otherLinkColour">{{treeItem.name}}</a>
         {%- else -%}
           <a class="otherLinkColour">{{treeItem.name}}</a>
           <!-- <span class="noPathItem">{{treeItem.name}}</span> -->
@@ -47,9 +42,9 @@
     {%- else -%}
       <li data-startVersion="{{treeItem.startVersion}}" data-endVersion="{{treeItem.endVersion}}" data-isHashNode="{{treeItem.isHashNode}}">
         {%- if matchUrl == curUrl -%}
-        <a href="{{treeItemPath}}" class="otherLinkColour activeLink">{{treeItem.name}}</a>
+        <a href="{{docHomePage}}{{treeItem.path}}" class="otherLinkColour activeLink">{{treeItem.name}}</a>
         {%- else -%}
-        <a href="{{treeItemPath}}" class="otherLinkColour">{{treeItem.name}}</a>
+        <a href="{{docHomePage}}{{treeItem.path}}" class="otherLinkColour">{{treeItem.name}}</a>
         {%- endif -%}
       </li>
     {%- endif -%}
