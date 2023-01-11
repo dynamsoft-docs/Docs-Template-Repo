@@ -72,6 +72,10 @@ function GetVersionDiff(inputVer, compareVer)
 
 function addParam (aTag, fromSourse=null, needh3=false)
 {
+    if ($(aTag).hasClass('fullUrl')) {
+        window.location.href = aTag.href;
+        return
+    }
     var hrefVal = aTag.href;
     var changeHref = hrefVal
 

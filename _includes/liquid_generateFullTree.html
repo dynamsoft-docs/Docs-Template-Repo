@@ -16,7 +16,9 @@
         {%- assign matchUrl = matchUrl | remove: 'index.html' | strip -%}
       {%- endif -%}
     {%- endif -%}
+    {%- assign isFullUrl = '' -%}
     {%- if treeItem.path contains 'https://' -%}
+      {%- assign isFullUrl = 'fullUrl' -%}
       {%- assign treeItemPath = treeItem.path -%}
     {%- else -%}
       {%- assign treeItemPath = docHomePage | append: treeItem.path -%}
@@ -24,7 +26,7 @@
     {%- if treeItem.childList -%}
       {%- if matchUrl == curUrl -%}
       <li class="expandListStyle" data-startVersion="{{treeItem.startVersion}}" data-endVersion="{{treeItem.endVersion}}" data-isHashNode="{{treeItem.isHashNode}}">
-        <a href="{{treeItemPath}}" class="otherLinkColour activeLink">{{treeItem.name}}</a>
+        <a href="{{treeItemPath}}" class="otherLinkColour activeLink {{isFullUrl}}">{{treeItem.name}}</a>
         <ul style="display: block;">
           {%- include liquid_generateFullTree.html treeList=treeItem.childList -%}
         </ul>
@@ -33,7 +35,7 @@
       {%- else -%}
       <li class="collapseListStyle" data-startVersion="{{treeItem.startVersion}}" data-endVersion="{{treeItem.endVersion}}" data-isHashNode="{{treeItem.isHashNode}}">
         {%- if curUrl and curUrl != "" -%}
-          <a href="{{treeItemPath}}" class="otherLinkColour">{{treeItem.name}}</a>
+          <a href="{{treeItemPath}}" class="otherLinkColour {{isFullUrl}}">{{treeItem.name}}</a>
         {%- else -%}
           <a class="otherLinkColour">{{treeItem.name}}</a>
           <!-- <span class="noPathItem">{{treeItem.name}}</span> -->
@@ -47,9 +49,9 @@
     {%- else -%}
       <li data-startVersion="{{treeItem.startVersion}}" data-endVersion="{{treeItem.endVersion}}" data-isHashNode="{{treeItem.isHashNode}}">
         {%- if matchUrl == curUrl -%}
-        <a href="{{treeItemPath}}" class="otherLinkColour activeLink">{{treeItem.name}}</a>
+        <a href="{{treeItemPath}}" class="otherLinkColour activeLink {{isFullUrl}}">{{treeItem.name}}</a>
         {%- else -%}
-        <a href="{{treeItemPath}}" class="otherLinkColour">{{treeItem.name}}</a>
+        <a href="{{treeItemPath}}" class="otherLinkColour {{isFullUrl}}">{{treeItem.name}}</a>
         {%- endif -%}
       </li>
     {%- endif -%}
