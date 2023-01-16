@@ -139,10 +139,12 @@ function initCrumbs() {
       for (var i=0; i<expandList.length; i++) {
           if ($(expandList[i]).find(".activeLink").length > 0) {
               var atag = $(expandList[i]).find("> a")
-              if ($(atag).hasClass("activeLink")) {
-                  appendText += '<li id="breadcrumbLastNode">' + $(atag)[0].textContent + '</li>'
-              } else {
-                  appendText += '<li><a class="bluelink" href = "' + $(atag)[0].href + '">'+ $(atag)[0].textContent + '</a></li>'
+              if(atag.length > 0) {
+                if ($(atag).hasClass("activeLink")) {
+                    appendText += '<li id="breadcrumbLastNode">' + $(atag)[0].textContent + '</li>'
+                } else {
+                    appendText += '<li><a class="bluelink" href = "' + $(atag)[0].href + '">'+ $(atag)[0].textContent + '</a></li>'
+                }
               }
           }
       }

@@ -202,7 +202,7 @@ function changeVersion (liTag)
 
 	var innertext = (liTag.innerText).toLowerCase();
 	var ver = null;
-	if (innertext == "latest version"){
+	if (innertext.indexOf("latest version") >= 0){
 		ver = "latest"
 	}
 	else{
@@ -240,7 +240,7 @@ function findNearestVersion(ver) {
     var bestVer = ver, verDiff=null
     for (var i=0; i<versionList.length; i++) {
         var tempVer = $(versionList[i]).text().toLowerCase()
-        if (tempVer == "latest version"){
+        if (tempVer.indexOf("latest version") >= 0){
             tempVer = "latest"
         } else{
             tempVer = tempVer.replace('version ','');
