@@ -349,7 +349,7 @@ function init() {
         $('.history').css({'width': $('#txtSearch').outerWidth() + 'px'});
         $('.history').removeClass('history-absolute');
     } else {
-        $('.history').css({'width': '140px'});
+        $('.history').css({'width': '170px'});
         $('.history').addClass('history-absolute');
     }
     if ($(window).outerWidth() > 1680) {
