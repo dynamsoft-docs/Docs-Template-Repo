@@ -439,7 +439,7 @@ function init() {
         if ($(window).outerWidth() > 991) {
             $('.mainPage').css({'min-height': 'calc(100vh - '+(menuHeight + basicFullTreeIncrease) +'px)'});
         }
-        $('.history').css({'width': '140px'});
+        $('.history').css({'width': '170px'});
         $('.history').addClass('history-absolute');
     }
     if ($(window).outerWidth() > 1680) {
