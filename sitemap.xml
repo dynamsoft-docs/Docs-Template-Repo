@@ -26,9 +26,17 @@ regenerate: true
 {%- if site.docFullPath contains 'web-twain/docs' and page.url contains 'indepth/faqs/develop' -%}	
 	{%- assign excludeFlag = true -%}
 {%- endif -%}
+
+{%- assign docFullPath = site.docFullPath -%}
+{%- assign docFullPathLastChar = docFullPath | split:'' | last -%}
+{%- if docFullPathLastChar contains '/' -%}	
+	{%- assign truncateDocHomePageSize = docFullPath | size | minus:1 -%}
+	{%- assign docFullPath = docFullPath | slice: 0, truncateDocHomePageSize -%}
+{%- endif -%}
+
 {%- unless excludeFlag or page.layout == "" or page.layout == "default" -%}
   <url>
-    <loc>{{ site.docFullPath }}{{page.url | replace:'/index.html','/' | xml_escape}}</loc> 
+    <loc>{{ docFullPath }}{{page.url | replace:'/index.html','/' | xml_escape}}</loc> 
   </url>
 {%- endunless -%}
 {%- endfor -%}
