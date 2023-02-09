@@ -20,6 +20,11 @@ regenerate: true
 		{%- endif -%}
 	{%- endfor -%}
 {%- endif -%}
+
+{%- if page.ignore -%}
+	{%- assign excludeFlag = true -%}
+{%- endif -%}
+
 {%- if site.docFullPath contains 'license-server/docs' and page.url contains 'schedule/stable' -%}
 	{%- assign excludeFlag = true -%}
 {%- endif -%}
