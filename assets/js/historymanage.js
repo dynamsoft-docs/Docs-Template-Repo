@@ -316,12 +316,6 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
                 $("#AutoGenerateSidebar").removeClass("noTitleIndex")
             }
 
-            // replace edit url link
-            if ($(data).find("#docHead").find(".iconsBox a").length > 0) {
-                var editMdFileLink = $(data).find("#docHead").find(".iconsBox a")[0].href
-                $("#docHead .iconsBox a").attr("href", editMdFileLink)
-            }
-            
             // add addParam click function for all a tags in article content
             var articleContentATags = $("#articleContent").find("a")
             var verArray = SearchVersion();

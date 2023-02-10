@@ -155,10 +155,6 @@ function RequestNewPage(aTag, paramLink, onlyLoadContent=false) {
             $("#AutoGenerateSidebar").removeClass("noTitleIndex")
         }
 
-        // replace edit url link
-        //var editMdFileLink = $(data).find("#docHead").find(".iconsBox a").length > 0 ? $(data).find("#docHead").find(".iconsBox a")[0].href : ""
-        //$("#docHead .iconsBox a").attr("href", editMdFileLink)
-
         // add addParam click function for all a tags in article content
         var articleContentATags = $("#articleContent").find("a")
         for (var i = 0; i < articleContentATags.length; i++)
