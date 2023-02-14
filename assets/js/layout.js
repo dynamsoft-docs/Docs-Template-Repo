@@ -16,8 +16,9 @@ $(document).ready(function(){
             $(".languageWrap .languageSelectDown > div").removeClass("on")
             let obj = $(".languageWrap .languageSelectDown > div")
             for(var i=0; i<obj.length;i++) {
-                if ($(obj).data("value") == lang) {
-                    $(obj).addClass("on")
+                if ($(obj[i]).data("value") == lang) {
+                    $(obj[i]).addClass("on")
+                    $(".languageWrap .languageChange .chosenLanguage").text($(obj[i]).text())
                 }
             }
             var href = document.URL.replace(urlLang, lang)
