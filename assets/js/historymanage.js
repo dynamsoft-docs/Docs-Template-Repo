@@ -203,6 +203,13 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
     if(hrefVal == "")
         return;
 
+    // mobile - ios 页面
+    if ($(".languageWrap").length > 0 && getCurrentUrlLang(hrefVal, true) == "objectivec-swift") {
+        var curLang = $(".languageWrap .languageSelectDown > div.on").data("value")
+        var urlLang = getUrlVars(hrefVal)["lang"]
+        hrefVal = hrefVal.replace(urlLang, curLang)
+    }
+
     var exp = new RegExp(/[?&]ver=[^&^#]+/gi);
 	if (exp.exec(hrefVal) != null) {
         changeHref = hrefVal
@@ -218,6 +225,8 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
                 srcString = "&&src="+getCurrentUrlLang(document.URL)
             }
         }
+        
+
         if (hrefVal.indexOf("#") != -1) {
             var urlAry = hrefVal.split("#");
             if (urlAry.length == 2){

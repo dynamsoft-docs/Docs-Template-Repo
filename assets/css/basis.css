@@ -5369,3 +5369,91 @@ a#toTop {
     position: relative;
     z-index: 1;
 }
+
+.languageWrap {
+    position: relative;
+    font-family: OpenSans-Regular;
+    float: right;
+    color: #F5F5F5;
+    font-size: 16px;
+    margin-top: 32px;
+    margin-right: 20px;
+}
+
+.languageWrap .title {
+    font-weight: normal;
+    margin-bottom: 0;
+}
+
+.languageWrap .languageChange {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.languageWrap .languageChange .chosenLanguage {
+    color: #FFFFFF;
+    font-weight: normal;
+    font-family: OpenSans-Semibold;
+    margin-bottom: 0;
+}
+
+.languageWrap .languageSelectDown {
+    display: none;
+    position: absolute;
+    width: 120px;
+    background: #f5f5f5;
+    color: #323234;
+    text-align: right;
+    right: 0;
+}
+
+.languageWrap .languageSelectDown > div {
+    height: 36px;
+    line-height: 36px;
+    padding: 0px 12px;
+    cursor: pointer;
+}
+.languageWrap .languageSelectDown > div:hover {
+    color: #fe8e14;
+}
+.languageWrap .languageSelectDown > div.on {
+    background: #fe8e1491;
+    color: #fff;
+}
+
+@media (max-width: 1680px) {
+    .languageWrap {
+        margin-top: 22px;
+        margin-right: 15px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .productMenu .pcProductMenu .downloadBtn > span {
+        display: none;
+    }
+}
+
+@media (max-width: 991px) {
+    .languageWrap {
+        margin-top: 16px;
+    }
+}
+
+@media (max-width: 767px) {
+    .languageWrap {
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .languageWrap {
+        position: absolute;
+        top: 80px;
+        left: 0;
+        padding: 5px 10px;
+        background: #323234;
+    }
+}
+

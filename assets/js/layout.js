@@ -5,6 +5,27 @@ $(document).ready(function(){
         $("#AutoGenerateSidebar").addClass("noTitleIndex")
     }
 
+    // mobile - ios 页面
+    if ($(".languageWrap").length > 0 && getCurrentUrlLang(document.URL, true) == "objectivec-swift") {
+        $(".languageWrap").show()
+        var urlLang = getUrlVars(document.URL)["lang"]
+        console.log(1, urlLang)
+        if (urlLang) {
+            var lang = urlLang.split(",")[0]
+            console.log(2, lang)
+            $(".languageWrap .languageSelectDown > div").removeClass("on")
+            let obj = $(".languageWrap .languageSelectDown > div")
+            for(var i=0; i<obj.length;i++) {
+                if ($(obj).data("value") == lang) {
+                    $(obj).addClass("on")
+                }
+            }
+            var href = document.URL.replace(urlLang, lang)
+            history.replaceState(null, null, href)
+            sampleCodeSingleLangInit(lang)
+        }
+    }
+
     $('.sideBar, #docHead').addClass("hide-md")
     $('.markdown-body .sample-code-prefix + blockquote > ul > li:first-child').addClass('on')
     $('.markdown-body .sample-code-prefix + blockquote > ol > li:first-child').addClass('on')
@@ -176,6 +197,7 @@ $(document).ready(function(){
     $(document).click(function(){
         $('.otherVersions').hide();
         $('.fullVersionInfo').hide();
+        $(".languageWrap .languageSelectDown").hide()
     })
 
     $('.changeBtn').on('click', function(e) {
@@ -192,7 +214,6 @@ $(document).ready(function(){
         $('.fullVersionInfo').slideToggle();
         stopPropagation(e);
     })
-
 
     $(document).delegate(".markdown-body .sample-code-prefix + blockquote ul li", 'click', function() {
         var index = $(this).index()
@@ -244,10 +265,6 @@ $(document).ready(function(){
         window.scrollTo(0, 0)
     })
 
-    // $("#fullTreeMenuListContainer li > span.noPathItem, #fullTreeMenuListContainer li .listStyleIcon").on("click", function() {
-    //     openChildMenuTree($(this))
-    // })
-
     $(document).delegate("#categoryMenuTree li > a", "click", function(e) {
         if ($(this)[0].href == undefined || $(this)[0].href.trim() == "" || $(this).parent().find(" > ul").length > 0) {
             openChildMenuTree($(this), true)
@@ -286,6 +303,25 @@ $(document).ready(function(){
         if ((up && scrollTop == 0) || (!up && (scrollTop + height) >= scrollHeight)) {
             ev.preventDefault();
         }
+    })
+
+    $(".languageWrap .languageChange").on('click', function(e) {
+        $(".languageWrap .languageSelectDown").toggle()
+        e.stopPropagation()
+    })
+
+    $(".languageWrap .languageSelectDown > div").on('click', function(e) {
+        let value = $(this).data('value')
+        $(".languageWrap .languageChange .chosenLanguage").text($(this).text())
+        $(".languageWrap .languageSelectDown > div").removeClass("on")
+        $(this).addClass('on')
+        sampleCodeSingleLangInit(value)
+        var urlLang = getUrlVars(document.URL)["lang"]
+        if (urlLang) {
+            var href = document.URL.replace(urlLang, value)
+            history.replaceState(null, null, href)
+        }
+        e.stopPropagation()
     })
 })
 
