@@ -204,12 +204,19 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
         return;
 
     // mobile - ios 页面
+    var urlLang = getUrlVars(hrefVal)["lang"]
     if ($(".languageWrap").length > 0 && getCurrentUrlLang(hrefVal, true) == "objectivec-swift") {
         var curLang = $(".languageWrap .languageSelectDown > div.on").data("value")
-        var urlLang = getUrlVars(hrefVal)["lang"]
-        hrefVal = hrefVal.replace(urlLang, curLang)
+        if (urlLang) {
+            hrefVal = hrefVal.replace(urlLang, curLang)
+        } else {
+            if (hrefVal.indexOf("?")>0){
+                hrefVal = hrefVal + '&lang=' + curLang
+            } else {
+                hrefVal = hrefVal + '?lang=' + curLang
+            }
+        }
     }
-
     var exp = new RegExp(/[?&]ver=[^&^#]+/gi);
 	if (exp.exec(hrefVal) != null) {
         changeHref = hrefVal

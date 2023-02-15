@@ -9,10 +9,8 @@ $(document).ready(function(){
     if ($(".languageWrap").length > 0 && getCurrentUrlLang(document.URL, true) == "objectivec-swift") {
         $(".languageWrap").show()
         var urlLang = getUrlVars(document.URL)["lang"]
-        console.log(1, urlLang)
         if (urlLang) {
             var lang = urlLang.split(",")[0]
-            console.log(2, lang)
             $(".languageWrap .languageSelectDown > div").removeClass("on")
             let obj = $(".languageWrap .languageSelectDown > div")
             for(var i=0; i<obj.length;i++) {
@@ -24,6 +22,15 @@ $(document).ready(function(){
             var href = document.URL.replace(urlLang, lang)
             history.replaceState(null, null, href)
             sampleCodeSingleLangInit(lang)
+        } else {
+            if (document.URL.indexOf("?") > 0) {
+                var href = document.URL + "&lang=swift"
+                history.replaceState(null, null, href)
+            } else {
+                var href = document.URL + "?lang=swift"
+                history.replaceState(null, null, href)
+            }
+            sampleCodeSingleLangInit('swift')
         }
     }
 
@@ -319,7 +326,7 @@ $(document).ready(function(){
         sampleCodeSingleLangInit(value)
         var urlLang = getUrlVars(document.URL)["lang"]
         if (urlLang) {
-            var href = document.URL.replace(urlLang, value)
+            var href = document.URL.replace('lang=' + urlLang, 'lang=' + value)
             history.replaceState(null, null, href)
         }
         e.stopPropagation()
