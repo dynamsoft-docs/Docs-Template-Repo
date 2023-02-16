@@ -205,13 +205,17 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
 
     // mobile - ios 页面
     var urlLang = getUrlVars(hrefVal)["lang"]
-    if ($(".languageWrap").length > 0 && getCurrentUrlLang(hrefVal, true) == "objectivec-swift") {
+    if ($(".languageWrap.multiProgrammingLanguage").length > 0 && getCurrentUrlLang(hrefVal, true) == "objectivec-swift") {
         var curLang = $(".languageWrap .languageSelectDown > div.on").data("value")
         if (urlLang) {
-            hrefVal = hrefVal.replace(urlLang, curLang)
+            hrefVal = hrefVal.replace('lang=' + urlLang, 'lang=' + curLang)
         } else {
             if (hrefVal.indexOf("?")>0){
-                hrefVal = hrefVal + '&lang=' + curLang
+                let tempHref = hrefVal.split("?")
+                hrefVal = tempHref[0] + '?lang=' + curLang + '&' + tempHref[1]
+            } else if (hrefVal.indexOf("#") > 0) {
+                let tempHref = hrefVal.split("#")
+                hrefVal = tempHref[0] + '?lang=' + curLang + '#' + tempHref[1]
             } else {
                 hrefVal = hrefVal + '?lang=' + curLang
             }
@@ -286,6 +290,59 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
 
         if (inputVer == "latest" || inputVer == undefined || otherVersions.length == 0 || redirectUrl) {
             document.title = $(data)[1].innerText
+
+            // init language select container
+            let languageWrapItem = $(data).find(".languageWrap")
+            if (languageWrapItem && languageWrapItem.length > 0) {
+                languageWrapItem = languageWrapItem[0]
+                let className = languageWrapItem.className.trim()
+                let originClassName = $(".languageWrap").attr('class').trim()
+                if (className != originClassName) {
+                    $(".languageWrap").attr("class", className)
+                    // mobile - ios 页面
+                    var urlLang = getUrlVars(paramLink)["lang"]
+                    if ($(".languageWrap.multiProgrammingLanguage").length > 0 && getCurrentUrlLang(paramLink, true) == "objectivec-swift") {
+                        var curLang = $(".languageWrap .languageSelectDown > div.on").data("value")
+                        if (!$(".languageWrap").hasClass("enableLanguageSelection")) {
+                            let singleLang = ""
+                            if ($(data).find(".language-swift").length > 0) {
+                                singleLang = "swift"
+                            } else {
+                                singleLang = "objc"
+                            }
+                            if (singleLang != curLang) {
+                                $(".languageWrap .languageSelectDown > div").removeClass("on")
+                                let obj = $(".languageWrap .languageSelectDown > div")
+                                for(var i=0; i<obj.length;i++) {
+                                    if ($(obj[i]).data("value") == singleLang) {
+                                        $(obj[i]).addClass("on")
+                                        $(".languageWrap .languageChange .chosenLanguage").text($(obj[i]).text())
+                                    }
+                                }
+                            }
+                            curLang = singleLang
+                        }
+                        if (urlLang) {
+                            paramLink = paramLink.replace('lang=' + urlLang, 'lang=' + curLang)
+                        } else {
+                            if (paramLink.indexOf("?")>0){
+                                let tempHref = paramLink.split("?")
+                                paramLink = tempHref[0] + '?lang=' + curLang + '&' + tempHref[1]
+                            } else if (paramLink.indexOf("#") > 0) {
+                                let tempHref = paramLink.split("#")
+                                paramLink = tempHref[0] + '?lang=' + curLang + '#' + tempHref[1]
+                            } else {
+                                paramLink = paramLink + '?lang=' + curLang
+                            }
+                        }
+                    } else {
+                        if (urlLang) {
+                            paramLink = paramLink.replace('lang=' + urlLang, '')
+                        }
+                    }
+                }
+            }
+
             !onlyLoadContent&&history.pushState(null, null, paramLink)
 
             // remove old active link and li style
@@ -306,7 +363,7 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
             if (oldLang != newLang) {
                 FilterLangFullTree()
             }
-            
+
             // show article content
             var showRightSideMenu = $("#articleContent").hasClass("showRightSideMenu")
             $("#articleContent").html($(data).find("#articleContent").html()).removeClass("hidden")
