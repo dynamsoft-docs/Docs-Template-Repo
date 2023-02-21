@@ -293,7 +293,7 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
 
             // init language select container
             let languageWrapItem = $(data).find(".languageWrap")
-            if (languageWrapItem && languageWrapItem.length > 0) {
+            if (languageWrapItem && languageWrapItem.length > 0 && $(".languageWrap").length > 0) {
                 languageWrapItem = languageWrapItem[0]
                 let className = languageWrapItem.className.trim()
                 let originClassName = $(".languageWrap").attr('class').trim()
