@@ -6,11 +6,14 @@ $(document).ready(function(){
     }
 
     // mobile - ios 页面
-    if ($(".languageWrap").length > 0 && getCurrentUrlLang(document.URL, true) == "objectivec-swift") {
-        $(".languageWrap").show()
+    if ($(".languageWrap.multiProgrammingLanguage").length > 0 && getCurrentUrlLang(document.URL, true) == "objectivec-swift") {
+        // $(".languageWrap").show()
         var urlLang = getUrlVars(document.URL)["lang"]
         if (urlLang) {
             var lang = urlLang.split(",")[0]
+            if (!$(".languageWrap").hasClass("enableLanguageSelection")) {
+                lang = getSingleLangOfCurrentMobilePage()
+            }
             $(".languageWrap .languageSelectDown > div").removeClass("on")
             let obj = $(".languageWrap .languageSelectDown > div")
             for(var i=0; i<obj.length;i++) {
@@ -19,19 +22,37 @@ $(document).ready(function(){
                     $(".languageWrap .languageChange .chosenLanguage").text($(obj[i]).text())
                 }
             }
-            var href = document.URL.replace(urlLang, lang)
+            var href = document.URL.replace('lang' + urlLang, 'lang' + lang)
             history.replaceState(null, null, href)
             sampleCodeSingleLangInit(lang)
         } else {
+            var curLang = "swift"
+            if (!$(".languageWrap").hasClass("enableLanguageSelection")) {
+                curLang = getSingleLangOfCurrentMobilePage()
+            }
+            $(".languageWrap .languageSelectDown > div").removeClass("on")
+            let obj = $(".languageWrap .languageSelectDown > div")
+            for(var i=0; i<obj.length;i++) {
+                if ($(obj[i]).data("value") == curLang) {
+                    $(obj[i]).addClass("on")
+                    $(".languageWrap .languageChange .chosenLanguage").text($(obj[i]).text())
+                }
+            }
             if (document.URL.indexOf("?") > 0) {
-                var href = document.URL + "&lang=swift"
+                let tempHref = document.URL.split("?")
+                var href = tempHref[0] + "?lang=" + curLang + '&' + tempHref[1]
+                history.replaceState(null, null, href)
+            } else if (document.URL.indexOf("#") > 0) {
+                let tempHref = document.URL.split("#")
+                var href = tempHref[0] + "?lang=" + curLang + '#' + tempHref[1]
                 history.replaceState(null, null, href)
             } else {
-                var href = document.URL + "?lang=swift"
+                var href = document.URL + "?lang=" + curLang
                 history.replaceState(null, null, href)
             }
-            sampleCodeSingleLangInit('swift')
+            sampleCodeSingleLangInit(curLang)
         }
+        
     }
 
     $('.sideBar, #docHead').addClass("hide-md")
@@ -205,7 +226,9 @@ $(document).ready(function(){
     $(document).click(function(){
         $('.otherVersions').hide();
         $('.fullVersionInfo').hide();
-        $(".languageWrap .languageSelectDown").hide()
+        if ($(".languageWrap").length > 0 && $(".languageWrap .languageSelectDown").is(":visible")) {
+            $(".languageWrap .languageSelectDown").hide()
+        }
     })
 
     $('.changeBtn').on('click', function(e) {
@@ -313,12 +336,12 @@ $(document).ready(function(){
         }
     })
 
-    $(".languageWrap .languageChange").on('click', function(e) {
+    $(document).delegate(".languageWrap.enableLanguageSelection .languageChange", 'click', function(e) {
         $(".languageWrap .languageSelectDown").toggle()
         e.stopPropagation()
     })
 
-    $(".languageWrap .languageSelectDown > div").on('click', function(e) {
+    $(document).delegate(".languageWrap.enableLanguageSelection .languageSelectDown > div", 'click', function(e) {
         let value = $(this).data('value')
         $(".languageWrap .languageChange .chosenLanguage").text($(this).text())
         $(".languageWrap .languageSelectDown > div").removeClass("on")
@@ -552,4 +575,14 @@ function formatDate(date) {
     var weekday = weekdayList[newDate.getDay()]
     var month = monthList[newDate.getMonth()]
     return weekday + ', ' + month + ' ' + newDate.getDate() + ', ' + newDate.getFullYear()
+}
+
+function getSingleLangOfCurrentMobilePage() {
+    let singleLang = ""
+    if ($(".language-swift").length > 0) {
+        singleLang = "swift"
+    } else {
+        singleLang = "objc"
+    }
+    return singleLang
 }
