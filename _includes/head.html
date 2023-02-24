@@ -30,7 +30,13 @@
     <meta name="robots" content="noindex">
     {%- endif -%}
 
-    <link href="{{ site.docFullPath }}{{ targetUrl }}" rel="canonical">
+    {%- assign docFullPath = site.docFullPath -%}
+    {%- assign docFullPathLastChar = docFullPath | split:'' | last -%}
+    {%- if docFullPathLastChar contains '/' -%}	
+        {%- assign truncateDocHomePageSize = docFullPath | size | minus:1 -%}
+        {%- assign docFullPath = docFullPath | slice: 0, truncateDocHomePageSize -%}
+    {%- endif -%}
+    <link href="{{ docFullPath }}{{ targetUrl }}" rel="canonical">
     
     <link rel="stylesheet" href="{{ site.assets }}css/dm-style.css?v=b8601a47f85e9c71565aa6c079c8988cd98cc1e7">
 
