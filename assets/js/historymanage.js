@@ -15,26 +15,11 @@ function UrlReplace()
         RedirToGivenVersionPage(ver);
     }
     if (ver == undefined) {
-        if(docUrl.indexOf("?") > 0) {
-            if (docUrl.indexOf('#') >= 0) {
-                var anchorVal = "";
-                var urlAry = docUrl.split("#");
-                anchorVal = "#" + urlAry[1].toLowerCase();
-                window.location.replace(urlAry[0] + "&&ver=latest" + anchorVal);
-            } else {
-                window.location.replace(docUrl + "&&ver=latest");
-            }
-        } else {
-            if (docUrl.indexOf("-v") >= 0) {
-                var docVer = docUrl.split("-v")[1]
-                if (parseInt(docVer[0]) <= 9 && parseInt(docVer[0]) >= 0 && docVer.indexOf('.html') > 0) {
-                    docVer = docVer.split(".html")[0]
-                    window.location.replace(docUrl + "?ver=" + docVer);
-                } else {
-                    window.location.replace(docUrl + "?ver=latest");
-                }
-            } else {
-                window.location.replace(docUrl + "?ver=latest");
+        if (docUrl.indexOf("-v") > 0 && (docUrl.indexOf("-v") < docUrl.indexOf("?") || docUrl.indexOf("?") < 0)) {
+            var docVer = docUrl.split("-v")[1]
+            if (parseInt(docVer[0]) <= 9 && parseInt(docVer[0]) >= 0 && docVer.indexOf('.html') > 0) {
+                docVer = docVer.split(".html")[0]
+                window.location.replace(docUrl + "?ver=" + docVer);
             }
         }
     }
@@ -88,7 +73,6 @@ function RedirToGivenVersionPage(inputVer)
     if (historyList != null)
     {
         var listAry = historyList[0].getElementsByTagName("li");
-
         for (var i = 0; i < listAry.length; i++) {
             var tmpVerText = listAry[i].innerText;
             var tmpVer = null;
@@ -103,15 +87,27 @@ function RedirToGivenVersionPage(inputVer)
                 if (aTag.length > 0) {
                     var exp = new RegExp(/[?]+([^=]+)=/gi)
                     if (exp.exec(aTag[0].href) != null){
-                        window.location.replace(aTag[0].href + "&&ver=" +inputVer+"&&matchVer=true" + changeVer + anchorVal);
+                        if (inputVer == 'latest') {
+                            window.location.replace(aTag[0].href + anchorVal);
+                        } else {
+                            window.location.replace(aTag[0].href + "&&ver=" +inputVer+"&&matchVer=true" + changeVer + anchorVal);
+                        }
                         return;
                     }
                     else{
                     	if (getUrlVars(document.URL)["src"] != undefined){
-                    		window.location.replace(aTag[0].href + "?src=" + getUrlVars(document.URL)["src"] + "&&ver=" +inputVer+"&&matchVer=true" + changeVer + anchorVal);
+                            if (inputVer == 'latest') {
+                                window.location.replace(aTag[0].href + "?src=" + getUrlVars(document.URL)["src"] + anchorVal);
+                            } else {
+                                window.location.replace(aTag[0].href + "?src=" + getUrlVars(document.URL)["src"] + "&&ver=" +inputVer+"&&matchVer=true" + changeVer + anchorVal);
+                            }
                     	}
                     	else{
-                        	window.location.replace(aTag[0].href + "?ver=" +inputVer+"&&matchVer=true" + changeVer + anchorVal);
+                            if (inputVer == 'latest') {
+                                window.location.replace(aTag[0].href + anchorVal);
+                            } else {
+                                window.location.replace(aTag[0].href + "?ver=" +inputVer+"&&matchVer=true" + changeVer + anchorVal);
+                            }
                     	}
                        return;
                     }
@@ -227,7 +223,9 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
 	} else {
         var verStr = "";
         exp = new RegExp(/[?]+([^=]+)=/gi);
-        verStr = exp.exec(hrefVal) != null ? ("&&ver=" + verText) : ("?ver=" + verText)
+        if (verText != '' && verText != 'latest') {
+            verStr = exp.exec(hrefVal) != null ? ("&&ver=" + verText) : ("?ver=" + verText)
+        }
         var srcString = ""
         if (changeHref.indexOf("/server/programming/c-cplusplus/") > 0 && !getUrlVars(changeHref)["src"]) {
             if (getUrlVars(document.URL)["src"]) {
@@ -639,7 +637,13 @@ function changeVersion (liTag)
 		curUrl = curUrl.substring(0, curUrl.indexOf("#"));
 	}
 	
-	curUrl = curUrl + "?ver=" + ver + "&&cVer=true";
+    if (ver != 'latest') {
+        curUrl = curUrl + "?ver=" + ver + "&&cVer=true";
+    } else {
+        RedirToGivenVersionPage("latest");
+        return
+    }
+	
 	if (srcVal != undefined){
 		curUrl = curUrl + "&&src=" + srcVal;
 	}

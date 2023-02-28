@@ -48,7 +48,7 @@ regenerate: true
 {%- else -%}
 	{%- unless excludeFlag or page.layout == "" or page.layout == "default" -%}
 		<url>
-			<loc>{{ docFullPath }}{{page.url | replace:'/index.html','/' | xml_escape}}?ver=latest</loc> 
+			<loc>{{ docFullPath }}{{page.url | replace:'/index.html','/' | xml_escape}}</loc> 
 		</url>
 	{%- endunless -%}
 {%- endif -%}
