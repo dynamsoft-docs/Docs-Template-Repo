@@ -253,7 +253,7 @@ function findCurLinkOnFullTree(aTag, paramLink, onlyLoadContent=false) {
 function changeVersion (liTag) {
 	var innertext = (liTag.innerText).toLowerCase();
 	var ver = null;
-	if (innertext == "latest version"){
+	if (innertext.indexOf("latest version")>=0){
 		ver = "latest"
 	}
 	else{
