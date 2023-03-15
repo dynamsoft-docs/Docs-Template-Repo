@@ -42,19 +42,11 @@ regenerate: true
 	{%- assign docFullPath = docFullPath | slice: 0, truncateDocHomePageSize -%}
 {%- endif -%}
 
-{%- if docFullPath contains 'web-twain/docs' -%}
-	{%- unless excludeFlag or page.layout == "" or page.layout == "default" -%}
+{%- unless excludeFlag or page.layout == "" or page.layout == "default" -%}
 		<url>
 			<loc>{{ docFullPath }}{{page.url | replace:'/index.html','/' | xml_escape}}</loc> 
 		</url>
-	{%- endunless -%}
-{%- else -%}
-	{%- unless excludeFlag or page.layout == "" or page.layout == "default" -%}
-		<url>
-			<loc>{{ docFullPath }}{{page.url | replace:'/index.html','/' | xml_escape}}?ver=latest</loc> 
-		</url>
-	{%- endunless -%}
-{%- endif -%}
+{%- endunless -%}
 
 {%- endfor -%}
 </urlset>
