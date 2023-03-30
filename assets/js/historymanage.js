@@ -123,8 +123,7 @@ function RedirToGivenVersionPage(inputVer)
             }
         }
     }
- 
-    
+
     if (bestVerIndex >= 0){
         var aTag = $(listAry[bestVerIndex]).children("a");
         if (aTag.length > 0) {
@@ -143,6 +142,10 @@ function RedirToGivenVersionPage(inputVer)
                 return;
             }
         }
+    }
+
+    if (inputVer == "latest") {
+        window.location.replace((curDocUrl.indexOf("?") > 0 ? curDocUrl.split("?")[0] : curDocUrl) + anchorVal);
     }
 
     return;
@@ -636,7 +639,6 @@ function changeVersion (liTag)
 	if (curUrl.indexOf("#") != -1){
 		curUrl = curUrl.substring(0, curUrl.indexOf("#"));
 	}
-	
     if (ver != 'latest') {
         curUrl = curUrl + "?ver=" + ver + "&&cVer=true";
     } else {
