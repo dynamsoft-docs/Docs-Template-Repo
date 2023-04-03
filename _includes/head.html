@@ -69,6 +69,14 @@
         </style>
     {%- endif -%}
 
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.0.2/+esm';
+        mermaid.initialize({ startOnLoad: false });
+        await mermaid.run({
+          querySelector: '.language-mermaid',
+        });
+    </script>
+
     <script type="text/javascript" src="{{ site.assets }}js/jquery-3.5.0.min.js"></script>
     <script type="text/javascript" src="{{ site.assets }}js/bootstrap.min.js"></script>
     <script type="text/javascript" src="{{ site.assets }}js/ds-jquery-bs.min.js"></script>
