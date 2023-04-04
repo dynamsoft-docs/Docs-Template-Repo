@@ -478,6 +478,10 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
                 })();
             }
 
+            myMermaid.run({
+                querySelector: '.language-mermaid',
+            });
+
             // file tree
             if ($(".filetree h3").length > 0) {
                 if ($(window).outerWidth() > 1680) {

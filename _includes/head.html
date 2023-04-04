@@ -69,12 +69,17 @@
         </style>
     {%- endif -%}
 
+    <script>
+        var myMermaid = null
+    </script>
+
     <script type="module">
-        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.0.2/+esm';
-        mermaid.initialize({ startOnLoad: false });
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: false },);
         await mermaid.run({
-          querySelector: '.language-mermaid',
+            querySelector: '.language-mermaid'
         });
+        myMermaid = mermaid
     </script>
 
     <script type="text/javascript" src="{{ site.assets }}js/jquery-3.5.0.min.js"></script>
