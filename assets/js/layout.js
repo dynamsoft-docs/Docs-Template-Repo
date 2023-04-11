@@ -1,5 +1,8 @@
+var currentCountry = null;
 $(document).ready(function(){ 
     init();
+    getLocation();
+    mutationObserverFunc();
     
     if ($(".headCounter").hasClass("noTitleIndex")) {
         $("#AutoGenerateSidebar").addClass("noTitleIndex")
@@ -585,4 +588,40 @@ function getSingleLangOfCurrentMobilePage() {
         singleLang = "objc"
     }
     return singleLang
+}
+
+function getLocation() {
+    $.ajax({
+        url: "https://www.dynamsoft.com/api-common/Api/Location/Get",
+        type: "get",
+        success: function (res) {
+            if (res.code == 0) {
+                if (res.data) {
+                    currentCountry = res.data;
+                    if (currentCountry && currentCountry.countryCode == 'RU') {
+                        $("#comm100-container").hide()
+                    }
+                }
+            }
+        },
+    });
+}
+
+function mutationObserverFunc() {
+    var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
+    var mo = new MutationObserver(function (records) {
+        records.forEach(function (record) {
+            var obj = record.addedNodes[0]
+            if ($(obj).attr("id") == "comm100-container") {
+                if (currentCountry && currentCountry.countryCode == 'RU') {
+                    $("#comm100-container").hide()
+                }
+            }
+        })
+    });
+
+    mo.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
 }
