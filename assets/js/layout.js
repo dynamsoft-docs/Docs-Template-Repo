@@ -1,5 +1,8 @@
+var currentCountry = null
 $(document).ready(function(){ 
     init();
+    getLocation();
+    mutationObserverFunc();
     // $('h1').append('<p class="subtitle">Last Modified Date: <span id="LastModifiedDate">' + formatDate(document.lastModified) + '</span></p>')
     $('.markdown-body .sample-code-prefix + blockquote > ul > li:first-child').addClass('on')
     $('.markdown-body .sample-code-prefix + blockquote > ol > li:first-child').addClass('on')
@@ -404,4 +407,41 @@ function formatDate(date) {
     var weekday = weekdayList[newDate.getDay()]
     var month = monthList[newDate.getMonth()]
     return weekday + ', ' + month + ' ' + newDate.getDate() + ', ' + newDate.getFullYear()
+}
+
+
+function getLocation() {
+    $.ajax({
+        url: "https://www.dynamsoft.com/api-common/Api/Location/Get",
+        type: "get",
+        success: function (res) {
+            if (res.code == 0) {
+                if (res.data) {
+                    currentCountry = res.data;
+                    if (currentCountry && currentCountry.countryCode == 'RU') {
+                        $("#comm100-container").hide()
+                    }
+                }
+            }
+        },
+    });
+}
+
+function mutationObserverFunc() {
+    var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
+    var mo = new MutationObserver(function (records) {
+        records.forEach(function (record) {
+            var obj = record.addedNodes[0]
+            if ($(obj).attr("id") == "comm100-container") {
+                if (currentCountry && currentCountry.countryCode == 'RU') {
+                    $("#comm100-container").hide()
+                }
+            }
+        })
+    });
+
+    mo.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
 }
