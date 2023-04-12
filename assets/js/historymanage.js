@@ -137,11 +137,19 @@ function RedirToGivenVersionPage(inputVer)
                 return;
             }
             else{
-                if (getUrlVars(document.URL)["src"] != undefined){
-                    window.location.replace(aTag[0].href + "?src="+ getUrlVars(document.URL)["src"] + "&&ver=" +inputVer+"&&matchVer=true"+ changeVer + anchorVal);
+                var srcVal = getUrlVars(document.URL)["src"]
+                var langVar = getUrlVars(document.URL)["lang"]
+                var redirectUrl = aTag[0].href
+                if (srcVal != undefined){
+                    redirectUrl = redirectUrl + "?src="+ srcVal
                 }
-                else{
-                    window.location.replace(aTag[0].href + "?ver=" +inputVer+"&&matchVer=true"+ changeVer + anchorVal);
+                if (langVar != undefined) {
+                    redirectUrl = srcVal != undefined ? (redirectUrl + "&lang="+ langVal) : (redirectUrl + "?lang="+ langVal)
+                }
+                if(redirectUrl.indexOf("?") > 0) {
+                    window.location.replace(redirectUrl + "&&ver=" +inputVer+"&&matchVer=true"+ changeVer + anchorVal);
+                } else {
+                    window.location.replace(redirectUrl + "?ver=" +inputVer+"&&matchVer=true"+ changeVer + anchorVal);
                 }
                 return;
             }
@@ -149,7 +157,18 @@ function RedirToGivenVersionPage(inputVer)
     }
 
     if (inputVer == "latest") {
-        window.location.replace((curDocUrl.indexOf("?") > 0 ? curDocUrl.split("?")[0] : curDocUrl) + anchorVal);
+        var srcVal = getUrlVars(curDocUrl)["src"]
+        var langVar = getUrlVars(curDocUrl)["lang"]
+        var redirectUrl = curDocUrl.indexOf("?") > 0 ? curDocUrl.split("?")[0] : curDocUrl
+        if (srcVal != undefined) {
+            redirectUrl = redirectUrl + '?src='+ srcVal
+        }
+
+        if (langVal != undefined) {
+            redirectUrl = srcVal != undefined ? (redirectUrl + '&lang=' + langVal) : (redirectUrl + '?lang=' + langVal)
+        }
+
+        window.location.replace(redirectUrl + anchorVal);
     }
 
     return;
