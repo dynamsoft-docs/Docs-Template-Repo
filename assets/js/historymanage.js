@@ -95,20 +95,24 @@ function RedirToGivenVersionPage(inputVer)
                         return;
                     }
                     else{
-                    	if (getUrlVars(document.URL)["src"] != undefined){
-                            if (inputVer == 'latest') {
-                                window.location.replace(aTag[0].href + "?src=" + getUrlVars(document.URL)["src"] + anchorVal);
-                            } else {
-                                window.location.replace(aTag[0].href + "?src=" + getUrlVars(document.URL)["src"] + "&&ver=" +inputVer+"&&matchVer=true" + changeVer + anchorVal);
-                            }
+                        var srcVal = getUrlVars(document.URL)["src"]
+                        var langVal = getUrlVars(document.URL)["lang"]
+                        var redirectUrl = aTag[0].href
+                    	if (srcVal != undefined){
+                            redirectUrl = redirectUrl + '?src=' + srcVal
                     	}
-                    	else{
-                            if (inputVer == 'latest') {
-                                window.location.replace(aTag[0].href + anchorVal);
+                        if (langVal != undefined) {
+                            redirectUrl = srcVal != undefined ? (redirectUrl + '&lang=' + langVal) : (redirectUrl + '?lang=' + langVal)
+                        }
+                        if (inputVer == 'latest') {
+                            window.location.replace(redirectUrl + anchorVal)
+                        } else {
+                            if (redirectUrl.indexOf("?") > 0) {
+                                window.location.replace(redirectUrl + "&ver=" +inputVer+"&&matchVer=true" + changeVer + anchorVal)
                             } else {
-                                window.location.replace(aTag[0].href + "?ver=" +inputVer+"&&matchVer=true" + changeVer + anchorVal);
+                                window.location.replace(redirectUrl + "?ver=" +inputVer+"&&matchVer=true" + changeVer + anchorVal);
                             }
-                    	}
+                        }
                        return;
                     }
                 }
@@ -632,6 +636,7 @@ function changeVersion (liTag)
 	}
 	var curUrl = document.URL;
 	var srcVal = getUrlVars(curUrl)["src"];
+    var langVar = getUrlVars(curUrl)["lang"];
 	var anchorVar = undefined;
 	if (curUrl.indexOf("#") != -1){
 		anchorVar = (curUrl.split("#")).pop();
@@ -653,6 +658,9 @@ function changeVersion (liTag)
 	if (srcVal != undefined){
 		curUrl = curUrl + "&&src=" + srcVal;
 	}
+    if (langVar != undefined) {
+        curUrl = curUrl + "&&lang=" + langVar;
+    }
 	if(anchorVar != undefined){
 		curUrl = curUrl + "#" + anchorVar;
 	}
