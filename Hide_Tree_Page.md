@@ -2,6 +2,12 @@
 layout: tree-layout
 ---
 
+{%- if site.firstLevelUrl == '/document-normalizer/docs/server' -%}
+    <div id="docsNavBar">
+        {%- include ddnNav.html -%}
+    </div>
+{%- endif -%}
+
 {%- if site.useVersionTree -%}
     <div id="version_tree_list">
         {%- if site.edition -%}

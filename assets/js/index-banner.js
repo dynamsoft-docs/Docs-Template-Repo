@@ -175,6 +175,14 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
             if (completeTag && completeTag.length > 0) {
                 clearInterval(versionListInterval);
 
+                // Start Nav change
+                // if page is dvc but used in ddn or other docs, need to change navbar
+                // the nav bar in the (DDN or other docs's) Hide_Tree_Page.html file
+                var navBar = $('#sideBarIframe').contents().find('#docsNavBar');
+                $(".productMenu").parent().html($(navBar[0]).html())
+                // End Nav Change
+                
+                // Start Version Tree
                 var version_tree_list = null
                 var curPageVersion = verArray[0];
                 curPageVersion = curPageVersion == 'latest' || curPageVersion == null ? 'latest_version' : curPageVersion;
@@ -287,6 +295,7 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                         }
                     }
                 }
+                // End Version Tree
             }
             
         }, 100)

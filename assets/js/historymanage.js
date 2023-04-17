@@ -247,8 +247,10 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
     }
     var exp = new RegExp(/[?&]ver=[^&^#]+/gi);
 	if (exp.exec(hrefVal) != null) {
-        if (hrefVal.indexOf(currentDocDomain) < 0 && hrefVal.indexOf(document.location.host) >= 0 && hrefVal.indexOf("/docs/") > 0) {
+        if (hrefVal.indexOf(currentDocDomain) < 0 && hrefVal.indexOf(document.location.host) >= 0 && hrefVal.indexOf("/docs/") > 0 && !getUrlVars(document.URL)["product"]) {
             changeHref = hrefVal + '?product=' + getCurrentUrlProductName()
+        } else if (hrefVal.indexOf(currentDocDomain) >= 0 && getUrlVars(document.URL)["product"]) {
+            changeHref = hrefVal + '?product=' + getUrlVars(document.URL)["product"]
         } else {
             changeHref = hrefVal
         }
@@ -268,7 +270,7 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
         }
         
         var productVar = ""
-        if (hrefVal.indexOf(currentDocDomain) < 0 && hrefVal.indexOf(document.location.host) >= 0 && hrefVal.indexOf("/docs/") > 0) {
+        if (hrefVal.indexOf(currentDocDomain) < 0 && hrefVal.indexOf(document.location.host) >= 0 && hrefVal.indexOf("/docs/") > 0 && !getUrlVars(document.URL)["product"]) {
             productVar = verStr == '' && srcString == "" ? '?product=' + getCurrentUrlProductName() : '&product=' + getCurrentUrlProductName()
         } else if (hrefVal.indexOf(currentDocDomain) >= 0 && getUrlVars(document.URL)["product"]) {
             productVar = verStr == '' && srcString == "" ? '?product=' + getUrlVars(document.URL)["product"] : '&product=' + getUrlVars(document.URL)["product"]
