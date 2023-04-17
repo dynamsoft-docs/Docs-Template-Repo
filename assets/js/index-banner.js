@@ -156,11 +156,18 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
     }
     else {
         if (pageUrl.indexOf("/docs/core/") > 0 && getUrlVars(pageUrl)["lang"]) {
-            var sideBarIframeSrc = getSideBarIframeSrc(getUrlVars(pageUrl)["lang"])
+            var sideBarIframeSrc = getSideBarIframeSrc(pageUrl, getUrlVars(pageUrl)["lang"])
             if (sideBarIframeSrc) {
                 $("#sideBarIframe").attr('src', sideBarIframeSrc)
                 needFilterLangTree = true
             } 
+        }
+        if (pageUrl.indexOf("/capture-vision/docs/") > 0 && getUrlVars(pageUrl)["product"]) {
+            var sideBarIframeSrc = getSideBarIframeSrc(pageUrl, null, getUrlVars(pageUrl)["product"])
+            if (sideBarIframeSrc) {
+                $("#sideBarIframe").attr('src', sideBarIframeSrc)
+                needFilterLangTree = true
+            }
         }
         var versionListInterval = setInterval(function() {
             // console.log("waiting...")
@@ -600,7 +607,6 @@ function initCrumbs() {
 }
 
 function FilterLangFullTree(needFilterLang=false) {
-    console.log(123, needFilterLang)
     var curUrl = document.URL
     if (curUrl.indexOf("/docs/server/") > 0 || curUrl.indexOf("/docs/mobile/") > 0 || needFilterLang) {
         var lang = getCurrentUrlLang(curUrl, needFilterLang);
@@ -658,16 +664,22 @@ function getCurrentUrlLang(url, needFilterLang=false) {
     }
 }
 
-function getSideBarIframeSrc(lang) {
-    lang = lang.toLowerCase().trim().split(",")[0]
-    if (['javascript', 'js'].indexOf(lang) >= 0) {
-        return '/barcode-reader/docs/web/Hide_Tree_Page.html'
-    }
-    if (['android', 'objective-c', 'objc', 'swift'].indexOf(lang) >= 0) {
-        return '/barcode-reader/docs/mobile/Hide_Tree_Page.html'
-    }
-    if (['c', 'cpp', 'c++', 'csharp', 'dotnet', 'java', 'python'].indexOf(lang) >= 0) {
-        return '/barcode-reader/docs/server/Hide_Tree_Page.html'
+function getSideBarIframeSrc(pageUrl, lang, product=null) {
+    if (lang) {
+        lang = lang.toLowerCase().trim().split(",")[0]
+        if (['javascript', 'js'].indexOf(lang) >= 0) {
+            return '/barcode-reader/docs/web/Hide_Tree_Page.html'
+        }
+        if (['android', 'objective-c', 'objc', 'swift'].indexOf(lang) >= 0) {
+            return '/barcode-reader/docs/mobile/Hide_Tree_Page.html'
+        }
+        if (['c', 'cpp', 'c++', 'csharp', 'dotnet', 'java', 'python'].indexOf(lang) >= 0) {
+            return '/barcode-reader/docs/server/Hide_Tree_Page.html'
+        }
+    } else {
+        if (product == 'ddn' && pageUrl.indexOf('/docs/server/') > 0) {
+            return '/document-normalizer/docs/server/Hide_Tree_Page.html'
+        }
     }
     return null
 }

@@ -220,12 +220,14 @@ function GetVersionDiff(inputVer, compareVer)
 function addParam (aTag, verText, fromSourse=null, needh3=false)
 {
     var hrefVal = aTag.href;
-    var changeHref = hrefVal
+    var changeHref = hrefVal;
+    var productName = getCurrentUrlProductName()
+    var currentDocDomain = document.URL.split("/docs/")[0] + '/docs/';
 
     if(hrefVal == "")
         return;
 
-    // mobile - ios 页面
+    // mobile - ios 页面 - swift&objc 语言切换
     var urlLang = getUrlVars(hrefVal)["lang"]
     if ($(".languageWrap.multiProgrammingLanguage").length > 0 && getCurrentUrlLang(hrefVal, true) == "objectivec-swift") {
         var curLang = $(".languageWrap .languageSelectDown > div.on").data("value")
@@ -245,7 +247,11 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
     }
     var exp = new RegExp(/[?&]ver=[^&^#]+/gi);
 	if (exp.exec(hrefVal) != null) {
-        changeHref = hrefVal
+        if (hrefVal.indexOf(currentDocDomain) < 0 && hrefVal.indexOf(document.location.host) >= 0 && hrefVal.indexOf("/docs/") > 0) {
+            changeHref = hrefVal + '?product=' + getCurrentUrlProductName()
+        } else {
+            changeHref = hrefVal
+        }
 	} else {
         var verStr = "";
         exp = new RegExp(/[?]+([^=]+)=/gi);
@@ -255,28 +261,34 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
         var srcString = ""
         if (changeHref.indexOf("/server/programming/c-cplusplus/") > 0 && !getUrlVars(changeHref)["src"]) {
             if (getUrlVars(document.URL)["src"]) {
-                srcString = "&&src=" + getUrlVars(document.URL)["src"]
+                srcString = verStr == '' ? "?src=" + getUrlVars(document.URL)["src"] : "&&src=" + getUrlVars(document.URL)["src"]
             } else {
-                srcString = "&&src="+getCurrentUrlLang(document.URL)
+                srcString = verStr == '' ? "?src=" + getCurrentUrlLang(document.URL) : "&&src=" + getCurrentUrlLang(document.URL)
             }
         }
         
+        var productVar = ""
+        if (hrefVal.indexOf(currentDocDomain) < 0 && hrefVal.indexOf(document.location.host) >= 0 && hrefVal.indexOf("/docs/") > 0) {
+            productVar = verStr == '' && srcString == "" ? '?product=' + getCurrentUrlProductName() : '&product=' + getCurrentUrlProductName()
+        } else if (hrefVal.indexOf(currentDocDomain) >= 0 && getUrlVars(document.URL)["product"]) {
+            productVar = verStr == '' && srcString == "" ? '?product=' + getUrlVars(document.URL)["product"] : '&product=' + getUrlVars(document.URL)["product"]
+        }
 
         if (hrefVal.indexOf("#") != -1) {
             var urlAry = hrefVal.split("#");
             if (urlAry.length == 2){
-                changeHref = urlAry[0]+verStr+srcString+"#"+urlAry[1]
+                changeHref = urlAry[0]+verStr+srcString+productVar+"#"+urlAry[1]
             }
-        }
-        else{
-            changeHref = hrefVal+verStr+srcString
+        } else {
+            changeHref = hrefVal+verStr+srcString+productVar
         }
     }
+
     
     // && (verText == "latest" || verText == undefined)
 	if (fromSourse == "sidebar") {
-        var currentDocDomain = document.URL.split("/docs/")[0] + '/docs/';
-        if (aTag.href.indexOf(currentDocDomain) < 0) {
+        var currentHost = document.location.host 
+        if (aTag.href.indexOf("/docs/") <= 0 || aTag.href.indexOf(currentHost) < 0) {
             window.location.href = aTag.href;
             return;
         }
@@ -297,7 +309,6 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
             window.location.href = changeHref;
         }
     }
-
 	return;
 }
 
@@ -750,6 +761,22 @@ function initHistoryVersionList() {
         if (edition && edition != "" && edition.split('_').indexOf(lang) < 0) {
             $(obj[i]).addClass("hideLi").hide()
         }
+    }
+}
+
+function getCurrentUrlProductName() {
+    var currentPath = document.location.pathname
+    currentPath = currentPath.slice(1, currentPath.length)
+    var productParam = currentPath.split('/')[0]
+    switch (productParam) {
+        case 'web-twain': return 'dwt';
+        case 'barcode-reader': return 'dbr';
+        case 'label-recognition': return 'dlr';
+        case 'camera-enhancer': return 'dce';
+        case 'code-parser': return 'dcp';
+        case 'document-normalizer': return 'ddn';
+        case 'capture-vision': return 'dcv'
+        default: return '';
     }
 }
 
