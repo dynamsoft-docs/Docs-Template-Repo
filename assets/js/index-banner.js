@@ -162,7 +162,7 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                 needFilterLangTree = true
             } 
         }
-        if (pageUrl.indexOf("/capture-vision/docs/") > 0 && getUrlVars(pageUrl)["product"]) {
+        if (getUrlVars(pageUrl)["product"]) {
             var sideBarIframeSrc = getSideBarIframeSrc(pageUrl, null, getUrlVars(pageUrl)["product"])
             if (sideBarIframeSrc) {
                 $("#sideBarIframe").attr('src', sideBarIframeSrc)
@@ -170,7 +170,6 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
             }
         }
         var versionListInterval = setInterval(function() {
-            // console.log("waiting...")
             var completeTag = $('#sideBarIframe').contents().find('#complete_loading_tree');
             if (completeTag && completeTag.length > 0) {
                 clearInterval(versionListInterval);
@@ -178,8 +177,10 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                 // Start Nav change
                 // if page is dvc but used in ddn or other docs, need to change navbar
                 // the nav bar in the (DDN or other docs's) Hide_Tree_Page.html file
-                var navBar = $('#sideBarIframe').contents().find('#docsNavBar');
-                $(".productMenu").parent().html($(navBar[0]).html())
+                if (getUrlVars(pageUrl)["product"]) {
+                    var navBar = $('#sideBarIframe').contents().find('#docsNavBar');
+                    $(".productMenu").parent().html($(navBar[0]).html())
+                }
                 // End Nav Change
                 
                 // Start Version Tree
