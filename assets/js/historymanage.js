@@ -222,6 +222,7 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
     var hrefVal = aTag.href;
     var changeHref = hrefVal;
     var productName = getCurrentUrlProductName()
+    var repoType = getCurrentUrlRepoType(document.URL)
     var currentDocDomain = document.URL.split("/docs/")[0] + '/docs/';
 
     if(hrefVal == "")
@@ -247,13 +248,22 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
     }
     var exp = new RegExp(/[?&]ver=[^&^#]+/gi);
 	if (exp.exec(hrefVal) != null) {
+        // different docs, different repo
+        var productVar = ""
         if (hrefVal.indexOf(currentDocDomain) < 0 && hrefVal.indexOf(document.location.host) >= 0 && hrefVal.indexOf("/docs/") > 0 && !getUrlVars(document.URL)["product"]) {
-            changeHref = hrefVal + '?product=' + getCurrentUrlProductName()
+            productVar = '?product=' + productName + '&repoType=' + repoType
         } else if (hrefVal.indexOf(currentDocDomain) >= 0 && getUrlVars(document.URL)["product"]) {
-            changeHref = hrefVal + '?product=' + getUrlVars(document.URL)["product"]
-        } else {
-            changeHref = hrefVal
+            productVar = '?product=' + getUrlVars(document.URL)["product"] + '&repoType=' + repoType
         }
+        // same docs, different repo
+        var repoTypeVar = ""
+        if (hrefVal.indexOf(currentDocDomain) >= 0 && !getUrlVars(document.URL)["product"]) {
+            if (getCurrentUrlRepoType(hrefVal) != repoType) {
+                repoTypeVar = '?repoType=' + repoType
+            }
+        }
+
+        changeHref = hrefVal + productVar + repoTypeVar
 	} else {
         var verStr = "";
         exp = new RegExp(/[?]+([^=]+)=/gi);
@@ -269,11 +279,20 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
             }
         }
         
+        // different docs, different repo
         var productVar = ""
         if (hrefVal.indexOf(currentDocDomain) < 0 && hrefVal.indexOf(document.location.host) >= 0 && hrefVal.indexOf("/docs/") > 0 && !getUrlVars(document.URL)["product"]) {
-            productVar = verStr == '' && srcString == "" ? '?product=' + getCurrentUrlProductName() : '&product=' + getCurrentUrlProductName()
+            productVar = verStr == '' && srcString == "" ? ('?product=' + productName + '&repoType=' + repoType)  : ('&product=' + productName + '&repoType=' + repoType)
         } else if (hrefVal.indexOf(currentDocDomain) >= 0 && getUrlVars(document.URL)["product"]) {
-            productVar = verStr == '' && srcString == "" ? '?product=' + getUrlVars(document.URL)["product"] : '&product=' + getUrlVars(document.URL)["product"]
+            productVar = verStr == '' && srcString == "" ? ('?product=' + getUrlVars(document.URL)["product"] + '&repoType=' + repoType) : ('&product=' + getUrlVars(document.URL)["product"] + '&repoType=' + repoType)
+        }
+
+        // same docs, different repo
+        var repoTypeVar = ""
+        if (hrefVal.indexOf(currentDocDomain) >= 0 && !getUrlVars(document.URL)["product"]) {
+            if (getCurrentUrlRepoType(hrefVal) != repoType) {
+                repoTypeVar = verStr == '' && srcString == "" ? '?repoType=' + repoType : '&repoType=' + repoType
+            }
         }
 
         if (hrefVal.indexOf("#") != -1) {
@@ -782,6 +801,21 @@ function getCurrentUrlProductName() {
     }
 }
 
+function getCurrentUrlRepoType(url) {
+    var currentPath = url
+    if (currentPath.includes("/docs/server/")) {
+        return 'server'
+    }
+    if (currentPath.includes("/docs/core/")) {
+        return 'core'
+    }
+    if (currentPath.includes("/docs/mobile/")) {
+        return 'mobile'
+    }
+    if (currentPath.includes("/docs/web/")) {
+        return 'web'
+    }
+}
 
 window.addEventListener("popstate", function(e) {
     findCurLinkOnFullTree(location, location.href, false, true)

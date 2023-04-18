@@ -162,8 +162,8 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                 needFilterLangTree = true
             } 
         }
-        if (getUrlVars(pageUrl)["product"]) {
-            var sideBarIframeSrc = getSideBarIframeSrc(pageUrl, null, getUrlVars(pageUrl)["product"])
+        if (getUrlVars(pageUrl)["product"] || getUrlVars(pageUrl)["repoType"]) {
+            var sideBarIframeSrc = getSideBarIframeSrc(pageUrl, null, getUrlVars(pageUrl)["product"], getUrlVars(pageUrl)["repoType"])
             if (sideBarIframeSrc) {
                 $("#sideBarIframe").attr('src', sideBarIframeSrc)
                 needFilterLangTree = true
@@ -674,7 +674,28 @@ function getCurrentUrlLang(url, needFilterLang=false) {
     }
 }
 
-function getSideBarIframeSrc(pageUrl, lang, product=null) {
+function getDoumentName(product) {
+    switch (product) {
+        case 'dwt': return 'web-twain';
+        case 'dbr': return 'barcode-reader';
+        case 'dlr': return 'label-recognition';
+        case 'dce': return 'camera-enhancer';
+        case 'dcp': return 'code-parser';
+        case 'ddn': return 'document-normalizer';
+        case 'dcv': return 'capture-vision'
+        default: return '';
+    }
+}
+
+function getCurrentUrlProductName() {
+    var currentPath = document.location.pathname
+    currentPath = currentPath.slice(1, currentPath.length)
+    var productParam = currentPath.split('/')[0]
+    
+}
+
+
+function getSideBarIframeSrc(pageUrl, lang, product=null, repoType=null) {
     if (lang) {
         lang = lang.toLowerCase().trim().split(",")[0]
         if (['javascript', 'js'].indexOf(lang) >= 0) {
@@ -687,8 +708,9 @@ function getSideBarIframeSrc(pageUrl, lang, product=null) {
             return '/barcode-reader/docs/server/Hide_Tree_Page.html'
         }
     } else {
-        if (product == 'ddn' && pageUrl.indexOf('/docs/server/') > 0) {
-            return '/document-normalizer/docs/server/Hide_Tree_Page.html'
+        if (getDoumentName(product)) {
+            repoType = repoType == null ? 'core' : repoType
+            return '/'+ getDoumentName(product) +'/docs/'+ repoType +'/Hide_Tree_Page.html'
         }
     }
     return null
