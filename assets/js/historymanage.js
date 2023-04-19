@@ -273,25 +273,25 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
         var srcString = ""
         if (changeHref.indexOf("/server/programming/c-cplusplus/") > 0 && !getUrlVars(changeHref)["src"]) {
             if (getUrlVars(document.URL)["src"]) {
-                srcString = verStr == '' ? "?src=" + getUrlVars(document.URL)["src"] : "&&src=" + getUrlVars(document.URL)["src"]
+                srcString = exp.exec(hrefVal) == null && verStr == '' ? "?src=" + getUrlVars(document.URL)["src"] : "&&src=" + getUrlVars(document.URL)["src"]
             } else {
-                srcString = verStr == '' ? "?src=" + getCurrentUrlLang(document.URL) : "&&src=" + getCurrentUrlLang(document.URL)
+                srcString = exp.exec(hrefVal) == null && verStr == '' ? "?src=" + getCurrentUrlLang(document.URL) : "&&src=" + getCurrentUrlLang(document.URL)
             }
         }
-        
+
         // different docs, different repo
         var productVar = ""
         if (hrefVal.indexOf(currentDocDomain) < 0 && hrefVal.indexOf(document.location.host) >= 0 && hrefVal.indexOf("/docs/") > 0 && !getUrlVars(document.URL)["product"]) {
-            productVar = verStr == '' && srcString == "" ? ('?product=' + productName + '&repoType=' + repoType)  : ('&product=' + productName + '&repoType=' + repoType)
+            productVar = exp.exec(hrefVal) == null && verStr == '' && srcString == "" ? ('?product=' + productName + '&repoType=' + repoType)  : ('&product=' + productName + '&repoType=' + repoType)
         } else if (hrefVal.indexOf(currentDocDomain) >= 0 && getUrlVars(document.URL)["product"]) {
-            productVar = verStr == '' && srcString == "" ? ('?product=' + getUrlVars(document.URL)["product"] + '&repoType=' + repoType) : ('&product=' + getUrlVars(document.URL)["product"] + '&repoType=' + repoType)
+            productVar = exp.exec(hrefVal) == null && verStr == '' && srcString == "" ? ('?product=' + getUrlVars(document.URL)["product"] + '&repoType=' + repoType) : ('&product=' + getUrlVars(document.URL)["product"] + '&repoType=' + repoType)
         }
 
         // same docs, different repo
         var repoTypeVar = ""
         if (hrefVal.indexOf(currentDocDomain) >= 0 && !getUrlVars(document.URL)["product"]) {
             if (getCurrentUrlRepoType(hrefVal) != repoType) {
-                repoTypeVar = verStr == '' && srcString == "" ? '?repoType=' + repoType : '&repoType=' + repoType
+                repoTypeVar = exp.exec(hrefVal) == null && verStr == '' && srcString == "" ? '?repoType=' + repoType : '&repoType=' + repoType
             }
         }
 
