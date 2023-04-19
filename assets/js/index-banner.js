@@ -617,6 +617,7 @@ function initCrumbs() {
 }
 
 function FilterLangFullTree(needFilterLang=false) {
+    console.log(needFilterLang)
     var curUrl = document.URL
     if (curUrl.indexOf("/docs/server/") > 0 || curUrl.indexOf("/docs/mobile/") > 0 || needFilterLang) {
         var lang = getCurrentUrlLang(curUrl, needFilterLang);
@@ -634,7 +635,7 @@ function FilterLangFullTree(needFilterLang=false) {
     }
 }
 
-function getCurrentUrlLang(url, needFilterLang=false) {
+function getCurrentUrlLang(url, needFilterLang=false, repoType=null) {
     if (url.indexOf("/docs/server/") > 0 || url.indexOf("/docs/mobile/") > 0 || needFilterLang) {
         if (url.indexOf("/c-cplusplus/") > 0) {
             if (getUrlVars(url)["src"]) {
@@ -649,13 +650,21 @@ function getCurrentUrlLang(url, needFilterLang=false) {
             } else {
                 return "c"
             }
-        } else if (getUrlVars(url)["lang"]) {
-            var result = getUrlVars(url)["lang"].toLowerCase().trim().split(",")[0]
+        } else if (getUrlVars(url)["lang"] || getUrlVars(url)["src"]) {
+            var result = ""
+            if (!getUrlVars(url)["lang"]) {
+                result = getUrlVars(url)["src"]
+            } else {
+                result = getUrlVars(url)["lang"].toLowerCase().trim().split(",")[0]
+            }
             if (result == "ios" || result == "objective-c" || result == "objc" || result == "swift") {
                 result = "objectivec-swift"
             }
             if (result == "c++" || result == "cpp") {
                 result = "cplusplus"
+            }
+            if (result == "c") {
+                result = "c"
             }
             if(result == 'csharp') {
                 result = "dotnet"
@@ -693,7 +702,6 @@ function getCurrentUrlProductName() {
     var productParam = currentPath.split('/')[0]
     
 }
-
 
 function getSideBarIframeSrc(pageUrl, lang, product=null, repoType=null) {
     if (lang) {

@@ -311,8 +311,8 @@ $(document).ready(function(){
         e.stopPropagation()
     })
 
-    if($(".markdown-body .sample-code-prefix").length > 0 && getUrlVars(document.URL)["lang"]) {
-        var langs = getUrlVars(document.URL)["lang"].toLowerCase().trim().split(",")
+    if($(".markdown-body .sample-code-prefix").length > 0 && (getUrlVars(document.URL)["lang"] || getUrlVars(document.URL)["src"])) {
+        var langs = getUrlVars(document.URL)["lang"] ? getUrlVars(document.URL)["lang"].toLowerCase().trim().split(",") : getUrlVars(document.URL)["src"].split(",")
         if (langs) {
             if (langs.length == 1) {
                 sampleCodeSingleLangInit(langs[0])

@@ -222,7 +222,7 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
     var hrefVal = aTag.href;
     var changeHref = hrefVal;
     var productName = getCurrentUrlProductName()
-    var repoType = getCurrentUrlRepoType(document.URL)
+    var repoType = getUrlVars(document.URL)["repoType"] || getCurrentUrlRepoType(document.URL)
     var currentDocDomain = document.URL.split("/docs/")[0] + '/docs/';
 
     if(hrefVal == "")
