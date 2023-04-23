@@ -5516,6 +5516,7 @@ a#toTop {
     height: calc(100% - 60px);
     overflow: auto;
     margin: 0;
+    width: 100%;
 }
 
 .docsModal .article .content a:not(.d-btn) {
