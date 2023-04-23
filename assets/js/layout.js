@@ -464,6 +464,18 @@ function getlangText(lang) {
         case 'python':
             langText = 'Python'
             break;
+        case 'xamarin':
+            langText = 'Xamarin'
+            break;
+        case 'react-native':
+            langText = 'React Native'
+            break;
+        case 'flutter':
+            langText = 'Flutter'
+            break;
+        case 'cordova':
+            langText = 'Cordova'
+            break;
         default:
             langText = null
             break;

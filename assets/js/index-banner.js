@@ -617,10 +617,12 @@ function initCrumbs() {
 }
 
 function FilterLangFullTree(needFilterLang=false) {
+    console.log("-------------- Start Filter Lang Full Tree --------------")
     console.log(needFilterLang)
     var curUrl = document.URL
     if (curUrl.indexOf("/docs/server/") > 0 || curUrl.indexOf("/docs/mobile/") > 0 || needFilterLang) {
         var lang = getCurrentUrlLang(curUrl, needFilterLang);
+        console.log(lang)
         var fullTreeLis = $("#fullTreeMenuListContainer > li")
         for(var i=0;i<fullTreeLis.length;i++) {
             var liItemLang = fullTreeLis[i].getAttribute("lang")
@@ -633,6 +635,7 @@ function FilterLangFullTree(needFilterLang=false) {
             }
         }
     }
+    console.log("-------------- End Filter Lang Full Tree --------------")
 }
 
 function getCurrentUrlLang(url, needFilterLang=false, repoType=null) {
@@ -672,7 +675,8 @@ function getCurrentUrlLang(url, needFilterLang=false, repoType=null) {
             return result
         } else {
             var arr = url.indexOf("/docs/server/") > 0 ? url.split("/docs/server/")[1].split("/") : (url.indexOf("/docs/mobile/") > 0 ? url.split("/docs/mobile/")[1].split("/"): '')
-            if (url.indexOf("/docs/mobile/") > 0 && arr[1]!="objectivec-swift" && arr[1]!="android") {
+            console.log(arr)
+            if (url.indexOf("/docs/mobile/") > 0 && ["objectivec-swift", "android", "xamarin", "react-native", "flutter", "cordova"].indexOf(arr[1]) < 0) {
                 return "objectivec-swift"
             } else {
                 return arr[1]
