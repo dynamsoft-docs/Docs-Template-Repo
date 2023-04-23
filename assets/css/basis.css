@@ -5498,7 +5498,7 @@ a#toTop {
 .docsModal .article .title {
     height: 60px;
     line-height: 60px;
-    border-bottom: 1px solid #dddddd;
+    /* border-bottom: 1px solid #dddddd; */
     padding: 0 30px;
     font-size: 20px;
 }
