@@ -341,9 +341,21 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
         return response.text()
     }).then(function(data) {
         var inputVer = getUrlVars(paramLink)["ver"]
+        var dcvVer = null
+        if (getUrlVars(paramLink)["product"]) {
+            dcvVer = getDCVVer(inputVer)
+        }
         var otherVersions = $(data).find(".otherVersions > li")
 
-        if (inputVer == "latest" || inputVer == undefined || otherVersions.length == 0 || redirectUrl) {
+        var needToSearchHistory = false
+        if ((!dcvVer || dcvVer == "latest")&&(inputVer == "latest" || inputVer == undefined || otherVersions.length == 0 || redirectUrl)) {
+            needToSearchHistory = false
+        } else {
+            needToSearchHistory = true
+            inputVer = dcvVer
+        }
+
+        if (!needToSearchHistory) {
             document.title = $(data)[1].innerText
 
             // init language select container
@@ -846,6 +858,40 @@ function showPageContentInModal(fetchUrl) {
 
 function closeDocsModal() {
     $("#docsModal").remove()
+}
+
+function getDCVVer(inputVer) {
+    let product = getUrlVars(document.URL)["product"] ? getUrlVars(document.URL)["product"] : getCurrentUrlProductName()
+    if (!product || product == "") {
+        return "latest"
+    }
+
+    var bestVerIndex = -1;
+    var verDiff = -1;
+    var bestVersion = inputVer;
+
+    var productDCVVersionList = dcvVersionList.filter(function(item) { return item.prodcut == product });
+    var matchSuccess = false
+    for (var i = 0; i < productDCVVersionList.length; i++) {
+        var tmpVer = productDCVVersionList[i].version;
+        if (tmpVer == inputVer) {
+            matchSuccess = true
+            return productDCVVersionList[i].dcvVersion
+        } else {
+            var tmpDiff = GetVersionDiff(inputVer, tmpVer);
+            if (tmpDiff >= 0 && (tmpDiff < verDiff || verDiff < 0)){
+                bestVerIndex = i;
+                verDiff = tmpDiff;
+                bestVersion = tmpVer;
+            }
+        }
+    }
+
+    if (bestVerIndex >= 0 && !matchSuccess) {
+        return productDCVVersionList[bestVerIndex].dcvVersion
+    } else {
+        return "latest"
+    }
 }
 
 window.addEventListener("popstate", function(e) {
