@@ -26,6 +26,18 @@ layout: tree-layout
     </div>
 {%- endif -%}
 
+{%- if site.docFullPath contains '/camera-enhancer/' -%}
+    <div id="docsNavBar">
+        {%- include dceNav.html -%}
+    </div>
+{%- endif -%}
+
+{%- if site.docFullPath contains '/capture-vision/' -%}
+    <div id="docsNavBar">
+        {%- include dcvNav.html -%}
+    </div>
+{%- endif -%}
+
 {%- if site.useVersionTree -%}
     <div id="version_tree_list">
         {%- if site.edition -%}
