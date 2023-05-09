@@ -72,6 +72,10 @@ function GetVersionDiff(inputVer, compareVer)
 
 function addParam (aTag, fromSourse=null, needh3=false)
 {
+    if ($(aTag).hasClass('fullUrl')) {
+        window.location.href = aTag.href;
+        return
+    }
     var hrefVal = aTag.href;
     var changeHref = hrefVal
 
@@ -154,6 +158,10 @@ function RequestNewPage(aTag, paramLink, onlyLoadContent=false) {
         } else {
             $("#AutoGenerateSidebar").removeClass("noTitleIndex")
         }
+
+        // replace edit url link
+        var editMdFileLink = $(data).find("#docHead").find(".iconsBox a")[0].href
+        $("#docHead .iconsBox a").attr("href", editMdFileLink)
 
         // add addParam click function for all a tags in article content
         var articleContentATags = $("#articleContent").find("a")
@@ -245,7 +253,7 @@ function findCurLinkOnFullTree(aTag, paramLink, onlyLoadContent=false) {
 function changeVersion (liTag) {
 	var innertext = (liTag.innerText).toLowerCase();
 	var ver = null;
-	if (innertext == "latest version"){
+	if (innertext.indexOf("latest version")>=0){
 		ver = "latest"
 	}
 	else{

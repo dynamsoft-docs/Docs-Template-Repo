@@ -1,9 +1,65 @@
+var currentCountry = null;
 $(document).ready(function(){ 
     init();
+    getLocation();
+    mutationObserverFunc();
     
     if ($(".headCounter").hasClass("noTitleIndex")) {
         $("#AutoGenerateSidebar").addClass("noTitleIndex")
     }
+
+    
+    // mobile - ios 椤甸潰
+    if ($(".languageWrap.multiProgrammingLanguage").length > 0 && getCurrentUrlLang(document.URL, true) == "objectivec-swift") {
+        // $(".languageWrap").show()
+        var urlLang = getUrlVars(document.URL)["lang"]
+        if (urlLang) {
+            var lang = urlLang.split(",")[0]
+            if (!$(".languageWrap").hasClass("enableLanguageSelection")) {
+                lang = getSingleLangOfCurrentMobilePage()
+            }
+            $(".languageWrap .languageSelectDown > div").removeClass("on")
+            let obj = $(".languageWrap .languageSelectDown > div")
+            for(var i=0; i<obj.length;i++) {
+                if ($(obj[i]).data("value") == lang) {
+                    $(obj[i]).addClass("on")
+                    $(".languageWrap .languageChange .chosenLanguage").text($(obj[i]).text())
+                }
+            }
+            var href = document.URL.replace('lang' + urlLang, 'lang' + lang)
+            history.replaceState(null, null, href)
+            sampleCodeSingleLangInit(lang)
+        } else {
+            var curLang = "swift"
+            if (!$(".languageWrap").hasClass("enableLanguageSelection")) {
+                curLang = getSingleLangOfCurrentMobilePage()
+            }
+            $(".languageWrap .languageSelectDown > div").removeClass("on")
+            let obj = $(".languageWrap .languageSelectDown > div")
+            for(var i=0; i<obj.length;i++) {
+                if ($(obj[i]).data("value") == curLang) {
+                    $(obj[i]).addClass("on")
+                    $(".languageWrap .languageChange .chosenLanguage").text($(obj[i]).text())
+                }
+            }
+            if (document.URL.indexOf("?") > 0) {
+                let tempHref = document.URL.split("?")
+                var href = tempHref[0] + "?lang=" + curLang + '&' + tempHref[1]
+                history.replaceState(null, null, href)
+            } else if (document.URL.indexOf("#") > 0) {
+                let tempHref = document.URL.split("#")
+                var href = tempHref[0] + "?lang=" + curLang + '#' + tempHref[1]
+                history.replaceState(null, null, href)
+            } else {
+                var href = document.URL + "?lang=" + curLang
+                history.replaceState(null, null, href)
+            }
+            sampleCodeSingleLangInit(curLang)
+        }
+        
+    }
+
+    $('.sideBar, #docHead').addClass("hide-md")
 
     $('.markdown-body .sample-code-prefix + blockquote > ul > li:first-child').addClass('on')
     $('.markdown-body .sample-code-prefix + blockquote > ol > li:first-child').addClass('on')
@@ -96,7 +152,9 @@ $(document).ready(function(){
                     $('#docHead').css({'top': '0px'});
                     $('.history').css({'top': '30px'})
                 }
-                $('.sideBar #sideBarCnt').addClass('sidebar-fixed');
+                if ($(window).outerWidth() > 1199) {
+                    $('.sideBar #sideBarCnt').addClass('sidebar-fixed');
+                }
                 $('.rightSideMenu').addClass('rsm-fixed');
             } else {
                 if ($('#footerWrapper').offset().top - $(document).scrollTop() < $(window).height()) {
@@ -154,6 +212,7 @@ $(document).ready(function(){
     }
 
     $('.sideBarIcon').click(function() {
+        $(".sideBar").toggleClass('hide-md');
         $(".sideBar").toggleClass('hide-sm');
         $(".sideBar").toggleClass('hide-xs');
         setTimeout(function() {
@@ -161,9 +220,20 @@ $(document).ready(function(){
         }, 100)
     })
 
+    $('#articleContent').click(function() {
+        if ($(window).outerWidth() < 1200 && $(".sideBar").is(':visible')) {
+            $(".sideBar").toggleClass('hide-md');
+            $(".sideBar").toggleClass('hide-sm');
+            $(".sideBar").toggleClass('hide-xs');
+        }
+    })
+
     $(document).click(function(){
         $('.otherVersions').hide();
         $('.fullVersionInfo').hide();
+        if ($(".languageWrap").length > 0 && $(".languageWrap .languageSelectDown").is(":visible")) {
+            $(".languageWrap .languageSelectDown").hide()
+        }
     })
 
     $('.changeBtn').on('click', function(e) {
@@ -274,6 +344,25 @@ $(document).ready(function(){
         if ((up && scrollTop == 0) || (!up && (scrollTop + height) >= scrollHeight)) {
             ev.preventDefault();
         }
+    })
+
+    $(document).delegate(".languageWrap.enableLanguageSelection .languageChange", 'click', function(e) {
+        $(".languageWrap .languageSelectDown").toggle()
+        e.stopPropagation()
+    })
+
+    $(document).delegate(".languageWrap.enableLanguageSelection .languageSelectDown > div", 'click', function(e) {
+        let value = $(this).data('value')
+        $(".languageWrap .languageChange .chosenLanguage").text($(this).text())
+        $(".languageWrap .languageSelectDown > div").removeClass("on")
+        $(this).addClass('on')
+        sampleCodeSingleLangInit(value)
+        var urlLang = getUrlVars(document.URL)["lang"]
+        if (urlLang) {
+            var href = document.URL.replace('lang=' + urlLang, 'lang=' + value)
+            history.replaceState(null, null, href)
+        }
+        e.stopPropagation()
     })
 })
 
@@ -410,7 +499,7 @@ function init() {
     $('.mainPage').css({'max-height': 'calc(100vh - '+(menuHeight + basicFullTreeIncrease) +'px)'});
     $('.rightSideMenu').css({'padding-top': $('#docHead').outerHeight()+'px'});
     $('.docContainer .markdown-body').css({'margin-top': ($('#docHead').outerHeight() + 0) + 'px'});
-    if (breakpoint() == 'lg') {
+    if ($(window).outerWidth() > 1200) {
         $('.history').css({'width': $('#txtSearch').outerWidth() + 'px'});
         $('.history').removeClass('history-absolute');
         if (sd > $('#overall-header').height()) {
@@ -424,7 +513,10 @@ function init() {
             $('.mainPage').css({'max-height': 'calc(100vh - '+(menuHeight + basicFullTreeIncrease -sd) +'px)'});
         }
     } else {
-        $('.history').css({'width': '140px'});
+        if ($(window).outerWidth() > 991) {
+            $('.mainPage').css({'min-height': 'calc(100vh - '+(menuHeight + basicFullTreeIncrease) +'px)'});
+        }
+        $('.history').css({'width': '170px'});
         $('.history').addClass('history-absolute');
     }
     if ($(window).outerWidth() > 1680) {
@@ -493,4 +585,50 @@ function formatDate(date) {
     var weekday = weekdayList[newDate.getDay()]
     var month = monthList[newDate.getMonth()]
     return weekday + ', ' + month + ' ' + newDate.getDate() + ', ' + newDate.getFullYear()
+}
+
+function getSingleLangOfCurrentMobilePage() {
+    let singleLang = ""
+    if ($(".language-swift").length > 0) {
+        singleLang = "swift"
+    } else {
+        singleLang = "objc"
+    }
+    return singleLang
+}
+
+function getLocation() {
+    $.ajax({
+        url: "https://www.dynamsoft.com/api-common/Api/Location/Get",
+        type: "get",
+        success: function (res) {
+            if (res.code == 0) {
+                if (res.data) {
+                    currentCountry = res.data;
+                    if (currentCountry && currentCountry.countryCode == 'RU') {
+                        $("#comm100-container").hide()
+                    }
+                }
+            }
+        },
+    });
+}
+
+function mutationObserverFunc() {
+    var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
+    var mo = new MutationObserver(function (records) {
+        records.forEach(function (record) {
+            var obj = record.addedNodes[0]
+            if ($(obj).attr("id") == "comm100-container") {
+                if (currentCountry && currentCountry.countryCode == 'RU') {
+                    $("#comm100-container").hide()
+                }
+            }
+        })
+    });
+
+    mo.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
 }
