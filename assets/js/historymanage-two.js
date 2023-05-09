@@ -253,7 +253,7 @@ function changeVersion (liTag) {
 	}
 	var curUrl = document.URL;
     var verFileName = "/v" + ver + "/";
-    if (curUrl.indexOf("web-twain/docs-archive/v18.0/") > 0 && GetVersionDiff('17.2.1', ver) < 0) {
+    if (curUrl.indexOf("web-twain/docs-archive/v18.1/") > 0 && GetVersionDiff('17.2.1', ver) < 0) {
         verFileName = '/v17.2.1/';
     }
     
@@ -277,12 +277,12 @@ function changeVersion (liTag) {
 	if(anchorVar != undefined){
 		curUrl = curUrl + "#" + anchorVar;
 	}
-	if (curUrl.indexOf("web-twain/docs-archive/v18.0/") > 0 && ver == "latest") {
-        curUrl = curUrl.replace("/docs-archive/v18.0/", "/docs/")
+	if (curUrl.indexOf("web-twain/docs-archive/v18.1/") > 0 && ver == "latest") {
+        curUrl = curUrl.replace("/docs-archive/v18.1/", "/docs/")
         window.location.href = curUrl
         return
     } else {
-        curUrl = curUrl.replace("/docs-archive/v18.0/", "/docs-archive" + verFileName)
+        curUrl = curUrl.replace("/docs-archive/v18.1/", "/docs-archive" + verFileName)
         window.location.href = curUrl;
 	    return;
     }
