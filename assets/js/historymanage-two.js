@@ -214,6 +214,13 @@ function RequestNewPage(aTag, paramLink, onlyLoadContent=false) {
             let nextSiblings = $(multiPanelListSwitchingItems[i]).find("+ul ~")
             showSelectMultiPanel(nextSiblings, switchIndex)
         }
+
+        $(".multi-panel-switching-prefix + ul > li").on("click", function() {
+            $(this).parent("ul").find("li").removeClass("on")
+            $(this).addClass("on")
+            let nextSiblings = $(this).parent("ul").find("~")
+            showSelectMultiPanel(nextSiblings, $(this).index())
+        })
     
         if($(".markdown-body .sample-code-prefix").length > 0 && getUrlVars(document.URL)["lang"]) {
             var langs = getUrlVars(document.URL)["lang"].toLowerCase().trim().split(",")
