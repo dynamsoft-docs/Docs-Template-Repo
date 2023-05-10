@@ -5508,4 +5508,6 @@ a#toTop {
     border-bottom: 2px solid #fe8e14;
 }
 
-
+.multi-panel-start + p, .multi-panel-start + table, .multi-panel-start + ul {
+    margin-top: 30px
+}
