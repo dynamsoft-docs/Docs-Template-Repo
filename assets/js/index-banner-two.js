@@ -26,6 +26,30 @@ function FullTreeMenuList(generateDocHead, needh3=true) {
       }              
       GenerateContentByHead(needh3);
     }
+    // multi panel switching start
+    let multiPanelListSwitchingItems = $(".multi-panel-switching-prefix")
+    for (let i =0; i < multiPanelListSwitchingItems.length; i++) {
+        let multiPanelSwitchBtns = $(multiPanelListSwitchingItems[i]).find("+ul > li")
+        let hash = location.hash
+        let switchIndex = 0
+        if (hash && hash != "") {
+            for(let j=0; j < multiPanelSwitchBtns.length; j++) {
+                if ($(multiPanelSwitchBtns[j]).find("a").attr("href") == hash) {
+                    switchIndex = j
+                }
+            }
+        }
+        $(multiPanelSwitchBtns[switchIndex]).addClass("on")
+        let nextSiblings = $(multiPanelListSwitchingItems[i]).find("+ul ~")
+        showSelectMultiPanel(nextSiblings, switchIndex)
+    }
+
+    $(".multi-panel-switching-prefix + ul > li").on("click", function() {
+        $(this).parent("ul").find("li").removeClass("on")
+        $(this).addClass("on")
+        let nextSiblings = $(this).parent("ul").find("~")
+        showSelectMultiPanel(nextSiblings, $(this).index())
+    })
   }
 }
 
@@ -160,5 +184,28 @@ function initCrumbs() {
         appendText += '<li><a class="bluelink" href = "https://www.dynamsoft.com/web-twain/docs/faq/">FAQ</a></li>'
       }
       $(crumbul[0]).append(appendText);
+  }
+}
+
+function showSelectMultiPanel(nextSiblings, findItemIndex) {
+  let isFind = false, findItemCount = 0;
+  for(let j = 0; j < nextSiblings.length; j++) {
+      if ($(nextSiblings[j]).hasClass("multi-panel-switching-end")) {
+          break;
+      }
+      if ($(nextSiblings[j]).hasClass("multi-panel-start")) {
+          if (findItemCount == findItemIndex) {
+              isFind = true
+          }
+          findItemCount++
+      }
+      if (isFind && $(nextSiblings[j]).hasClass("multi-panel-end")) {
+          isFind = false
+      }
+      if (isFind) {
+          $(nextSiblings[j]).show()
+      } else {
+          $(nextSiblings[j]).hide()
+      }
   }
 }

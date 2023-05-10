@@ -197,6 +197,23 @@ function RequestNewPage(aTag, paramLink, onlyLoadContent=false) {
                 window.scrollTo(0, sd > $('#overall-header').height() ? $('#overall-header').height() : sd)
             }
         }
+
+        // multi panel switching start
+        let multiPanelListSwitchingItems = $(".multi-panel-switching-prefix")
+        for (let i =0; i < multiPanelListSwitchingItems.length; i++) {
+            let multiPanelSwitchBtns = $(multiPanelListSwitchingItems[i]).find("+ul > li")
+            let switchIndex = 0
+            if (hash && hash != "") {
+                for(let j=0; j < multiPanelSwitchBtns.length; j++) {
+                    if ('#' + $(multiPanelSwitchBtns[j]).find("a").attr("href") == hash) {
+                        switchIndex = j
+                    }
+                }
+            }
+            $(multiPanelSwitchBtns[switchIndex]).addClass("on")
+            let nextSiblings = $(multiPanelListSwitchingItems[i]).find("+ul ~")
+            showSelectMultiPanel(nextSiblings, switchIndex)
+        }
     
         if($(".markdown-body .sample-code-prefix").length > 0 && getUrlVars(document.URL)["lang"]) {
             var langs = getUrlVars(document.URL)["lang"].toLowerCase().trim().split(",")
