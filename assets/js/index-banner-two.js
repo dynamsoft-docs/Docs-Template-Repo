@@ -188,7 +188,7 @@ function initCrumbs() {
 }
 
 function showSelectMultiPanel(nextSiblings, findItemIndex) {
-  let isFind = false, findItemCount = 0;
+  let isFind = false, findItemCount = 0, aTags = [], isFindTag = false, findTagName = 'h2';
   for(let j = 0; j < nextSiblings.length; j++) {
       if ($(nextSiblings[j]).hasClass("multi-panel-switching-end")) {
           break;
@@ -203,9 +203,34 @@ function showSelectMultiPanel(nextSiblings, findItemIndex) {
           isFind = false
       }
       if (isFind) {
+          if($(nextSiblings[j]).is("table")) {
+            let objs = $(nextSiblings[j]).find("a")
+            for(let i = 0; i < objs.length; i++) {
+              aTags.push($(objs[i]).attr("href"))
+            }
+          }
           $(nextSiblings[j]).show()
       } else {
+        let id = nextSiblings[j].id
+        if (aTags.includes('#' + id)) {
+          findTagName = nextSiblings[j].tagName
+          isFindTag = true
+          $(nextSiblings[j]).show()
+        } else if (isFindTag && !$(nextSiblings[j]).is(findTagName)) {
+          $(nextSiblings[j]).show()
+        } else {
+          isFindTag = false
           $(nextSiblings[j]).hide()
+        }
       }
+  }
+  let sidebarList = $("#AutoGenerateSidebar> ul > li")
+  for(let i=0; i < sidebarList.length; i++) {
+    let aTag = $(sidebarList[i]).find("a").attr("href")
+    if (aTags.includes(aTag)) {
+      $(sidebarList[i]).show()
+    } else {
+      $(sidebarList[i]).hide()
+    }
   }
 }
