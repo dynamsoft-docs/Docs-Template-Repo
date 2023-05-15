@@ -687,7 +687,12 @@ function findCurLinkOnFullTree(aTag, paramLink, needh3=false, onlyLoadContent=fa
             
             if ((fullTreeATags[i].offsetParent !== null || ($(fullTreeATags[i]).parent().attr("otherlang") == undefined && $(fullTreeATags[i]).parent().attr("lang"))) && searchHref && searchHref.toLowerCase() == targetHref) {
                 flag = true
-                RequestNewPage(fullTreeATags[i], paramLink, needh3, null, onlyLoadContent)
+                if ($(fullTreeATags[i]).hasClass("refreshLink")) {
+                    $(fullTreeATags[i]).click()
+                } else {
+                    RequestNewPage(fullTreeATags[i], paramLink, needh3, null, onlyLoadContent)
+                }
+                
             } else if (searchHref.toLowerCase() == targetHref && (fullTreeATags[i]).hasClass("refreshLink")) {
                 flag = true
                 $(fullTreeATags[i]).click()
