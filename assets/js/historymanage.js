@@ -662,26 +662,35 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
 }
 
 function findCurLinkOnFullTree(aTag, paramLink, needh3=false, onlyLoadContent=false) {
+    console.log(aTag, paramLink)
     var fullTreeATags = $("#fullTreeMenuListContainer").find("a")
     var targetHref = aTag.href.toLowerCase()
     var curDocUrl = document.URL.toLowerCase()
     targetHref = targetHref.indexOf("?") > 0 ? targetHref.split("?")[0] : (targetHref.indexOf("#") > 0 ? targetHref.split("#")[0] : targetHref) 
     curDocUrl = curDocUrl.indexOf("?") > 0 ? curDocUrl.split("?")[0] : (curDocUrl.indexOf("#") > 0 ? curDocUrl.split("#")[0] : curDocUrl)
-    
+    console.log(targetHref, curDocUrl)
     if (curDocUrl == targetHref && (aTag.href.split("#").length > 1 || document.URL.split("#").length > 1)) {
         var hash = aTag.href.split("#").length > 1 ? aTag.href.split("#")[1].toLowerCase() : null
         window.scrollTo(0, hash && $("#" + hash.toLowerCase()).length > 0 ? $("#" + hash.toLowerCase()).offset().top : 0)
         !onlyLoadContent&&history.pushState(null, null, paramLink)
     } else {
         var flag = false
+        console.log(fullTreeATags)
         for(var i=0; i<fullTreeATags.length; i++) {
             var searchHref = fullTreeATags[i].href
             searchHref = searchHref.indexOf("index.html") > 0 ? searchHref.replace("index.html", "") : searchHref
             targetHref = targetHref.indexOf("index.html") > 0 ? targetHref.replace("index.html", "") : targetHref
             searchHref = searchHref.indexOf("?") > 0 ? searchHref.split("?")[0] : (searchHref.indexOf("#") > 0 ? searchHref.split("#")[0] : searchHref) 
+            if (searchHref == targetHref) {
+                console.log($(fullTreeATags[i]).parent().attr("otherlang") == undefined, $(fullTreeATags[i]).parent().attr("lang"))
+            }
+            
             if ((fullTreeATags[i].offsetParent !== null || ($(fullTreeATags[i]).parent().attr("otherlang") == undefined && $(fullTreeATags[i]).parent().attr("lang"))) && searchHref && searchHref.toLowerCase() == targetHref) {
                 flag = true
                 RequestNewPage(fullTreeATags[i], paramLink, needh3, null, onlyLoadContent)
+            } else if (searchHref.toLowerCase() == targetHref && (fullTreeATags[i]).hasClass("refreshLink")) {
+                flag = true
+                $(fullTreeATags[i]).click()
             }
         }
     
