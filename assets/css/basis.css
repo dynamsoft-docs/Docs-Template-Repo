@@ -5470,7 +5470,6 @@ a#toTop {
     }
 }
 
-
 .docsModal .mask {
     position: fixed;
     top: 0;
@@ -5525,4 +5524,45 @@ a#toTop {
 
 .docsModal .article .content a:not(.d-btn):hover {
     color: #fe8e14!important;
+}
+
+.multi-panel-switching-prefix + ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-bottom: 2px solid #ddd;
+    padding-left: 10px;
+}
+
+.multi-panel-switching-prefix + ul > li {
+    position: relative;
+    top: 2px;
+    list-style: none;
+    display: inline-block;
+    color: #323234;
+    padding: 0 15px;
+    border: 2px solid transparent;
+    border-radius: 0;
+    height: 40px;
+    line-height: 36px;
+    cursor: pointer;
+    font-family: Oswald-Regular;
+    font-size: 18px;
+    transition: all ease-in-out .2s;
+}
+
+.multi-panel-switching-prefix + ul > li a {
+    display: block;
+    color: inherit;
+}
+
+.multi-panel-switching-prefix + ul > li:hover, .multi-panel-switching-prefix + ul > li.on {
+    color: #fe8e14;
+}
+.multi-panel-switching-prefix + ul > li.on {
+    border-bottom: 2px solid #fe8e14;
+}
+
+.multi-panel-start + p, .multi-panel-start + table, .multi-panel-start + ul, .multi-panel-start + blockquote {
+    margin-top: 30px
 }
