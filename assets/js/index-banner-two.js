@@ -203,13 +203,14 @@ function showSelectMultiPanel(nextSiblings, findItemIndex) {
           isFind = false
       }
       if (isFind) {
-          if($(nextSiblings[j]).is("table")) {
-            let objs = $(nextSiblings[j]).find("a")
-            for(let i = 0; i < objs.length; i++) {
-              aTags.push($(objs[i]).attr("href"))
-            }
+        if($(nextSiblings[j]).is("table")) {
+          let objs = $(nextSiblings[j]).find("a")
+          for(let i = 0; i < objs.length; i++) {
+            let id = '#' + $(objs[i]).attr("href").split("#")[1]
+            aTags.push(id)
           }
-          $(nextSiblings[j]).show()
+        }
+        $(nextSiblings[j]).show()
       } else {
         let id = nextSiblings[j].id
         if (aTags.includes('#' + id)) {
