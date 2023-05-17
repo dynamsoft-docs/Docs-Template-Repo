@@ -18,35 +18,41 @@
             {%- for verInfo in validVerInfo -%}
                 {%- assign curVerText = "" -%}
                 {%- assign ver = verInfo.value | downcase | strip -%}
+                {%- assign editions = "" -%}
+                {%- if ver contains '_' -%}
+                    {%- assign arr = ver | split: "_" -%}
+                    {%- assign ver = arr.first -%}
+                    {%- assign editions = ver | remove: arr.first | remove_first: '_' -%}
+                {%- endif -%}
                 {%- if ver == "latest version"-%}
                     {%- assign curVerText = ver | capitalize -%}
                 {%- else -%}
                     {%- assign curVerText = "Version " | append: ver -%}
                 {%- endif -%}
                 {%- if verInfo.child -%}
-                <li class="hasChildLi">
+                <li class="hasChildLi" data-editions="{{editions}}">
                     <div>{{ curVerText }} <i class="icon-arrow"></i></div>
                     <ul>
                         {%- for childVersion in verInfo.child -%}
                             {%- assign curVerText = "" -%}
                             {%- assign c_version = childVersion | downcase | strip -%}
-                            {%- assign editions = "" -%}
+                            {%- assign c_editions = "" -%}
                             {%- if c_version contains '_' -%}
                                 {%- assign arr = childVersion | split: "_" -%}
                                 {%- assign c_version = arr.first -%}
-                                {%- assign editions = childVersion | remove: arr.first | remove_first: '_' -%}
+                                {%- assign c_editions = childVersion | remove: arr.first | remove_first: '_' -%}
                             {%- endif -%}
                             {%- if c_version == "latest version"-%}
                                 {%- assign curVerText = c_version | capitalize -%}
                             {%- else -%}
                                 {%- assign curVerText = "Version " | append: c_version -%}
                             {%- endif -%}
-                            <li onclick="changeVersion(this)" data-editions="{{editions}}">{{ curVerText }}</li>
+                            <li onclick="changeVersion(this)" data-editions="{{c_editions}}">{{ curVerText }}</li>
                         {%- endfor -%}
                     </ul>
                 </li>
                 {%- else -%}
-                <li onclick="changeVersion(this)">{{ curVerText }}</li>
+                <li onclick="changeVersion(this)" data-editions="{{editions}}">{{ curVerText }}</li>
                 {%- endif -%}
             {%- endfor -%}
         {%- else -%}
