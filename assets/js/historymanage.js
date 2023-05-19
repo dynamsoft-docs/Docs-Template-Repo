@@ -680,6 +680,7 @@ function findCurLinkOnFullTree(aTag, paramLink, needh3=false, onlyLoadContent=fa
             searchHref = searchHref.indexOf("?") > 0 ? searchHref.split("?")[0] : (searchHref.indexOf("#") > 0 ? searchHref.split("#")[0] : searchHref) 
             
             if (searchHref && searchHref.toLowerCase() == targetHref) {
+                // item is visible
                 if (fullTreeATags[i].offsetParent !== null) {
                     flag = true
                     if ($(fullTreeATags[i]).hasClass("refreshLink")) {
