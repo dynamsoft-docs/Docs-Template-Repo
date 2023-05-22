@@ -357,7 +357,7 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
             needToSearchHistory = false
         } else {
             needToSearchHistory = true
-            inputVer = dcvVer
+            inputVer = dcvVer ? dcvVer : inputVer
         }
 
         if (!needToSearchHistory) {
