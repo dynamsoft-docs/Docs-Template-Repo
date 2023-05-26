@@ -667,6 +667,7 @@ function findCurLinkOnFullTree(aTag, paramLink, needh3=false, onlyLoadContent=fa
     var curDocUrl = document.URL.toLowerCase()
     targetHref = targetHref.indexOf("?") > 0 ? targetHref.split("?")[0] : (targetHref.indexOf("#") > 0 ? targetHref.split("#")[0] : targetHref) 
     curDocUrl = curDocUrl.indexOf("?") > 0 ? curDocUrl.split("?")[0] : (curDocUrl.indexOf("#") > 0 ? curDocUrl.split("#")[0] : curDocUrl)
+    
     if (curDocUrl == targetHref && (aTag.href.split("#").length > 1 || document.URL.split("#").length > 1)) {
         var hash = aTag.href.split("#").length > 1 ? aTag.href.split("#")[1].toLowerCase() : null
         window.scrollTo(0, hash && $("#" + hash.toLowerCase()).length > 0 ? $("#" + hash.toLowerCase()).offset().top : 0)
@@ -691,7 +692,7 @@ function findCurLinkOnFullTree(aTag, paramLink, needh3=false, onlyLoadContent=fa
                 } else {
                     var objs = $(fullTreeATags[i]).parents("li")
                     for(var j=0; j<objs.length; j++) {
-                        if ($(objs[j]).attr("otherlang") == undefined && $(objs[j]).attr("lang")) {
+                        if ($(objs[j]).attr("otherlang") == undefined && $(objs[j]).attr("lang") || document.URL.indexOf("/docs/web/") > 0) {
                             flag = true
                             if ($(fullTreeATags[i]).hasClass("refreshLink")) {
                                 $(fullTreeATags[i]).click()
@@ -709,7 +710,7 @@ function findCurLinkOnFullTree(aTag, paramLink, needh3=false, onlyLoadContent=fa
         }
         if (!flag) {
             // use modal to display page if not in the menu tree
-            showPageContentInModal(paramLink)
+            // showPageContentInModal(paramLink)
             // window.location.href = paramLink;
         }
     }
