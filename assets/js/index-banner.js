@@ -162,8 +162,8 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                 needFilterLangTree = true
             } 
         }
-        if (getUrlVars(pageUrl)["product"]) {
-            var sideBarIframeSrc = getSideBarIframeSrc(pageUrl, null, getUrlVars(pageUrl)["product"])
+        if (getUrlVars(pageUrl)["product"] || getUrlVars(pageUrl)["repoType"]) {
+            var sideBarIframeSrc = getSideBarIframeSrc(pageUrl, null, getUrlVars(pageUrl)["product"], getUrlVars(pageUrl)["repoType"])
             if (sideBarIframeSrc) {
                 $("#sideBarIframe").attr('src', sideBarIframeSrc)
                 needFilterLangTree = true
@@ -617,9 +617,12 @@ function initCrumbs() {
 }
 
 function FilterLangFullTree(needFilterLang=false) {
+    // console.log("-------------- Start Filter Lang Full Tree --------------")
+    // console.log(needFilterLang)
     var curUrl = document.URL
     if (curUrl.indexOf("/docs/server/") > 0 || curUrl.indexOf("/docs/mobile/") > 0 || needFilterLang) {
         var lang = getCurrentUrlLang(curUrl, needFilterLang);
+        // console.log(lang)
         var fullTreeLis = $("#fullTreeMenuListContainer > li")
         for(var i=0;i<fullTreeLis.length;i++) {
             var liItemLang = fullTreeLis[i].getAttribute("lang")
@@ -632,9 +635,10 @@ function FilterLangFullTree(needFilterLang=false) {
             }
         }
     }
+    // console.log("-------------- End Filter Lang Full Tree --------------")
 }
 
-function getCurrentUrlLang(url, needFilterLang=false) {
+function getCurrentUrlLang(url, needFilterLang=false, repoType=null) {
     if (url.indexOf("/docs/server/") > 0 || url.indexOf("/docs/mobile/") > 0 || needFilterLang) {
         if (url.indexOf("/c-cplusplus/") > 0) {
             if (getUrlVars(url)["src"]) {
@@ -649,13 +653,21 @@ function getCurrentUrlLang(url, needFilterLang=false) {
             } else {
                 return "c"
             }
-        } else if (getUrlVars(url)["lang"]) {
-            var result = getUrlVars(url)["lang"].toLowerCase().trim().split(",")[0]
+        } else if (getUrlVars(url)["lang"] || getUrlVars(url)["src"]) {
+            var result = ""
+            if (!getUrlVars(url)["lang"]) {
+                result = getUrlVars(url)["src"]
+            } else {
+                result = getUrlVars(url)["lang"].toLowerCase().trim().split(",")[0]
+            }
             if (result == "ios" || result == "objective-c" || result == "objc" || result == "swift") {
                 result = "objectivec-swift"
             }
             if (result == "c++" || result == "cpp") {
                 result = "cplusplus"
+            }
+            if (result == "c") {
+                result = "c"
             }
             if(result == 'csharp') {
                 result = "dotnet"
@@ -663,7 +675,7 @@ function getCurrentUrlLang(url, needFilterLang=false) {
             return result
         } else {
             var arr = url.indexOf("/docs/server/") > 0 ? url.split("/docs/server/")[1].split("/") : (url.indexOf("/docs/mobile/") > 0 ? url.split("/docs/mobile/")[1].split("/"): '')
-            if (url.indexOf("/docs/mobile/") > 0 && arr[1]!="objectivec-swift" && arr[1]!="android") {
+            if (url.indexOf("/docs/mobile/") > 0 && ["objectivec-swift", "android", "xamarin", "react-native", "flutter", "cordova"].indexOf(arr[1]) < 0) {
                 return "objectivec-swift"
             } else {
                 return arr[1]
@@ -674,7 +686,27 @@ function getCurrentUrlLang(url, needFilterLang=false) {
     }
 }
 
-function getSideBarIframeSrc(pageUrl, lang, product=null) {
+function getDoumentName(product) {
+    switch (product) {
+        case 'dwt': return 'web-twain';
+        case 'dbr': return 'barcode-reader';
+        case 'dlr': return 'label-recognition';
+        case 'dce': return 'camera-enhancer';
+        case 'dcp': return 'code-parser';
+        case 'ddn': return 'document-normalizer';
+        case 'dcv': return 'capture-vision'
+        default: return '';
+    }
+}
+
+function getCurrentUrlProductName() {
+    var currentPath = document.location.pathname
+    currentPath = currentPath.slice(1, currentPath.length)
+    var productParam = currentPath.split('/')[0]
+    
+}
+
+function getSideBarIframeSrc(pageUrl, lang, product=null, repoType=null) {
     if (lang) {
         lang = lang.toLowerCase().trim().split(",")[0]
         if (['javascript', 'js'].indexOf(lang) >= 0) {
@@ -687,8 +719,9 @@ function getSideBarIframeSrc(pageUrl, lang, product=null) {
             return '/barcode-reader/docs/server/Hide_Tree_Page.html'
         }
     } else {
-        if (product == 'ddn' && pageUrl.indexOf('/docs/server/') > 0) {
-            return '/document-normalizer/docs/server/Hide_Tree_Page.html'
+        if (getDoumentName(product)) {
+            repoType = repoType == null ? 'core' : repoType
+            return '/'+ getDoumentName(product) +'/docs/'+ repoType +'/Hide_Tree_Page.html'
         }
     }
     return null

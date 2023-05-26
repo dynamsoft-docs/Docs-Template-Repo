@@ -222,6 +222,7 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
     var hrefVal = aTag.href;
     var changeHref = hrefVal;
     var productName = getCurrentUrlProductName()
+    var repoType = getUrlVars(document.URL)["repoType"] || getCurrentUrlRepoType(document.URL)
     var currentDocDomain = document.URL.split("/docs/")[0] + '/docs/';
 
     if(hrefVal == "")
@@ -247,13 +248,22 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
     }
     var exp = new RegExp(/[?&]ver=[^&^#]+/gi);
 	if (exp.exec(hrefVal) != null) {
+        // different docs, different repo
+        var productVar = ""
         if (hrefVal.indexOf(currentDocDomain) < 0 && hrefVal.indexOf(document.location.host) >= 0 && hrefVal.indexOf("/docs/") > 0 && !getUrlVars(document.URL)["product"]) {
-            changeHref = hrefVal + '?product=' + getCurrentUrlProductName()
+            productVar = '?product=' + productName + '&repoType=' + repoType
         } else if (hrefVal.indexOf(currentDocDomain) >= 0 && getUrlVars(document.URL)["product"]) {
-            changeHref = hrefVal + '?product=' + getUrlVars(document.URL)["product"]
-        } else {
-            changeHref = hrefVal
+            productVar = '?product=' + getUrlVars(document.URL)["product"] + '&repoType=' + repoType
         }
+        // same docs, different repo
+        var repoTypeVar = ""
+        if (hrefVal.indexOf(currentDocDomain) >= 0 && !getUrlVars(document.URL)["product"]) {
+            if (getCurrentUrlRepoType(hrefVal) != repoType) {
+                repoTypeVar = '?repoType=' + repoType
+            }
+        }
+
+        changeHref = hrefVal + productVar + repoTypeVar
 	} else {
         var verStr = "";
         exp = new RegExp(/[?]+([^=]+)=/gi);
@@ -263,17 +273,31 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
         var srcString = ""
         if (changeHref.indexOf("/server/programming/c-cplusplus/") > 0 && !getUrlVars(changeHref)["src"]) {
             if (getUrlVars(document.URL)["src"]) {
-                srcString = verStr == '' ? "?src=" + getUrlVars(document.URL)["src"] : "&&src=" + getUrlVars(document.URL)["src"]
+                srcString = exp.exec(hrefVal) == null && verStr == '' ? "?src=" + getUrlVars(document.URL)["src"] : "&&src=" + getUrlVars(document.URL)["src"]
             } else {
-                srcString = verStr == '' ? "?src=" + getCurrentUrlLang(document.URL) : "&&src=" + getCurrentUrlLang(document.URL)
+                srcString = exp.exec(hrefVal) == null && verStr == '' ? "?src=" + getCurrentUrlLang(document.URL) : "&&src=" + getCurrentUrlLang(document.URL)
+            }
+        }
+
+        // different docs, different repo
+        var productVar = ""
+        if (!getUrlVars(changeHref)["product"]) {
+            if (hrefVal.indexOf(currentDocDomain) < 0 && hrefVal.indexOf(document.location.host) >= 0 && hrefVal.indexOf("/docs/") > 0 && !getUrlVars(document.URL)["product"]) {
+                productVar = exp.exec(hrefVal) == null && verStr == '' && srcString == "" ? ('?product=' + productName + '&repoType=' + repoType)  : ('&product=' + productName + '&repoType=' + repoType)
+            } else if (hrefVal.indexOf(currentDocDomain) >= 0 && getUrlVars(document.URL)["product"]) {
+                productVar = exp.exec(hrefVal) == null && verStr == '' && srcString == "" ? ('?product=' + getUrlVars(document.URL)["product"] + '&repoType=' + repoType) : ('&product=' + getUrlVars(document.URL)["product"] + '&repoType=' + repoType)
             }
         }
         
-        var productVar = ""
-        if (hrefVal.indexOf(currentDocDomain) < 0 && hrefVal.indexOf(document.location.host) >= 0 && hrefVal.indexOf("/docs/") > 0 && !getUrlVars(document.URL)["product"]) {
-            productVar = verStr == '' && srcString == "" ? '?product=' + getCurrentUrlProductName() : '&product=' + getCurrentUrlProductName()
-        } else if (hrefVal.indexOf(currentDocDomain) >= 0 && getUrlVars(document.URL)["product"]) {
-            productVar = verStr == '' && srcString == "" ? '?product=' + getUrlVars(document.URL)["product"] : '&product=' + getUrlVars(document.URL)["product"]
+
+        // same docs, different repo
+        var repoTypeVar = ""
+        if (!getUrlVars(changeHref)["repoType"]) {
+            if (hrefVal.indexOf(currentDocDomain) >= 0 && !getUrlVars(document.URL)["product"]) {
+                if (getCurrentUrlRepoType(hrefVal) != repoType) {
+                    repoTypeVar = exp.exec(hrefVal) == null && verStr == '' && srcString == "" ? '?repoType=' + repoType : '&repoType=' + repoType
+                }
+            }
         }
 
         if (hrefVal.indexOf("#") != -1) {
@@ -286,7 +310,6 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
         }
     }
 
-    
     // && (verText == "latest" || verText == undefined)
 	if (fromSourse == "sidebar") {
         var currentHost = document.location.host 
@@ -323,9 +346,21 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
         return response.text()
     }).then(function(data) {
         var inputVer = getUrlVars(paramLink)["ver"]
+        var dcvVer = null
+        if (getUrlVars(paramLink)["product"]) {
+            dcvVer = getDCVVer(inputVer)
+        }
         var otherVersions = $(data).find(".otherVersions > li")
 
-        if (inputVer == "latest" || inputVer == undefined || otherVersions.length == 0 || redirectUrl) {
+        var needToSearchHistory = false
+        if ((!dcvVer || dcvVer == "latest")&&(inputVer == "latest" || inputVer == undefined || otherVersions.length == 0 || redirectUrl)) {
+            needToSearchHistory = false
+        } else {
+            needToSearchHistory = true
+            inputVer = dcvVer ? dcvVer : inputVer
+        }
+
+        if (!needToSearchHistory) {
             document.title = $(data)[1].innerText
 
             // init language select container
@@ -644,14 +679,39 @@ function findCurLinkOnFullTree(aTag, paramLink, needh3=false, onlyLoadContent=fa
             searchHref = searchHref.indexOf("index.html") > 0 ? searchHref.replace("index.html", "") : searchHref
             targetHref = targetHref.indexOf("index.html") > 0 ? targetHref.replace("index.html", "") : targetHref
             searchHref = searchHref.indexOf("?") > 0 ? searchHref.split("?")[0] : (searchHref.indexOf("#") > 0 ? searchHref.split("#")[0] : searchHref) 
-            if ((fullTreeATags[i].offsetParent !== null || ($(fullTreeATags[i]).parent().attr("otherlang") == undefined && $(fullTreeATags[i]).parent().attr("lang"))) && searchHref && searchHref.toLowerCase() == targetHref) {
+            
+            if (searchHref && searchHref.toLowerCase() == targetHref) {
+                // item is visible
+                if (fullTreeATags[i].offsetParent !== null) {
+                    flag = true
+                    if ($(fullTreeATags[i]).hasClass("refreshLink")) {
+                        $(fullTreeATags[i]).click()
+                    } else {
+                        RequestNewPage(fullTreeATags[i], paramLink, needh3, null, onlyLoadContent)
+                    }
+                } else {
+                    var objs = $(fullTreeATags[i]).parents("li")
+                    for(var j=0; j<objs.length; j++) {
+                        if ($(objs[j]).attr("otherlang") == undefined && $(objs[j]).attr("lang") || document.URL.indexOf("/docs/web/") > 0) {
+                            flag = true
+                            if ($(fullTreeATags[i]).hasClass("refreshLink")) {
+                                $(fullTreeATags[i]).click()
+                            } else {
+                                RequestNewPage(fullTreeATags[i], paramLink, needh3, null, onlyLoadContent)
+                            }
+                            return
+                        }
+                    }
+                }
+            } else if (searchHref.toLowerCase() == targetHref && (fullTreeATags[i]).hasClass("refreshLink")) {
                 flag = true
-                RequestNewPage(fullTreeATags[i], paramLink, needh3, null, onlyLoadContent)
+                $(fullTreeATags[i]).click()
             }
         }
-    
         if (!flag) {
-            window.location.href = paramLink;
+            // use modal to display page if not in the menu tree
+            // showPageContentInModal(paramLink)
+            // window.location.href = paramLink;
         }
     }
 }
@@ -782,6 +842,84 @@ function getCurrentUrlProductName() {
     }
 }
 
+function getCurrentUrlRepoType(url) {
+    var currentPath = url
+    if (currentPath.includes("/docs/server/")) {
+        return 'server'
+    }
+    if (currentPath.includes("/docs/core/")) {
+        return 'core'
+    }
+    if (currentPath.includes("/docs/mobile/")) {
+        return 'mobile'
+    }
+    if (currentPath.includes("/docs/web/")) {
+        return 'web'
+    }
+}
+
+function showPageContentInModal(fetchUrl) {
+    fetch(fetchUrl).then(function(response) {
+        return response.text()
+    }).then(function(data) {
+        if ($(data).find("#articleContent .markdown-body").length > 0) {
+            var articleContentHtml = $(data).find("#articleContent .markdown-body").html()
+            var modalHtml = `
+                <div class="docsModal" id="docsModal">
+                    <div class="article">
+                        <div class="title fontOswald">
+                            <i class="fr" onclick="closeDocsModal()"><svg viewBox="64 64 896 896" data-icon="close" width="1em" height="1em" fill="currentColor" aria-hidden="true" focusable="false" class=""><path d="M563.8 512l262.5-312.9c4.4-5.2.7-13.1-6.1-13.1h-79.8c-4.7 0-9.2 2.1-12.3 5.7L511.6 449.8 295.1 191.7c-3-3.6-7.5-5.7-12.3-5.7H203c-6.8 0-10.5 7.9-6.1 13.1L459.4 512 196.9 824.9A7.95 7.95 0 0 0 203 838h79.8c4.7 0 9.2-2.1 12.3-5.7l216.5-258.1 216.5 258.1c3 3.6 7.5 5.7 12.3 5.7h79.8c6.8 0 10.5-7.9 6.1-13.1L563.8 512z"></path></svg></i>
+                        </div>
+                        <div class="content markdown-body">${articleContentHtml}</div>
+                    </div>
+                </div>
+            `
+            $("body").append(modalHtml)
+        } else {
+            window.location.href = fetchUrl
+        }
+    }).catch(function(e) {
+        window.location.href = fetchUrl
+    })
+}
+
+function closeDocsModal() {
+    $("#docsModal").remove()
+}
+
+function getDCVVer(inputVer) {
+    let product = getUrlVars(document.URL)["product"] ? getUrlVars(document.URL)["product"] : getCurrentUrlProductName()
+    if (!product || product == "") {
+        return "latest"
+    }
+
+    var bestVerIndex = -1;
+    var verDiff = -1;
+    var bestVersion = inputVer;
+
+    var productDCVVersionList = dcvVersionList.filter(function(item) { return item.prodcut == product });
+    var matchSuccess = false
+    for (var i = 0; i < productDCVVersionList.length; i++) {
+        var tmpVer = productDCVVersionList[i].version;
+        if (tmpVer == inputVer) {
+            matchSuccess = true
+            return productDCVVersionList[i].dcvVersion
+        } else {
+            var tmpDiff = GetVersionDiff(inputVer, tmpVer);
+            if (tmpDiff >= 0 && (tmpDiff < verDiff || verDiff < 0)){
+                bestVerIndex = i;
+                verDiff = tmpDiff;
+                bestVersion = tmpVer;
+            }
+        }
+    }
+
+    if (bestVerIndex >= 0 && !matchSuccess) {
+        return productDCVVersionList[bestVerIndex].dcvVersion
+    } else {
+        return "latest"
+    }
+}
 
 window.addEventListener("popstate", function(e) {
     findCurLinkOnFullTree(location, location.href, false, true)

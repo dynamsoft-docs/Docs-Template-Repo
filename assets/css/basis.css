@@ -5470,6 +5470,83 @@ a#toTop {
     }
 }
 
+.docsModal {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,.5);
+    text-align: center;
+    font-size: 0;
+    white-space: nowrap;
+    overflow: auto;
+    z-index: 1000;
+}
+
+.docsModal::after {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+.docsModal .article {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: left;
+    font-size: 16px;
+    white-space: normal;
+    background: white;
+    height: 80vh;
+    max-height: 800px;
+    width: 80vw;
+    max-width: 1100px;
+    /* position: fixed;
+    top: 50%;
+    left: 50%;
+    height: 80vh;
+    max-height: 800px;
+    width: 80vw;
+    max-width: 1100px;
+    border-radius: 5px;
+    transform: translate(-50%,-50%);
+    background: #fff;
+    z-index: 2000;
+    overflow: hidden; */
+}
+
+.docsModal .article .title {
+    height: 60px;
+    line-height: 60px;
+    /* border-bottom: 1px solid #dddddd; */
+    padding: 0 30px;
+    font-size: 20px;
+}
+
+.docsModal .article .title i {
+    cursor: pointer;
+}
+
+.docsModal .article .title i:hover {
+    color: #999;
+}
+
+.docsModal .article .content {
+    padding: 20px 50px;
+    height: calc(100% - 80px);
+    overflow: auto;
+    margin: 0;
+    width: 100%;
+}
+
+.docsModal .article .content a:not(.d-btn) {
+    color: #50a8e1!important;
+}
+
+.docsModal .article .content a:not(.d-btn):hover {
+    color: #fe8e14!important;
+}
 
 .multi-panel-switching-prefix + ul {
     list-style: none;

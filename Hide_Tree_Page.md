@@ -2,9 +2,39 @@
 layout: tree-layout
 ---
 
-{%- if site.firstLevelUrl == '/document-normalizer/docs/server' -%}
+{%- if site.docFullPath contains '/document-normalizer/' -%}
     <div id="docsNavBar">
         {%- include ddnNav.html -%}
+    </div>
+{%- endif -%}
+
+{%- if site.docFullPath contains '/barcode-reader/' -%}
+    <div id="docsNavBar">
+        {%- include dbrNav.html -%}
+    </div>
+{%- endif -%}
+
+{%- if site.docFullPath contains '/label-recognition/' -%}
+    <div id="docsNavBar">
+        {%- include dlrNav.html -%}
+    </div>
+{%- endif -%}
+
+{%- if site.docFullPath contains '/code-parser/' -%}
+    <div id="docsNavBar">
+        {%- include dcpNav.html -%}
+    </div>
+{%- endif -%}
+
+{%- if site.docFullPath contains '/camera-enhancer/' -%}
+    <div id="docsNavBar">
+        {%- include dceNav.html -%}
+    </div>
+{%- endif -%}
+
+{%- if site.docFullPath contains '/capture-vision/' -%}
+    <div id="docsNavBar">
+        {%- include dcvNav.html -%}
     </div>
 {%- endif -%}
 
