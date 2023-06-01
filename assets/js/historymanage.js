@@ -310,6 +310,9 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
         }
     }
 
+    // 除了到 dcv docs 的跳转，其余文档需要打开新页面，不需要修改 Nav
+    // 除dcv外，其他文档需要去查找到对应的版本号
+
     // && (verText == "latest" || verText == undefined)
 	if (fromSourse == "sidebar") {
         var currentHost = document.location.host 
@@ -346,6 +349,7 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
         return response.text()
     }).then(function(data) {
         var inputVer = getUrlVars(paramLink)["ver"]
+
         var dcvVer = null
         if (getUrlVars(paramLink)["product"]) {
             dcvVer = getDCVVer(inputVer)
