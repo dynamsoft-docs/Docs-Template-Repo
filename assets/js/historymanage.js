@@ -312,7 +312,6 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
 
     // 除了到 dcv docs 的跳转，其余文档需要打开新页面，不需要修改 Nav
     // 除dcv外，其他文档需要去查找到对应的版本号
-
     // && (verText == "latest" || verText == undefined)
 	if (fromSourse == "sidebar") {
         var currentHost = document.location.host 
@@ -672,6 +671,8 @@ function findCurLinkOnFullTree(aTag, paramLink, needh3=false, onlyLoadContent=fa
     targetHref = targetHref.indexOf("?") > 0 ? targetHref.split("?")[0] : (targetHref.indexOf("#") > 0 ? targetHref.split("#")[0] : targetHref) 
     curDocUrl = curDocUrl.indexOf("?") > 0 ? curDocUrl.split("?")[0] : (curDocUrl.indexOf("#") > 0 ? curDocUrl.split("#")[0] : curDocUrl)
     
+    console.log(aTag, curDocUrl,paramLink)
+
     if (curDocUrl == targetHref && (aTag.href.split("#").length > 1 || document.URL.split("#").length > 1)) {
         var hash = aTag.href.split("#").length > 1 ? aTag.href.split("#")[1].toLowerCase() : null
         window.scrollTo(0, hash && $("#" + hash.toLowerCase()).length > 0 ? $("#" + hash.toLowerCase()).offset().top : 0)
@@ -714,7 +715,7 @@ function findCurLinkOnFullTree(aTag, paramLink, needh3=false, onlyLoadContent=fa
         }
         if (!flag) {
             // use modal to display page if not in the menu tree
-            // showPageContentInModal(paramLink)
+            showPageContentInModal(paramLink)
             // window.location.href = paramLink;
         }
     }
