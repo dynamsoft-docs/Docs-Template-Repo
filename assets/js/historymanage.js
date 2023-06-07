@@ -552,9 +552,12 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
                 })();
             }
 
-            myMermaid.run({
-                querySelector: '.language-mermaid',
-            });
+            if (myMermaid) {
+                myMermaid.run({
+                    querySelector: '.language-mermaid',
+                });
+            }
+            
 
             // file tree
             if ($(".filetree h3").length > 0) {
@@ -696,15 +699,26 @@ function findCurLinkOnFullTree(aTag, paramLink, needh3=false, onlyLoadContent=fa
                     }
                 } else {
                     var objs = $(fullTreeATags[i]).parents("li")
+                    var ifOtherLangTag = false
                     for(var j=0; j<objs.length; j++) {
-                        if ($(objs[j]).attr("otherlang") == undefined && $(objs[j]).attr("lang") || document.URL.indexOf("/docs/web/") > 0) {
+                        if ($(objs[j]).attr("otherlang") != undefined) {
+                            ifOtherLangTag = true
+                        }
+                        if (!flag && $(objs[j]).attr("otherlang") == undefined && $(objs[j]).attr("lang") || document.URL.indexOf("/docs/web/") > 0) {
                             flag = true
                             if ($(fullTreeATags[i]).hasClass("refreshLink")) {
                                 $(fullTreeATags[i]).click()
                             } else {
                                 RequestNewPage(fullTreeATags[i], paramLink, needh3, null, onlyLoadContent)
                             }
-                            return
+                        }
+                    }
+                    if (!ifOtherLangTag && !flag) {
+                        flag = true
+                        if ($(fullTreeATags[i]).hasClass("refreshLink")) {
+                            $(fullTreeATags[i]).click()
+                        } else {
+                            RequestNewPage(fullTreeATags[i], paramLink, needh3, null, onlyLoadContent)
                         }
                     }
                 }
