@@ -285,14 +285,7 @@ function changeVersion (liTag) {
 	}
 	var curUrl = document.URL;
     var verFileName = "/v" + ver + "/";
-    if (curUrl.indexOf("web-twain/docs/") > 0 && GetVersionDiff('17.2.1', ver) < 0) {
-        verFileName = '/v17.2.1/';
-    } 
-    if (curUrl.indexOf("remote-scan/docs/") > 0 && ver == "latest") {
-        window.location.href = curUrl
-        return
-    }
-    curUrl = curUrl.replace("/docs/", "/docs-archive" + verFileName)
+    
 	var srcVal = getUrlVars(curUrl)["src"];
 	var anchorVar = undefined;
 	if (curUrl.indexOf("#") != -1){
@@ -313,8 +306,15 @@ function changeVersion (liTag) {
 	if(anchorVar != undefined){
 		curUrl = curUrl + "#" + anchorVar;
 	}
-	window.location.href = curUrl;
-	return;
+	if (curUrl.indexOf("remote-scan/docs-archive/v18.2/") > 0 && ver == "latest") {
+        curUrl = curUrl.replace("/docs-archive/v18.2/", "/docs/")
+        window.location.href = curUrl
+        return
+    } else {
+        curUrl = curUrl.replace("/docs-archive/v18.2/", "/docs-archive" + verFileName)
+        window.location.href = curUrl;
+	    return;
+    }
 }
 
 function findNearestVersion(ver) {
