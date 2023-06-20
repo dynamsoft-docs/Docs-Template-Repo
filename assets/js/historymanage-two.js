@@ -3,7 +3,7 @@ function UrlReplace()
     var docUrl = document.URL;
     var ver = getUrlVars(docUrl)["ver"];
     var matchVer = getUrlVars(docUrl)["matchVer"];
-    var verFileName = "/v17.2.1/"
+    var verFileName = "/v18.2/"
     if (ver != undefined && ver != "latest") {
         var tempVer = findNearestVersion(ver);
         if (tempVer!="latest" && tempVer != ver) {
@@ -288,7 +288,7 @@ function changeVersion (liTag) {
     if (curUrl.indexOf("web-twain/docs/") > 0 && GetVersionDiff('17.2.1', ver) < 0) {
         verFileName = '/v17.2.1/';
     } 
-    if (curUrl.indexOf("web-twain/docs/") > 0 && ver == "latest") {
+    if (curUrl.indexOf("remote-scan/docs/") > 0 && ver == "latest") {
         window.location.href = curUrl
         return
     }
