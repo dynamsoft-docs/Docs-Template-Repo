@@ -285,12 +285,12 @@ function changeVersion (liTag) {
 	if(anchorVar != undefined){
 		curUrl = curUrl + "#" + anchorVar;
 	}
-	if (curUrl.indexOf("web-twain/docs-archive/v18.1/") > 0 && ver == "latest") {
-        curUrl = curUrl.replace("/docs-archive/v18.1/", "/docs/")
+	if (curUrl.indexOf("remote-scan/docs-archive/v18.2/") > 0 && ver == "latest") {
+        curUrl = curUrl.replace("/docs-archive/v18.2/", "/docs/")
         window.location.href = curUrl
         return
     } else {
-        curUrl = curUrl.replace("/docs-archive/v18.1/", "/docs-archive" + verFileName)
+        curUrl = curUrl.replace("/docs-archive/v18.2/", "/docs-archive" + verFileName)
         window.location.href = curUrl;
 	    return;
     }
