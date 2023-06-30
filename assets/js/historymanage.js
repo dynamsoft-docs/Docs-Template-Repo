@@ -563,7 +563,6 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
                     querySelector: '.language-mermaid',
                 });
             }
-            
 
             // file tree
             if ($(".filetree h3").length > 0) {
@@ -898,6 +897,25 @@ function showPageContentInModal(fetchUrl) {
                 </div>
             `
             $("body").append(modalHtml)
+
+            // load sample-code style
+            if($("#docsModal .markdown-body .sample-code-prefix").length > 0 && getUrlVars(fetchUrl)["lang"]) {
+                var langs = getUrlVars(fetchUrl)["lang"].toLowerCase().trim().split(",")
+                if (langs) {
+                    if (langs.length == 1) {
+                        sampleCodeSingleLangInit(langs[0], null, null, true)
+                    } else {
+                        sampleCodeLangsInit(langs, true)
+                    }
+                }
+            } else if ($("#docsModal .markdown-body .sample-code-prefix").length > 0) {
+                $('.markdown-body .sample-code-prefix + blockquote > ul > li:first-child').addClass('on')
+                $('.markdown-body .sample-code-prefix + blockquote > ol > li:first-child').addClass('on')
+                var template2Objs = $('#docsModal .markdown-body .sample-code-prefix.template2 + blockquote')
+                for (var i=0; i<template2Objs.length; i++) {
+                    $(template2Objs[i]).find(">div").eq(0).addClass('on')
+                }
+            }
         } else {
             window.location.href = fetchUrl
         }
