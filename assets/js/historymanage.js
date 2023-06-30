@@ -262,7 +262,6 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
                 repoTypeVar = '?repoType=' + repoType
             }
         }
-
         changeHref = hrefVal + productVar + repoTypeVar
 	} else {
         var verStr = "";
@@ -278,18 +277,17 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
                 srcString = exp.exec(hrefVal) == null && verStr == '' ? "?src=" + getCurrentUrlLang(document.URL) : "&&src=" + getCurrentUrlLang(document.URL)
             }
         }
-
         // different docs, different repo
         var productVar = ""
         if (!getUrlVars(changeHref)["product"]) {
             if (hrefVal.indexOf(currentDocDomain) < 0 && hrefVal.indexOf(document.location.host) >= 0 && hrefVal.indexOf("/docs/") > 0 && !getUrlVars(document.URL)["product"]) {
-                productVar = exp.exec(hrefVal) == null && verStr == '' && srcString == "" ? ('?product=' + productName + '&repoType=' + repoType)  : ('&product=' + productName + '&repoType=' + repoType)
+                productVar = exp.exec(hrefVal) == null && verStr == '' && srcString == "" 
+                ? ('?product=' + productName + '&repoType=' + repoType)  
+                : ('&product=' + productName + '&repoType=' + repoType)
             } else if (hrefVal.indexOf(currentDocDomain) >= 0 && getUrlVars(document.URL)["product"]) {
                 productVar = exp.exec(hrefVal) == null && verStr == '' && srcString == "" ? ('?product=' + getUrlVars(document.URL)["product"] + '&repoType=' + repoType) : ('&product=' + getUrlVars(document.URL)["product"] + '&repoType=' + repoType)
             }
         }
-        
-
         // same docs, different repo
         var repoTypeVar = ""
         if (!getUrlVars(changeHref)["repoType"]) {
@@ -299,12 +297,20 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
                 }
             }
         }
-
-        if (hrefVal.indexOf("#") != -1) {
-            var urlAry = hrefVal.split("#");
-            if (urlAry.length == 2){
-                changeHref = urlAry[0]+verStr+srcString+productVar+"#"+urlAry[1]
+        let hashIndex = hrefVal.indexOf("#")
+        let queryIndex = hrefVal.indexOf("?")
+        if (hashIndex != -1) {
+            if (queryIndex != 1 && hashIndex < queryIndex) {
+                var urlQuery = hrefVal.split("?")
+                var urlHash = urlQuery[0].split("#")
+                changeHref = urlHash[0] + "?" + urlQuery[1]+verStr+srcString+productVar + "#" + urlHash[1]
+            } else {
+                var urlAry = hrefVal.split("#");
+                if (urlAry.length == 2){
+                    changeHref = urlAry[0]+verStr+srcString+productVar+"#"+urlAry[1]
+                }
             }
+            
         } else {
             changeHref = hrefVal+verStr+srcString+productVar
         }
@@ -673,8 +679,6 @@ function findCurLinkOnFullTree(aTag, paramLink, needh3=false, onlyLoadContent=fa
     var curDocUrl = document.URL.toLowerCase()
     targetHref = targetHref.indexOf("?") > 0 ? targetHref.split("?")[0] : (targetHref.indexOf("#") > 0 ? targetHref.split("#")[0] : targetHref) 
     curDocUrl = curDocUrl.indexOf("?") > 0 ? curDocUrl.split("?")[0] : (curDocUrl.indexOf("#") > 0 ? curDocUrl.split("#")[0] : curDocUrl)
-    
-    console.log(aTag, curDocUrl,paramLink)
 
     if (curDocUrl == targetHref && (aTag.href.split("#").length > 1 || document.URL.split("#").length > 1)) {
         var hash = aTag.href.split("#").length > 1 ? aTag.href.split("#")[1].toLowerCase() : null
