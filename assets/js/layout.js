@@ -390,7 +390,7 @@ function openChildMenuTree(obj, needIcon) {
     }
 }
 
-function sampleCodeLangsInit(langs) {
+function sampleCodeLangsInit(langs, isInModal = false) {
     var langTexts = langs.map(function(lang) {
         // lang to langText
         return getlangText(lang)
@@ -401,15 +401,18 @@ function sampleCodeLangsInit(langs) {
     for (var i=0; i<langTexts.length; i++) {
         var langText = langTexts[i]
         if (langText) {
-            sampleCodeSingleLangInit(null, langText, i+1)
+            sampleCodeSingleLangInit(null, langText, i+1, isInModal)
         }
     }
     $(".scChoosedLi").removeClass("scHiddenLi")
 }
 
-function sampleCodeSingleLangInit(lang, langText, index) {
+function sampleCodeSingleLangInit(lang, langText, index, isInModal = false) {
     langText = langText || getlangText(lang)
     var sampleCodeList = $(".markdown-body .sample-code-prefix + blockquote")
+    if (isInModal) {
+        sampleCodeList = $("#docsModal .markdown-body .sample-code-prefix + blockquote")
+    }
     if (langText) {
         for (var i=0; i < sampleCodeList.length; i++) {
             var scLis = $(sampleCodeList[i]).find("ul li")
