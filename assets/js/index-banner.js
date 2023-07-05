@@ -180,6 +180,8 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                 if (getUrlVars(pageUrl)["product"]) {
                     var navBar = $('#sideBarIframe').contents().find('#docsNavBar');
                     $(".productMenu").parent().html($(navBar[0]).html())
+                    var historyVersion = $('#sideBarIframe').contents().find('.fullVersionHistory');
+                    $("#categoryMenuTree_history .fullVersionHistory").html($(historyVersion[0]).html())
                 }
                 // End Nav Change
                 

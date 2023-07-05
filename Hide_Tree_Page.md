@@ -85,3 +85,5 @@ layout: tree-layout
         <span id="complete_loading_tree"></span>
     </div>
 {%- endif -%}
+
+{%- include auto-version-list.html -%}
