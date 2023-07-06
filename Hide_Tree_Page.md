@@ -1,43 +1,6 @@
 ---
 layout: tree-layout
 ---
-
-{%- if site.docFullPath contains '/document-normalizer/' -%}
-    <div id="docsNavBar">
-        {%- include ddnNav.html -%}
-    </div>
-{%- endif -%}
-
-{%- if site.docFullPath contains '/barcode-reader/' -%}
-    <div id="docsNavBar">
-        {%- include dbrNav.html -%}
-    </div>
-{%- endif -%}
-
-{%- if site.docFullPath contains '/label-recognition/' -%}
-    <div id="docsNavBar">
-        {%- include dlrNav.html -%}
-    </div>
-{%- endif -%}
-
-{%- if site.docFullPath contains '/code-parser/' -%}
-    <div id="docsNavBar">
-        {%- include dcpNav.html -%}
-    </div>
-{%- endif -%}
-
-{%- if site.docFullPath contains '/camera-enhancer/' -%}
-    <div id="docsNavBar">
-        {%- include dceNav.html -%}
-    </div>
-{%- endif -%}
-
-{%- if site.docFullPath contains '/capture-vision/' -%}
-    <div id="docsNavBar">
-        {%- include dcvNav.html -%}
-    </div>
-{%- endif -%}
-
 {%- if site.useVersionTree -%}
     <div id="version_tree_list">
         {%- if site.edition -%}
@@ -85,5 +48,3 @@ layout: tree-layout
         <span id="complete_loading_tree"></span>
     </div>
 {%- endif -%}
-
-{%- include auto-version-list.html -%}
