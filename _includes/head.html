@@ -24,7 +24,7 @@
 		{%- endif -%}
 	{%- endfor -%}
     {%- endif -%}
-    {%- assign targetUrl = targetUrl | remove: 'index.html' | strip -%}
+    {%- assign targetUrl = targetUrl | replace: '/index.html', '/' | strip -%}
 
     {%- if excludeFlag -%}
     <meta name="robots" content="noindex">
