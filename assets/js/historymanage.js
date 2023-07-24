@@ -250,11 +250,15 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
 	if (exp.exec(hrefVal) != null) {
         // different docs, different repo
         var productVar = ""
+        console.log(hrefVal)
+        console.log(currentDocDomain)
+        console.log(document.location.host)
         if (hrefVal.indexOf(currentDocDomain) < 0 && hrefVal.indexOf(document.location.host) >= 0 && hrefVal.indexOf("/docs/") > 0 && !getUrlVars(document.URL)["product"]) {
             productVar = '?product=' + productName + '&repoType=' + repoType
         } else if (hrefVal.indexOf(currentDocDomain) >= 0 && getUrlVars(document.URL)["product"]) {
             productVar = '?product=' + getUrlVars(document.URL)["product"] + '&repoType=' + repoType
         }
+        console.log("productVar: " + productVar)
         // same docs, different repo
         var repoTypeVar = ""
         if (hrefVal.indexOf(currentDocDomain) >= 0 && !getUrlVars(document.URL)["product"]) {
@@ -262,6 +266,7 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
                 repoTypeVar = '?repoType=' + repoType
             }
         }
+        console.log("repoTypeVar: " + repoTypeVar)
         changeHref = hrefVal + productVar + repoTypeVar
 	} else {
         var verStr = "";
@@ -362,7 +367,7 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
         var otherVersions = $(data).find(".otherVersions > li")
 
         var needToSearchHistory = false
-        if ((!dcvVer || dcvVer == "latest")&&(inputVer == "latest" || inputVer == undefined || otherVersions.length == 0 || redirectUrl)) {
+        if (((!dcvVer || dcvVer == "latest")&&(inputVer == "latest" || inputVer == undefined)) || otherVersions.length == 0 || redirectUrl) {
             needToSearchHistory = false
         } else {
             needToSearchHistory = true
@@ -950,6 +955,7 @@ function getDCVVer(inputVer, url) {
         return "latest"
     }
     repoType = repoType && repoType == "web" ? "js" : repoType
+    inputVer = inputVer == "latest" ? 99 : inputVer
     var productDCVVersionList = dcvVersionList.filter(function(item) {
         let aFlag = false
         let bFlag = false
