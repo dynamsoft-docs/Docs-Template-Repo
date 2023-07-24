@@ -372,6 +372,13 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
         if (!needToSearchHistory) {
             document.title = $(data)[1].innerText
 
+            let codeSampleStyle = $(data).find("#CodeAutoHeight")
+            if (codeSampleStyle && codeSampleStyle.length > 0) {
+                $(".markdown-body .sample-code-prefix+blockquote ol li pre.highlight, .markdown-body .sample-code-prefix.template2 + blockquote > div pre.highlight").css({'min-height': '400px'});
+            } else {
+                $("#CodeAutoHeight").remove();
+                $(".markdown-body .sample-code-prefix+blockquote ol li pre.highlight, .markdown-body .sample-code-prefix.template2 + blockquote > div pre.highlight").css({'min-height': 'unset'});
+            }
             // init language select container
             let languageWrapItem = $(data).find(".languageWrap")
             if (languageWrapItem && languageWrapItem.length > 0 && $(".languageWrap").length > 0) {
