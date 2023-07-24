@@ -372,13 +372,6 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
         if (!needToSearchHistory) {
             document.title = $(data)[1].innerText
 
-            let codeSampleStyle = $(data).find("#CodeAutoHeight")
-            if (codeSampleStyle && codeSampleStyle.length > 0) {
-                $(".markdown-body .sample-code-prefix+blockquote ol li pre.highlight, .markdown-body .sample-code-prefix.template2 + blockquote > div pre.highlight").css({'min-height': '400px'});
-            } else {
-                $("#CodeAutoHeight").remove();
-                $(".markdown-body .sample-code-prefix+blockquote ol li pre.highlight, .markdown-body .sample-code-prefix.template2 + blockquote > div pre.highlight").css({'min-height': 'unset'});
-            }
             // init language select container
             let languageWrapItem = $(data).find(".languageWrap")
             if (languageWrapItem && languageWrapItem.length > 0 && $(".languageWrap").length > 0) {
@@ -433,6 +426,7 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
 
             !onlyLoadContent&&history.pushState(null, null, paramLink)
 
+        
             // remove old active link and li style
             for(var i=0; i < $("#fullTreeMenuListContainer .activeLink").parents("li").length;i++) {
                 var obj = $("#fullTreeMenuListContainer .activeLink").parents("li")[i]
@@ -545,6 +539,19 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
                     $(template2Objs[i]).find(">div").eq(0).addClass('on')
                 }
             }
+
+            let codeSampleStyle = $(data).filter(function(item) { return $(data).eq(item).attr("id") == "CodeAutoHeight"});
+            if (codeSampleStyle && codeSampleStyle.length > 0) {
+                if ($("#CodeAutoHeight").length == 0) {
+                    $(".markdown-body .sample-code-prefix+blockquote ol li pre.highlight").css("max-height", "unset") 
+                    $(".markdown-body .sample-code-prefix.template2 + blockquote > div pre.highlight").css("max-height", "unset") 
+                }
+            } else {
+                $("#CodeAutoHeight").remove();
+                $(".markdown-body .sample-code-prefix+blockquote ol li pre.highlight").css("max-height", "400px") 
+                $(".markdown-body .sample-code-prefix.template2 + blockquote > div pre.highlight").css("max-height", "400px") 
+            }
+
             // load MathJax style
             if ($("#articleContent").find("script").length>0) {
                 window.MathJax = null
