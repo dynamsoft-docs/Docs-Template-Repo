@@ -357,7 +357,7 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
 
         var dcvVer = null
         if (getUrlVars(paramLink)["product"]) {
-            dcvVer = getDCVVer(inputVer)
+            dcvVer = getDCVVer(inputVer, fetchUrl)
         }
         var otherVersions = $(data).find(".otherVersions > li")
 
@@ -848,8 +848,8 @@ function initHistoryVersionList() {
     }
 }
 
-function getCurrentUrlProductName() {
-    var currentPath = document.location.pathname
+function getCurrentUrlProductName(url=null) {
+    var currentPath = url ? url.replace(url.split('/')[0], "") : document.location.pathname
     currentPath = currentPath.slice(1, currentPath.length)
     var productParam = currentPath.split('/')[0]
     switch (productParam) {
@@ -928,35 +928,42 @@ function closeDocsModal() {
     $("#docsModal").remove()
 }
 
-function getDCVVer(inputVer) {
+function getDCVVer(inputVer, url) {
     let product = getUrlVars(document.URL)["product"] ? getUrlVars(document.URL)["product"] : getCurrentUrlProductName()
+    let urlProduct = getCurrentUrlProductName(url)
+    let repoType = getUrlVars(document.URL)["repoType"]
     if (!product || product == "") {
         return "latest"
     }
-
-    var bestVerIndex = -1;
-    var verDiff = -1;
-    var bestVersion = inputVer;
-
-    var productDCVVersionList = dcvVersionList.filter(function(item) { return item.prodcut == product });
-    var matchSuccess = false
-    for (var i = 0; i < productDCVVersionList.length; i++) {
-        var tmpVer = productDCVVersionList[i].version;
-        if (tmpVer == inputVer) {
-            matchSuccess = true
-            return productDCVVersionList[i].dcvVersion
-        } else {
-            var tmpDiff = GetVersionDiff(inputVer, tmpVer);
-            if (tmpDiff >= 0 && (tmpDiff < verDiff || verDiff < 0)){
-                bestVerIndex = i;
-                verDiff = tmpDiff;
-                bestVersion = tmpVer;
+    repoType = repoType && repoType == "web" ? "js" : repoType
+    var productDCVVersionList = dcvVersionList.filter(function(item) {
+        let aFlag = false
+        let bFlag = false
+        for(var key in item) {
+            if (key == product) {
+                aFlag = true
+                item.version = item[key]
             }
         }
-    }
+        for(var key in item.matchList) {
+            if (key == urlProduct) {
+                bFlag = true
+                item.linkedProductVersion = item.matchList[key][0]
+            }
+        }
+        return aFlag && bFlag && (!item.repoType || repoType == item.repoType) && (!inputVer||inputVer <= item.version)
+    })
 
-    if (bestVerIndex >= 0 && !matchSuccess) {
-        return productDCVVersionList[bestVerIndex].dcvVersion
+    productDCVVersionList.sort(function(a, b) {
+        return a.version - b.version
+    })
+
+    if (productDCVVersionList && productDCVVersionList.length > 0) {
+        if (inputVer) {
+            return productDCVVersionList[0].linkedProductVersion
+        } else {
+            return productDCVVersionList[productDCVVersionList.length - 1].linkedProductVersion
+        }
     } else {
         return "latest"
     }
