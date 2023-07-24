@@ -101,4 +101,12 @@
     {%- if page.hasCustomLdJson -%}
         {{page.customLdJsonScript}}
     {%- endif -%}
+
+    {%- if page.codeAutoHeight -%}
+    <style>
+        .markdown-body .sample-code-prefix+blockquote ol li pre.highlight {
+            max-height: unset;
+        }
+    </style>
+    {%- endif -%}
 </head>
