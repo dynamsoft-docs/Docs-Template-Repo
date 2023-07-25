@@ -236,17 +236,17 @@ $(document).ready(function(){
         }
     })
 
-    $('.changeBtn').on('click', function(e) {
+    $(document).delegate(".changeBtn", 'click', function(e) {
         $('.otherVersions').toggle();
         stopPropagation(e);
     })
 
-    $('.fvChange').on('click', function(e) {
+    $(document).delegate(".fvChange", 'click', function(e) {
         $('.fullVersionInfo').toggle();
         stopPropagation(e);
     })
 
-    $('.history .currentVersion').on('click', function(e) {
+    $(document).delegate(".history .currentVersion", 'click', function(e) {
         $('.fullVersionInfo').slideToggle();
         stopPropagation(e);
     })
@@ -324,7 +324,7 @@ $(document).ready(function(){
         }
     }
 
-    $(".fullVersionHistory .fullVersionInfo .hasChildLi").on("click", function(e) {
+    $(document).delegate(".fullVersionHistory .fullVersionInfo .hasChildLi", 'click', function(e) {
         $(this).toggleClass("expand")
         $(this).find("ul").slideToggle()
         e.stopPropagation()

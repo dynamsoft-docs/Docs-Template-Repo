@@ -6,12 +6,14 @@ function UrlReplace()
     var matchVer = getUrlVars(docUrl)["matchVer"];
     if (ver != undefined && ver != "latest") {
         var tempVer = findNearestVersion(ver);
+        // console.log(tempVer)
         if (tempVer != ver) {
             var replaceUrl = docUrl.replace(ver, tempVer)
             window.location.replace(replaceUrl);
         }
     }
     if (matchVer == undefined && ver != undefined) {
+        // console.log(123)
         RedirToGivenVersionPage(ver);
     }
     if (ver == undefined) {
@@ -69,6 +71,11 @@ function RedirToGivenVersionPage(inputVer)
         changeVer = "&&cVer=true";
     }
 
+    var productVar = ""
+    var productParam = getUrlVars(document.URL)["product"];
+    var repoTypeParam = getUrlVars(document.URL)["repoType"];
+    
+
     var historyList = $(".otherVersions");
     if (historyList != null)
     {
@@ -87,10 +94,20 @@ function RedirToGivenVersionPage(inputVer)
                 if (aTag.length > 0) {
                     var exp = new RegExp(/[?]+([^=]+)=/gi)
                     if (exp.exec(aTag[0].href) != null){
+                        if (productParam != undefined && getCurrentUrlProductName() == "dcv") {
+                            if (aTag[0].href > 0) {
+                                productVar = "&&product=" + productParam + "&&repoType="+repoTypeParam;
+                            } else {
+                                productVar = "?product=" + productParam + "&&repoType="+repoTypeParam;
+                            }
+                            if (getUrlVars(document.URL)[productParam] != undefined) {
+                                productVar += ("&&"+productParam + "=" + getUrlVars(document.URL)[productParam])
+                            }
+                        }
                         if (inputVer == 'latest') {
-                            window.location.replace(aTag[0].href + anchorVal);
+                            window.location.replace(aTag[0].href + productVar + anchorVal);
                         } else {
-                            window.location.replace(aTag[0].href + "&&ver=" +inputVer+"&&matchVer=true" + changeVer + anchorVal);
+                            window.location.replace(aTag[0].href + "&&ver=" +inputVer+"&&matchVer=true" + productVar + changeVer + anchorVal);
                         }
                         return;
                     }
@@ -103,6 +120,17 @@ function RedirToGivenVersionPage(inputVer)
                     	}
                         if (langVal != undefined) {
                             redirectUrl = srcVal != undefined ? (redirectUrl + '&lang=' + langVal) : (redirectUrl + '?lang=' + langVal)
+                        }
+                        if (productParam != undefined && getCurrentUrlProductName() == "dcv") {
+                            if (redirectUrl.indexOf("?") > 0) {
+                                productVar = "&&product=" + productParam + "&&repoType="+repoTypeParam;
+                            } else {
+                                productVar = "?product=" + productParam + "&&repoType="+repoTypeParam;
+                            }
+                            if (getUrlVars(document.URL)[productParam] != undefined) {
+                                productVar += ("&&"+productParam + "=" + getUrlVars(document.URL)[productParam])
+                            }
+                            redirectUrl = redirectUrl + productVar
                         }
                         if (inputVer == 'latest') {
                             window.location.replace(redirectUrl + anchorVal)
@@ -146,10 +174,16 @@ function RedirToGivenVersionPage(inputVer)
                 if (langVar != undefined) {
                     redirectUrl = srcVal != undefined ? (redirectUrl + "&lang="+ langVal) : (redirectUrl + "?lang="+ langVal)
                 }
+                if (productParam != undefined && getCurrentUrlProductName() == "dcv") {
+                    productVar = "&&product=" + productParam + "&&repoType="+repoTypeParam;
+                    if (getUrlVars(document.URL)[productParam] != undefined) {
+                        productVar += ("&&"+productParam + "=" + getUrlVars(document.URL)[productParam])
+                    }
+                }
                 if(redirectUrl.indexOf("?") > 0) {
-                    window.location.replace(redirectUrl + "&&ver=" +inputVer+"&&matchVer=true"+ changeVer + anchorVal);
+                    window.location.replace(redirectUrl + "&&ver=" +inputVer+"&&matchVer=true"+ productVar + changeVer + anchorVal);
                 } else {
-                    window.location.replace(redirectUrl + "?ver=" +inputVer+"&&matchVer=true"+ changeVer + anchorVal);
+                    window.location.replace(redirectUrl + "?ver=" +inputVer+"&&matchVer=true"+ productVar + changeVer + anchorVal);
                 }
                 return;
             }
@@ -166,6 +200,18 @@ function RedirToGivenVersionPage(inputVer)
 
         if (langVal != undefined) {
             redirectUrl = srcVal != undefined ? (redirectUrl + '&lang=' + langVal) : (redirectUrl + '?lang=' + langVal)
+        }
+
+        if (productParam != undefined && getCurrentUrlProductName() == "dcv") {
+            if (redirectUrl.indexOf("?") > 0) {
+                productVar = "&&product=" + productParam + "&&repoType="+repoTypeParam;
+            } else {
+                productVar = "?product=" + productParam + "&&repoType="+repoTypeParam;
+            }
+            if (getUrlVars(document.URL)[productParam] != undefined) {
+                productVar += ("&&"+productParam + "=" + getUrlVars(document.URL)[productParam])
+            }
+            redirectUrl = redirectUrl + productVar
         }
 
         window.location.replace(redirectUrl + anchorVal);
@@ -250,15 +296,15 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
 	if (exp.exec(hrefVal) != null) {
         // different docs, different repo
         var productVar = ""
-        console.log(hrefVal)
-        console.log(currentDocDomain)
-        console.log(document.location.host)
+        // console.log(hrefVal)
+        // console.log(currentDocDomain)
+        // console.log(document.location.host)
         if (hrefVal.indexOf(currentDocDomain) < 0 && hrefVal.indexOf(document.location.host) >= 0 && hrefVal.indexOf("/docs/") > 0 && !getUrlVars(document.URL)["product"]) {
             productVar = '?product=' + productName + '&repoType=' + repoType
         } else if (hrefVal.indexOf(currentDocDomain) >= 0 && getUrlVars(document.URL)["product"]) {
             productVar = '?product=' + getUrlVars(document.URL)["product"] + '&repoType=' + repoType
         }
-        console.log("productVar: " + productVar)
+        // console.log("productVar: " + productVar)
         // same docs, different repo
         var repoTypeVar = ""
         if (hrefVal.indexOf(currentDocDomain) >= 0 && !getUrlVars(document.URL)["product"]) {
@@ -266,7 +312,7 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
                 repoTypeVar = '?repoType=' + repoType
             }
         }
-        console.log("repoTypeVar: " + repoTypeVar)
+        // console.log("repoTypeVar: " + repoTypeVar)
         changeHref = hrefVal + productVar + repoTypeVar
 	} else {
         var verStr = "";
@@ -770,6 +816,9 @@ function changeVersion (liTag)
 	var curUrl = document.URL;
 	var srcVal = getUrlVars(curUrl)["src"];
     var langVar = getUrlVars(curUrl)["lang"];
+    var productVar = getUrlVars(curUrl)["product"];
+    var repoTypeVar =getUrlVars(curUrl)["repoType"];
+
 	var anchorVar = undefined;
 	if (curUrl.indexOf("#") != -1){
 		anchorVar = (curUrl.split("#")).pop();
@@ -781,6 +830,12 @@ function changeVersion (liTag)
 	if (curUrl.indexOf("#") != -1){
 		curUrl = curUrl.substring(0, curUrl.indexOf("#"));
 	}
+    var productVersion = null;
+    if (productVar != undefined && getCurrentUrlProductName() == "dcv") {
+        var dcvVer = getDCVVer(ver, document.URL)
+        productVersion = ver
+        ver = dcvVer
+    }
     if (ver != 'latest') {
         curUrl = curUrl + "?ver=" + ver + "&&cVer=true";
     } else {
@@ -788,13 +843,19 @@ function changeVersion (liTag)
         return
     }
 	
-	if (srcVal != undefined){
+	if (srcVal != undefined) {
 		curUrl = curUrl + "&&src=" + srcVal;
 	}
     if (langVar != undefined) {
         curUrl = curUrl + "&&lang=" + langVar;
     }
-	if(anchorVar != undefined){
+    if (productVar != undefined) {
+        curUrl = curUrl + "&&product=" + productVar + "&&repoType=" + repoTypeVar
+        if (getCurrentUrlProductName() == "dcv") {
+            curUrl = curUrl + "&&"+ productVar +"=" + productVersion;
+        }
+    }
+	if (anchorVar != undefined) {
 		curUrl = curUrl + "#" + anchorVar;
 	}
 	window.location.href = curUrl;
@@ -804,11 +865,12 @@ function changeVersion (liTag)
 function findNearestVersion(ver) {
     var versionList = $(".fullVersionInfo li:not(.hideLi)")
     var bestVer = ver, verDiff=null
+    console.log(versionList)
     for (var i=0; i<versionList.length; i++) {
         var tempVer = $(versionList[i]).text().toLowerCase()
         if (tempVer == "latest version"){
             tempVer = "latest"
-        } else{
+        } else {
             tempVer = tempVer.replace('version ','');
         }
         if (tempVer == ver) {
@@ -868,6 +930,7 @@ function initHistoryVersionList() {
 }
 
 function getCurrentUrlProductName(url=null) {
+    url = url ? url.replace("https://", "") : null
     var currentPath = url ? url.replace(url.split('/')[0], "") : document.location.pathname
     currentPath = currentPath.slice(1, currentPath.length)
     var productParam = currentPath.split('/')[0]
@@ -954,8 +1017,10 @@ function getDCVVer(inputVer, url) {
     if (!product || product == "") {
         return "latest"
     }
+
     repoType = repoType && repoType == "web" ? "js" : repoType
-    inputVer = inputVer == "latest" ? 99 : inputVer
+    inputVer = inputVer == "latest" ? 99 : inputVer.split(".")[0]
+
     var productDCVVersionList = dcvVersionList.filter(function(item) {
         let aFlag = false
         let bFlag = false

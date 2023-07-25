@@ -175,13 +175,21 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                 clearInterval(versionListInterval);
 
                 // Start Nav change
-                // if page is dvc but used in ddn or other docs, need to change navbar
+                // if page is dcv but used in ddn or other docs, need to change navbar
                 // the nav bar in the (DDN or other docs's) Hide_Tree_Page.html file
-                if (getUrlVars(pageUrl)["product"]) {
+                if (getUrlVars(pageUrl)["product"] && getCurrentUrlProductName() == "dcv") {
                     var navBar = $('#sideBarIframe').contents().find('#docsNavBar');
-                    $(".productMenu").parent().html($(navBar[0]).html())
-                    // var historyVersion = $('#sideBarIframe').contents().find('.fullVersionHistory');
-                    // $("#categoryMenuTree_history .fullVersionHistory").html($(historyVersion[0]).html())
+                    if (navBar && navBar.length > 0) {
+                        $(".productMenu").parent().html($(navBar[0]).html())
+                        var historyVersion = $('#sideBarIframe').contents().find('.fullVersionHistory');
+                        $("#categoryMenuTree_history .fullVersionHistory").html($(historyVersion[0]).html())
+                        var product = getUrlVars(pageUrl)["product"]
+                        var productVersion = getUrlVars(pageUrl)[product]
+                        if(productVersion != undefined) {
+                            productVersion = findNearestVersion(productVersion)
+                            $("p.currentVersion").text("Version " + productVersion)
+                        }
+                    }
                 }
                 // End Nav Change
                 
@@ -699,13 +707,6 @@ function getDoumentName(product) {
         case 'dcv': return 'capture-vision'
         default: return '';
     }
-}
-
-function getCurrentUrlProductName() {
-    var currentPath = document.location.pathname
-    currentPath = currentPath.slice(1, currentPath.length)
-    var productParam = currentPath.split('/')[0]
-    
 }
 
 function getSideBarIframeSrc(pageUrl, lang, product=null, repoType=null) {
