@@ -1019,7 +1019,7 @@ function getDCVVer(inputVer, url) {
     }
 
     repoType = repoType && repoType == "web" ? "js" : repoType
-    inputVer = inputVer == "latest" ? 99 : inputVer.split(".")[0]
+    inputVer = inputVer && inputVer == "latest" ? 99 : (inputVer ? inputVer.split(".")[0] : null)
 
     var productDCVVersionList = dcvVersionList.filter(function(item) {
         let aFlag = false
