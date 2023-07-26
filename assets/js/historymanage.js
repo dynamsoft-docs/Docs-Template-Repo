@@ -21,7 +21,11 @@ function UrlReplace()
             var docVer = docUrl.split("-v")[1]
             if (parseInt(docVer[0]) <= 9 && parseInt(docVer[0]) >= 0 && docVer.indexOf('.html') > 0) {
                 docVer = docVer.split(".html")[0]
-                window.location.replace(docUrl + "?ver=" + docVer);
+                if (docUrl.indexOf("?") < 0) {
+                    window.location.replace(docUrl + "?ver=" + docVer);
+                } else {
+                    window.location.replace(docUrl + "&ver=" + docVer);
+                }
             }
         }
     }
@@ -294,15 +298,22 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
     }
     var exp = new RegExp(/[?&]ver=[^&^#]+/gi);
 	if (exp.exec(hrefVal) != null) {
-        // different docs, different repo
         var productVar = ""
         // console.log(hrefVal)
         // console.log(currentDocDomain)
         // console.log(document.location.host)
+        // different docs, different repo
         if (hrefVal.indexOf(currentDocDomain) < 0 && hrefVal.indexOf(document.location.host) >= 0 && hrefVal.indexOf("/docs/") > 0 && !getUrlVars(document.URL)["product"]) {
             productVar = '?product=' + productName + '&repoType=' + repoType
+        } else if (hrefVal.indexOf(currentDocDomain) < 0 && hrefVal.indexOf(document.location.host) >= 0 && hrefVal.indexOf("/docs/") > 0 && getUrlVars(document.URL)["product"] && getUrlVars(document.URL)["product"] != getCurrentUrlProductName(changeHref)) {
+            productVar = '?product=' + getUrlVars(document.URL)["product"] + '&repoType=' + repoType
         } else if (hrefVal.indexOf(currentDocDomain) >= 0 && getUrlVars(document.URL)["product"]) {
             productVar = '?product=' + getUrlVars(document.URL)["product"] + '&repoType=' + repoType
+        }
+        var product = getUrlVars(document.URL)["product"]
+        if (productVar != "" && product != undefined && getUrlVars(document.URL)[product] != undefined) {
+            var productVersion = getUrlVars(document.URL)[product]
+            productVar = productVar + "&" + product + "=" + productVersion
         }
         // console.log("productVar: " + productVar)
         // same docs, different repo
@@ -335,8 +346,21 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
                 productVar = exp.exec(hrefVal) == null && verStr == '' && srcString == "" 
                 ? ('?product=' + productName + '&repoType=' + repoType)  
                 : ('&product=' + productName + '&repoType=' + repoType)
+            } else if (hrefVal.indexOf(currentDocDomain) < 0 && hrefVal.indexOf(document.location.host) >= 0 && hrefVal.indexOf("/docs/") > 0 && getUrlVars(document.URL)["product"] && getUrlVars(document.URL)["product"] != getCurrentUrlProductName(changeHref)) {
+                productVar = exp.exec(hrefVal) == null && verStr == '' && srcString == "" 
+                ? ('?product=' + getUrlVars(document.URL)["product"] + '&repoType=' + repoType)  
+                : ('&product=' + getUrlVars(document.URL)["product"] + '&repoType=' + repoType)
             } else if (hrefVal.indexOf(currentDocDomain) >= 0 && getUrlVars(document.URL)["product"]) {
                 productVar = exp.exec(hrefVal) == null && verStr == '' && srcString == "" ? ('?product=' + getUrlVars(document.URL)["product"] + '&repoType=' + repoType) : ('&product=' + getUrlVars(document.URL)["product"] + '&repoType=' + repoType)
+                var product = getUrlVars(document.URL)["product"]
+                var productVersion = getUrlVars(document.URL)[product]
+                productVar = productVar + "&" + product + "=" + productVersion
+            }
+
+            var product = getUrlVars(document.URL)["product"]
+            if (productVar != "" && product != undefined && getUrlVars(document.URL)[product] != undefined) {
+                var productVersion = getUrlVars(document.URL)[product]
+                productVar = productVar + "&" + product + "=" + productVersion
             }
         }
         // same docs, different repo
@@ -376,6 +400,8 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
             window.location.href = aTag.href;
             return;
         }
+        // console.log("enter request page")
+        // console.log(changeHref)
         // request link
         if (!$(aTag).hasClass("activeLink")) {
             RequestNewPage(aTag, changeHref, needh3)
@@ -405,11 +431,12 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
         return response.text()
     }).then(function(data) {
         var inputVer = getUrlVars(paramLink)["ver"]
-
+        // console.log("inputVer: " + inputVer)
         var dcvVer = null
         if (getUrlVars(paramLink)["product"]) {
-            dcvVer = getDCVVer(inputVer, fetchUrl)
+            dcvVer = getDCVVer(inputVer?inputVer:"latest", fetchUrl)
         }
+        // console.log("dcvVer: " + dcvVer)
         var otherVersions = $(data).find(".otherVersions > li")
 
         var needToSearchHistory = false
@@ -865,7 +892,7 @@ function changeVersion (liTag)
 function findNearestVersion(ver) {
     var versionList = $(".fullVersionInfo li:not(.hideLi)")
     var bestVer = ver, verDiff=null
-    console.log(versionList)
+    // console.log(versionList)
     for (var i=0; i<versionList.length; i++) {
         var tempVer = $(versionList[i]).text().toLowerCase()
         if (tempVer == "latest version"){
@@ -1017,9 +1044,14 @@ function getDCVVer(inputVer, url) {
     if (!product || product == "") {
         return "latest"
     }
+    // console.log("product: " + product)
+    // console.log("urlProduct: " + urlProduct)
 
     repoType = repoType && repoType == "web" ? "js" : repoType
     inputVer = inputVer && inputVer == "latest" ? 99 : (inputVer ? inputVer.split(".")[0] : null)
+
+    // console.log("repoType: " + repoType)
+    // console.log("inputVer: " + inputVer)
 
     var productDCVVersionList = dcvVersionList.filter(function(item) {
         let aFlag = false
