@@ -846,6 +846,17 @@ function changeVersion (liTag)
     var productVar = getUrlVars(curUrl)["product"];
     var repoTypeVar =getUrlVars(curUrl)["repoType"];
 
+    if (productVar !=undefined && productVar != getCurrentUrlProductName() && getCurrentUrlProductName() != "dcv") {
+        var menuLis = $("#fullTreeMenuListContainer > li")
+        for(var i=0;i<menuLis.length;i++) {
+            let aTag = $(menuLis[i]).find(" > a").eq(0).attr("href")
+            if($(menuLis[i]).is(":visible") && aTag) {
+                window.location.href = aTag + "?ver=" + ver;
+                return;
+            }
+        }
+    }
+
 	var anchorVar = undefined;
 	if (curUrl.indexOf("#") != -1){
 		anchorVar = (curUrl.split("#")).pop();
@@ -1085,6 +1096,24 @@ function getDCVVer(inputVer, url) {
         return "latest"
     }
 }
+
+// function getProductDocsIntroductionPage(product, repoType) {
+//     switch(product) {
+//         case "dbr": {
+//             if (repoType == "core") {
+
+//             } else if (repoType == "web" || repoType == "js") {
+
+//             } else if (repoType == "mobile") {
+
+//             }
+//         }
+//         case "dce": return "";
+//         case "ddn": return "";
+//         case "dlr": return "";
+//         case "dcv": return "";
+//     }
+// }
 
 window.addEventListener("popstate", function(e) {
     findCurLinkOnFullTree(location, location.href, false, true)
