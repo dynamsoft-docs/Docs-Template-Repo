@@ -177,17 +177,19 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                 // Start Nav change
                 // if page is dcv but used in ddn or other docs, need to change navbar
                 // the nav bar in the (DDN or other docs's) Hide_Tree_Page.html file
-                if (getUrlVars(pageUrl)["product"] && getCurrentUrlProductName() == "dcv") {
+                if (getUrlVars(pageUrl)["product"]) {
                     var navBar = $('#sideBarIframe').contents().find('#docsNavBar');
                     if (navBar && navBar.length > 0) {
                         $(".productMenu").parent().html($(navBar[0]).html())
-                        var historyVersion = $('#sideBarIframe').contents().find('.fullVersionHistory');
-                        $("#categoryMenuTree_history .fullVersionHistory").html($(historyVersion[0]).html())
-                        var product = getUrlVars(pageUrl)["product"]
-                        var productVersion = getUrlVars(pageUrl)[product]
-                        if(productVersion != undefined) {
-                            productVersion = findNearestVersion(productVersion)
-                            $("p.currentVersion").text("Version " + productVersion)
+                        if (getCurrentUrlProductName() == "dcv") {
+                            var historyVersion = $('#sideBarIframe').contents().find('.fullVersionHistory');
+                            $("#categoryMenuTree_history .fullVersionHistory").html($(historyVersion[0]).html());
+                            var product = getUrlVars(pageUrl)["product"]
+                            var productVersion = getUrlVars(pageUrl)[product]
+                            if(productVersion != undefined) {
+                                productVersion = findNearestVersion(productVersion)
+                                $("p.currentVersion").text("Version " + productVersion)
+                            }
                         }
                     }
                 }
