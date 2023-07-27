@@ -1097,24 +1097,6 @@ function getDCVVer(inputVer, url) {
     }
 }
 
-// function getProductDocsIntroductionPage(product, repoType) {
-//     switch(product) {
-//         case "dbr": {
-//             if (repoType == "core") {
-
-//             } else if (repoType == "web" || repoType == "js") {
-
-//             } else if (repoType == "mobile") {
-
-//             }
-//         }
-//         case "dce": return "";
-//         case "ddn": return "";
-//         case "dlr": return "";
-//         case "dcv": return "";
-//     }
-// }
-
 window.addEventListener("popstate", function(e) {
     findCurLinkOnFullTree(location, location.href, false, true)
 }, false)
