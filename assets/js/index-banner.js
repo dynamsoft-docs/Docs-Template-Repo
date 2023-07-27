@@ -183,12 +183,14 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                         $(".productMenu").parent().html($(navBar[0]).html())
                         if (getCurrentUrlProductName() == "dcv") {
                             var historyVersion = $('#sideBarIframe').contents().find('.fullVersionHistory');
-                            $("#categoryMenuTree_history .fullVersionHistory").html($(historyVersion[0]).html());
-                            var product = getUrlVars(pageUrl)["product"]
-                            var productVersion = getUrlVars(pageUrl)[product]
-                            if(productVersion != undefined) {
-                                productVersion = findNearestVersion(productVersion)
-                                $("p.currentVersion").text("Version " + productVersion)
+                            if (historyVersion && historyVersion.length > 0) {
+                                $("#categoryMenuTree_history .fullVersionHistory").html($(historyVersion[0]).html());
+                                var product = getUrlVars(pageUrl)["product"]
+                                var productVersion = getUrlVars(pageUrl)[product]
+                                if(productVersion != undefined) {
+                                    productVersion = findNearestVersion(productVersion)
+                                    $("p.currentVersion").text("Version " + productVersion)
+                                }
                             }
                         }
                     }
