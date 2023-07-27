@@ -608,6 +608,10 @@ function UsefulRecord(isUseful) {
 function initCrumbs() {
     var crumbul = $('#crumbs').children("ul")
     if (crumbul.length != 0) {
+        if (getUrlVars(document.URL)["product"]) {
+            var documentationLink = getDocumentationLink(getUrlVars(document.URL)["product"], getUrlVars(document.URL)["repoType"])
+            $(crumbul[0]).find("a").eq(0).attr("href", documentationLink)
+        } 
         var appendText = "";
         var expandList = $("#fullTreeMenuListContainer .expandListStyle")
         for (var i=0; i<expandList.length; i++) {
@@ -730,4 +734,8 @@ function getSideBarIframeSrc(pageUrl, lang, product=null, repoType=null) {
         }
     }
     return null
+}
+
+function getDocumentationLink(product, repoType) {
+    return "/" + getDoumentName(product) + '/docs/'+ repoType + "/introduction/"
 }
