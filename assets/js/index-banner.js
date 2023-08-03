@@ -201,6 +201,14 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                 var version_tree_list = null
                 var curPageVersion = verArray[0];
                 curPageVersion = curPageVersion == 'latest' || curPageVersion == null ? 'latest_version' : curPageVersion;
+
+                // if dcv docs but use in other docs, use other docs version
+                var product = getUrlVars(document.URL)["product"]
+                var productVersion = getUrlVars(document.URL)[product]
+                var curProduct = getCurrentUrlProductName(document.URL)
+                if (product && productVersion && curProduct == 'dcv') {
+                    curPageVersion = (productVersion == 'latest' ? 'latest_version' : productVersion)
+                }
                 // console.log(version_tree_list, curPageVersion);
                 version_tree_list = $('#sideBarIframe').contents().find('#version_tree_list ul.version-tree-container');
                 // console.log(version_tree_list, curPageVersion);
@@ -257,6 +265,18 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                         var lineHeight = $('#fullTreeMenuListContainer .activeLink').length > 0 ? $('#fullTreeMenuListContainer .activeLink')[0].offsetHeight : 0;
                         if (nodeOffsetTop > treeHeight + treeOffsetTop - lineHeight) {
                             $('#fullTreeMenuListContainer').scrollTop(nodeOffsetTop - treeOffsetTop - lineHeight);
+                        }
+
+                        // if dcv docs but use in other docs, link did'nt find, go to index page
+                        if (product && productVersion && curProduct == 'dcv' && $('#fullTreeMenuListContainer .activeLink').length == 0) {
+                            var menuLis = $("#fullTreeMenuListContainer > li")
+                            for(var i=0;i<menuLis.length;i++) {
+                                let aTag = $(menuLis[i]).find(" > a").eq(0).attr("href")
+                                if($(menuLis[i]).is(":visible") && aTag) {
+                                    window.location.href = aTag + "?ver=" + productVersion;
+                                    return;
+                                }
+                            }
                         }
     
                         navWrap = document.getElementById("fullTreeMenuListContainer");
