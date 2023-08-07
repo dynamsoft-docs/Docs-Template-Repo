@@ -1,5 +1,6 @@
 ---
 layout: tree-layout
+regenerate: true
 ---
 {%- if site.useVersionTree -%}
     <div id="version_tree_list">
