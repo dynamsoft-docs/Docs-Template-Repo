@@ -632,6 +632,15 @@ function initCrumbs() {
     if (crumbul.length != 0) {
         if (getUrlVars(document.URL)["product"]) {
             var documentationLink = getDocumentationLink(getUrlVars(document.URL)["product"], getUrlVars(document.URL)["repoType"])
+            var menuLis = $("#fullTreeMenuListContainer > li")
+            var flag = false
+            for(var i=0;i<menuLis.length;i++) {
+                let aTag = $(menuLis[i]).find(" > a").eq(0).attr("href")
+                if($(menuLis[i]).is(":visible") && aTag && !flag) {
+                    documentationLink = aTag
+                    flag = true
+                }
+            }
             $(crumbul[0]).find("a").eq(0).attr("href", documentationLink)
         } 
         var appendText = "";
