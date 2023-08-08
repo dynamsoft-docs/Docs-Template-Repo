@@ -1049,9 +1049,10 @@ function closeDocsModal() {
 }
 
 function getDCVVer(inputVer, url) {
+    // console.log(url, document.URL)
     let product = getUrlVars(document.URL)["product"] ? getUrlVars(document.URL)["product"] : getCurrentUrlProductName()
     let urlProduct = getCurrentUrlProductName(url)
-    let repoType = getUrlVars(document.URL)["repoType"]
+    let repoType = getUrlVars(document.URL)["repoType"] ? getUrlVars(document.URL)["repoType"] : getCurrentUrlRepoType(document.URL)
     if (!product || product == "") {
         return "latest"
     }
@@ -1059,7 +1060,8 @@ function getDCVVer(inputVer, url) {
     // console.log("urlProduct: " + urlProduct)
 
     repoType = repoType && repoType == "web" ? "js" : repoType
-    inputVer = inputVer && inputVer == "latest" ? 99 : (inputVer ? inputVer.split(".")[0] : null)
+    inputVer = inputVer ? getFormatVal(inputVer) : null
+    // inputVer = inputVer && inputVer == "latest" ? 99 : (inputVer ? inputVer.split(".")[0] : null)
 
     // console.log("repoType: " + repoType)
     // console.log("inputVer: " + inputVer)
@@ -1071,31 +1073,50 @@ function getDCVVer(inputVer, url) {
             if (key == product) {
                 aFlag = true
                 item.version = item[key]
+                // console.log(item)
             }
         }
-        for(var key in item.matchList) {
-            if (key == urlProduct) {
-                bFlag = true
-                item.linkedProductVersion = item.matchList[key][0]
+        if (aFlag) {
+            for(var key in item.matchList) {
+                if (key == urlProduct) {
+                    bFlag = true
+                    item.linkedProductVersion = item.matchList[key][0]
+                    // console.log(item)
+                }
             }
         }
-        return aFlag && bFlag && (!item.repoType || repoType == item.repoType) && (!inputVer||inputVer <= item.version)
+        // return aFlag && bFlag && (!item.repoType || repoType == item.repoType) && (!inputVer||inputVer <= item.version)
+        return aFlag && bFlag && (!item.repoType || repoType == item.repoType) && (!inputVer||inputVer >= getFormatVal(item.version))
     })
 
+
     productDCVVersionList.sort(function(a, b) {
-        return a.version - b.version
+        return getFormatVal(b.version) - getFormatVal(a.version)
     })
 
     if (productDCVVersionList && productDCVVersionList.length > 0) {
-        if (inputVer) {
-            return productDCVVersionList[0].linkedProductVersion
-        } else {
-            return productDCVVersionList[productDCVVersionList.length - 1].linkedProductVersion
-        }
+        return productDCVVersionList[0].linkedProductVersion
     } else {
         return "latest"
     }
 }
+
+function getFormatVal(inputVer) {
+    if (inputVer == "latest") {
+        return 999999
+    }
+    var arr = inputVer.split(".")
+    var sum = 0
+    if(arr.length == 2) {
+        arr.push(0)
+    }
+    for(var i=0; i<arr.length; i++) {
+        var num = Number(arr[i])
+        sum = sum * 100 + num
+    }
+    return sum
+}
+
 
 window.addEventListener("popstate", function(e) {
     findCurLinkOnFullTree(location, location.href, false, true)
