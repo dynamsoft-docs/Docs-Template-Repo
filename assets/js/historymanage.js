@@ -354,7 +354,9 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
                 productVar = exp.exec(hrefVal) == null && verStr == '' && srcString == "" ? ('?product=' + getUrlVars(document.URL)["product"] + '&repoType=' + repoType) : ('&product=' + getUrlVars(document.URL)["product"] + '&repoType=' + repoType)
                 var product = getUrlVars(document.URL)["product"]
                 var productVersion = getUrlVars(document.URL)[product]
-                productVar = productVar + "&" + product + "=" + productVersion
+                if (productVersion != undefined) {
+                    productVar = productVar + "&" + product + "=" + productVersion
+                }
             }
 
             var product = getUrlVars(document.URL)["product"]
