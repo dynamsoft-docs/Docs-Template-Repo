@@ -75,6 +75,12 @@
         {{page.customLdJsonScript}}
     {%- endif -%}
 
+    {% if page.schema %}
+    <script type="application/ld+json">
+        {% include {{ page.schema }} %}
+    </script>
+    {% endif %}
+
     <script type="text/javascript">
         var _hsq = window._hsq = window._hsq || [];
         _hsq.push(['setContentType', 'knowledge-article']);
