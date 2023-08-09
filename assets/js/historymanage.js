@@ -313,7 +313,9 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
         var product = getUrlVars(document.URL)["product"]
         if (productVar != "" && product != undefined && getUrlVars(document.URL)[product] != undefined) {
             var productVersion = getUrlVars(document.URL)[product]
-            productVar = productVar + "&" + product + "=" + productVersion
+            if (productVersion != undefined) {
+                productVar = productVar + "&" + product + "=" + productVersion
+            }
         }
         // console.log("productVar: " + productVar)
         // same docs, different repo
@@ -342,6 +344,7 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
         // different docs, different repo
         var productVar = ""
         if (!getUrlVars(changeHref)["product"]) {
+            var isAddProductVersion = false
             if (hrefVal.indexOf(currentDocDomain) < 0 && hrefVal.indexOf(document.location.host) >= 0 && hrefVal.indexOf("/docs/") > 0 && !getUrlVars(document.URL)["product"]) {
                 productVar = exp.exec(hrefVal) == null && verStr == '' && srcString == "" 
                 ? ('?product=' + productName + '&repoType=' + repoType)  
@@ -357,12 +360,14 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
                 if (productVersion != undefined) {
                     productVar = productVar + "&" + product + "=" + productVersion
                 }
+                isAddProductVersion = true
             }
-
             var product = getUrlVars(document.URL)["product"]
-            if (productVar != "" && product != undefined && getUrlVars(document.URL)[product] != undefined) {
+            if (!isAddProductVersion && productVar != "" && product != undefined && getUrlVars(document.URL)[product] != undefined) {
                 var productVersion = getUrlVars(document.URL)[product]
-                productVar = productVar + "&" + product + "=" + productVersion
+                if (productVersion != undefined) {
+                    productVar = productVar + "&" + product + "=" + productVersion
+                }
             }
         }
         // same docs, different repo
@@ -406,7 +411,7 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
         // console.log(changeHref)
         // request link
         if (!$(aTag).hasClass("activeLink")) {
-            RequestNewPage(aTag, changeHref, needh3)
+           RequestNewPage(aTag, changeHref, needh3)
         }
     } else if (fromSourse == "docContainer") {
         if (aTag.target == '_blank') {
@@ -433,7 +438,6 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
         return response.text()
     }).then(function(data) {
         var inputVer = getUrlVars(paramLink)["ver"]
-        // console.log("inputVer: " + inputVer)
         var dcvVer = null
         if (getUrlVars(paramLink)["product"]) {
             dcvVer = getDCVVer(inputVer?inputVer:"latest", fetchUrl)
@@ -560,6 +564,7 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
             // add addParam click function for all a tags in article content
             var articleContentATags = $("#articleContent").find("a")
             var verArray = SearchVersion();
+
             for (var i = 0; i < articleContentATags.length; i++)
             {
                 articleContentATags[i].onclick = function(){
@@ -567,6 +572,7 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
                     return false;
                 };
             }
+
             // load breadcrumbs add right side menu
             if ($("#AutoGenerateSidebar").length > 0) {
                 $('#fullTreeMenuListContainer').removeClass('needh3');

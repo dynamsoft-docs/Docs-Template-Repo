@@ -369,6 +369,17 @@ function SearchVersion() {
             else{
                 curVerTag[0].innerText = "version "+ver;
             }
+            var productName = getUrlVars(docUrl)["product"];
+            if (productName != undefined) {
+                var productVersion = getUrlVars(docUrl)[productName];
+                if (productVersion != undefined) {
+                    if (productVersion == "latest version") {
+                        curVerTag[0].innerText = "latest version";
+                    } else {
+                        curVerTag[0].innerText = "version " + productVersion;
+                    }
+                }
+            }
         }
         if(compatiableDiv != null){
             
