@@ -402,16 +402,20 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
     // 除dcv外，其他文档需要去查找到对应的版本号
     // && (verText == "latest" || verText == undefined)
 	if (fromSourse == "sidebar") {
-        var currentHost = document.location.host 
-        if (aTag.href.indexOf("/docs/") <= 0 || aTag.href.indexOf(currentHost) < 0) {
-            window.location.href = aTag.href;
-            return;
-        }
-        // console.log("enter request page")
-        // console.log(changeHref)
-        // request link
-        if (!$(aTag).hasClass("activeLink")) {
-           RequestNewPage(aTag, changeHref, needh3)
+        if (aTag.target == '_blank') {
+            window.open(changeHref);
+        } else {
+            var currentHost = document.location.host 
+            if (aTag.href.indexOf("/docs/") <= 0 || aTag.href.indexOf(currentHost) < 0) {
+                window.location.href = aTag.href;
+                return;
+            }
+            // console.log("enter request page")
+            // console.log(changeHref)
+            // request link
+            if (!$(aTag).hasClass("activeLink")) {
+               RequestNewPage(aTag, changeHref, needh3)
+            }
         }
     } else if (fromSourse == "docContainer") {
         if (aTag.target == '_blank') {
