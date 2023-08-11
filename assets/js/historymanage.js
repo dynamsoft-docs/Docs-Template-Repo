@@ -411,15 +411,15 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
                     if (queryIndex != -1 && hashIndex < queryIndex) {
                         let urlQuery = hrefVal.split("?")
                         let urlHash = urlQuery[0].split("#")
-                        anchorVal = urlHash[1]
-                        hrefVal = hrefVal.replace("#"+anchorVal, '')
+                        anchorVal = '#' + urlHash[1]
+                        hrefVal = hrefVal.replace(anchorVal, '')
                     } else if (queryIndex != -1 && hashIndex > queryIndex) {
-                        anchorVal = hrefVal.split("#")[1]
+                        anchorVal = '#' + hrefVal.split("#")[1]
                         hrefVal = anchorVal ? hrefVal.split("#")[0] : hrefVal
                     } else {
                         let urlAry = hrefVal.split("#");
                         if (urlAry.length == 2){
-                            anchorVal = urlAry[1]
+                            anchorVal = '#' + urlAry[1]
                         }
                     }
                 }
@@ -433,13 +433,13 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
                     let productRepoType = getUrlVars(hrefVal)["repoType"] ? getUrlVars(hrefVal)["repoType"] : getCurrentUrlRepoType(hrefVal)
                     let hrefVal_ProductVersion = getDCVVer(productVersion, null, productName, productRepoType, hrefVal_Product)
                     queryParam = `&${productName}=${productVersion}&repoType=${productRepoType}&ver=${hrefVal_ProductVersion}`
-                    window.open(hrefVal + queryParam + '#' + anchorVal);
+                    window.open(hrefVal + queryParam + anchorVal);
                 } else {
                     let hrefVal_ProductVersion = getDCVVer(currentVersion, hrefVal)
                     if (queryIndex > 0) {
-                        window.open(hrefVal + '&ver='+hrefVal_ProductVersion + '#' +anchorVal); 
+                        window.open(hrefVal + '&ver='+hrefVal_ProductVersion + anchorVal); 
                     } else {
-                        window.open(hrefVal + '?ver='+hrefVal_ProductVersion + '#' +anchorVal); 
+                        window.open(hrefVal + '?ver='+hrefVal_ProductVersion + anchorVal); 
                     }
                 }
             } 
