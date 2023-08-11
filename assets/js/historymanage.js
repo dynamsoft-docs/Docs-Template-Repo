@@ -304,11 +304,14 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
         // console.log(document.location.host)
         // different docs, different repo
         if (hrefVal.indexOf(currentDocDomain) < 0 && hrefVal.indexOf(document.location.host) >= 0 && hrefVal.indexOf("/docs/") > 0 && !getUrlVars(document.URL)["product"]) {
-            productVar = '?product=' + productName + '&repoType=' + repoType
+            productVar = 'product=' + productName + '&repoType=' + repoType
         } else if (hrefVal.indexOf(currentDocDomain) < 0 && hrefVal.indexOf(document.location.host) >= 0 && hrefVal.indexOf("/docs/") > 0 && getUrlVars(document.URL)["product"] && getUrlVars(document.URL)["product"] != getCurrentUrlProductName(changeHref)) {
-            productVar = '?product=' + getUrlVars(document.URL)["product"] + '&repoType=' + repoType
+            productVar = 'product=' + getUrlVars(document.URL)["product"] + '&repoType=' + repoType
         } else if (hrefVal.indexOf(currentDocDomain) >= 0 && getUrlVars(document.URL)["product"]) {
-            productVar = '?product=' + getUrlVars(document.URL)["product"] + '&repoType=' + repoType
+            productVar = 'product=' + getUrlVars(document.URL)["product"] + '&repoType=' + repoType
+        }
+        if (productVar && productVar != "") {
+            productVar = (hrefVal.indexOf("?") > 0 ? '&' : '?') + productVar
         }
         var product = getUrlVars(document.URL)["product"]
         if (productVar != "" && product != undefined && getUrlVars(document.URL)[product] != undefined) {
@@ -856,8 +859,6 @@ function changeVersion (liTag)
     var productVar = getUrlVars(curUrl)["product"];
     var repoTypeVar =getUrlVars(curUrl)["repoType"];
     
-    console.log(productVar, getCurrentUrlProductName())
-
     if (productVar !=undefined && productVar != getCurrentUrlProductName() && getCurrentUrlProductName() != "dcv") {
         var menuLis = $("#fullTreeMenuListContainer > li")
         for(var i=0;i<menuLis.length;i++) {
