@@ -299,9 +299,6 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
     var exp = new RegExp(/[?&]ver=[^&^#]+/gi);
 	if (exp.exec(hrefVal) != null) {
         var productVar = ""
-        // console.log(hrefVal)
-        // console.log(currentDocDomain)
-        // console.log(document.location.host)
         // different docs, different repo
         if (hrefVal.indexOf(currentDocDomain) < 0 && hrefVal.indexOf(document.location.host) >= 0 && hrefVal.indexOf("/docs/") > 0 && !getUrlVars(document.URL)["product"]) {
             productVar = 'product=' + productName + '&repoType=' + repoType
@@ -320,7 +317,6 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
                 productVar = productVar + "&" + product + "=" + productVersion
             }
         }
-        // console.log("productVar: " + productVar)
         // same docs, different repo
         var repoTypeVar = ""
         if (hrefVal.indexOf(currentDocDomain) >= 0 && !getUrlVars(document.URL)["product"]) {
@@ -328,7 +324,6 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
                 repoTypeVar = '?repoType=' + repoType
             }
         }
-        // console.log("repoTypeVar: " + repoTypeVar)
         changeHref = hrefVal + productVar + repoTypeVar
 	} else {
         var verStr = "";
@@ -404,10 +399,56 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
     // 除了到 dcv docs 的跳转，其余文档需要打开新页面，不需要修改 Nav
     // 除dcv外，其他文档需要去查找到对应的版本号
     // && (verText == "latest" || verText == undefined)
-	if (fromSourse == "sidebar") {
-        if (aTag.target == '_blank') {
-            window.open(changeHref);
+    if (aTag.target == '_blank') {
+        console.log(hrefVal)
+        if (hrefVal.indexOf("/docs/") > 0 && hrefVal.indexOf(location.host) >= 0) {
+            if (getUrlVars(hrefVal)["ver"]!=undefined) {
+                window.open(hrefVal);
+            } else {
+                let hashIndex = hrefVal.indexOf("#")
+                let queryIndex = hrefVal.indexOf("?")
+                let anchorVal = null
+                if (hashIndex != -1) {
+                    if (queryIndex != -1 && hashIndex < queryIndex) {
+                        let urlQuery = hrefVal.split("?")
+                        let urlHash = urlQuery[0].split("#")
+                        anchorVal = urlHash[1]
+                        hrefVal = hrefVal.replace("#"+anchorVal, '')
+                    } else if (queryIndex != -1 && hashIndex > queryIndex) {
+                        anchorVal = hrefVal.split("#")[1]
+                        hrefVal = anchorVal ? hrefVal.split("#")[0] : hrefVal
+                    } else {
+                        let urlAry = hrefVal.split("#");
+                        if (urlAry.length == 2){
+                            anchorVal = urlAry[1]
+                        }
+                    }
+                }
+                
+                let currentVersion = $(".currentVersion").text().toLowerCase()
+                currentVersion = currentVersion == "latest version" ? "latest" : (currentVersion.replace("version ", ""))
+                if (getUrlVars(hrefVal)["product"] != undefined) {
+                    let hrefVal_Product = getCurrentUrlProductName(hrefVal)
+                    let productName = getUrlVars(hrefVal)["product"]
+                    let productVersion = getDCVVer(currentVersion, hrefVal, null, null, productName)
+                    let productRepoType = getUrlVars(hrefVal)["repoType"] ? getUrlVars(hrefVal)["repoType"] : getCurrentUrlRepoType(hrefVal)
+                    let hrefVal_ProductVersion = getDCVVer(productVersion, null, productName, productRepoType, hrefVal_Product)
+                    queryParam = `&${productName}=${productVersion}&repoType=${productRepoType}&ver=${hrefVal_ProductVersion}`
+                    window.open(hrefVal + queryParam + anchorVal);
+                } else {
+                    let hrefVal_ProductVersion = getDCVVer(currentVersion, hrefVal)
+                    if (queryIndex > 0) {
+                        window.open(hrefVal + '&ver='+hrefVal_ProductVersion); 
+                    } else {
+                        window.open(hrefVal + '?ver='+hrefVal_ProductVersion); 
+                    }
+                }
+            } 
         } else {
+            window.open(hrefVal);
+        }
+    } else {
+        if (fromSourse == "sidebar") {
             var currentHost = document.location.host 
             if (aTag.href.indexOf("/docs/") <= 0 || aTag.href.indexOf(currentHost) < 0) {
                 window.location.href = aTag.href;
@@ -415,18 +456,10 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
             }
             // request link
             if (!$(aTag).hasClass("activeLink")) {
-               RequestNewPage(aTag, changeHref, needh3)
+                RequestNewPage(aTag, changeHref, needh3)
             }
-        }
-    } else if (fromSourse == "docContainer") {
-        if (aTag.target == '_blank') {
-            window.open(changeHref);
-        } else {
+        } else if (fromSourse == "docContainer") {
             findCurLinkOnFullTree(aTag, changeHref, needh3)
-        }
-    } else {
-        if (aTag.target == '_blank') {
-            window.open(changeHref);
         } else {
             window.location.href = changeHref;
         }
@@ -1072,22 +1105,22 @@ function closeDocsModal() {
     $("#docsModal").remove()
 }
 
-function getDCVVer(inputVer, url) {
-    // console.log(url, inputVer)
-    let product = getUrlVars(document.URL)["product"] ? getUrlVars(document.URL)["product"] : getCurrentUrlProductName()
-    let urlProduct = getCurrentUrlProductName(url)
-    let repoType = getUrlVars(document.URL)["repoType"] ? getUrlVars(document.URL)["repoType"] : getCurrentUrlRepoType(document.URL)
+function getDCVVer(inputVer, url, curProduct=null, curRepoType=null, linkProduct=null) {
+    // console.log(inputVer, url, curProduct, curRepoType, linkProduct)
+    // get current url product & repoType
+    let product = curProduct ? curProduct : (getUrlVars(document.URL)["product"] ? getUrlVars(document.URL)["product"] : getCurrentUrlProductName())
+    let repoType = curRepoType ? curRepoType : (getUrlVars(document.URL)["repoType"] ? getUrlVars(document.URL)["repoType"] : getCurrentUrlRepoType(document.URL))
+    let urlProduct = linkProduct ? linkProduct: getCurrentUrlProductName(url)
     if (!product || product == "") {
         return "latest"
     }
-    // console.log("product: " + product)
-    // console.log("urlProduct: " + urlProduct)
     
     repoType = repoType && repoType == "web" ? "js" : repoType
     inputVer = inputVer ? getFormatVal(inputVer) : 999999
-    // inputVer = inputVer && inputVer == "latest" ? 99 : (inputVer ? inputVer.split(".")[0] : null)
+    // console.log("product:" + product)
     // console.log("repoType: " + repoType)
     // console.log("inputVer: " + inputVer)
+    // console.log("urlProduct: " + urlProduct)
 
     var productDCVVersionList = dcvVersionList.filter(function(item) {
         let aFlag = false
@@ -1096,7 +1129,6 @@ function getDCVVer(inputVer, url) {
             if (key == product) {
                 aFlag = true
                 item.version = item[key]
-                // console.log(item)
             }
         }
         if (aFlag) {
@@ -1104,7 +1136,6 @@ function getDCVVer(inputVer, url) {
                 if (key == urlProduct) {
                     bFlag = true
                     item.linkedProductVersion = item.matchList[key][0]
-                    // console.log(item)
                 }
             }
         }
