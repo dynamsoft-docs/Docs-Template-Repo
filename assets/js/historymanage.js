@@ -400,7 +400,6 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
     // 除dcv外，其他文档需要去查找到对应的版本号
     // && (verText == "latest" || verText == undefined)
     if (aTag.target == '_blank') {
-        console.log(hrefVal)
         if (hrefVal.indexOf("/docs/") > 0 && hrefVal.indexOf(location.host) >= 0) {
             if (getUrlVars(hrefVal)["ver"]!=undefined) {
                 window.open(hrefVal);
@@ -434,13 +433,13 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
                     let productRepoType = getUrlVars(hrefVal)["repoType"] ? getUrlVars(hrefVal)["repoType"] : getCurrentUrlRepoType(hrefVal)
                     let hrefVal_ProductVersion = getDCVVer(productVersion, null, productName, productRepoType, hrefVal_Product)
                     queryParam = `&${productName}=${productVersion}&repoType=${productRepoType}&ver=${hrefVal_ProductVersion}`
-                    window.open(hrefVal + queryParam + anchorVal);
+                    window.open(hrefVal + queryParam + '#' + anchorVal);
                 } else {
                     let hrefVal_ProductVersion = getDCVVer(currentVersion, hrefVal)
                     if (queryIndex > 0) {
-                        window.open(hrefVal + '&ver='+hrefVal_ProductVersion); 
+                        window.open(hrefVal + '&ver='+hrefVal_ProductVersion + '#' +anchorVal); 
                     } else {
-                        window.open(hrefVal + '?ver='+hrefVal_ProductVersion); 
+                        window.open(hrefVal + '?ver='+hrefVal_ProductVersion + '#' +anchorVal); 
                     }
                 }
             } 
