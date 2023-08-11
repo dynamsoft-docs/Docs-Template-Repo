@@ -410,8 +410,6 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
                 window.location.href = aTag.href;
                 return;
             }
-            // console.log("enter request page")
-            // console.log(changeHref)
             // request link
             if (!$(aTag).hasClass("activeLink")) {
                RequestNewPage(aTag, changeHref, needh3)
@@ -857,6 +855,8 @@ function changeVersion (liTag)
     var langVar = getUrlVars(curUrl)["lang"];
     var productVar = getUrlVars(curUrl)["product"];
     var repoTypeVar =getUrlVars(curUrl)["repoType"];
+    
+    console.log(productVar, getCurrentUrlProductName())
 
     if (productVar !=undefined && productVar != getCurrentUrlProductName() && getCurrentUrlProductName() != "dcv") {
         var menuLis = $("#fullTreeMenuListContainer > li")
@@ -883,8 +883,19 @@ function changeVersion (liTag)
     var productVersion = null;
     if (productVar != undefined && getCurrentUrlProductName() == "dcv") {
         var dcvVer = getDCVVer(ver, document.URL)
-        productVersion = ver
-        ver = dcvVer
+        if (dcvVer != -1) {
+            productVersion = ver
+            ver = dcvVer
+        } else {
+            var menuLis = $("#fullTreeMenuListContainer > li")
+            for(var i=0;i<menuLis.length;i++) {
+                let aTag = $(menuLis[i]).find(" > a").eq(0).attr("href")
+                if($(menuLis[i]).is(":visible") && aTag) {
+                    window.location.href = aTag + "?ver=" + ver;
+                    return;
+                }
+            }
+        }
     }
     if (ver != 'latest') {
         curUrl = curUrl + "?ver=" + ver + "&&cVer=true";
@@ -1061,7 +1072,7 @@ function closeDocsModal() {
 }
 
 function getDCVVer(inputVer, url) {
-    // console.log(url, document.URL)
+    // console.log(url, inputVer)
     let product = getUrlVars(document.URL)["product"] ? getUrlVars(document.URL)["product"] : getCurrentUrlProductName()
     let urlProduct = getCurrentUrlProductName(url)
     let repoType = getUrlVars(document.URL)["repoType"] ? getUrlVars(document.URL)["repoType"] : getCurrentUrlRepoType(document.URL)
@@ -1070,11 +1081,10 @@ function getDCVVer(inputVer, url) {
     }
     // console.log("product: " + product)
     // console.log("urlProduct: " + urlProduct)
-
+    
     repoType = repoType && repoType == "web" ? "js" : repoType
-    inputVer = inputVer ? getFormatVal(inputVer) : null
+    inputVer = inputVer ? getFormatVal(inputVer) : 999999
     // inputVer = inputVer && inputVer == "latest" ? 99 : (inputVer ? inputVer.split(".")[0] : null)
-
     // console.log("repoType: " + repoType)
     // console.log("inputVer: " + inputVer)
 
@@ -1097,10 +1107,10 @@ function getDCVVer(inputVer, url) {
                 }
             }
         }
-        // return aFlag && bFlag && (!item.repoType || repoType == item.repoType) && (!inputVer||inputVer <= item.version)
         return aFlag && bFlag && (!item.repoType || repoType == item.repoType) && (!inputVer||inputVer >= getFormatVal(item.version))
     })
 
+    // console.log(productDCVVersionList)
 
     productDCVVersionList.sort(function(a, b) {
         return getFormatVal(b.version) - getFormatVal(a.version)
@@ -1109,7 +1119,7 @@ function getDCVVer(inputVer, url) {
     if (productDCVVersionList && productDCVVersionList.length > 0) {
         return productDCVVersionList[0].linkedProductVersion
     } else {
-        return "latest"
+        return -1
     }
 }
 
