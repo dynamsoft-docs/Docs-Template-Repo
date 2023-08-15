@@ -770,6 +770,9 @@ function getSideBarIframeSrc(pageUrl, lang, product=null, repoType=null) {
             return '/barcode-reader/docs/server/Hide_Tree_Page.html'
         }
     } else {
+        if (product == null && repoType != null) {
+            product = getCurrentUrlProductName()
+        }
         if (getDoumentName(product)) {
             repoType = repoType == null ? 'core' : repoType
             return '/'+ getDoumentName(product) +'/docs/'+ repoType +'/Hide_Tree_Page.html'

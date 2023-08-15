@@ -275,6 +275,8 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
     var repoType = getUrlVars(document.URL)["repoType"] || getCurrentUrlRepoType(document.URL)
     var currentDocDomain = document.URL.split("/docs/")[0] + '/docs/';
 
+    console.log(changeHref, currentDocDomain, repoType)
+
     if(hrefVal == "")
         return;
 
@@ -372,8 +374,10 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
         var repoTypeVar = ""
         if (!getUrlVars(changeHref)["repoType"]) {
             if (hrefVal.indexOf(currentDocDomain) >= 0 && !getUrlVars(document.URL)["product"]) {
+                console.log(repoType, getCurrentUrlRepoType(hrefVal))
                 if (getCurrentUrlRepoType(hrefVal) != repoType) {
                     repoTypeVar = exp.exec(hrefVal) == null && verStr == '' && srcString == "" ? '?repoType=' + repoType : '&repoType=' + repoType
+                    productVar = productVar == "" ? repoTypeVar : productVar
                 }
             }
         }
