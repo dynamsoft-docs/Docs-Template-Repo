@@ -696,8 +696,13 @@ function FilterLangFullTree(needFilterLang=false) {
     // console.log("-------------- End Filter Lang Full Tree --------------")
 }
 
-function getCurrentUrlLang(url, needFilterLang=false, repoType=null) {
-    if (url.indexOf("/docs/server/") > 0 || url.indexOf("/docs/mobile/") > 0 || needFilterLang) {
+function getCurrentUrlLang(url, needFilterLang=false) {
+    let repoType = getUrlVars(url)["repoType"]
+    if (repoType == undefined) {
+        repoType = getCurrentUrlRepoType(url)
+    }
+
+    if (repoType == "server" || repoType == "mobile" || needFilterLang) {
         if (url.indexOf("/c-cplusplus/") > 0) {
             if (getUrlVars(url)["src"]) {
                 var src = getUrlVars(url)["src"].toLowerCase().trim()
@@ -732,9 +737,11 @@ function getCurrentUrlLang(url, needFilterLang=false, repoType=null) {
             }
             return result
         } else {
-            var arr = url.indexOf("/docs/server/") > 0 ? url.split("/docs/server/")[1].split("/") : (url.indexOf("/docs/mobile/") > 0 ? url.split("/docs/mobile/")[1].split("/"): '')
-            if (url.indexOf("/docs/mobile/") > 0 && ["objectivec-swift", "android", "xamarin", "react-native", "flutter", "cordova"].indexOf(arr[1]) < 0) {
+            var arr = repoType == "server" ? url.split("/docs/server/")[1].split("/") : (repoType == "mobile" ? url.split("/docs/mobile/")[1].split("/"): '')
+            if (repoType == "mobile" && ["objectivec-swift", "android", "xamarin", "react-native", "flutter", "cordova"].indexOf(arr[1]) < 0) {
                 return "objectivec-swift"
+            } else if (repoType == "web" || repoType == "js") {
+                return "js"
             } else {
                 return arr[1]
             }
