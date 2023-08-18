@@ -16,6 +16,7 @@ var dcvVersionList =
     },
     {
         dbr: "10.0.10",
+        repoType: "server",
         matchList: 
         {
             dcv:["2.0.10"],
@@ -26,7 +27,21 @@ var dcvVersionList =
         }
     },
     {
+        dbr: "10.0.10",
+        repoType: "core",
+        matchList: 
+        {
+            dcv:["2.0.10"],
+            dce:["4.0.0"],
+            ddn:["2.0.10"],
+            dlr:["3.0.10"],
+            dcp:["2.0.10"]
+        }
+    },
+
+    {
         dbr: "10.0.0",
+        repoType: "server",
         matchList: 
         {
             dcv:["2.0.0"],
