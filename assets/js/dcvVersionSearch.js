@@ -57,7 +57,7 @@ var dcvVersionList =
         matchList: 
         {
             dcv:["1.0.0"],
-            dce:["2.0.0"]
+            dce:["2.3.10"]
         }
     },
     {
@@ -65,7 +65,7 @@ var dcvVersionList =
         repoType: "js",
         matchList: 
         {
-            dce:["3.0.0"]
+            dce:["3.3.5"]
         }
     },
     {
