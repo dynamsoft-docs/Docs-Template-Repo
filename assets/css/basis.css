@@ -45,7 +45,11 @@
 html {
     font-size: 10px;
     color: #606060;
-    font-family: OpenSans-Regular
+    font-family: OpenSans-Regular;
+}
+
+body {
+    font-family: OpenSans-Regular;
 }
 
 .h1,
@@ -309,13 +313,13 @@ ul.disc>li p:hover {
 #docHead {
     position: fixed;
     z-index: 12;
-    top: 155px;
+    top: 150px;
     padding: 20px 0 20px 0;
     margin-top: 0px;
 }
 
 .noSubMenuDoc #docHead {
-    top: 95px;
+    top: 80px;
 }
 
 #docHead .crumbsBox {
@@ -344,7 +348,7 @@ ul.disc>li p:hover {
 .dlrDoc #docHead {
     position: fixed;
     z-index: 12;
-    top: 190px;
+    top: 150px;
     padding: 20px 0 20px 0;
     margin-top: 0px;
 }
@@ -651,12 +655,12 @@ ul.disc>li p:hover {
 }
 
 .docContainer {
-    padding-top: 95px;
+    padding-top: 70px;
 }
 
 .dlrDoc #sideBarCnt.sidebar-fixed {
     position: fixed;
-    top: 95px;
+    top: 70px;
     max-height: unset;
 }
 
@@ -1675,2171 +1679,21 @@ ul {
     vertical-align: top;
 }
 
-/*------------------ begin navigation ---------------*/
-#cp-header {
-    -webkit-transition: background .3s ease;
-    -moz-transition: background .3s ease;
-    -o-transition: background .3s ease;
-    transition: background .3s ease;
-    text-decoration: none;
-}
-
-#action-nav {
-    height: 65px;
-    font-size: 14px;
-    margin: 0;
-    padding: 0;
-    font-size: 14px;
-    font-family: OpenSans-Regular;
-    color: #999;
-}
-
-#action-nav li {
-    float: right;
-    vertical-align: middle;
-    list-style: none;
-    margin-top: 0;
-    margin-right: 0;
-    margin-bottom: 0;
-}
-
-#cp-header .action-signin {
-    max-width: 120px;
-    width: 120px;
-    margin-left: 30px;
-}
-
-#cp-header .action-search {
-    vertical-align: middle;
-    position: relative;
-    cursor: pointer;
-}
-
-#cp-header .action-search .searchIcon {
-    display: inline-block;
-    width: 24px;
-    height: 24px;
-    background: url(../img-icon/search-1.png) no-repeat center center;
-    vertical-align: text-bottom;
-}
-
-#cp-header .action-search .toggle-search .icon-search {
-    display: inline-block;
-    margin-right: 7px;
-    width: 16px;
-    height: 16px;
-    background: url(https://www.dynamsoft.com/assets/img-icon/icon-search-9-16x16.png) no-repeat center center;
-    vertical-align: text-bottom;
-}
-
-#cp-header .action-search .toggle-search {
-    display: none;
-}
-
-#cp-header .action-search input[type='text'] {
-    padding: 0 5px;
-    margin-top: 17px;
-    width: 240px;
-    height: 30px;
-    color: #323234;
-    background-image: url(https://www.dynamsoft.com/assets/img-icon/icon-search-a-16x16.png);
-    background-repeat: no-repeat;
-    background-position: 9px center;
-    border: 1px solid #707070;
-    border-radius: 0px;
-    outline: none;
-}
-
-#cp-header .action-search input[type='text']:focus {
-    background-image: none;
-}
-
-.company-header #cp-header .action-search .toggle-search {
-    display: block;
-    line-height: 65px;
-}
-
-.company-header #cp-header .action-search input[type='text'] {
-    width: 0;
-    padding: 0;
-    border-width: 0;
-}
-
-#cp-header .header-visitor,
-header-signin {
-    height: 65px;
-    text-align: right;
-    display: none;
-}
-
-#cp-header .header-visitor a {
-    display: block;
-    max-width: 120px;
-    height: 65px;
-    line-height: 65px;
-    vertical-align: middle;
-    color: #999;
-    text-decoration: none;
-}
-
-#cp-header .header-visitor a img {
-    margin-right: 7px;
-    vertical-align: sub;
-}
-
-#cp-header .header-visitor a:link,
-.header-visitor a:visited,
-.header-visitor a:hover {
-    color: #999;
-    text-decoration: none;
-}
-
-#cp-header .header-signin {
-    -webkit-transition: background .3s ease;
-    -moz-transition: background .3s ease;
-    -o-transition: background .3s ease;
-    transition: background .3s ease;
-    /*background: #fff;*/
-    height: 65px;
-    float: left;
-    max-width: 120px;
-}
-
-#cp-header .userbox {
-    float: right;
-    cursor: pointer;
-    max-width: 120px;
-    line-height: 65px;
-}
-
-#cp-header .usericon {
-    background: url(https://www.dynamsoft.com/CustomerPortal/images/icn-loggedin-18x18.png) no-repeat;
-    width: 18px;
-    height: 18px;
-    float: left;
-    margin-top: 25px;
-    margin-right: 8px;
-}
-
-#cp-header .userbox label.username {
-    white-space: nowrap;
-    display: block;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    max-width: 70px;
-    float: left;
-    margin-bottom: 0;
-    margin-right: 5px;
-    cursor: pointer;
-    color: #323234;
-}
-
-#cp-header .userbox .username:hover {
-    color: #fe8e14;
-}
-
-#cp-header .userbox .fa {
-    color: #323234;
-}
-
-#cp-header .popup {
-    border-radius: 4px;
-    background: #ffffff;
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    color: #333;
-}
-
-#cp-header .arrow-up {
-    position: absolute;
-    left: 50%;
-    margin-left: -11px;
-    top: -11px;
-    width: 0;
-    height: 0;
-    border-bottom: 11px solid #ccc;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-}
-
-#cp-header .arrow-up:after {
-    border-width: 10px;
-    content: "";
-    top: 1px;
-    margin-left: -10px;
-    position: absolute;
-    display: block;
-    width: 0;
-    height: 0;
-    border-bottom: 11px solid #f7f7f7;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-}
-
-#cp-header #action-nav .userbox-more {
-    display: none;
-    width: 140px;
-    border: 1px solid #ccc;
-    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-    -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-    right: 0px;
-    top: 65px;
-    z-index: 9998;
-    background: #f7f7f7;
-}
-
-#cp-header #action-nav .userbox-more ul {
-    margin: 0;
-    padding: 2px 0;
-    float: left;
-}
-
-#cp-header #action-nav .userbox-more li {
-    list-style: none;
-    height: auto;
-    font-size: 14px;
-    text-align: left;
-    line-height: 25px;
-    float: left;
-    width: 100%;
-    border-bottom: solid 1px #f7f7f7;
-}
-
-#cp-header #action-nav .userbox-more li a {
-    line-height: 25px;
-    font-size: 14px;
-    text-align: left;
-    height: 25px;
-    padding: 5px 10px;
-    color: #444;
-    display: block;
-    margin: 0 1px;
-    text-decoration: none;
-    box-sizing: content-box;
-}
-
-#cp-header #action-nav .userbox-more li:hover {
-    background: #efefef;
-    border-bottom: 1px solid #fe8e14;
-    color: #fe8e14;
-}
-
-#cp-header #action-nav .userbox-more li a:hover {
-    text-decoration: none;
-    color: #fe8e14;
-}
-
-#cp-header #action-nav .userbox-more li:nth-child(2) {
-    display: none;
-}
-
-#cp-header .btn {
-    border-left: 1px solid #ccc;
-    border-right: 1px solid #ccc;
-    border-top: 1px solid #ccc;
-    border-bottom: 1px solid #b3b3b3;
-    display: inline-block;
-    padding: 4px 12px;
-    margin-bottom: 0;
-    font-size: 14px;
-    line-height: 20px;
-    text-align: center;
-    vertical-align: middle;
-    cursor: pointer;
-    color: #333;
-    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
-    background-color: #f5f5f5;
-    background-repeat: repeat-x;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
-    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 1px 2px rgba(0, 0, 0, .05);
-    -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 1px 2px rgba(0, 0, 0, .05);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 1px 2px rgba(0, 0, 0, .05);
-    background-image: linear-gradient(to bottom, #fff, #e6e6e6);
-    text-decoration: none;
-}
-
-#cp-header .btn:hover {
-    text-decoration: none;
-    background-image: linear-gradient(to bottom, #fe8e14, #ff6600);
-    color: #ffffff;
-}
-
-#cp-header a.btnSignUp {
-    background: #3a3a3a;
-    color: #ffffff;
-    text-decoration: none;
-}
-
-#cp-header a.btnSignUp:hover {
-    background-image: linear-gradient(to bottom, #fe8e14, #ff6600);
-    color: #ffffff;
-}
-
-#cp-header a.btnSignIn {
-    text-decoration: none;
-}
-
-#cp-header a.btnSignIn:hover {
-    background-image: linear-gradient(to bottom, #fe8e14, #ff6600);
-    color: #ffffff;
-}
-
-#cp-header #buttons {
-    float: right;
-    margin-right: 40px;
-    margin-top: 20px;
-}
-
-#cp-header .fl {
-    float: left;
-}
-
-#cp-header .fr {
-    float: right;
-}
-
-#cp-header .pa {
-    position: absolute;
-}
-
-#cp-header .pr {
-    position: relative;
-}
-
-#dynamsoft-header i.dwt-white-logo,
-#dynamsoft-header i.dnt-white-logo {
-    height: 30px;
-}
-
-#mdMenu li.on .icon-orange-angle {
-    transform: rotate(180deg)
-}
-
-@media screen and (max-width: 767px) {
-    #xsMenu {
-        height: 60px;
-    }
-
-    #xsHeader {
-        border-bottom: 1px solid #eee;
-        background-color: #ffffff;
-    }
-
-    #xsHeader.showMenu {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        left: 0;
-    }
-
-    #xsHeader .ds-logo {
-        float: left;
-        margin: 14px 0 0;
-        width: 125px;
-        height: 30px;
-    }
-
-    #xsMenu .xsMenuToggle {
-        float: right;
-        padding: 0px 0 0px 10px;
-        cursor: pointer;
-    }
-
-    #xsMenu .xsMenuToggle .open {
-        display: inline-block;
-        margin-top: 18px;
-    }
-
-    #xsMenu .xsMenuToggle .open span {
-        display: block;
-        margin-top: 4px;
-        width: 22px;
-        height: 2px;
-        background: #aaa;
-    }
-
-    #xsMenu .xsMenuToggle .close {
-        display: none;
-        font-size: 4rem;
-        color: #aaa;
-        font-family: initial;
-        opacity: 1;
-        margin-top: 9px;
-    }
-
-    #xsNav {
-        display: none;
-        height: calc(100vh - 60px);
-        background-color: #000000;
-        color: #FFFFFF;
-        padding-top: 25px;
-        position: fixed;
-        width: 100%;
-        z-index: 1111;
-    }
-
-    #xsSearch {
-        position: relative;
-        margin: 0 0 15px;
-        height: 46px;
-        width: 100%;
-    }
-
-    #xsSearch input[type=text] {
-        padding: 0 35px 0 15px;
-        width: 100%;
-        height: 43px;
-        border: none;
-        border-radius: 0;
-        outline: none;
-        vertical-align: top;
-        font-size: 16px;
-    }
-
-    #xsSearch .xsSearchSubmit {
-        display: inline-block;
-        position: absolute;
-        right: 15px;
-        top: 0;
-        width: 30px;
-        height: 100%;
-        background: url(https://www.dynamsoft.com/assets/img-icon/icon-search-a-16x16.png) no-repeat 100%;
-        cursor: pointer;
-    }
-
-    #xsNav .xsNavToggle {
-        display: inline-block;
-        padding: 0 15px 3px;
-        color: #999;
-        cursor: pointer;
-    }
-
-    #xsNav .xsNavToggle,
-    #xsNav a {
-        font-size: 14px;
-        line-height: 24px;
-    }
-
-    #xsNav .products {
-        margin-bottom: 5px;
-    }
-
-    #xsNav li {
-        padding: 5px 0;
-        line-height: 26px;
-    }
-
-    #xsNav li a.bluelink {
-        color: #50a8e1;
-    }
-
-    #subMenu {
-        display: none !important;
-    }
-
-    #pcMenu {
-        display: none !important;
-    }
-
-    #xsNav li.menuItem {
-        padding: 20px 0;
-        border-bottom: 1px solid #999;
-    }
-
-    #xsNav li.menuItem .menuName,
-    #xsNav li.menuItem .menuName a {
-        color: #FFFFFF;
-        font-size: 20px;
-        font-family: Oswald-Regular, 'Myriad Pro', 'Gloucester MT', myriad-pro, 'Agency FB';
-    }
-
-    #xsNav li.menuItem .menuDetail {
-        display: none;
-    }
-
-    #xsNav li.menuItem .menuDetail .productLogo {
-        margin-top: 20px;
-    }
-
-    #xsNav li.menuItem .menuDetail .menu-left,
-    #xsNav li.menuItem .menuDetail .menu-right {
-        display: inline-block;
-        font-family: Oswald-Regular, 'Myriad Pro', 'Gloucester MT', myriad-pro, 'Agency FB';
-    }
-
-    #xsNav li.menuItem .menuDetail .menu-left {
-        padding-right: 50px;
-    }
-
-    #xsNav li.menuItem .menuDetail .menu-left .subMenuList li.item a {
-        color: #FFFFFF;
-        font-size: 16px;
-    }
-
-    #xsNav li.menuItem .menuDetail .menu-right {
-        padding-left: 30px;
-    }
-
-    #xsNav li.menuItem .menuDetail .menu-right .subMenuList li.item a {
-        color: #FFFFFF;
-        padding-left: 20px;
-        font-size: 16px;
-    }
-
-    #xsNav li.menuItem .menuDetail .menu-right .subMenuList li.subTitle {
-        font-family: Oswald-Light, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
-        font-size: 16px;
-    }
-
-    #xsNav li.menuItem .menuDetail .desc {
-        font-size: 14px;
-    }
-
-    #xsNav li.menuItem.on .icon-orange-angle {
-        transform: rotate(180deg)
-    }
-
-    #xsNav li.menuItem .menuDetail .menu-left .subMenuList li.dwtDownload a {
-        color: #FE8E14
-    }
-
-    #xsNav li.menuItem .menuDetail .menu-left .subMenuList li.dntDownload a {
-        color: #6AC4BB
-    }
-}
-
-@media (min-width: 768px) {
-    #overall-header {
-        height: 65px;
-    }
-
-    #pcMenu.fixed {
-        position: fixed;
-        top: 65px;
-        left: 0;
-        right: 0;
-        width: 100%;
-        z-index: 1111;
-    }
-
-    #subMenu {
-        /*display: none;*/
-        padding: 35px 20px 55px 45px;
-        position: absolute;
-        z-index: 1111;
-        width: 620px;
-        background: #f5f5f5;
-        border: 1px solid #ddd;
-        border-top: 2px solid #ddd;
-        box-shadow: unset;
-    }
-
-    #subMenu .subMenuContent .pro>a {
-        display: inline-block;
-        margin: 0 0 6px;
-        font-size: 14px;
-        line-height: 32px;
-        color: #444;
-        font-family: OpenSans-Semibold;
-    }
-
-    #subMenu .subMenuContent .pro .logo {
-        display: inline-block;
-        float: left;
-        margin: 0 9px 0 0;
-    }
-
-    #subMenu .subMenuContent .pro .logo img {
-        width: 33px;
-        height: 32px;
-    }
-
-    #subMenu .subMenuContent .pro .intro {
-        margin: 4px 0 0;
-        font-size: 14px;
-        line-height: 22px;
-        color: #999;
-    }
-
-    #subMenu .subMenuContent .proPanel .rightPart .rightPartTitle {
-        color: #323234;
-    }
-}
-
-@media (max-width: 991px) and (min-width: 768px) {
-    #smMenu {
-        height: 65px;
-        border-bottom: 1px solid #eee;
-        background: #ffffff;
-    }
-
-    #smHeader .ds-logo {
-        float: left;
-        margin: 15px 0 0;
-        width: 135px;
-        height: 32px;
-    }
-
-    #smHeader .smMenuToggle {
-        float: right;
-        margin-top: 20px;
-        cursor: pointer;
-    }
-
-    #smHeader .smMenuToggle .bars {
-        display: inline-block;
-        width: 28px;
-        vertical-align: top;
-    }
-
-    #smHeader .smMenuToggle .bars span {
-        display: block;
-        margin-top: 5px;
-        width: 21px;
-        height: 2px;
-        border-radius: 2px;
-        background: #aaa;
-    }
-
-    #smHeader .smMenuToggle .textMenu {
-        font-size: 16px;
-        line-height: 26px;
-        color: #606060;
-        vertical-align: top;
-    }
-
-    #smNav {
-        margin: 0 0 22px;
-        font-size: 16px;
-    }
-
-    #smNav li {
-        float: left;
-        height: 26px;
-        line-height: 26px;
-        padding: 0 22px;
-    }
-
-    #smNav li:first-child {
-        padding-left: 0;
-    }
-
-    #smNav li:first-child a {
-        color: #fe8e14;
-        font-family: OpenSans-Semibold;
-        cursor: default;
-    }
-
-    #smNav li a,
-    #smNav li a:visited,
-    #smNav li a:active {
-        color: #606060;
-    }
-
-    #smNav li a:hover {
-        color: #fe8e14;
-    }
-
-    #subMenu .subMenuContent .pro {
-        margin-bottom: 15px;
-    }
-
-    #pcMenu .headSubMenu {
-        display: none !important;
-    }
-
-    #subMenu {
-        display: none;
-        padding: 40px 20px 50px 30px;
-        width: 100%;
-        top: 0;
-        left: 0;
-        margin-left: 0;
-    }
-
-    #subMenu .icon-orange-angle {
-        display: none;
-    }
-
-    #subMenu .subMenuContent .proPanel {
-        margin-bottom: 0px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart,
-    #subMenu .subMenuContent .proPanel .rightPart {
-        display: block;
-        vertical-align: top;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct,
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct {
-        display: inline-block;
-        vertical-align: top;
-        cursor: pointer;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .proLine {
-        margin-bottom: 30px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .icon {
-        display: inline-block;
-        border-radius: 5px;
-        width: 50px;
-        height: 50px;
-        background: #999;
-        vertical-align: top;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .icon.dbrIcon {
-        background: url(../img-icon/dbr-big.png);
-        background-size: cover;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .icon.dwtIcon {
-        background: url(../img-icon/dwt-big.png);
-        background-size: cover;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .proInfo {
-        display: inline-block;
-        width: 240px;
-        vertical-align: top;
-        padding-left: 10px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .proInfo .title {
-        font-size: 16px;
-        line-height: 18px;
-        margin-bottom: 10px;
-        color: #323234;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .proInfo .intro {
-        font-size: 14px;
-        line-height: 22px;
-        color: #606060;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct {
-        padding-right: 20px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct .icon {
-        display: inline-block;
-        border-radius: 5px;
-        width: 30px;
-        height: 30px;
-        background: #999;
-        vertical-align: top;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct .icon.dlrIcon {
-        background: url(../img-icon/dlr-small.png);
-        background-size: cover;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct .icon.dntIcon {
-        background: url(../img-icon/dnt-small.png);
-        background-size: cover;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct .proInfo {
-        display: inline-block;
-        width: 240px;
-        vertical-align: top;
-        padding-left: 10px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct .proInfo .title {
-        font-size: 14px;
-        line-height: 20px;
-        margin-bottom: 5px;
-        color: #323234;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct .proInfo .intro {
-        font-size: 14px;
-        line-height: 24px;
-        color: #606060;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct a {
-        padding-left: 22px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct.dwt,
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct.dnt {
-        padding-left: 0px;
-        padding-right: 0px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct.dbr,
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct.dlr {
-        width: 350px;
-        padding-right: 30px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .advancedModules {
-        padding-left: 63px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .advancedModules p {
-        margin-bottom: 5px;
-        font-size: 12px;
-        line-height: 22px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .advancedModules p.label {
-        margin-top: 15px;
-        font-size: 14px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .advancedModules p a {
-        display: inline;
-        color: #323234;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .advancedModules p a:hover {
-        color: #fe8e14;
-    }
-
-    #subMenu .subMenuContent .proPanel .rightPart {
-        padding-left: 63px;
-    }
-
-    #subMenu .subMenuContent .proPanel .rightPart .subProduct {
-        width: 238px;
-        display: inline-block;
-        vertical-align: top;
-        margin-bottom: 40px;
-    }
-
-    #subMenu .subMenuContent .proPanel .rightPart .subProduct:first-child {
-        padding-left: 42px;
-    }
-
-    #subMenu .subMenuContent .proPanel .rightPart .subProduct:last-child {
-        margin-bottom: 0;
-        margin-left: 110px;
-    }
-
-    #subMenu .subMenuContent .proPanel .rightPart .subProduct .title {
-        font-size: 14px;
-        line-height: 20px;
-        margin-bottom: 5px;
-        color: #323234;
-    }
-
-    #subMenu .subMenuContent .proPanel .rightPart .subProduct .intro {
-        font-size: 14px;
-        line-height: 26px;
-        color: #606060;
-    }
-}
-
-@media (min-width: 992px) {
-
-    #overall-header,
-    #mdHeader,
-    #mdMenu li,
-    #cp-header,
-    #cp-header .header-visitor a {
-        height: 72px;
-    }
-
-    #cp-header .header-visitor,
-    header-signin {
-        height: 72px;
-    }
-
-    #mdHeader {
-        height: 72px;
-        background: #ffffff;
-        /*border-bottom: 1px solid #ddd;*/
-    }
-
-    #mdHeader .ds-logo {
-        float: left;
-        margin: 16px 0 0;
-        width: 145px;
-        height: 35px;
-    }
-
-    #mdMenu {
-        padding-left: 190px;
-        margin: 0;
-        width: 100%;
-    }
-
-    #mdMenu li {
-        float: left;
-        height: 72px;
-        padding: 0;
-        text-align: center;
-        list-style: none;
-        margin-right: 40px;
-    }
-
-    #mdMenu li a {
-        display: inline-block;
-        padding: 0;
-        line-height: 71px;
-        font-size: 18px;
-        color: #444;
-        font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
-    }
-
-    #mdMenu .icon-orange-angle {
-        width: 7px;
-        height: 13px;
-    }
-
-    #cp-header {
-        float: right;
-        padding: 0;
-        height: 72px;
-    }
-
-    #cp-header li {
-        text-indent: 0;
-    }
-
-    #cp-header .action-signin {
-        margin: 0;
-    }
-
-    #cp-header .action-buttons {
-        height: auto;
-        margin-top: 21px;
-        margin-right: 20px;
-    }
-
-    #cp-header .action-buttons a {
-        transition: ease-in-out 0.2s all;
-        box-shadow: 0px 0px 0 0 #FFFFFF;
-    }
-
-    #cp-header .action-buttons a:first-child {
-        margin-right: 10px;
-    }
-
-    #cp-header .action-buttons a:hover {
-        box-shadow: -4px 4px 0 0 #000000;
-        transform: translate(4px, -4px);
-        background: #fe8e14;
-    }
-
-    #cp-header .action-search {
-        margin-right: 20px;
-    }
-
-    #cp-header .action-search .searchIcon {
-        margin-top: 23px;
-    }
-
-    #cp-header .action-search input[type='text'] {
-        margin-top: 21px;
-        width: 200px;
-    }
-
-    #cp-header .header-visitor a {
-        padding: 0;
-        color: #323234;
-        line-height: 71px;
-    }
-
-    #cp-header .header-visitor a:link,
-    .header-visitor a:visited,
-    .header-visitor a:hover {
-        color: #323234;
-    }
-
-    .icon-signin {
-        margin-top: 21px;
-        margin-right: 15px;
-    }
-
-    #pcMenu.fixed {
-        position: fixed;
-        top: 72px;
-        left: 0;
-        right: 0;
-        width: 100%;
-        z-index: 1111;
-    }
-
-    .headSubMenu {
-        background: #F5F5F5;
-        position: absolute;
-        border: 1px solid #ddd;
-        border-top: 2px solid #ddd;
-        z-index: 1111;
-    }
-
-    .headSubMenu .icon-orange-angle {
-        display: none;
-        width: 26px;
-        height: 33px;
-        position: absolute;
-        left: 80px;
-        top: -15px;
-    }
-
-    .headSubMenu .menu-top .menu-left {
-        display: inline-block;
-        padding: 40px 80px 25px;
-        border-right: 1px solid #323234;
-        vertical-align: top;
-    }
-
-    .headSubMenu .menu-top .menu-left .dbr-logo {
-        margin-bottom: 5px;
-    }
-
-    .headSubMenu .menu-top .menu-right {
-        display: inline-block;
-        padding: 55px 0 0 80px;
-        vertical-align: top;
-    }
-
-    .headSubMenu .menu-top .menu-right .subMenuList li.subTitle {
-        color: #323234;
-        font-family: Oswald-Light, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
-        font-size: 18px;
-    }
-
-    .headSubMenu .menu-top .subMenuList li.item {
-        margin-top: 15px;
-    }
-
-    .headSubMenu .menu-top .subMenuList li.item a {
-        color: #323234;
-        font-size: 18px;
-        font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
-    }
-
-    .headSubMenu .menu-top .subMenuList li.item a:hover,
-    .headSubMenu .menu-top .subMenuList li.item a:visited,
-    .headSubMenu .menu-top .subMenuList li.item a:active {
-        color: #323234
-    }
-
-    .headSubMenu .menu-bottom {
-        width: 100%;
-        height: 65px;
-        line-height: 65px;
-    }
-
-    .headSubMenu .menu-bottom a {
-        display: block;
-        width: 100%;
-        height: 100%;
-        color: #ffffff;
-        text-align: center;
-        font-size: 24px;
-        font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
-    }
-
-    #companySubMenu {
-        display: none;
-        padding: 20px 70px 30px 60px;
-        left: 462px;
-    }
-
-    #companySubMenu .subMenuList li.item {
-        margin-top: 15px;
-    }
-
-    #companySubMenu .subMenuList li.item a {
-        color: #323234;
-        font-size: 16px;
-        font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
-    }
-
-    #companySubMenu .subMenuList li.item a:visited,
-    #companySubMenu .subMenuList li.item a:active {
-        color: #323234
-    }
-
-    #companySubMenu .subMenuList li.item a:hover {
-        color: #fe8e14;
-    }
-
-    #companySubMenu .icon-orange-angle {
-        left: 60px;
-    }
-
-    #useCaseSubMenu {
-        display: none;
-        padding: 20px 70px 30px 60px;
-        left: 355px;
-    }
-
-    #useCaseSubMenu .subMenuList li.item {
-        margin-top: 15px;
-    }
-
-    #useCaseSubMenu .subMenuList li.item a {
-        color: #323234;
-        font-size: 16px;
-        font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
-    }
-
-    #useCaseSubMenu .subMenuList li.item a:visited,
-    #useCaseSubMenu .subMenuList li.item a:active {
-        color: #323234
-    }
-
-    #useCaseSubMenu .subMenuList li.item a:hover {
-        color: #fe8e14;
-    }
-
-    #useCaseSubMenu .icon-orange-angle {
-        left: 60px;
-    }
-
-    #subMenu .icon-orange-angle {
-        display: none;
-        position: absolute;
-        width: 26px;
-        height: 33px;
-        left: 100px;
-        top: -15px;
-    }
-
-    #subMenu {
-        padding: 0px 0px 50px 0px;
-        display: none;
-        width: 987px;
-        left: 50%;
-        top: 0;
-        transform: translateX(-50%);
-        margin-left: 0;
-        box-shadow: unset;
-    }
-
-    #subMenu .subMenuContent .proPanel {
-        margin-bottom: 0px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart,
-    #subMenu .subMenuContent .proPanel .rightPart {
-        display: inline-block;
-        vertical-align: top;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart {
-        border-right: 1px solid #ddd;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct,
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct {
-        display: inline-block;
-        vertical-align: top;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .proLine {
-        margin-bottom: 0px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .proLine:last-child {
-        margin-bottom: 0;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct {
-        padding: 0;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .icon {
-        display: inline-block;
-        border-radius: 5px;
-        width: 50px;
-        height: 50px;
-        background: #999;
-        vertical-align: top;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .icon.dbrIcon {
-        background: url(../img-icon/dbr-big.png);
-        background-size: cover;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .icon.dwtIcon {
-        background: url(../img-icon/dwt-big.png);
-        background-size: cover;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .proInfo {
-        display: inline-block;
-        width: 200px;
-        vertical-align: top;
-        padding-left: 10px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .proInfo .title {
-        font-size: 16px;
-        line-height: 18px;
-        margin-bottom: 10px;
-        color: #323234;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .proInfo .intro {
-        font-size: 14px;
-        line-height: 22px;
-        color: #606060;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct {
-        padding: 0;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct .icon {
-        display: inline-block;
-        border-radius: 5px;
-        width: 30px;
-        height: 30px;
-        background: #999;
-        vertical-align: top;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct .icon.dlrIcon {
-        background: url(../img-icon/dlr-small.png);
-        background-size: cover;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct .icon.dntIcon {
-        background: url(../img-icon/dnt-small.png);
-        background-size: cover;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct .proInfo {
-        display: inline-block;
-        width: 240px;
-        vertical-align: top;
-        padding-left: 10px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct .proInfo .title {
-        font-size: 14px;
-        line-height: 20px;
-        margin-bottom: 5px;
-        color: #323234;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct .proInfo .intro {
-        font-size: 14px;
-        line-height: 24px;
-        color: #606060;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct a,
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct a {
-        display: block;
-        width: 100%;
-        height: 100%;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct {
-        padding: 40px 20px 0px 30px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct {
-        padding: 30px 20px 40px 20px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct a {
-        padding-left: 22px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct.dwt,
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct.dnt {
-        padding-left: 10px;
-        padding-right: 30px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct.dbr,
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct.dlr {
-        width: 370px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .advancedModules {
-        padding-left: 63px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .advancedModules p {
-        margin-bottom: 5px;
-        font-size: 12px;
-        line-height: 22px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .advancedModules p.label {
-        margin-top: 15px;
-        font-size: 14px;
-        padding: 0;
-        color: #323234;
-        font-weight: normal;
-        display: inline-block;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .advancedModules p a {
-        display: inline;
-        color: #323234;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .advancedModules p a:hover {
-        color: #fe8e14;
-    }
-
-    #subMenu .subMenuContent .proPanel .rightPart {
-        padding-left: 0px;
-        padding-top: 40px;
-    }
-
-    #subMenu .subMenuContent .proPanel .rightPart .rightPartTitle {
-        padding-left: 25px;
-        font-size: 18px;
-        line-height: 22px;
-        color: #323234;
-    }
-
-    #subMenu .subMenuContent .proPanel .rightPart .subProduct {
-        width: 220px;
-        margin-bottom: 0px;
-        padding: 0;
-    }
-
-    #subMenu .subMenuContent .proPanel .rightPart .subProduct a {
-        display: block;
-        width: 100%;
-        height: 100%;
-        padding: 20px 0px 20px 25px;
-    }
-
-    #subMenu .subMenuContent .proPanel .rightPart .subProduct:last-child {
-        margin-bottom: 0;
-    }
-
-    #subMenu .subMenuContent .proPanel .rightPart .subProduct .title {
-        font-size: 14px;
-        line-height: 20px;
-        margin-bottom: 5px;
-        color: #323234;
-    }
-
-    #subMenu .subMenuContent .proPanel .rightPart .subProduct .intro {
-        font-size: 14px;
-        line-height: 26px;
-        color: #606060;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct>a:hover .proInfo .intro,
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct>a:hover .proInfo .intro,
-    #subMenu .subMenuContent .proPanel .rightPart .subProduct>a:hover .intro {
-        color: #fe8e14;
-    }
-}
-
-@media (min-width: 1200px) {
-
-    #overall-header,
-    #mdHeader,
-    #mdMenu li,
-    #cp-header,
-    #cp-header .header-visitor a {
-        height: 72px;
-    }
-
-    #cp-header .header-visitor,
-    header-signin,
-    #cp-header .userbox,
-    #cp-header .header-signin {
-        height: 72px;
-    }
-
-    #cp-header .usericon {
-        margin-top: 28px;
-    }
-
-    #cp-header .userbox {
-        line-height: 71px;
-    }
-
-    #mdHeader .ds-logo {
-        width: 145px;
-        height: 35px;
-        margin-top: 16px;
-    }
-
-    #mdMenu {
-        padding-left: 190px;
-    }
-
-    #mdMenu li {
-        margin-right: 40px;
-    }
-
-    #mdMenu li:last-child {
-        margin-right: 0;
-    }
-
-    #mdMenu li a {
-        font-size: 18px;
-        line-height: 71px;
-    }
-
-    #mdMenu li>a {
-        padding: 0;
-    }
-
-    #mdMenu .icon-orange-angle {
-        width: 7px;
-        height: 13px;
-    }
-
-    #cp-header .action-signin {
-        margin: 0;
-        margin-right: 30px;
-    }
-
-    #cp-header .action-buttons {
-        display: inline-block;
-        height: auto;
-        margin-top: 21px;
-        margin-right: 40px;
-    }
-
-    #cp-header .action-buttons a:first-child {
-        margin-right: 20px;
-    }
-
-    #cp-header .action-search {
-        margin-right: 20px;
-    }
-
-    #cp-header .action-search .searchIcon {
-        margin-top: 23px;
-    }
-
-    #cp-header .action-search input[type='text'] {
-        margin-top: 21px;
-        width: 240px;
-    }
-
-    #cp-header .header-visitor a {
-        padding: 0;
-        color: #323234;
-        line-height: 71px;
-    }
-
-    #cp-header .header-visitor a:link,
-    .header-visitor a:visited,
-    .header-visitor a:hover {
-        color: #323234;
-    }
-
-    .icon-signin {
-        margin-top: 21px;
-        margin-right: 15px;
-    }
-
-    #pcMenu.fixed {
-        position: fixed;
-        top: 72px;
-        left: 0;
-        right: 0;
-        width: 100%;
-        z-index: 1111;
-    }
-
-    .headSubMenu {
-        background: #F5F5F5;
-        position: absolute;
-        border-top: 2px solid #ddd;
-    }
-
-    .headSubMenu .menu-top .menu-left {
-        display: inline-block;
-        padding: 40px 80px 25px;
-        border-right: 1px solid #323234;
-        vertical-align: top;
-    }
-
-    .headSubMenu .menu-top .menu-left .dbr-logo {
-        margin-bottom: 5px;
-    }
-
-    .headSubMenu .menu-top .menu-right {
-        display: inline-block;
-        padding: 55px 0 0 80px;
-        vertical-align: top;
-    }
-
-    .headSubMenu .menu-top .menu-right .subMenuList li.subTitle {
-        color: #323234;
-        font-family: Oswald-Light, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
-        font-size: 18px;
-    }
-
-    .headSubMenu .menu-top .subMenuList li.item {
-        margin-top: 15px;
-    }
-
-    .headSubMenu .menu-top .subMenuList li.item a {
-        color: #323234;
-        font-size: 18px;
-        font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
-    }
-
-    .headSubMenu .menu-top .subMenuList li.item a:hover,
-    .headSubMenu .menu-top .subMenuList li.item a:visited,
-    .headSubMenu .menu-top .subMenuList li.item a:active {
-        color: #323234
-    }
-
-    .headSubMenu .menu-bottom {
-        width: 100%;
-        height: 65px;
-        line-height: 65px;
-    }
-
-    .headSubMenu .menu-bottom a {
-        display: block;
-        width: 100%;
-        height: 100%;
-        color: #ffffff;
-        text-align: center;
-        font-size: 24px;
-        font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
-    }
-
-    #companySubMenu {
-        display: none;
-        padding: 20px 70px 30px 60px;
-        left: 520px;
-    }
-
-    #companySubMenu .subMenuList li.item {
-        margin-top: 15px;
-    }
-
-    #companySubMenu .subMenuList li.item a {
-        color: #323234;
-        font-size: 16px;
-        font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
-    }
-
-    #companySubMenu .subMenuList li.item a:visited,
-    #companySubMenu .subMenuList li.item a:active {
-        color: #323234
-    }
-
-    #companySubMenu .subMenuList li.item a:hover {
-        color: #fe8e14;
-    }
-
-    #companySubMenu .icon-orange-angle {
-        left: 60px;
-    }
-
-    #useCaseSubMenu {
-        display: none;
-        padding: 20px 70px 30px 60px;
-        left: 376px;
-    }
-
-    #useCaseSubMenu .subMenuList li.item {
-        margin-top: 15px;
-    }
-
-    #useCaseSubMenu .subMenuList li.item a {
-        color: #323234;
-        font-size: 16px;
-        font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
-    }
-
-    #useCaseSubMenu .subMenuList li.item a:visited,
-    #useCaseSubMenu .subMenuList li.item a:active {
-        color: #323234
-    }
-
-    #useCaseSubMenu .subMenuList li.item a:hover {
-        color: #fe8e14;
-    }
-
-    #useCaseSubMenu .icon-orange-angle {
-        left: 60px;
-    }
-
-    #subMenu {
-        padding: 0px 0px 52px 0px;
-        width: 1120px;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-
-    #subMenu .subMenuContent .proPanel {
-        margin-bottom: 0px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart,
-    #subMenu .subMenuContent .proPanel .rightPart {
-        display: inline-block;
-        vertical-align: top;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart {
-        border-right: 1px solid #ddd;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct,
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct {
-        display: inline-block;
-        vertical-align: top;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .proLine {
-        margin-bottom: 0px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .proLine:last-child {
-        margin-bottom: 0;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct {
-        padding: 0;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .icon {
-        display: inline-block;
-        border-radius: 5px;
-        width: 70px;
-        height: 70px;
-        background: #999;
-        vertical-align: top;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .icon.dbrIcon {
-        background: url(../img-icon/dbr-big.png);
-        background-size: cover;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .icon.dwtIcon {
-        background: url(../img-icon/dwt-big.png);
-        background-size: cover;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .proInfo {
-        display: inline-block;
-        width: 236px;
-        vertical-align: top;
-        padding-left: 10px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .proInfo .title {
-        font-size: 18px;
-        line-height: 18px;
-        margin-bottom: 10px;
-        color: #323234;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .proInfo .intro {
-        font-size: 14px;
-        line-height: 22px;
-        color: #606060;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct {
-        padding: 0;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct .icon {
-        display: inline-block;
-        border-radius: 5px;
-        width: 48px;
-        height: 48px;
-        background: #999;
-        vertical-align: top;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct .icon.dlrIcon {
-        background: url(../img-icon/dlr-small.png);
-        background-size: cover;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct .icon.dntIcon {
-        background: url(../img-icon/dnt-small.png);
-        background-size: cover;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct .proInfo {
-        display: inline-block;
-        width: 236px;
-        vertical-align: top;
-        padding-left: 10px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct .proInfo .title {
-        font-size: 14px;
-        line-height: 20px;
-        margin-bottom: 5px;
-        color: #323234;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct .proInfo .intro {
-        font-size: 14px;
-        line-height: 24px;
-        color: #606060;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct a,
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct a {
-        display: block;
-        width: 100%;
-        height: 100%;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct {
-        padding: 40px 15px 0px 40px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct {
-        padding: 40px 15px 40px 40px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct a {
-        padding-left: 22px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct.dwt,
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct.dnt {
-        padding-left: 20px;
-        padding-right: 50px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct.dbr,
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct.dlr {
-        width: 400px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .advancedModules {
-        padding-left: 83px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .advancedModules p {
-        margin-bottom: 5px;
-        font-size: 12px;
-        line-height: 22px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .advancedModules p.label {
-        margin-top: 15px;
-        font-size: 14px;
-    }
-
-    #subMenu .subMenuContent .proPanel .rightPart {
-        padding-left: 0px;
-        padding-top: 40px;
-    }
-
-    #subMenu .subMenuContent .proPanel .rightPart .rightPartTitle {
-        padding-left: 36px;
-        font-size: 18px;
-        line-height: 22px;
-    }
-
-    #subMenu .subMenuContent .proPanel .rightPart .subProduct {
-        width: 250px;
-        margin-bottom: 0px;
-        padding: 0;
-    }
-
-    #subMenu .subMenuContent .proPanel .rightPart .subProduct a {
-        display: block;
-        width: 100%;
-        height: 100%;
-        padding: 25px 30px 20px 36px;
-    }
-
-    #subMenu .subMenuContent .proPanel .rightPart .subProduct:last-child {
-        margin-bottom: 0;
-    }
-
-    #subMenu .subMenuContent .proPanel .rightPart .subProduct .title {
-        font-size: 14px;
-        line-height: 20px;
-        margin-bottom: 5px;
-        color: #323234;
-    }
-
-    #subMenu .subMenuContent .proPanel .rightPart .subProduct .intro {
-        font-size: 14px;
-        line-height: 26px;
-        color: #606060;
-    }
-}
-
-@media (min-width: 1680px) {
-
-    #overall-header,
-    #mdHeader,
-    #mdMenu li,
-    #cp-header,
-    #cp-header .header-visitor a {
-        height: 94px;
-    }
-
-    #cp-header .header-visitor,
-    header-signin,
-    #cp-header .userbox,
-    #cp-header .header-signin {
-        height: 94px;
-    }
-
-    #cp-header .userbox {
-        line-height: 93px;
-    }
-
-    #cp-header .usericon {
-        margin-top: 38px;
-    }
-
-    #mdHeader .ds-logo {
-        width: 176px;
-        height: 43px;
-        margin-top: 24px;
-    }
-
-    #mdMenu {
-        padding-left: 225px;
-    }
-
-    #mdMenu li {
-        margin-right: 50px;
-    }
-
-    #mdMenu li:last-child {
-        margin-right: 0;
-    }
-
-    #mdMenu li a {
-        font-size: 20px;
-        line-height: 93px;
-    }
-
-    #mdMenu li>a {
-        padding: 0;
-    }
-
-    #mdMenu .icon-orange-angle {
-        width: 9px;
-        height: 15px;
-    }
-
-    #cp-header .action-buttons {
-        height: auto;
-        margin-top: 32px;
-    }
-
-    #cp-header .action-signin {
-        margin-left: 0;
-    }
-
-    #cp-header .action-search {
-        margin-right: 20px;
-    }
-
-    #cp-header .action-search .searchIcon {
-        margin-top: 34px;
-    }
-
-    #cp-header .action-search input[type='text'] {
-        margin-top: 32px;
-    }
-
-    #cp-header .header-visitor a {
-        padding: 0;
-        color: #323234;
-        line-height: 93px;
-    }
-
-    #cp-header .header-visitor a:link,
-    .header-visitor a:visited,
-    .header-visitor a:hover {
-        color: #323234;
-    }
-
-    .icon-signin {
-        margin-top: 32px;
-        margin-right: 15px;
-    }
-
-    #pcMenu.fixed {
-        position: fixed;
-        top: 94px;
-        left: 0;
-        right: 0;
-        width: 100%;
-        z-index: 1111;
-    }
-
-    .headSubMenu .icon-orange-angle {
-        width: 26px;
-        height: 33px;
-        left: 100px;
-        top: -15px;
-    }
-
-    .headSubMenu .menu-top .menu-left {
-        padding: 50px 100px 30px;
-    }
-
-    .headSubMenu .menu-top .menu-right {
-        padding: 65px 0 0 100px;
-    }
-
-    .headSubMenu .menu-top .menu-right .subMenuList li.subTitle {
-        font-size: 20px;
-    }
-
-    .headSubMenu .menu-top .subMenuList li.item {
-        margin-top: 15px;
-    }
-
-    .headSubMenu .menu-top .subMenuList li.item a {
-        font-size: 20px;
-    }
-
-    .headSubMenu .menu-bottom {
-        height: 74px;
-        line-height: 74px;
-    }
-
-    .headSubMenu .menu-bottom a {
-        font-size: 24px;
-    }
-
-    #companySubMenu {
-        padding: 35px 100px 45px 70px;
-        left: 600px;
-    }
-
-    #companySubMenu .subMenuList li.item {
-        margin-top: 15px;
-    }
-
-    #companySubMenu .subMenuList li.item a {
-        font-size: 20px;
-    }
-
-    #companySubMenu .icon-orange-angle {
-        left: 70px;
-    }
-
-    #useCaseSubMenu {
-        padding: 35px 100px 45px 70px;
-        left: 437px;
-    }
-
-    #useCaseSubMenu .subMenuList li.item {
-        margin-top: 15px;
-    }
-
-    #useCaseSubMenu .subMenuList li.item a {
-        font-size: 20px;
-    }
-
-    #useCaseSubMenu .icon-orange-angle {
-        left: 70px;
-    }
-
-    #subMenu {
-        padding: 0px 0px 52px 0px;
-        width: 1275px;
-        left: 188px;
-        transform: unset
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .proLine {
-        margin-bottom: 0px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .proLine:last-child {
-        margin-bottom: 0;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct {
-        padding: 0;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .icon {
-        width: 70px;
-        height: 70px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .proInfo {
-        width: 295px;
-        padding-left: 15px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .proInfo .title {
-        font-size: 20px;
-        line-height: 20px;
-        margin-bottom: 10px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .proInfo .intro {
-        font-size: 16px;
-        line-height: 24px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct {
-        padding: 0;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct .icon {
-        width: 48px;
-        height: 48px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct .proInfo {
-        width: 295px;
-        padding-left: 15px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct .proInfo .title {
-        font-size: 16px;
-        line-height: 20px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct .proInfo .intro {
-        font-size: 16px;
-        line-height: 26px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct a,
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct a {
-        display: block;
-        width: 100%;
-        height: 100%;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct {
-        padding: 50px 15px 25px 55px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct {
-        padding: 25px 30px 40px 55px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct a {
-        padding-left: 20px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct.dwt,
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct.dnt {
-        padding-left: 30px;
-        padding-right: 50px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct.dbr,
-    #subMenu .subMenuContent .proPanel .leftPart .smallProduct.dlr {
-        width: 453px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .advancedModules {
-        padding-left: 85px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .advancedModules p {
-        margin-bottom: 8px;
-        font-size: 14px;
-        line-height: 22px;
-    }
-
-    #subMenu .subMenuContent .proPanel .leftPart .bigProduct .advancedModules p.label {
-        margin-top: 16px;
-        font-size: 16px;
-    }
-
-    #subMenu .subMenuContent .proPanel .rightPart {
-        padding-left: 0px;
-        padding-top: 50px;
-    }
-
-    #subMenu .subMenuContent .proPanel .rightPart .rightPartTitle {
-        padding-left: 40px;
-        font-size: 20px;
-        line-height: 22px;
-    }
-
-    #subMenu .subMenuContent .proPanel .rightPart .subProduct {
-        width: 280px;
-        margin-bottom: 0px;
-        padding: 0;
-    }
-
-    #subMenu .subMenuContent .proPanel .rightPart .subProduct a {
-        display: block;
-        width: 100%;
-        height: 100%;
-        padding: 36px 0px 20px 40px;
-    }
-
-    #subMenu .subMenuContent .proPanel .rightPart .subProduct:last-child {
-        margin-bottom: 0;
-    }
-
-    #subMenu .subMenuContent .proPanel .rightPart .subProduct .title {
-        font-size: 16px;
-        line-height: 20px;
-        margin-bottom: 5px;
-        color: #323234;
-    }
-
-    #subMenu .subMenuContent .proPanel .rightPart .subProduct .intro {
-        font-size: 16px;
-        line-height: 26px;
-        color: #606060;
-    }
-}
-
-@media (min-width: 992px) {
-    #dynamsoft-header .container {
-        max-width: calc(100% - 40px);
-    }
-}
-
-@media (min-width: 1200px) {
-    #dynamsoft-header .container {
-        max-width: calc(100% - 40px);
-    }
-}
-
-@media(min-width:1680px) {
-    #dynamsoft-header .container {
-        max-width: calc(100% - 40px);
-    }
-}
-
 .textUpperCase {
     text-transform: uppercase;
 }
 
 .orangeBgBtn {
     display: inline-block;
-    padding: 0 25px !important;
+    padding: 0 25px;
     height: 30px !important;
     line-height: 30px !important;
     font-size: 16px !important;
     text-align: center;
     cursor: pointer;
-    color: #FFFFFF !important;
-    background: #FE8E14 !important;
-    font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
+    color: #fff !important;
+    background: #fe8e14 !important;
+    font-family: Oswald-Regular,'Myriad Pro','Gloucester MT',myriad-pro,'Agency FB';
     vertical-align: top;
 }
 
@@ -3852,7 +1706,7 @@ header-signin {
 
 .orangeBorderBtn {
     display: inline-block;
-    padding: 0 25px !important;
+    padding: 0 25px;
     height: 30px !important;
     line-height: 26px !important;
     font-size: 16px !important;
@@ -4036,7 +1890,7 @@ i.dbr-white-logo {
 /*  Sub Navigation  */
 .productMenu {
     width: 100%;
-    height: 95px;
+    height: 70px;
     font-size: 14px;
     background: #323234;
     position: fixed;
@@ -4068,7 +1922,7 @@ i.dbr-white-logo {
     display: inline-block;
     position: relative;
     color: #ffffff;
-    line-height: 95px;
+    line-height: 70px;
     margin-right: 30px;
     padding: 0 10px;
     font-size: 18px;
@@ -4111,17 +1965,17 @@ i.dbr-white-logo {
 .productMenu .downloadBtn {
     display: inline-block;
     padding: 0 25px;
-    height: 54px;
-    line-height: 54px;
+    height: 36px;
+    line-height: 36px;
     font-size: 18px;
     text-align: center;
     cursor: pointer;
-    margin-top: 20px;
-    color: #FFFFFF;
-    background: #FE8E14;
-    font-family: Oswald-Regular, 'Myriad Pro','Gloucester MT', myriad-pro, 'Agency FB';
-    transition: ease-in-out 0.2s all;
-    box-shadow: 0px 0px 0 0 #FFFFFF;
+    margin-top: 16px;
+    color: #fff;
+    background: #fe8e14;
+    font-family: Oswald-Regular,'Myriad Pro','Gloucester MT',myriad-pro,'Agency FB';
+    transition: ease-in-out .2s all;
+    box-shadow: 0 0 0 0 #fff;
 }
 
 .productMenu .downloadBtn:hover {
@@ -4133,7 +1987,7 @@ i.dbr-white-logo {
 
 .productMenu .pcProductMenu .ct-more {
     position: absolute;
-    top: 95px;
+    top: 70px;
     padding: 8px 0;
     width: auto;
     height: auto;
@@ -4240,11 +2094,11 @@ i.dbr-white-logo {
 
 @media (max-width: 1679.98px) {
     .productMenu {
-        height: 72px;
+        height: 70px;
     }
 
     .productMenu .pcProductMenu .menuList li {
-        line-height: 72px;
+        line-height: 70px;
         margin-right: 30px;
         font-size: 16px;
     }
@@ -4548,7 +2402,7 @@ i.dbr-white-logo {
 
 /* version style adjust 2021-06-04 */
 .sideBar {
-    padding-top: 137px !important;
+    padding-top: 132px !important;
 }
 
 #sideBarCnt.sidebar-fixed {
@@ -4565,14 +2419,14 @@ i.dbr-white-logo {
 
 .history {
     position: fixed;
-    width: 250px;
+    width: 265px;
     height: 32px;
     background: #ffffff;
     border: 1px solid #CCCCCC;
     border-radius: 0px;
     color: #323234;
     padding: 0;
-    top: 219px;
+    top: 181px;
     left: 35px;
     z-index: 12;
 }
@@ -4716,7 +2570,7 @@ i.dbr-white-logo {
 
 @media (max-width: 1679px) {
     .sideBar {
-        padding-top: 117px !important;
+        padding-top: 134px !important;
         max-width: 280px;
     }
 
@@ -5118,11 +2972,15 @@ a#toTop {
     background: #F5F5F5;
 }
 #categoryMenuTree > .row {
+    display: -webkit-flex;
+    display: flex;
     margin-right: 0;
     margin-left: 0;
 }
 #categoryMenuTree .sideBar {
     background: #f5f5f5;
+    -webkit-order: 1; 
+    order: 1;
 }
 #categoryMenuTree .sideBar.col-xs-12, #categoryMenuTree sideBar.col-md-3
 #categoryMenuTree .docContainer.col-xs-12, #categoryMenuTree .docContainer.col-md-9 {
@@ -5268,6 +3126,8 @@ a#toTop {
 
 #categoryMenuTree .docContainer {
     background: #FFFFFF;
+    -webkit-order: 2; 
+    order: 2;
 }
 
 @media (min-width: 1200px) {
@@ -5280,7 +3140,7 @@ a#toTop {
         width: calc(100% - 320px);
         border-left: 1px solid #ddd;
         padding-left: 15px;
-        min-height: calc(100vh - 95px);
+        min-height: calc(100vh - 70px);
     }
 
     #categoryMenuTree #fullTreeMenuListContainer {
@@ -5310,7 +3170,7 @@ a#toTop {
     }
 
     #sideBarCnt.sidebar-fixed {
-        top: 115px !important;
+        top: 134px !important;
     }
 
     #categoryMenuTree .rightSideMenu.rsm-fixed {
@@ -5587,4 +3447,42 @@ a#toTop {
 
 .multi-panel-start + p, .multi-panel-start + table, .multi-panel-start + ul, .multi-panel-start + blockquote {
     margin-top: 30px
+}
+
+/* header */
+#dynamsoft-header .d-btn {
+    display: inline-block;
+    font-family: Oswald-Regular,'Myriad Pro','Gloucester MT',myriad-pro,'Agency FB';
+    height: 7rem;
+    padding: 0 3.2rem;
+    line-height: 7rem;
+    color: #fe8e14;
+    background: #fff;
+    outline: none;
+    font-size: 2.4rem;
+    border: 0;
+    outline: none;
+}
+
+#dynamsoft-header  .d-btn.orange-btn, #dynamsoft-header .d-btn.orange-btn:hover {
+    background: #fe8e14;
+    color: #fff!important;
+}
+
+#dynamsoft-header .icon-signin {
+    margin-top: 0!important;
+}
+
+#dynamsoft-header #mdHeader .ds-logo {
+    position: absolute!important;
+    margin-left: 15px;
+}
+
+#dynamsoft-header .label {
+    font-weight: normal;
+    padding: 0;
+}
+
+#dynamsoft-header .headSubMenu {
+    z-index: 1110;
 }

@@ -48,9 +48,12 @@ layout: null
           <div></div>
       </div>
     </div>
-    <div class="headWrapper">
-        {%- include page_header.html -%}
-    </div>
+
+    <!-- include head  -->
+    {% assign url = 'https://www.dynamsoft.com/shared/head/' %}
+    {% remote_include {{ url }} %}
+
+    <!-- include subnav  -->
     {%- if page.cx == '32039cdf85bc7ae2b' -%}
     {%- include dbrNav.html -%}
     {%- endif -%}
@@ -60,10 +63,8 @@ layout: null
     {%- if page.cx == '2849fa1c545c59689' -%}
     {%- include dwtNav.html -%}
     {%- endif -%}
-    <!-- {%- if page.cx == 'a671e766504a74330' -%}
-    {%- include dcpNav.html -%}
-    {%- endif -%} -->
-    <div class="search-wrap">
+
+    <main class="search-wrap">
       <h1 class="fontOswald">Search</h1>
       <div class="search-box">
         <input class="search-box__input" onkeyup="cseSearch(event)" />
@@ -76,7 +77,7 @@ layout: null
         </div>
       </div>
       <div class="search-pages"></div>
-    </div>
+    </main>
     {{content}}
     <div id="footerWrapper">
         {%- include page_footer.html -%}
