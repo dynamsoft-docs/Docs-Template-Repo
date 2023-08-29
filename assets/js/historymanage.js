@@ -9,12 +9,8 @@ function UrlReplace()
     if (ver != undefined && ver != "latest") {
         if (product == undefined || product == docProduct) {
             var tempVer = findNearestVersion(ver);
-            if (tempVer != ver && tempVer != "latest") {
-                var replaceUrl = docUrl.replace(ver, tempVer)
-                window.location.replace(replaceUrl);
-            }
-            if (tempVer != ver && tempVer == "latest") {
-                var replaceUrl = docUrl.replace('-v' + ver, "")
+            if (tempVer != ver) {
+                var replaceUrl = docUrl.replace("ver=" + ver, "ver=" + tempVer)
                 window.location.replace(replaceUrl);
             }
         }
