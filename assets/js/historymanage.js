@@ -4,12 +4,15 @@ function UrlReplace()
     var docUrl = document.URL;
     var ver = getUrlVars(docUrl)["ver"];
     var matchVer = getUrlVars(docUrl)["matchVer"];
+    var product = getUrlVars(docUrl)["product"];
+    var docProduct = getCurrentUrlProductName();
     if (ver != undefined && ver != "latest") {
-        var tempVer = findNearestVersion(ver);
-        // console.log(tempVer)
-        if (tempVer != ver) {
-            var replaceUrl = docUrl.replace(ver, tempVer)
-            window.location.replace(replaceUrl);
+        if (product == undefined || product == docProduct) {
+            var tempVer = findNearestVersion(ver);
+            if (tempVer != ver) {
+                var replaceUrl = docUrl.replace("ver=" + ver, "ver=" + tempVer)
+                window.location.replace(replaceUrl);
+            }
         }
     }
     if (matchVer == undefined && ver != undefined) {
@@ -233,7 +236,6 @@ function GetVersionDiff(inputVer, compareVer)
     if (compareVer < inputVer){
         return -1;
     }
-
     var inputChar = inputVer.split('.');
     var compareChar = compareVer.split('.');
     var diff = 0;
@@ -505,7 +507,7 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
             needToSearchHistory = false
         } else {
             needToSearchHistory = true
-            inputVer = dcvVer ? dcvVer : inputVer
+            inputVer = dcvVer && dcvVer != -1 ? dcvVer : inputVer
         }
 
         if (!needToSearchHistory) {
