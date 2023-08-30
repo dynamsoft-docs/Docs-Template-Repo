@@ -236,8 +236,9 @@ function GetVersionDiff(inputVer, compareVer)
     if (compareVer < inputVer){
         return -1;
     }
-    var inputChar = inputVer.split('.');
-    var compareChar = compareVer.split('.');
+    var inputChar = inputVer ? inputVer.split('.') : inputVer;
+    var compareChar = compareVer ? compareVer.split('.') : compareVer;
+    
     var diff = 0;
 
     var maxLength = Math.max(inputChar.length, compareChar.length);
@@ -495,6 +496,7 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
         return response.text()
     }).then(function(data) {
         var inputVer = getUrlVars(paramLink)["ver"]
+        inputVer = inputVer == undefined ? "latest" : inputVer
         var dcvVer = null
         if (getUrlVars(paramLink)["product"]) {
             dcvVer = getDCVVer(inputVer?inputVer:"latest", fetchUrl)
