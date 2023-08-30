@@ -701,7 +701,6 @@ function getCurrentUrlLang(url, needFilterLang=false) {
     if (repoType == undefined) {
         repoType = getCurrentUrlRepoType(url)
     }
-
     if (repoType == "server" || repoType == "mobile" || needFilterLang) {
         if (url.indexOf("/c-cplusplus/") > 0) {
             if (getUrlVars(url)["src"]) {
@@ -744,7 +743,7 @@ function getCurrentUrlLang(url, needFilterLang=false) {
             if (repoType == "mobile" && ["objectivec-swift", "android", "xamarin", "react-native", "flutter", "cordova"].indexOf(arr[1]) < 0) {
                 return "objectivec-swift"
             } else if (repoType == "web" || repoType == "js") {
-                return "js"
+                return "javascript"
             } else {
                 return arr[1]
             }
