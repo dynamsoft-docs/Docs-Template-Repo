@@ -3486,3 +3486,55 @@ a#toTop {
 #dynamsoft-header .headSubMenu {
     z-index: 1110;
 }
+
+/* block quote style */
+div[class^="blockquote-"]  + blockquote {
+    font-size: 16px;
+    padding-top: 5px;
+}
+
+div[class^="blockquote-"]  + blockquote::before {
+    display: block;
+    content: "";
+    height: 20px;
+    margin-bottom: 5px;
+    padding-left: 26px;
+    font-size: 16px;
+    line-height: 20px;
+}
+
+div.blockquote-note + blockquote {
+    border-color: #0969da;
+}
+
+div.blockquote-note + blockquote::before {
+    content: "Note";
+    background: url(../img-icon/message-information.svg) left center no-repeat;
+    background-size: contain;
+    border-color: #0969da;
+    color: #0969da;
+}
+
+div.blockquote-warning + blockquote {
+    border-color: #9a6700;
+}
+
+div.blockquote-warning + blockquote::before {
+    content: "Warning";
+    background: url(../img-icon/message-warning.svg) left center no-repeat;
+    background-size: contain;
+    border-color: #9a6700;
+    color: #9a6700;
+}
+
+div.blockquote-important + blockquote {
+    border-color: #8250df;
+}
+
+div.blockquote-important + blockquote::before {
+    content: "Important";
+    background: url(../img-icon/message-important.svg) left 3px no-repeat;
+    background-size: contain;
+    border-color: #8250df;
+    color: #8250df;
+}
