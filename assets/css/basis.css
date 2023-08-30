@@ -5603,6 +5603,7 @@ div[class^="blockquote-"]  + blockquote::before {
     padding-left: 26px;
     font-size: 16px;
     line-height: 20px;
+    font-family: OpenSans-Semibold;
 }
 
 div.blockquote-note + blockquote {
