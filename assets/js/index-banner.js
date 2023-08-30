@@ -723,6 +723,9 @@ function getCurrentUrlLang(url, needFilterLang=false) {
             } else {
                 result = getUrlVars(url)["lang"].toLowerCase().trim().split(",")[0]
             }
+            if (result == "js") {
+                result = "javascript"
+            }
             if (result == "ios" || result == "objective-c" || result == "objc" || result == "swift") {
                 result = "objectivec-swift"
             }
