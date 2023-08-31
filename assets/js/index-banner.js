@@ -367,13 +367,13 @@ function SearchVersion() {
                 curVerTag[0].innerText = "latest version";
             }
             else{
-                curVerTag[0].innerText = "version "+ver;
+                curVerTag[0].innerText = "version " + ver;
             }
             var productName = getUrlVars(docUrl)["product"];
             if (productName != undefined) {
                 var productVersion = getUrlVars(docUrl)[productName];
                 if (productVersion != undefined) {
-                    if (productVersion == "latest version") {
+                    if (productVersion == "latest") {
                         curVerTag[0].innerText = "latest version";
                     } else {
                         curVerTag[0].innerText = "version " + productVersion;
@@ -381,12 +381,20 @@ function SearchVersion() {
                 }
             }
         }
-        if(compatiableDiv != null){
-            
-        }
-        if (compatiableDiv != null && compatibleTag != null){
+        if (compatiableDiv != null && compatibleTag != null) {
             compatiableDiv.style.display = "block";
-            compatibleTag[0].innerText = "Version "+ver;
+            compatibleTag[0].innerText = "Version "+ ver;
+            var productName = getUrlVars(docUrl)["product"];
+            if (productName != undefined) {
+                var productVersion = getUrlVars(docUrl)[productName];
+                if (productVersion != undefined) {
+                    if (productVersion == "latest") {
+                        compatiableDiv.style.display = "none";
+                    } else {
+                        compatibleTag[0].innerText = "Version " + productVersion;
+                    }
+                }
+            }
         }
         else if (compatiableDiv != null){
             compatiableDiv.style.display = "none";
