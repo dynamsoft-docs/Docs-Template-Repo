@@ -670,7 +670,11 @@ function initCrumbs() {
                 if ($(atag).hasClass("activeLink")) {
                     appendText += '<li id="breadcrumbLastNode">' + $(atag)[0].textContent + '</li>'
                 } else {
-                    appendText += '<li><a class="bluelink" href = "' + $(atag)[0].href + '">'+ $(atag)[0].textContent + '</a></li>'
+                    if ($(atag)[0].href != "") {
+                        appendText += '<li><a class="bluelink" href = "' + $(atag)[0].href + '">'+ $(atag)[0].textContent + '</a></li>'
+                    } else {
+                        appendText += '<li>' + $(atag)[0].textContent + '</li>'
+                    }
                 }
             }
         }
