@@ -492,7 +492,7 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
     $("#loadingContent").show()
     var fetchUrl = redirectUrl ? redirectUrl : aTag.href
     var oldLang = getCurrentUrlLang(document.URL)
-    fetch(fetchUrl).then(function(response) {
+    fetch(fetchUrl, {cache: "no-cache"}).then(function(response) {
         return response.text()
     }).then(function(data) {
         var inputVer = getUrlVars(paramLink)["ver"]
