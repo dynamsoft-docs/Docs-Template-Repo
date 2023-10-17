@@ -24,28 +24,36 @@
 		{%- endif -%}
 	{%- endfor -%}
     {%- endif -%}
-    {%- assign targetUrl = targetUrl | remove: 'index.html' | strip -%}
+    {%- assign targetUrl = targetUrl | replace: '/index.html', '/' | strip -%}
 
     {%- if excludeFlag -%}
     <meta name="robots" content="noindex">
     {%- endif -%}
 
-    <link href="{{ site.docFullPath }}{{ targetUrl }}" rel="canonical">
+    {%- assign docFullPath = site.docFullPath -%}
+    {%- assign docFullPathLastChar = docFullPath | split:'' | last -%}
+    {%- if docFullPathLastChar contains '/' -%}	
+        {%- assign truncateDocHomePageSize = docFullPath | size | minus:1 -%}
+        {%- assign docFullPath = docFullPath | slice: 0, truncateDocHomePageSize -%}
+    {%- endif -%}
+    <link href="{{ docFullPath }}{{ targetUrl }}" rel="canonical">
     
-    <link rel="stylesheet" href="{{ site.assets }}css/dm-style.css?v=b8601a47f85e9c71565aa6c079c8988cd98cc1e7">
-
+    <link rel="stylesheet" href="{{ site.assets }}css/dm-style.css?v={{ 'now' | date: "%s"}}">
     <link rel="stylesheet" href="{{ site.assets }}css/bootstrap.min.css">
-
     <link rel="stylesheet" href="{{ site.assets }}css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{ site.assets }}css/basis-bs.min.css?v={{ 'now' | date: "%s"}}">
+    <link href="https://www.dynamsoft.com/webres/wwwroot/css/header_bs.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ site.assets }}css/basis.min.css?v={{ 'now' | date: "%s"}}">
+    <link rel="stylesheet" href="{{ site.assets }}css/footer.css">
 
-    <link rel="stylesheet" href="{{ site.assets }}css/basis-bs.min.css?v=b202001119">
-
-    <link rel="stylesheet" href="{{ site.assets }}css/basis.min.css?v=b202001019">
-
-    <link rel="stylesheet" href="{{ site.assets }}css/header_bs.css">
-
-
+    {%- assign showNoIndexStyle = false -%}
     {%- if page.noTitleIndex or page.url contains 'release-notes' -%}
+        {%- assign showNoIndexStyle = true -%}
+    {%- endif -%}
+    {%- if site.docFullPath contains 'barcode-reader' or site.docFullPath contains 'web-twain' -%}
+        {%- assign showNoIndexStyle = false -%}
+    {%- endif -%}
+    {%- if showNoIndexStyle -%}
         <style>
             .headCounter h2:before { content: ''!important; padding-right: 0px!important; }
             .headCounter h2 { counter-reset: none!important; counter-increment: none!important; }
@@ -56,33 +64,50 @@
         </style>
     {%- endif -%}
 
+    <script>
+        var myMermaid = null
+    </script>
+
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: false },);
+        await mermaid.run({
+            querySelector: '.language-mermaid'
+        });
+        myMermaid = mermaid
+    </script>
+
     <script type="text/javascript" src="{{ site.assets }}js/jquery-3.5.0.min.js"></script>
     <script type="text/javascript" src="{{ site.assets }}js/bootstrap.min.js"></script>
+    <script src="https://www.dynamsoft.com/webres/wwwroot/js/util.min.js"></script>
+    <script src="https://www.dynamsoft.com/webres/wwwroot/js/site.min.js"></script>
+    <script src="https://www.dynamsoft.com/webres/wwwroot/js/header.min.js"></script>
     <script type="text/javascript" src="{{ site.assets }}js/ds-jquery-bs.min.js"></script>
 
     {%- if site.useVersionTreeV2 -%}
-    <script type="text/javascript" src="{{ site.assets }}js/index-banner-two.min.js"></script>
-    <script type="text/javascript" src="{{ site.assets }}js/historymanage-two.min.js"></script>
+    <script type="text/javascript" src="{{ site.assets }}js/index-banner-two.min.js?v={{ 'now' | date: "%s"}}"></script>
+    <script type="text/javascript" src="{{ site.assets }}js/historymanage-two.min.js?v={{ 'now' | date: "%s"}}"></script>
     {%- else -%}
-    <script type="text/javascript" src="{{ site.assets }}js/index-banner.min.js"></script>
-    <script type="text/javascript" src="{{ site.assets }}js/historymanage.min.js"></script>
+    <script type="text/javascript" src="{{ site.assets }}js/dcvVersionSearch.min.js?v={{ 'now' | date: "%s"}}"></script>
+    <script type="text/javascript" src="{{ site.assets }}js/index-banner.min.js?v={{ 'now' | date: "%s"}}"></script>
+    <script type="text/javascript" src="{{ site.assets }}js/historymanage.min.js?v={{ 'now' | date: "%s"}}"></script>
     {%- endif -%}
 
-    <script type="text/javascript" src="{{ site.assets }}js/layout.min.js"></script>
+    <script type="text/javascript" src="{{ site.assets }}js/layout.min.js?v={{ 'now' | date: "%s"}}"></script>
     <script type="text/javascript" src="{{ site.assets }}js/anchor.min.js"></script>
 
     {%- if page.hasCustomLdJson -%}
         {{page.customLdJsonScript}}
     {%- endif -%}
 
-    {% if page.schema %}
-    <script type="application/ld+json">
-        {% include {{ page.schema }} %}
-    </script>
-    {% endif %}
-
-    <script type="text/javascript">
-        var _hsq = window._hsq = window._hsq || [];
-        _hsq.push(['setContentType', 'knowledge-article']);
-    </script>
+    {%- if page.codeAutoHeight -%}
+    <style id="CodeAutoHeight">
+        .markdown-body .sample-code-prefix+blockquote ol li pre.highlight {
+            max-height: unset;
+        }
+        .markdown-body .sample-code-prefix.template2 + blockquote > div pre.highlight {
+            max-height: unset;
+        }
+    </style>
+    {%- endif -%}
 </head>

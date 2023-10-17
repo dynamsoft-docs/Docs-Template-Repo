@@ -49,6 +49,7 @@
                                         {%- break -%}
                                 {%- elsif curVal < targetVal -%}
                                         {%- assign needCheckSize = false -%}
+                                        {%- break -%}
                                 {%- endif -%}
                         {% endfor %}
                         {%- unless validVer -%}

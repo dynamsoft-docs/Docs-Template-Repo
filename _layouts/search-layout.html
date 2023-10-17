@@ -1,0 +1,273 @@
+---
+layout: null
+---
+
+<!DOCTYPE html>
+<html lang="en-US">
+
+{%- include head.html -%}
+<style>
+  .search-wrap { padding-top: 100px; margin: 0 auto; width: calc(100% - 100px); max-width: 1000px; min-height: calc(100vh - 140px); }
+  .search-wrap h1 { margin-top: 60px }
+  .search-box {border: 1px solid #323234; margin-top: 30px; height: 50px; line-height: 50px;}
+  .search-box__input {border: 0; height: 48px; vertical-align: top; width: calc(100% - 60px); padding-left: 20px; font-size: 18px;}
+  .search-box__button {height: 100%; vertical-align: top; width: 58px; background: #FFFFFF; box-shadow: none; outline: none; border: 0; border-left: 1px solid #323234; float: right;}
+  .search-box__button i.fa-search { font-size: 22px; color: #323234; }
+  .search-result__refinement { margin-top: 10px; }
+  .search-result__refinement > span { display: inline-block; font-size: 16px; height: 40px; line-height: 40px; padding: 0 10px; margin-right: 10px; cursor: pointer;}
+  .search-result__refinement > span.on { border-bottom: 2px solid #FE8E14; color: #FE8E14; font-family: OpenSans-Semibold; }
+  .search-result__statistics { line-height: 40px; color: #606060; }
+  .search-result__list {}
+  .search-result__list .item { margin: 10px 0 20px 0; font-size: 16px; }
+  .search-result__list .item a, .search-result__list .item a:active { color: #FE8E14; font-size: 18px;; }
+  .search-result__list .item a:hover { opacity: 0.7; }
+  .search-result__list .item p.link { font-size: 14px; color: #999; margin-bottom: 0;}
+  .search-result__list .item p.snippet {}
+  .search-result__list .item b { font-weight: normal; font-family: OpenSans-Semibold; }
+  .search-pages { margin-top: 20px; margin-bottom: 60px; }
+  .search-pages > span { font-size: 18px; cursor: pointer; margin-right: 10px; }
+  .search-pages > span.on {font-family: OpenSans-Semibold;  }
+  
+  .loading { position: fixed; background-color: rgba(255, 255, 255, 0.575); height: 100vh; width: 100%; margin-top: 0px !important; text-align: center; display: block; top: 0px; left: 0px; z-index: 1000; }
+  .lds-ring { display: inline-block; position: relative; width: 60px; height: 60px; top: 50%; }
+  .lds-ring div { box-sizing: border-box; display: block; position: absolute; width: 36px; height: 36px; margin: 6px; border: 6px solid #666; border-radius: 50%; animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite; border-color: #666 transparent transparent transparent; }
+  .lds-ring div:nth-child(1) { animation-delay: -0.45s; }
+  .lds-ring div:nth-child(2) { animation-delay: -0.3s; }
+  .lds-ring div:nth-child(3) { animation-delay: -0.15s; }
+  @keyframes lds-ring {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+  }
+</style>
+<body>
+    <div class="loading" style="display:none;">
+      <div class="lds-ring">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+      </div>
+    </div>
+
+    <!-- include head  -->
+    {% assign url = 'https://www.dynamsoft.com/shared/head/' %}
+    {% remote_include {{ url }} %}
+
+    <!-- include subnav  -->
+    {%- if page.cx == '32039cdf85bc7ae2b' -%}
+    {%- include dbrNav.html -%}
+    {%- endif -%}
+    {%- if page.cx == '53a201f66061dfc84' -%}
+    {%- include dlrNav.html -%}
+    {%- endif -%}
+    {%- if page.cx == '2849fa1c545c59689' -%}
+    {%- include dwtNav.html -%}
+    {%- endif -%}
+
+    <main class="search-wrap">
+      <h1 class="fontOswald">Search</h1>
+      <div class="search-box">
+        <input class="search-box__input" onkeyup="cseSearch(event)" />
+        <button class="search-box__button" onclick="cseSearch(event)"><i class="fa fa-search"></i></button>
+      </div>
+      <div class="search-result">
+        <div class="search-result__refinement"></div>
+        <div class="search-result__statistics"></div>
+        <div class="search-result__list">
+        </div>
+      </div>
+      <div class="search-pages"></div>
+    </main>
+    {{content}}
+    <div id="footerWrapper">
+        {%- include page_footer.html -%}
+    </div>
+
+    <script>
+      let queryParam = {
+        q: '',
+        start: 1,
+        cx: '{{page.cx}}',
+        refinement: '{{page.refinement}}'
+      }
+      let pagination = {
+        currentPage: 1,
+        total: 0,
+        pageSize: 10,
+        pages: 0
+      }
+      let hasFacets = '{{page.hasFacets}}'
+      let refinement = hasFacets == 'true' ? facets : null
+
+      initSearchPage()
+
+      function initSearchPage() {
+        if (getUrlVars(document.URL)["q"]) {
+          $(".search-box__input").val(getUrlVars(document.URL)["q"])
+          if (getUrlVars(document.URL)["refinement"]) {
+            queryParam.refinement = getUrlVars(document.URL)["refinement"]
+          }
+          cseSearch({type: 'click'}, queryParam.refinement)
+        }
+      }
+      
+      function cseSearch(e, refinement=null) {
+        if ((e.type === 'keyup' && e.keyCode === 13) || e.type === "click") {
+          if (e.type === 'click') {
+            queryParam.refinement = refinement ? refinement : $(e.target).attr("label")
+          } 
+          pagination.currentPage = 1
+          pagination.total = 0
+          pagination.pages = 0
+          getSearchResult()
+        }
+      }
+
+      function getSearchResult() {
+        queryParam.q = $(".search-box__input").val()
+        queryParam.start = (pagination.currentPage - 1) * pagination.pageSize + 1
+        $('.loading').show()
+        $.ajax({
+          headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+          },
+          url: 'https://www.dynamsoft.com/api-common2/api/csesearch',
+          type: 'POST',
+          data: JSON.stringify(queryParam),
+          dataType: 'json',
+          success: function(res) {
+            $('.loading').hide()
+            if (res.code == 0) {
+                let data = JSON.parse(res.data)
+                if (data.code == -1) {
+                  $('.search-result__statistics').text(data.msg)
+                  $(".search-result").show()
+                  $(".search-pages").hide()
+                  return
+                }
+                
+                if (data.items && data.items.length > 0) {
+                    // load refinement
+                    refinement = data.context.facets
+                    if (refinement) {
+                      let refinementHtml = `<span label="" onclick="cseSearch(event)">All</span>`
+                      refinement.sort(function(a, b) {
+                          return a[0].label > b[0].label ? 1 : -1
+                      })
+                      for(let i=0; i<refinement.length; i++) {
+                          refinementHtml += `
+                          <span class="${refinement[i][0].label==queryParam.refinement?'on':''}" label="${refinement[i][0].label}" onclick="cseSearch(event)">${refinement[i][0].anchor}</span>
+                          `
+                      }
+                      $('.search-result__refinement').html("").append(refinementHtml)
+                      if (!queryParam.refinement || queryParam.refinement == "") {
+                          $('.search-result__refinement > span').eq(0).addClass('on')
+                      }
+                    }
+                    // load statistics
+                    let statistics = data.searchInformation
+                    $('.search-result__statistics').text(`About ${statistics.formattedTotalResults} results (${statistics.formattedSearchTime} seconds)`)
+                    // load result
+                    let result = data.items
+                    let resultHtml = ''
+                    for(let i=0; i<result.length; i++) {
+                        resultHtml += `
+                        <div class="item">
+                            <a href="${result[i].link}">${result[i].htmlTitle}</a>
+                            <p class="link">${result[i].htmlFormattedUrl}</p>
+                            <p class="snippet">${result[i].htmlSnippet}</p>
+                        </div>
+                        `
+                    }
+                    $('.search-result__list').html("").append(resultHtml)
+                    // load pages
+                    pagination.total = Number(data.searchInformation.totalResults)
+                    pagination.pages = Math.ceil(pagination.total / pagination.pageSize)
+                    generatePagination()
+                    if (pagination.currentPage > 1) {
+                        window.scrollTo(0, 100)
+                    }
+                    $(".search-result, .search-pages").show()
+                } else {
+                  if (refinement) {
+                    let refinementHtml = `<span label="" onclick="cseSearch(event)">All</span>`
+                    refinement.sort(function(a, b) {
+                        return a[0].label > b[0].label ? 1 : -1
+                    })
+                    for(let i=0; i<refinement.length; i++) {
+                        refinementHtml += `
+                        <span class="${refinement[i][0].label==queryParam.refinement?'on':''}" label="${refinement[i][0].label}" onclick="cseSearch(event)">${refinement[i][0].anchor}</span>
+                        `
+                    }
+                    $('.search-result__refinement').html("").append(refinementHtml)
+                    if (!queryParam.refinement || queryParam.refinement == "") {
+                        $('.search-result__refinement > span').eq(0).addClass('on')
+                    }
+                  }
+                  let statistics = data.searchInformation
+                  $('.search-result__statistics').text(`About ${statistics.formattedTotalResults} results (${statistics.formattedSearchTime} seconds)`)
+                  $('.search-result__list').html("")
+                  $(".search-result").show()
+                  $(".search-pages").hide()
+                }
+            } else {
+              $(".search-result, .search-pages").hide()
+            }
+          },
+          error: function(err) {
+            $('.loading').hide()
+          }
+        })
+      }
+
+      function generatePagination() {
+        let paginationHtml = "";
+        if (pagination.currentPage > 1) {
+          paginationHtml += `<span onclick="prevPage()"> << </span>`
+        }
+        let pageList = [pagination.currentPage-2, pagination.currentPage-1, pagination.currentPage, pagination.currentPage+1, pagination.currentPage+2]
+        if (pagination.currentPage-2 > 1) {
+          paginationHtml += `<span onclick="toPage(1)">1</span>`
+          paginationHtml += `<span>...</span>`
+        }
+        for(let i=0; i<pageList.length; i++) {
+          if (pageList[i]>0&&pageList[i]<=pagination.pages) {
+            paginationHtml += `<span onclick="toPage(${pageList[i]})" class="${pageList[i]==pagination.currentPage ? 'on' :''}">${pageList[i]}</span>`
+          }
+        }
+        if (pagination.currentPage+2 < pagination.pages) {
+          paginationHtml += `<span>...</span>`
+        }
+        if (pagination.currentPage < pagination.pages) {
+          paginationHtml += `<span onclick="nextPage()"> >> </span>`
+        }
+        $('.search-pages').html(paginationHtml)
+      }
+
+      function nextPage() {
+        if (pagination.currentPage==pagination.pages) {
+          return false
+        }
+        pagination.currentPage++
+        getSearchResult()
+      }
+
+      function prevPage() {
+        if (pagination.currentPage==1) {
+          return false
+        }
+        pagination.currentPage--
+        getSearchResult()
+      }
+
+      function toPage(page) {
+        pagination.currentPage = page
+        getSearchResult()
+      }
+    </script>
+
+    {%- include livehelp.html -%}
+</body>
+
+</html>

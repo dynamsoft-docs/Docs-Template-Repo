@@ -1,9 +1,11 @@
 <span class="fullVersionHistory">
     <ul class="fullVersionInfo">
-        {%- if page.editon -%}
-            {%- if page.editon == 'js' -%}
+        {%- if site.edition -%}
+            {%- if site.edition == 'algorithm' -%}
+                {%- assign validVerInfo = site.data.product_version.version_info_list_algorithm -%}
+            {%- elsif site.edition == 'js' -%}
                 {%- assign validVerInfo = site.data.product_version.version_info_list_js -%}
-            {%- elsif page.editon == 'mobile' -%}
+            {%- elsif site.edition == 'mobile' -%}
                 {%- assign validVerInfo = site.data.product_version.version_info_list_mobile -%}
             {%- else -%}
                 {%- assign validVerInfo = site.data.product_version.version_info_list_desktop -%}
@@ -11,20 +13,60 @@
         {%- else -%}
             {%- assign validVerInfo = site.data.product_version.version_info_list -%}
         {%- endif -%}
-        {%- for verInfo in validVerInfo -%}
-            {%- assign curVerText = "" -%}
-            {%- assign verInfo = verInfo | downcase | strip -%}
-            {%- if verInfo == "latest version"-%}
-                {%- assign curVerText = verInfo | capitalize -%}
-            {%- else -%}
-                {%- assign curVerText = "Version " | append: verInfo -%}
-            {%- endif -%}
-            {%- if site.firstLevelUrl == "/barcode-reader" -%}
-            <li onclick="changeVersion(this)" class="dbr_changeVersion_li">{{ curVerText }}</li>
-            {%- else -%}
-            <li onclick="changeVersion(this)">{{ curVerText }}</li>
-            {%- endif -%}
-        {%- endfor -%}
+        
+        {%- if site.data.product_version.useGroupedVersion -%}
+            {%- for verInfo in validVerInfo -%}
+                {%- assign curVerText = "" -%}
+                {%- assign ver = verInfo.value | downcase | strip -%}
+                {%- assign editions = "" -%}
+                {%- if ver contains '_' -%}
+                    {%- assign arr = ver | split: "_" -%}
+                    {%- assign ver = arr.first -%}
+                    {%- assign editions = ver | remove: arr.first | remove_first: '_' -%}
+                {%- endif -%}
+                {%- if ver == "latest version"-%}
+                    {%- assign curVerText = ver | capitalize -%}
+                {%- else -%}
+                    {%- assign curVerText = "Version " | append: ver -%}
+                {%- endif -%}
+                {%- if verInfo.child -%}
+                <li class="hasChildLi" data-editions="{{editions}}">
+                    <div>{{ curVerText }} <i class="icon-arrow"></i></div>
+                    <ul>
+                        {%- for childVersion in verInfo.child -%}
+                            {%- assign curVerText = "" -%}
+                            {%- assign c_version = childVersion | downcase | strip -%}
+                            {%- assign c_editions = "" -%}
+                            {%- if c_version contains '_' -%}
+                                {%- assign arr = childVersion | split: "_" -%}
+                                {%- assign c_version = arr.first -%}
+                                {%- assign c_editions = childVersion | remove: arr.first | remove_first: '_' -%}
+                            {%- endif -%}
+                            {%- if c_version == "latest version"-%}
+                                {%- assign curVerText = c_version | capitalize -%}
+                            {%- else -%}
+                                {%- assign curVerText = "Version " | append: c_version -%}
+                            {%- endif -%}
+                            <li onclick="changeVersion(this)" data-editions="{{c_editions}}">{{ curVerText }}</li>
+                        {%- endfor -%}
+                    </ul>
+                </li>
+                {%- else -%}
+                <li onclick="changeVersion(this)" data-editions="{{editions}}">{{ curVerText }}</li>
+                {%- endif -%}
+            {%- endfor -%}
+        {%- else -%}
+            {%- for verInfo in validVerInfo -%}
+                {%- assign curVerText = "" -%}
+                {%- assign verInfo = verInfo | downcase | strip -%}
+                {%- if verInfo == "latest version"-%}
+                    {%- assign curVerText = verInfo | capitalize -%}
+                {%- else -%}
+                    {%- assign curVerText = "Version " | append: verInfo -%}
+                {%- endif -%}
+                <li onclick="changeVersion(this)">{{ curVerText }}</li>
+            {%- endfor -%}
+        {%- endif -%}
     </ul>
     <a class="fvChange fontOswald" href="javascript:;">Change +</a>
 </span>

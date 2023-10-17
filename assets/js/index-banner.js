@@ -30,10 +30,19 @@ function GenerateContentByHead(needh3 = true) {
     appendHtml += '</ul>'
     if ($('#AutoGenerateSidebar').length != 0) {
         $('#AutoGenerateSidebar').append(appendHtml);
+        if ($("#AutoGenerateSidebar > ul > li").length == 0) {
+            $(".rightSideMenu > p").hide()
+        } else {
+            $(".rightSideMenu > p").show()
+        }
     }
 }
 
 function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefined, useVersionTree = false) {
+    // check if /docs/core && lang exist, update iframe src
+    var pageUrl = document.URL;
+    var needFilterLangTree = false;
+    
     if (useVersionTree == 'true') {
         useVersionTree = true;
     }
@@ -51,7 +60,16 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
         var allHerf1 = $(".docContainer .content, #docHead, #AutoGenerateSidebar, .sideBar, #crumbs").find("a");
         for (var i = 0; i < allHerf1.length; i++)
         {
-            allHerf1[i].onclick = function(){addParam(this, verArray[0]); return false;};
+            allHerf1[i].onclick = function(){
+                if (!$(this).hasClass("refreshLink") && $(this).parents(".sideBar").length > 0 && $("#articleContent").length > 0) {
+                  addParam(this, verArray[0], 'sidebar', needh3); 
+                } else if (!$(this).hasClass("refreshLink") && $(this).parents(".markdown-body").length > 0 && $("#articleContent").length > 0) {
+                    addParam(this, verArray[0], 'docContainer', needh3); 
+                } else {
+                  addParam(this, verArray[0]); 
+                }
+                return false;
+            };
         }
 
         var navWrap = document.getElementById("fullTreeMenuListContainer");
@@ -137,16 +155,60 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
         }
     }
     else {
+        if (pageUrl.indexOf("/docs/core/") > 0 && getUrlVars(pageUrl)["lang"]) {
+            var sideBarIframeSrc = getSideBarIframeSrc(pageUrl, getUrlVars(pageUrl)["lang"])
+            if (sideBarIframeSrc) {
+                $("#sideBarIframe").attr('src', sideBarIframeSrc)
+                needFilterLangTree = true
+            } 
+        }
+        if (getUrlVars(pageUrl)["product"] || getUrlVars(pageUrl)["repoType"]) {
+            var sideBarIframeSrc = getSideBarIframeSrc(pageUrl, null, getUrlVars(pageUrl)["product"], getUrlVars(pageUrl)["repoType"])
+            if (sideBarIframeSrc) {
+                $("#sideBarIframe").attr('src', sideBarIframeSrc)
+                needFilterLangTree = true
+            }
+        }
         var versionListInterval = setInterval(function() {
-            // console.log('enter full tree menu list function...')
             var completeTag = $('#sideBarIframe').contents().find('#complete_loading_tree');
-            
             if (completeTag && completeTag.length > 0) {
                 clearInterval(versionListInterval);
 
+                // Start Nav change
+                // if page is dcv but used in ddn or other docs, need to change navbar
+                // the nav bar in the (DDN or other docs's) Hide_Tree_Page.html file
+                if (getUrlVars(pageUrl)["product"]) {
+                    var navBar = $('#sideBarIframe').contents().find('#docsNavBar');
+                    if (navBar && navBar.length > 0) {
+                        $(".productMenu").parent().html($(navBar[0]).html())
+                        if (getCurrentUrlProductName() == "dcv") {
+                            var historyVersion = $('#sideBarIframe').contents().find('.fullVersionHistory');
+                            if (historyVersion && historyVersion.length > 0) {
+                                $("#categoryMenuTree_history .fullVersionHistory").html($(historyVersion[0]).html());
+                                var product = getUrlVars(pageUrl)["product"]
+                                var productVersion = getUrlVars(pageUrl)[product]
+                                if(productVersion != undefined) {
+                                    productVersion = findNearestVersion(productVersion)
+                                    $("p.currentVersion").text("Version " + productVersion)
+                                }
+                            }
+                        }
+                    }
+                }
+                // End Nav Change
+                
+                // Start Version Tree
                 var version_tree_list = null
                 var curPageVersion = verArray[0];
                 curPageVersion = curPageVersion == 'latest' || curPageVersion == null ? 'latest_version' : curPageVersion;
+
+                // if dcv docs but use in other docs, use other docs version
+                var product = getUrlVars(document.URL)["product"]
+                var productVersion = getUrlVars(document.URL)[product]
+                var curProduct = getCurrentUrlProductName(document.URL)
+                if (product && productVersion && curProduct == 'dcv') {
+                    curPageVersion = (productVersion == 'latest' ? 'latest_version' : productVersion)
+                }
                 // console.log(version_tree_list, curPageVersion);
                 version_tree_list = $('#sideBarIframe').contents().find('#version_tree_list ul.version-tree-container');
                 // console.log(version_tree_list, curPageVersion);
@@ -160,12 +222,22 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                     var allHerf1 = $(".docContainer .content, #docHead, #AutoGenerateSidebar, .sideBar, #crumbs").find("a");
                     for (var i = 0; i < allHerf1.length; i++)
                     {
-                        allHerf1[i].onclick = function(){addParam(this, verArray[0]); return false;};
+                        allHerf1[i].onclick = function(){
+                            if (!$(this).hasClass("refreshLink") && $(this).parents(".sideBar").length > 0 && $("#articleContent").length > 0) {
+                              addParam(this, verArray[0], 'sidebar', needh3); 
+                            } else if (!$(this).hasClass("refreshLink") && $(this).parents(".markdown-body").length > 0 && $("#articleContent").length > 0) {
+                                addParam(this, verArray[0], 'docContainer', needh3); 
+                            } else {
+                              addParam(this, verArray[0]); 
+                            }
+                            return false;
+                        };
                     }
         
                     var navWrap = document.getElementById("fullTreeMenuListContainer");
+                    // console.log("navWrap: " + navWrap)
                     if (navWrap != null) {
-                        HighlightCurrentListForFullTree("fullTreeMenuListContainer", true, document.URL, pageStartVer, verArray[1]);
+                        HighlightCurrentListForFullTree("fullTreeMenuListContainer", true, document.URL, pageStartVer, verArray[1], needFilterLangTree);
                         if (generateDocHead) {
                             if (needh3 == 'true') {
                                 needh3 = true;
@@ -180,6 +252,7 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                             //GenerateContentByHead(false);
                         }
                         var hiddenLayout = $('.docContainer, .sideBar, .history');
+                        // console.log("hiddenLayout: " + hiddenLayout)
                         for (var i = 0; i < hiddenLayout.length; i++) {
                             hiddenLayout[i].style.visibility = "visible";
                         }
@@ -193,56 +266,71 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                         if (nodeOffsetTop > treeHeight + treeOffsetTop - lineHeight) {
                             $('#fullTreeMenuListContainer').scrollTop(nodeOffsetTop - treeOffsetTop - lineHeight);
                         }
+
+                        // if dcv docs but use in other docs, link did'nt find, go to index page
+                        if (product && productVersion && curProduct == 'dcv' && $('#fullTreeMenuListContainer .activeLink').length == 0) {
+                            var menuLis = $("#fullTreeMenuListContainer > li")
+                            for(var i=0;i<menuLis.length;i++) {
+                                let aTag = $(menuLis[i]).find(" > a").eq(0).attr("href")
+                                if($(menuLis[i]).is(":visible") && aTag) {
+                                    window.location.href = aTag + "?ver=" + productVersion;
+                                    return;
+                                }
+                            }
+                        }
     
                         navWrap = document.getElementById("fullTreeMenuListContainer");
                         var liAry = navWrap.getElementsByTagName("li");
-        
-                        for (var i = 0, len = liAry.length; i < len; i++) {
-                            liAry[i].onclick = (function (i) {
-                                return function (event) {
-                                    if ($(liAry[i]).children("a").length == 0 || $(liAry[i]).children("a")[0].getAttribute("href") == null) {
-                                        var subUl = $(liAry[i]).children("ul");
-                                        if (subUl.length > 0) {
-                                            for (var j = 0; j < subUl.length; j++) {
-                                                if (subUl[j].style.display == "block") {
-                                                    var parentL = $(subUl[j]).parents("li");
-                                                    if (parentL.length > 0) {
-                                                        parentL[0].className = "collapseListStyle"
-                                                        // parentL[0].style.listStyleImage = "url('/assets/img-icon/collapse-list.png')";
+                        
+                        if ($("#categoryMenuTree").length == 0) {
+                            for (var i = 0, len = liAry.length; i < len; i++) {
+                                liAry[i].onclick = (function (i) {
+                                    return function (event) {
+                                        if ($(liAry[i]).children("a").length == 0 || $(liAry[i]).children("a")[0].getAttribute("href") == null) {
+                                            var subUl = $(liAry[i]).children("ul");
+                                            if (subUl.length > 0) {
+                                                for (var j = 0; j < subUl.length; j++) {
+                                                    if (subUl[j].style.display == "block") {
+                                                        var parentL = $(subUl[j]).parents("li");
+                                                        if (parentL.length > 0) {
+                                                            parentL[0].className = "collapseListStyle"
+                                                            // parentL[0].style.listStyleImage = "url('/assets/img-icon/collapse-list.png')";
+                                                        }
+                                                        subUl[j].style.display = "none";
                                                     }
-                                                    subUl[j].style.display = "none";
-                                                }
-                                                else {
-                                                    subUl[j].style.display = "block";
-                                                    var parentL = $(subUl[j]).parents("li");
-                                                    if (parentL.length > 0) {
-                                                        parentL[0].className = "expandListStyle"
-                                                        // parentL[0].style.listStyleImage = "url('/assets/img-icon/expand-list.png')";
-                                                    }
-                                                    var parentUl = $(liAry[i]).parents("ul");
-                                                    for (var m = 0; m < parentUl.length; m++) {
-                                                        if (parentUl[m].style.display != "block") {
-                                                            var parentL = $(parentUl[m]).parents("li");
-                                                            if (parentL.length > 0) {
-                                                                parentL[0].className = "expandListStyle"
-                                                                // parentL[0].style.listStyleImage = "url('/assets/img-icon/expand-list.png')";
+                                                    else {
+                                                        subUl[j].style.display = "block";
+                                                        var parentL = $(subUl[j]).parents("li");
+                                                        if (parentL.length > 0) {
+                                                            parentL[0].className = "expandListStyle"
+                                                            // parentL[0].style.listStyleImage = "url('/assets/img-icon/expand-list.png')";
+                                                        }
+                                                        var parentUl = $(liAry[i]).parents("ul");
+                                                        for (var m = 0; m < parentUl.length; m++) {
+                                                            if (parentUl[m].style.display != "block") {
+                                                                var parentL = $(parentUl[m]).parents("li");
+                                                                if (parentL.length > 0) {
+                                                                    parentL[0].className = "expandListStyle"
+                                                                    // parentL[0].style.listStyleImage = "url('/assets/img-icon/expand-list.png')";
+                                                                }
+                                                                parentUl[m].style.display = "block";
                                                             }
-                                                            parentUl[m].style.display = "block";
                                                         }
                                                     }
                                                 }
                                             }
                                         }
+                                        else {
+                                            //HighlightCurrentListForFullTree("fullTreeMenuListContainer", false, ($(liAry[i]).children("a"))[0].href);
+                                        }
+                                        event.stopPropagation();
                                     }
-                                    else {
-                                        //HighlightCurrentListForFullTree("fullTreeMenuListContainer", false, ($(liAry[i]).children("a"))[0].href);
-                                    }
-                                    event.stopPropagation();
-                                }
-                            })(i)
+                                })(i)
+                            }
                         }
                     }
                 }
+                // End Version Tree
             }
             
         }, 100)
@@ -279,15 +367,34 @@ function SearchVersion() {
                 curVerTag[0].innerText = "latest version";
             }
             else{
-                curVerTag[0].innerText = "version "+ver;
+                curVerTag[0].innerText = "version " + ver;
+            }
+            var productName = getUrlVars(docUrl)["product"];
+            if (productName != undefined) {
+                var productVersion = getUrlVars(docUrl)[productName];
+                if (productVersion != undefined) {
+                    if (productVersion == "latest") {
+                        curVerTag[0].innerText = "latest version";
+                    } else {
+                        curVerTag[0].innerText = "version " + productVersion;
+                    }
+                }
             }
         }
-        if(compatiableDiv != null){
-            
-        }
-        if (compatiableDiv != null && compatibleTag != null){
+        if (compatiableDiv != null && compatibleTag != null) {
             compatiableDiv.style.display = "block";
-            compatibleTag[0].innerText = "Version "+ver;
+            compatibleTag[0].innerText = "Version "+ ver;
+            var productName = getUrlVars(docUrl)["product"];
+            if (productName != undefined) {
+                var productVersion = getUrlVars(docUrl)[productName];
+                if (productVersion != undefined) {
+                    if (productVersion == "latest") {
+                        compatiableDiv.style.display = "none";
+                    } else {
+                        compatibleTag[0].innerText = "Version " + productVersion;
+                    }
+                }
+            }
         }
         else if (compatiableDiv != null){
             compatiableDiv.style.display = "none";
@@ -301,9 +408,9 @@ function SearchVersion() {
     return verArray;
 }
 
-function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = document.URL, pageStartVer = undefined, curPageRealVer = undefined) {
+function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = document.URL, pageStartVer = undefined, curPageRealVer = undefined, needFilterLangTree=false) {
     var navWrap = document.getElementById(searchListId);
-    
+    // console.log(navWrap)
     if (navWrap != null) {
         var listAry = navWrap.getElementsByTagName("li");        
         var oriUrl = searchUrl;
@@ -335,24 +442,29 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
         var bestMatchList = -1;
         var bestReturnVal = -1;
 
+        FilterLangFullTree(needFilterLangTree)
+
+        // console.log(listAry)
         for (var i = 0, len = listAry.length; i < len; i++) {
             var curLi = listAry[i];
-            var curListATag =  $(curLi).children("a");
-            if (curListATag.length > 0 && curListATag[0].getAttribute("href") != null) {
-                var returnVal = UrlSearch(searchUrl, curListATag[0].href);
-                if (returnVal == 2) {
-                    bestReturnVal = returnVal;
-                    bestMatchList = i;
-                    break;               
-                }
-                else {
-                    if (returnVal > bestReturnVal || ( returnVal == 0 && bestReturnVal == 0)) {
+            if (!$(curLi).attr("otherLang")) {
+                var curListATag =  $(curLi).children("a");
+                if (curListATag.length > 0 && curListATag[0].getAttribute("href") != null && curListATag[0].getAttribute("href") != "#") {
+                    var returnVal = UrlSearch(searchUrl, curListATag[0].href);
+                    if (returnVal == 2) {
                         bestReturnVal = returnVal;
                         bestMatchList = i;
+                        break;               
                     }
-                    
-                    if (!firstTime) {
-                        curListATag[0].style.fontWeight = 'normal';
+                    else {
+                        if (returnVal > bestReturnVal || ( returnVal == 0 && bestReturnVal == 0)) {
+                            bestReturnVal = returnVal;
+                            bestMatchList = i;
+                        }
+                        
+                        if (!firstTime) {
+                            curListATag[0].style.fontWeight = 'normal';
+                        }
                     }
                 }
             }
@@ -361,18 +473,8 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
         if (bestMatchList != -1) {
             var curLi = listAry[bestMatchList];
             var curListATag =  $(curLi).children("a");
-            
             if (bestReturnVal == 0) {
                 var ver = getUrlVars(document.URL)["ver"];
-                // if (ver != undefined) {
-                //     addParam(curListATag[0], ver);
-                // }
-                // else if (curPageRealVer != undefined) {
-                //     addParam(curListATag[0], curPageRealVer);
-                // }
-                // else {
-                //     window.location.href = curListATag[0].href;
-                // }
                 var ifChangeVersion = getUrlVars(document.URL)["cVer"];
                 if (ifChangeVersion != undefined || (ver != undefined &&
                     ((ver != "latest" && pageStartVer != undefined && pageStartVer != "" && pageStartVer > ver) 
@@ -383,38 +485,10 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
             }
             
             if (document.URL.indexOf("web-twain/docs/faq/") < 0 || document.URL.indexOf("web-twain/docs/faq/?ver") > 0) {
-                curListATag[0].style.color = '#fe8e14';
                 curListATag[0].className = "otherLinkColour activeLink"
             }
 
             if (firstTime) {
-                var crumbul = $($('#crumbs')).children("ul")
-                if (crumbul.length != 0) {
-                    var parentsLi = $(curLi).parents("li");
-                    var appendText = "";
-                    if (parentsLi.length > 0) {
-                        for (var j = parentsLi.length - 1; j >= 0 ; j--) {
-                            var tmpATag = $(parentsLi[j]).children("a");
-                            if (tmpATag.length > 0) {
-                                appendText += '<li><a class="bluelink" href = "' + tmpATag[0].href + '">'+ tmpATag[0].textContent + '</a></li>';
-                            }
-                        }
-                    }
-
-                    var childUl = $(curLi).children("ul");
-                    if (childUl.length > 0) {
-                        appendText += '<li><a class="bluelink" href = "' + curListATag[0].href + '">'+ curListATag[0].textContent + '</a></li>';
-                    }
-                    else {
-                        if (document.URL.indexOf("/barcode-reader/faq/") > 0) {
-                            appendText += '<li id="breadcrumbLastNode"><a class="bluelink" href = "' + curListATag[0].href + '">'+ curListATag[0].textContent + '</a></li>'
-                        } else {
-                            appendText += '<li id="breadcrumbLastNode">' + curListATag[0].textContent + '</li>'
-                        }
-                        // appendText += '<li id="breadcrumbLastNode">' + curListATag[0].textContent + '</li>'
-                    }
-                    $(crumbul[0]).append(appendText);
-                }
                 var parentsUL = $(curLi).parents("ul");
                 for (var j = 0, lenUL = parentsUL.length; j < lenUL; j++) {
                     var curUL =  parentsUL[j];
@@ -427,11 +501,15 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
                         if (curULTag.length > 0) {
                             if (curULTag[0].style.display != "block") {
                                 curULChildrenListAry[k].className = "collapseListStyle"
-                                // curULChildrenListAry[k].style.listStyleImage = "url('/assets/img-icon/collapse-list.png')";  
+                                var iconItem = document.createElement("i")
+                                iconItem.className = "icon-arrow"
+                                curULChildrenListAry[k].appendChild(iconItem)
                             }
                             else {
                                 curULChildrenListAry[k].className = "expandListStyle"
-                                // curULChildrenListAry[k].style.listStyleImage = "url('/assets/img-icon/expand-list.png')";
+                                var iconItem = document.createElement("i")
+                                iconItem.className = "icon-arrow"
+                                curULChildrenListAry[k].appendChild(iconItem)
                             }
                         }
                     }
@@ -440,23 +518,29 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
                 var childUL = $(curLi).children("ul");
                 if (childUL.length > 0) {
                     curLi.className = "expandListStyle"
-                    // curLi.style.listStyleImage = "url('/assets/img-icon/expand-list.png')";
                     if (childUL[0].style.display != "block") {
                         childUL[0].style.display = "block";
                     }
-                    curListATag[0].removeAttribute("href");
 
+                    if ($("#categoryMenuTree").length == 0) {
+                        curListATag[0].removeAttribute("href");
+                    }
+                    
                     var childrenLi = $(childUL[0]).children("li");
                     for (var j = 0; j < childrenLi.length; j++) {
                         var curULTag = $(childrenLi[j]).children("ul");
                         if (curULTag.length > 0) {
                             if (curULTag[0].style.display != "block") {
                                 childrenLi[j].className = "collapseListStyle"
-                                // childrenLi[j].style.listStyleImage = "url('/assets/img-icon/collapse-list.png')";  
+                                var iconItem = document.createElement("i")
+                                iconItem.className = "icon-arrow"
+                                childrenLi[j].appendChild(iconItem)
                             }
                             else {
                                 childrenLi[j].className = "expandListStyle"
-                                // childrenLi[j].style.listStyleImage = "url('/assets/img-icon/expand-list.png')";
+                                var iconItem = document.createElement("i")
+                                iconItem.className = "icon-arrow"
+                                childrenLi[j].appendChild(iconItem)
                             }
                         }
                     }
@@ -464,8 +548,12 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
                 var parentsLi = $(curLi).parents("li");
                 for (var j = 0, lenLi = parentsLi.length; j < lenLi; j++) {
                     parentsLi[j].className = "expandListStyle"
-                    // parentsLi[j].style.listStyleImage = "url('/assets/img-icon/expand-list.png')";
+                    var iconItem = document.createElement("i")
+                    iconItem.className = "icon-arrow"
+                    parentsLi[j].appendChild(iconItem)
                 }
+
+                initCrumbs()
             }
         }
     }
@@ -556,4 +644,164 @@ function UsefulRecord(isUseful) {
     if(feedbackTag!=null) {
         feedbackTag.innerHTML = "Thanks!";
     }
+}
+
+function initCrumbs() {
+    var crumbul = $('#crumbs').children("ul")
+    if (crumbul.length != 0) {
+        if (getUrlVars(document.URL)["product"]) {
+            var documentationLink = getDocumentationLink(getUrlVars(document.URL)["product"], getUrlVars(document.URL)["repoType"])
+            var menuLis = $("#fullTreeMenuListContainer > li")
+            var flag = false
+            for(var i=0;i<menuLis.length;i++) {
+                let aTag = $(menuLis[i]).find(" > a").eq(0).attr("href")
+                if($(menuLis[i]).is(":visible") && aTag && !flag) {
+                    documentationLink = aTag
+                    flag = true
+                }
+            }
+            $(crumbul[0]).find("a").eq(0).attr("href", documentationLink)
+        } 
+        var appendText = "";
+        var expandList = $("#fullTreeMenuListContainer .expandListStyle")
+        for (var i=0; i<expandList.length; i++) {
+            if ($(expandList[i]).find(".activeLink").length > 0) {
+                var atag = $(expandList[i]).find("> a")
+                if ($(atag).hasClass("activeLink")) {
+                    appendText += '<li id="breadcrumbLastNode">' + $(atag)[0].textContent + '</li>'
+                } else {
+                    if ($(atag)[0].href != "") {
+                        appendText += '<li><a class="bluelink" href = "' + $(atag)[0].href + '">'+ $(atag)[0].textContent + '</a></li>'
+                    } else {
+                        appendText += '<li>' + $(atag)[0].textContent + '</li>'
+                    }
+                }
+            }
+        }
+        var activeLis = $("#fullTreeMenuListContainer a.activeLink")
+        if (activeLis.length > 0 && !$(activeLis[0]).parent().hasClass("expandListStyle")) {
+            appendText += '<li id="breadcrumbLastNode">' + $(activeLis[0]).text() + '</li>'
+        }
+        $(crumbul[0]).append(appendText);
+    }
+}
+
+function FilterLangFullTree(needFilterLang=false) {
+    // console.log("-------------- Start Filter Lang Full Tree --------------")
+    // console.log(needFilterLang)
+    var curUrl = document.URL
+    if (curUrl.indexOf("/docs/server/") > 0 || curUrl.indexOf("/docs/mobile/") > 0 || needFilterLang) {
+        var lang = getCurrentUrlLang(curUrl, needFilterLang);
+        // console.log(lang)
+        var fullTreeLis = $("#fullTreeMenuListContainer > li")
+        for(var i=0;i<fullTreeLis.length;i++) {
+            var liItemLang = fullTreeLis[i].getAttribute("lang")
+            if (liItemLang&&liItemLang!=""&&liItemLang.toLowerCase()!=lang) {
+                $(fullTreeLis[i]).attr("otherLang", true).hide()
+                $(fullTreeLis[i]).find("li").attr("otherLang", true)
+            } else {
+                $(fullTreeLis[i]).removeAttr("otherLang").show()
+                $(fullTreeLis[i]).find("li").removeAttr("otherLang")
+            }
+        }
+    }
+    // console.log("-------------- End Filter Lang Full Tree --------------")
+}
+
+function getCurrentUrlLang(url, needFilterLang=false) {
+    let repoType = getUrlVars(url)["repoType"]
+    if (repoType == undefined) {
+        repoType = getCurrentUrlRepoType(url)
+    }
+    if (repoType == "server" || repoType == "mobile" || needFilterLang) {
+        if (url.indexOf("/c-cplusplus/") > 0) {
+            if (getUrlVars(url)["src"]) {
+                var src = getUrlVars(url)["src"].toLowerCase().trim()
+                if (src == "c") {
+                    return "c"
+                } else if (src == "cplusplus" || src == "cpp") {
+                    return "cplusplus"
+                } else {
+                    return "c"
+                }
+            } else {
+                return "c"
+            }
+        } else if (getUrlVars(url)["lang"] || getUrlVars(url)["src"]) {
+            var result = ""
+            if (!getUrlVars(url)["lang"]) {
+                result = getUrlVars(url)["src"]
+            } else {
+                result = getUrlVars(url)["lang"].toLowerCase().trim().split(",")[0]
+            }
+            if (result == "js") {
+                result = "javascript"
+            }
+            if (result == "ios" || result == "objective-c" || result == "objc" || result == "swift") {
+                result = "objectivec-swift"
+            }
+            if (result == "c++" || result == "cpp") {
+                result = "cplusplus"
+            }
+            if (result == "c") {
+                result = "c"
+            }
+            if(result == 'csharp') {
+                result = "dotnet"
+            }
+            return result
+        } else {
+            var arr = repoType == "server" ? url.split("/docs/server/")[1].split("/") : (repoType == "mobile" ? url.split("/docs/mobile/")[1].split("/"): '')
+            if (repoType == "mobile" && ["objectivec-swift", "android", "xamarin", "react-native", "flutter", "cordova"].indexOf(arr[1]) < 0) {
+                return "objectivec-swift"
+            } else if (repoType == "web" || repoType == "js") {
+                return "javascript"
+            } else {
+                return arr[1]
+            }
+        }
+    } else {
+        return ""
+    }
+}
+
+function getDoumentName(product) {
+    switch (product) {
+        case 'dwt': return 'web-twain';
+        case 'dbr': return 'barcode-reader';
+        case 'dlr': return 'label-recognition';
+        case 'dce': return 'camera-enhancer';
+        case 'dcp': return 'code-parser';
+        case 'ddn': return 'document-normalizer';
+        case 'dcv': return 'capture-vision'
+        default: return '';
+    }
+}
+
+function getSideBarIframeSrc(pageUrl, lang, product=null, repoType=null) {
+    if (lang) {
+        lang = lang.toLowerCase().trim().split(",")[0]
+        if (['javascript', 'js'].indexOf(lang) >= 0) {
+            return '/barcode-reader/docs/web/Hide_Tree_Page.html'
+        }
+        if (['android', 'objective-c', 'objc', 'swift'].indexOf(lang) >= 0) {
+            return '/barcode-reader/docs/mobile/Hide_Tree_Page.html'
+        }
+        if (['c', 'cpp', 'c++', 'csharp', 'dotnet', 'java', 'python'].indexOf(lang) >= 0) {
+            return '/barcode-reader/docs/server/Hide_Tree_Page.html'
+        }
+    } else {
+        if (product == null && repoType != null) {
+            product = getCurrentUrlProductName()
+        }
+        if (getDoumentName(product)) {
+            repoType = repoType == null ? 'core' : repoType
+            return '/'+ getDoumentName(product) +'/docs/'+ repoType +'/Hide_Tree_Page.html'
+        }
+    }
+    return null
+}
+
+function getDocumentationLink(product, repoType) {
+    return "/" + getDoumentName(product) + '/docs/'+ repoType + "/introduction/"
 }
