@@ -1,12 +1,9 @@
-name: Build-Sync
+name: Build-Sync-Main
 
 # the workflow will be called by others
 on:
   workflow_call:
     inputs:
-      site-type:
-        required: true
-        type: string
       doc-repo:
         required: true
         type: string
@@ -17,8 +14,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
 
-  Update-Doc-On-Main-Change:
-    if: ${{ inputs.site-type == 'main' }}
+  Build-And-Sync-To-Production:
     # The type of runner that the job will run on
     runs-on: [self-hosted]
 
@@ -48,36 +44,4 @@ jobs:
       - name: Trigger Webhook 
         run: | 
           curl -X POST -H "${{ secrets.WEBHOOK_USER }}" -H "${{ secrets.WEBHOOK_TOKEN }}" -H "Content-Type: application/json" -d "[\"/${{ inputs.doc-url }}/*\"]" ${{ secrets.WEBHOOK_URL }}
-
-
-  Update-Doc-On-Preview-Change:
-    if: ${{ inputs.site-type == 'preview' }}
-    # The type of runner that the job will run on
-    runs-on: [self-hosted]
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Runs a set of commands using the runners shell
-      - name: Build the full site - preview
-        run: |
-          cd ${{ runner.temp }}
-          mkdir -p DocHome-preview
-          git clone --depth 1 --branch preview https://github.com/dynamsoft-docs/${{ inputs.doc-repo }}.git ${{ inputs.doc-repo }}-preview
-          git clone --depth 1 --branch preview https://github.com/dynamsoft-docs/Docs-Template-Repo.git Docs-Template-Repo-Preview
-          cp -rfp ./${{ inputs.doc-repo }}-preview/* ./DocHome-preview/
-          cp -rfp ./Docs-Template-Repo-Preview/* ./DocHome-preview/
-          sed -i -e "1,3s/blob\/master$/blob\/preview/" \
-          -e "1,3s/blob\/main$/blob\/preview/" ${{ runner.temp }}/DocHome-preview/_config.yml
-          cd DocHome-preview && bundle exec jekyll build
-
-      - name: Sync files
-        uses: SamKirkland/FTP-Deploy-Action@4.3.0
-        with:
-          server: ${{ secrets.FTP_TEST_SITE_SERVER }}
-          username: ${{ secrets.FTP_TEST_SITE_USER }}
-          password: ${{ secrets.FTP_TEST_SITE_PASSWORD }}
-          port: 7500 
-          local-dir: ${{ runner.temp }}/DocHome-preview/_site/
-          server-dir: /www.dynamsoft.com/${{ inputs.doc-url }}/        
-
 
