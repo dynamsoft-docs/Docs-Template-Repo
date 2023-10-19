@@ -4,6 +4,9 @@ name: Build-Sync
 on:
   workflow_call:
     inputs:
+      site-type:
+        required: true
+        type: string
       doc-repo:
         required: true
         type: string
@@ -15,7 +18,7 @@ on:
 jobs:
 
   Update-Doc-On-Main-Change:
-    if: ${{ github.ref == 'refs/heads/main' }}
+    if: ${{ inputs.site-type == 'main' }}
     # The type of runner that the job will run on
     runs-on: [self-hosted]
 
@@ -48,14 +51,14 @@ jobs:
 
 
   Update-Doc-On-Preview-Change:
-    if: ${{ github.ref == 'refs/heads/preview' }}
+    if: ${{ inputs.site-type == 'preview' }}
     # The type of runner that the job will run on
     runs-on: [self-hosted]
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Runs a set of commands using the runners shell
-      - name: Build the full site - main
+      - name: Build the full site - preview
         run: |
           cd ${{ runner.temp }}
           mkdir -p DocHome-preview
