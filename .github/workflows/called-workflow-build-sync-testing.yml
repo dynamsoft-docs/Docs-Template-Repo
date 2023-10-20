@@ -31,7 +31,7 @@ jobs:
           cp -rfp ./Docs-Template-Repo/* ./DocHome/
           sed -i -e "1,3s/blob\/master$/blob\/preview/" \
           -e "1,3s/blob\/main$/blob\/preview/" ${{ runner.temp }}/DocHome/_config.yml
-          cd DocHome && bundle exec jekyll build
+          cd DocHome && bundle install && bundle exec jekyll build
 
       - name: Sync files
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
