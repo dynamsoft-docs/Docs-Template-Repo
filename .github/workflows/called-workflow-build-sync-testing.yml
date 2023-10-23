@@ -58,8 +58,8 @@ jobs:
       - name: 'Extract Tar files'
         shell: cmd
         run: |
-          mkdir ${{ runner.temp }}/DocHome/_site
-          tar -xf built-doc-site.tar -C ${{ runner.temp }}/DocHome/_site
+          mkdir ${{ runner.temp }}\DocHome\_site
+          tar -xf built-doc-site.tar -C ${{ runner.temp }}\DocHome\_site
 
       - name: Sync files
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
@@ -68,6 +68,6 @@ jobs:
           username: ${{ secrets.FTP_TEST_SITE_USER }}
           password: ${{ secrets.FTP_TEST_SITE_PASSWORD }}
           port: 7500 
-          local-dir: ${{ runner.temp }}/DocHome/_site/
+          local-dir: ${{ runner.temp }}\DocHome\_site/
           server-dir: /www.dynamsoft.com/${{ inputs.doc-url }}/        
 
