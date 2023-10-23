@@ -56,6 +56,7 @@ jobs:
           name: built-doc-site
 
       - name: 'Extract Tar files'
+        shell: cmd
         run: |
           [ -d ${{ github.workspace }}/_site ] && rm -rf ${{ github.workspace }}/_site
           mkdir ${{ github.workspace }}/_site
@@ -68,6 +69,6 @@ jobs:
           username: ${{ secrets.FTP_TEST_SITE_USER }}
           password: ${{ secrets.FTP_TEST_SITE_PASSWORD }}
           port: 7500 
-          local-dir: ${{ runner.temp }}/DocHome/_site/
+          local-dir: ${{ github.workspace }}/_site/
           server-dir: /www.dynamsoft.com/${{ inputs.doc-url }}/        
 
