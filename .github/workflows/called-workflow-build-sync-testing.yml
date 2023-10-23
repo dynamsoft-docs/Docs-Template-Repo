@@ -34,14 +34,14 @@ jobs:
           cd DocHome && bundle install && bundle exec jekyll build
 
       - name: 'Create Tar files'
-        run: tar -czvf built-doc-site.tar.gz -C ${{ runner.temp }}/DocHome/_site .
+        run: tar -czvf ${{ inputs.doc-repo }}.tar.gz -C ${{ runner.temp }}/DocHome/_site .
 
       - name: Upload the built site as a single artifact
         uses: actions/upload-artifact@v3
         with:
-          name: built-doc-site
-          path: built-doc-site.tar.gz
-          retention-days: 5
+          name: ${{ inputs.doc-repo }}
+          path: ${{ inputs.doc-repo }}.tar.gz
+          retention-days: 2
 
   Sync-To-Testing:
     # The type of runner that the job will run on
@@ -54,13 +54,13 @@ jobs:
       - name: Download the artifact
         uses: actions/download-artifact@v3
         with:
-          name: built-doc-site
+          name: ${{ inputs.doc-repo }}
 
       - name: 'Extract Tar files'
         shell: cmd
         run: |
           mkdir ${{ runner.temp }}\DocHome\_site
-          tar -xzf built-doc-site.tar.gz -C ${{ runner.temp }}\DocHome\_site
+          tar -xzf ${{ inputs.doc-repo }}.tar.gz -C ${{ runner.temp }}\DocHome\_site
 
       - name: Sync files
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
