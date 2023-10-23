@@ -1,6 +1,13 @@
 var dcvVersionList = 
 [
     {
+        dcp: "2.0.20",
+        matchList: 
+        {
+            dcv:["2.0.20"]
+        }
+    },
+    {
         dcp: "2.0.10",
         matchList: 
         {
@@ -12,6 +19,18 @@ var dcvVersionList =
         matchList: 
         {
             dcv:["2.0.0"]
+        }
+    },
+    {
+        dbr: "10.0.20",
+        repoType: "server",
+        matchList: 
+        {
+            dcv:["2.0.20"],
+            dce:["4.0.0"],
+            ddn:["2.0.20"],
+            dlr:["3.0.20"],
+            dcp:["2.0.20"]
         }
     },
     {
@@ -38,7 +57,18 @@ var dcvVersionList =
             dcp:["2.0.10"]
         }
     },
-
+    {
+        dbr: "10.0.0",
+        repoType: "core",
+        matchList: 
+        {
+            dcv:["2.0.0"],
+            dce:["4.0.0"],
+            ddn:["2.0.0"],
+            dlr:["3.0.0"],
+            dcp:["2.0.0"]
+        }
+    },
     {
         dbr: "10.0.0",
         repoType: "server",
@@ -56,8 +86,15 @@ var dcvVersionList =
         repoType: "mobile",
         matchList: 
         {
-            dcv:["1.0.0"],
             dce:["2.3.10"]
+        }
+    },
+    {
+        dbr: "9.6.31",
+        repoType: "js",
+        matchList: 
+        {
+            dce:["3.3.8"]
         }
     },
     {
@@ -95,6 +132,17 @@ var dcvVersionList =
         matchList:
         {
             dce:["3.0.0"]
+        }
+    },
+    {
+        dlr: "3.0.20",
+        matchList:
+        {
+            dcv:["2.0.20"],
+            dce:["4.0.0"],
+            dbr:["10.0.20"],
+            ddn:["2.0.20"],
+            dcp:["2.0.20"]
         }
     },
     {

@@ -38,12 +38,12 @@
     {%- endif -%}
     <link href="{{ docFullPath }}{{ targetUrl }}" rel="canonical">
     
-    <link rel="stylesheet" href="{{ site.assets }}css/dm-style.css?v=b20230616">
+    <link rel="stylesheet" href="{{ site.assets }}css/dm-style.css?v={{ 'now' | date: "%s"}}">
     <link rel="stylesheet" href="{{ site.assets }}css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ site.assets }}css/font-awesome.min.css">
-    <link rel="stylesheet" href="{{ site.assets }}css/basis-bs.min.css?v=b202001119">
+    <link rel="stylesheet" href="{{ site.assets }}css/basis-bs.min.css?v={{ 'now' | date: "%s"}}">
     <link href="https://www.dynamsoft.com/webres/wwwroot/css/header_bs.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="{{ site.assets }}css/basis.min.css?v=b202001019">
+    <link rel="stylesheet" href="{{ site.assets }}css/basis.min.css?v={{ 'now' | date: "%s"}}">
     <link rel="stylesheet" href="{{ site.assets }}css/footer.css">
 
     {%- assign showNoIndexStyle = false -%}
@@ -85,15 +85,15 @@
     <script type="text/javascript" src="{{ site.assets }}js/ds-jquery-bs.min.js"></script>
 
     {%- if site.useVersionTreeV2 -%}
-    <script type="text/javascript" src="{{ site.assets }}js/index-banner-two.min.js"></script>
-    <script type="text/javascript" src="{{ site.assets }}js/historymanage-two.min.js"></script>
+    <script type="text/javascript" src="{{ site.assets }}js/index-banner-two.min.js?v={{ 'now' | date: "%s"}}"></script>
+    <script type="text/javascript" src="{{ site.assets }}js/historymanage-two.min.js?v={{ 'now' | date: "%s"}}"></script>
     {%- else -%}
-    <script type="text/javascript" src="{{ site.assets }}js/dcvVersionSearch.min.js"></script>
-    <script type="text/javascript" src="{{ site.assets }}js/index-banner.min.js"></script>
-    <script type="text/javascript" src="{{ site.assets }}js/historymanage.min.js"></script>
+    <script type="text/javascript" src="{{ site.assets }}js/dcvVersionSearch.min.js?v={{ 'now' | date: "%s"}}"></script>
+    <script type="text/javascript" src="{{ site.assets }}js/index-banner.min.js?v={{ 'now' | date: "%s"}}"></script>
+    <script type="text/javascript" src="{{ site.assets }}js/historymanage.min.js?v={{ 'now' | date: "%s"}}"></script>
     {%- endif -%}
 
-    <script type="text/javascript" src="{{ site.assets }}js/layout.min.js"></script>
+    <script type="text/javascript" src="{{ site.assets }}js/layout.min.js?v={{ 'now' | date: "%s"}}"></script>
     <script type="text/javascript" src="{{ site.assets }}js/anchor.min.js"></script>
 
     {%- if page.hasCustomLdJson -%}

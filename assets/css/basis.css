@@ -915,21 +915,65 @@ ul::-webkit-scrollbar-corner {
 
 .dbrThanksDownloading {
     display: none;
-    background: #F5F5F5;
-    color: #323234;
+    position: sticky;
+    top: 80px;
+    background: #306877;
+    color: #fff;
     padding: 30px 20px;
     text-align: center;
     margin-bottom: 20px;
+    margin-top: -53px;
+    z-index: 111;
+}
+
+.dbrThanksDownloading .icon-close{
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+}
+
+.dbrThanksDownloading .icon-close::after{
+    content: '';
+    height: 22px;
+    width: 2px;
+    background: #fff;
+    position: absolute;
+    top: -1px;
+    right: 9px;
+    transform: rotate(45deg);
+    cursor: pointer;
+}
+
+.dbrThanksDownloading .icon-close::before{
+    content: '';
+    width: 22px;
+    height: 2px;
+    background: #fff;
+    position: absolute;
+    top: 9px;
+    right: -1px;
+    transform: rotate(45deg);
+    cursor: pointer;
 }
 
 .dbrThanksDownloading .thanksDownloadTitle {
-    color: #323234;
+    color: #FFFFFF;
     font-size: 24px;
     line-height: 36px;
     margin-bottom: 5px;
     font-family: Oswald-Light, 'Myriad Pro', 'Gloucester MT', myriad-pro, 'Agency FB';
 }
 
+.dbrThanksDownloading .downloadlink {
+    color: #fe8e14!important;
+}
+
+.dbrThanksDownloading .downloadlink:hover {
+    color: #fea543!important;
+}
 
 @media (min-width: 768px) {
 
@@ -1192,6 +1236,10 @@ ul::-webkit-scrollbar-corner {
         width: calc(50% - 175px);
         cursor: pointer;
         margin-top: 72px;
+    }
+
+    .noSubMenuDoc .sideBarIcon {
+        margin-top: 0;
     }
 
     .sideBar,
@@ -2468,7 +2516,7 @@ i.dbr-white-logo {
 }
 
 .noSubMenuDoc .history {
-    top: 125px;
+    top: 110px;
 }
 
 .fullVersionHistory {
@@ -2580,7 +2628,7 @@ i.dbr-white-logo {
     }
 
     .noSubMenuDoc .history {
-        top: 120px;
+        top: 105px;
     }
 }
 
@@ -2597,13 +2645,17 @@ i.dbr-white-logo {
     }
 
     .noSubMenuDoc .history {
-        top: 120px;
+        top: 105px;
     }
 
     .history.history-absolute {
         position: absolute;
         top: 148px !important;
         left: calc(50% - 160px);
+    }
+
+    .noSubMenuDoc .history.history-absolute {
+        top: 0 !important;
     }
 
     #articleContent {

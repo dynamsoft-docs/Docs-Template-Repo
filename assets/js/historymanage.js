@@ -278,8 +278,6 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
     var repoType = getUrlVars(document.URL)["repoType"] || getCurrentUrlRepoType(document.URL)
     var currentDocDomain = document.URL.split("/docs/")[0] + '/docs/';
 
-    // console.log(changeHref, currentDocDomain, repoType)
-
     if(hrefVal == "")
         return;
 
@@ -430,9 +428,9 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
                         }
                     }
                 }
-                
                 let currentVersion = $(".currentVersion").text().toLowerCase()
                 currentVersion = currentVersion == "latest version" ? "latest" : (currentVersion.replace("version ", ""))
+                
                 if (getUrlVars(hrefVal)["product"] != undefined) {
                     let hrefVal_Product = getCurrentUrlProductName(hrefVal)
                     let productName = getUrlVars(hrefVal)["product"]
@@ -445,7 +443,11 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
                     if (hrefVal_ProductVersion == -1) {
                         hrefVal_ProductVersion = currentVersion
                     }
-                    queryParam = `&${productName}=${productVersion}&repoType=${productRepoType}&ver=${hrefVal_ProductVersion}`
+                    if (getUrlVars(hrefVal)["repoType"] != undefined) {
+                        queryParam = `&${productName}=${productVersion}&ver=${hrefVal_ProductVersion}`
+                    } else {
+                        queryParam = `&${productName}=${productVersion}&repoType=${productRepoType}&ver=${hrefVal_ProductVersion}`
+                    }
                     window.open(hrefVal + queryParam + anchorVal);
                 } else {
                     let hrefVal_ProductVersion = getDCVVer(currentVersion, hrefVal)
@@ -458,7 +460,7 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
                         if (queryIndex > 0) {
                             window.open(hrefVal + '&ver='+hrefVal_ProductVersion + anchorVal); 
                         } else {
-                            window.open(hrefVal + '?ver='+hrefVal_ProductVersion + anchorVal); 
+                            window.open(hrefVal + '?ver='+hrefVal_ProductVersion + anchorVal);
                         }
                     }
                     
@@ -1160,6 +1162,11 @@ function getDCVVer(inputVer, url, curProduct=null, curRepoType=null, linkProduct
                 }
             }
         }
+
+        if (item.repoType && item.repoType == "web") {
+            item.repoType = "js"
+        }
+
         return aFlag && bFlag && (!item.repoType || repoType == item.repoType) && (!inputVer||inputVer >= getFormatVal(item.version))
     })
 

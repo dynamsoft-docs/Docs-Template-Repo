@@ -3,107 +3,9 @@ $(document).ready(function(){
     init();
     getLocation();
     mutationObserverFunc();
+    initPageLayout();
     
-    if ($(".headCounter").hasClass("noTitleIndex")) {
-        $("#AutoGenerateSidebar").addClass("noTitleIndex")
-    }
-
-    // mobile - ios 页面
-    if ($(".languageWrap.multiProgrammingLanguage").length > 0 && getCurrentUrlLang(document.URL, true) == "objectivec-swift") {
-        // $(".languageWrap").show()
-        var urlLang = getUrlVars(document.URL)["lang"]
-        if (urlLang) {
-            var lang = urlLang.split(",")[0]
-            if (!$(".languageWrap").hasClass("enableLanguageSelection")) {
-                lang = getSingleLangOfCurrentMobilePage()
-            }
-            $(".languageWrap .languageSelectDown > div").removeClass("on")
-            let obj = $(".languageWrap .languageSelectDown > div")
-            for(var i=0; i<obj.length;i++) {
-                if ($(obj[i]).data("value") == lang) {
-                    $(obj[i]).addClass("on")
-                    $(".languageWrap .languageChange .chosenLanguage").text($(obj[i]).text())
-                }
-            }
-            var href = document.URL.replace('lang' + urlLang, 'lang' + lang)
-            history.replaceState(null, null, href)
-            sampleCodeSingleLangInit(lang)
-        } else {
-            var curLang = "swift"
-            if (!$(".languageWrap").hasClass("enableLanguageSelection")) {
-                curLang = getSingleLangOfCurrentMobilePage()
-            }
-            $(".languageWrap .languageSelectDown > div").removeClass("on")
-            let obj = $(".languageWrap .languageSelectDown > div")
-            for(var i=0; i<obj.length;i++) {
-                if ($(obj[i]).data("value") == curLang) {
-                    $(obj[i]).addClass("on")
-                    $(".languageWrap .languageChange .chosenLanguage").text($(obj[i]).text())
-                }
-            }
-            if (document.URL.indexOf("?") > 0) {
-                let tempHref = document.URL.split("?")
-                var href = tempHref[0] + "?lang=" + curLang + '&' + tempHref[1]
-                history.replaceState(null, null, href)
-            } else if (document.URL.indexOf("#") > 0) {
-                let tempHref = document.URL.split("#")
-                var href = tempHref[0] + "?lang=" + curLang + '#' + tempHref[1]
-                history.replaceState(null, null, href)
-            } else {
-                var href = document.URL + "?lang=" + curLang
-                history.replaceState(null, null, href)
-            }
-            sampleCodeSingleLangInit(curLang)
-        }
-        
-    }
-
-    $('.sideBar, #docHead').addClass("hide-md")
-    // sample code start
-    $('.markdown-body .sample-code-prefix + blockquote > ul > li:first-child').addClass('on')
-    $('.markdown-body .sample-code-prefix + blockquote > ol > li:first-child').addClass('on')
-
-    var preList = $('.markdown-body .highlight pre')
-    for (var i=0; i<preList.length; i++) {
-        var iconItem = document.createElement("i")
-        iconItem.className = "copyIcon fa fa-copy"
-        preList[i].appendChild(iconItem)
-    }
-
-    var template2Objs = $('.markdown-body .sample-code-prefix.template2 + blockquote')
-    for (var i=0; i<template2Objs.length; i++) {
-        $(template2Objs[i]).find(">div").eq(0).addClass('on')
-    }
-    // sample code end
-
-    if (document.URL.indexOf("web-twain/docs/faq/") > 0  && document.URL.indexOf("web-twain/docs/faq/?ver") < 0) {
-        $("#breadcrumbLastNode").text($("h1").text())
-    }
-
-    var sd = $(window).scrollTop()
-    if(sd > 0) {
-        realFunc()
-    } else {
-        $('#AutoGenerateSidebar a').eq(0).addClass('active')
-    }
-
-    var hash = document.URL.split("#").length > 1 ? document.URL.split("#")[1].toLowerCase() : null
-    hash = hash && hash.indexOf("?") > 0 ? hash.split("?")[0] : hash
-    hash = hash && hash.indexOf("&") > 0 ? hash.split("&")[0] : hash
-    if (hash && $("#" + hash.toLowerCase()).length > 0) {
-        window.scrollTo(0, $("#" + hash.toLowerCase()).offset().top)
-    }
     
-    setTimeout(function() {
-        var objs = $(".fold-panel-prefix")
-        for(var i = 0; i<objs.length; i++) {
-            var obj = $(".fold-panel-prefix").eq(i)
-            $(obj).next().find('i').css({'width': ($(obj).next().width() - 24) + 'px'})
-            $(obj).next().find('i').css({'height': $(obj).next().height() + 'px'})
-            $(obj).next().find('i').css({'line-height': $(obj).next().height() + 'px'})
-            $(obj).next().find('i').css({'opacity': 1})
-        }
-    }, 500)
 
     $(window).resize(function() {
         var objs = $(".fold-panel-prefix")
@@ -118,98 +20,6 @@ $(document).ready(function(){
     })
 
     window.addEventListener('scroll', realFunc);
-
-    function realFunc() {
-        if ($(window).scrollTop() > 0) {
-            $("a#toTop").show()
-        } else {
-            $("a#toTop").hide()
-        }
-        
-        $('.rightSideMenu').css({'padding-top': $('#docHead').outerHeight()+'px'});
-        if (breakpoint() == 'lg') {
-            var subHeight = $('.subHeadWrapper').length > 0 ? $('.subHeadWrapper').height() : $('.productMenu').height();
-            var menuHeight = $('#dynamsoft-header').height() + subHeight;
-            var sd = $(window).scrollTop();
-            var basicFullTreeIncrease = $(window).outerWidth() > 1680 ? 130 : 140
-            if (sd > $('#dynamsoft-header').height()) {
-                if ($('#footerWrapper').offset().top - $(document).scrollTop() < $(window).height()) {
-                    var offset = $('#footerWrapper').offset().top - $(document).scrollTop() - $(window).height()
-                    $('.mainPage').css({'max-height': 'calc(100vh - '+(subHeight + basicFullTreeIncrease - offset) +'px)'});
-                } else {
-                    $('.mainPage').css({'max-height': 'calc(100vh - '+(subHeight + basicFullTreeIncrease) +'px)'});
-                }
-                // head and sidebar fixed
-                if ($('.subHeadWrapper').length > 0) {
-                    $('.subHeadWrapper').css({'top': '0px'});
-                    $('#docHead').css({'top': ($('.subHeadWrapper').height() + 1) + 'px'});
-                    $('.history').css({'top': $(window).outerWidth() > 1680 ? '100px' : '100px'})
-                } else if ($('.productMenu').length > 0) {
-                    $('.productMenu').css({'top': '0px'});
-                    $('#docHead').css({'top': ($('.productMenu').height()) + 'px'});
-                    $('.history').css({'top': $(window).outerWidth() > 1680 ? '100px' : '100px'})
-                } else {
-                    $('#docHead').css({'top': '0px'});
-                    $('.history').css({'top': '30px'})
-                }
-                if ($(window).outerWidth() > 1199) {
-                    $('.sideBar #sideBarCnt').addClass('sidebar-fixed');
-                }
-                $('.rightSideMenu').addClass('rsm-fixed');
-            } else {
-                if ($('#footerWrapper').offset().top - $(document).scrollTop() < $(window).height()) {
-                    $('.mainPage').css({'max-height': 'calc(100vh - '+(menuHeight + basicFullTreeIncrease) +'px)'});
-                } else {
-                    $('.mainPage').css({'max-height': 'calc(100vh - '+(menuHeight + basicFullTreeIncrease - sd) +'px)'});
-                }
-                
-                // head and sidebar fixed
-                if ($('.subHeadWrapper').length > 0) {
-                    $('.subHeadWrapper').css({'top': ($('#dynamsoft-header').height()-sd) + 'px'});
-                    $('.sideBar').css({'padding-top': $('.subHeadWrapper').height() + 42 + 'px!important'});
-                    $('.history').css({'top': ($('#dynamsoft-header').height() + $('.subHeadWrapper').height() + 30 +  - sd) + 'px'})
-                } else if ($('.productMenu').length > 0) {
-                    $('.productMenu').css({'top': ($('#dynamsoft-header').height()-sd) + 'px'});
-                    $('.sideBar').css({'padding-top': $('.productMenu').height() + 42 + 'px!important'});
-                    $('.history').css({'top': ($('#dynamsoft-header').height() + $('.productMenu').height() + 30 +  - sd) + 'px'})
-                } else {
-                    $('.sideBar').css({'padding-top':  + '42px!important'});
-                    $('.history').css({'top': ($('#dynamsoft-header').height() + 30 +  - sd) + 'px'})
-                }
-                $('#docHead').css({'top': (menuHeight-sd)+1 + 'px'});
-                $('.sideBar #sideBarCnt').removeClass('sidebar-fixed');
-                $('.rightSideMenu').removeClass('rsm-fixed');
-            }
-        } else {
-            $('.subHeadWrapper').css({'top': 'unset'});
-            $('.productMenu').css({'top': 'unset'});
-            $('#docHead').css({'top': 'unset'});
-            $('.sideBar').css({'padding-top': '20px!important'});
-        }
-
-        if ($(window).outerWidth() < 992) {
-            $('.docContainer .main, .rightSideMenu, .markdown-body').removeClass('showRightSideMenu')
-        }
-
-        // right menu active link
-        var title = document.querySelectorAll('.markdown-body h2');
-        if ($('#fullTreeMenuListContainer').hasClass('needh3')) {
-            title = document.querySelectorAll('.markdown-body h2, .markdown-body h3');
-        }
-        var rightNavItem = $('#AutoGenerateSidebar a');
-        var flag = false
-        for(i=0; i<title.length; i++){
-            if($(title[i]).offset().top - 100 <= sd) {
-                flag = true
-                $('#AutoGenerateSidebar a').removeClass("active");
-                $(rightNavItem[i]).addClass("active");
-            }
-        }
-        if (!flag) {
-            $('#AutoGenerateSidebar a').removeClass("active");
-            $(rightNavItem[0]).addClass("active");
-        }
-    }
 
     $('.sideBarIcon').click(function() {
         $(".sideBar").toggleClass('hide-md');
@@ -360,6 +170,207 @@ $(document).ready(function(){
         e.stopPropagation()
     })
 })
+
+
+function initPageLayout() {
+    if ($(".headCounter").hasClass("noTitleIndex")) {
+        $("#AutoGenerateSidebar").addClass("noTitleIndex")
+    }
+
+    // mobile - ios 页面
+    if ($(".languageWrap.multiProgrammingLanguage").length > 0 && getCurrentUrlLang(document.URL, true) == "objectivec-swift") {
+        // $(".languageWrap").show()
+        var urlLang = getUrlVars(document.URL)["lang"]
+        if (urlLang) {
+            var lang = urlLang.split(",")[0]
+            if (!$(".languageWrap").hasClass("enableLanguageSelection")) {
+                lang = getSingleLangOfCurrentMobilePage()
+            }
+            $(".languageWrap .languageSelectDown > div").removeClass("on")
+            let obj = $(".languageWrap .languageSelectDown > div")
+            for(var i=0; i<obj.length;i++) {
+                if ($(obj[i]).data("value") == lang) {
+                    $(obj[i]).addClass("on")
+                    $(".languageWrap .languageChange .chosenLanguage").text($(obj[i]).text())
+                }
+            }
+            var href = document.URL.replace('lang' + urlLang, 'lang' + lang)
+            history.replaceState(null, null, href)
+            sampleCodeSingleLangInit(lang)
+        } else {
+            var curLang = "swift"
+            if (!$(".languageWrap").hasClass("enableLanguageSelection")) {
+                curLang = getSingleLangOfCurrentMobilePage()
+            }
+            $(".languageWrap .languageSelectDown > div").removeClass("on")
+            let obj = $(".languageWrap .languageSelectDown > div")
+            for(var i=0; i<obj.length;i++) {
+                if ($(obj[i]).data("value") == curLang) {
+                    $(obj[i]).addClass("on")
+                    $(".languageWrap .languageChange .chosenLanguage").text($(obj[i]).text())
+                }
+            }
+            if (document.URL.indexOf("?") > 0) {
+                let tempHref = document.URL.split("?")
+                var href = tempHref[0] + "?lang=" + curLang + '&' + tempHref[1]
+                history.replaceState(null, null, href)
+            } else if (document.URL.indexOf("#") > 0) {
+                let tempHref = document.URL.split("#")
+                var href = tempHref[0] + "?lang=" + curLang + '#' + tempHref[1]
+                history.replaceState(null, null, href)
+            } else {
+                var href = document.URL + "?lang=" + curLang
+                history.replaceState(null, null, href)
+            }
+            sampleCodeSingleLangInit(curLang)
+        }
+        
+    }
+
+    // download note
+    if ($(".dbrThanksDownloading").length > 0) {
+        $(".dbrThanksDownloading").append('<i class="icon-close" onclick="closeThanksDownloading()"></i>')
+    }
+
+    $('.sideBar, #docHead').addClass("hide-md")
+    // sample code start
+    $('.markdown-body .sample-code-prefix + blockquote > ul > li:first-child').addClass('on')
+    $('.markdown-body .sample-code-prefix + blockquote > ol > li:first-child').addClass('on')
+
+    var preList = $('.markdown-body .highlight pre')
+    for (var i=0; i<preList.length; i++) {
+        var iconItem = document.createElement("i")
+        iconItem.className = "copyIcon fa fa-copy"
+        preList[i].appendChild(iconItem)
+    }
+
+    var template2Objs = $('.markdown-body .sample-code-prefix.template2 + blockquote')
+    for (var i=0; i<template2Objs.length; i++) {
+        $(template2Objs[i]).find(">div").eq(0).addClass('on')
+    }
+    // sample code end
+
+    if (document.URL.indexOf("web-twain/docs/faq/") > 0  && document.URL.indexOf("web-twain/docs/faq/?ver") < 0) {
+        $("#breadcrumbLastNode").text($("h1").text())
+    }
+
+    var sd = $(window).scrollTop()
+    if(sd > 0) {
+        realFunc()
+    } else {
+        $('#AutoGenerateSidebar a').eq(0).addClass('active')
+    }
+
+    var hash = document.URL.split("#").length > 1 ? document.URL.split("#")[1].toLowerCase() : null
+    hash = hash && hash.indexOf("?") > 0 ? hash.split("?")[0] : hash
+    hash = hash && hash.indexOf("&") > 0 ? hash.split("&")[0] : hash
+    if (hash && $("#" + hash.toLowerCase()).length > 0) {
+        window.scrollTo(0, $("#" + hash.toLowerCase()).offset().top)
+    }
+    
+    setTimeout(function() {
+        var objs = $(".fold-panel-prefix")
+        for(var i = 0; i<objs.length; i++) {
+            var obj = $(".fold-panel-prefix").eq(i)
+            $(obj).next().find('i').css({'width': ($(obj).next().width() - 24) + 'px'})
+            $(obj).next().find('i').css({'height': $(obj).next().height() + 'px'})
+            $(obj).next().find('i').css({'line-height': $(obj).next().height() + 'px'})
+            $(obj).next().find('i').css({'opacity': 1})
+        }
+    }, 500)
+}
+
+function realFunc() {
+    if ($(window).scrollTop() > 0) {
+        $("a#toTop").show()
+    } else {
+        $("a#toTop").hide()
+    }
+    
+    $('.rightSideMenu').css({'padding-top': $('#docHead').outerHeight()+'px'});
+    if (breakpoint() == 'lg') {
+        var subHeight = $('.subHeadWrapper').length > 0 ? $('.subHeadWrapper').height() : $('.productMenu').height();
+        var menuHeight = $('#dynamsoft-header').height() + subHeight;
+        var sd = $(window).scrollTop();
+        var basicFullTreeIncrease = $(window).outerWidth() > 1680 ? 130 : 140
+        if (sd > $('#dynamsoft-header').height()) {
+            if ($('#footerWrapper').offset().top - $(document).scrollTop() < $(window).height()) {
+                var offset = $('#footerWrapper').offset().top - $(document).scrollTop() - $(window).height()
+                $('.mainPage').css({'max-height': 'calc(100vh - '+(subHeight + basicFullTreeIncrease - offset) +'px)'});
+            } else {
+                $('.mainPage').css({'max-height': 'calc(100vh - '+(subHeight + basicFullTreeIncrease) +'px)'});
+            }
+            // head and sidebar fixed
+            if ($('.subHeadWrapper').length > 0) {
+                $('.subHeadWrapper').css({'top': '0px'});
+                $('#docHead').css({'top': ($('.subHeadWrapper').height() + 1) + 'px'});
+                $('.history').css({'top': $(window).outerWidth() > 1680 ? '100px' : '100px'})
+            } else if ($('.productMenu').length > 0) {
+                $('.productMenu').css({'top': '0px'});
+                $('#docHead').css({'top': ($('.productMenu').height()) + 'px'});
+                $('.history').css({'top': $(window).outerWidth() > 1680 ? '100px' : '100px'})
+            } else {
+                $('#docHead').css({'top': '0px'});
+                $('.history').css({'top': '30px'})
+            }
+            if ($(window).outerWidth() > 1199) {
+                $('.sideBar #sideBarCnt').addClass('sidebar-fixed');
+            }
+            $('.rightSideMenu').addClass('rsm-fixed');
+        } else {
+            if ($('#footerWrapper').offset().top - $(document).scrollTop() < $(window).height()) {
+                $('.mainPage').css({'max-height': 'calc(100vh - '+(menuHeight + basicFullTreeIncrease) +'px)'});
+            } else {
+                $('.mainPage').css({'max-height': 'calc(100vh - '+(menuHeight + basicFullTreeIncrease - sd) +'px)'});
+            }
+            
+            // head and sidebar fixed
+            if ($('.subHeadWrapper').length > 0) {
+                $('.subHeadWrapper').css({'top': ($('#dynamsoft-header').height()-sd) + 'px'});
+                $('.sideBar').css({'padding-top': $('.subHeadWrapper').height() + 42 + 'px!important'});
+                $('.history').css({'top': ($('#dynamsoft-header').height() + $('.subHeadWrapper').height() + 30 +  - sd) + 'px'})
+            } else if ($('.productMenu').length > 0) {
+                $('.productMenu').css({'top': ($('#dynamsoft-header').height()-sd) + 'px'});
+                $('.sideBar').css({'padding-top': $('.productMenu').height() + 42 + 'px!important'});
+                $('.history').css({'top': ($('#dynamsoft-header').height() + $('.productMenu').height() + 30 +  - sd) + 'px'})
+            } else {
+                $('.sideBar').css({'padding-top':  + '42px!important'});
+                $('.history').css({'top': ($('#dynamsoft-header').height() + 30 +  - sd) + 'px'})
+            }
+            $('#docHead').css({'top': (menuHeight-sd)+1 + 'px'});
+            $('.sideBar #sideBarCnt').removeClass('sidebar-fixed');
+            $('.rightSideMenu').removeClass('rsm-fixed');
+        }
+    } else {
+        $('.subHeadWrapper').css({'top': 'unset'});
+        $('.productMenu').css({'top': 'unset'});
+        $('#docHead').css({'top': 'unset'});
+        $('.sideBar').css({'padding-top': '20px!important'});
+    }
+
+    if ($(window).outerWidth() < 992) {
+        $('.docContainer .main, .rightSideMenu, .markdown-body').removeClass('showRightSideMenu')
+    }
+
+    // right menu active link
+    var title = document.querySelectorAll('.markdown-body h2');
+    if ($('#fullTreeMenuListContainer').hasClass('needh3')) {
+        title = document.querySelectorAll('.markdown-body h2, .markdown-body h3');
+    }
+    var rightNavItem = $('#AutoGenerateSidebar a');
+    var flag = false
+    for(i=0; i<title.length; i++){
+        if($(title[i]).offset().top - 100 <= sd) {
+            flag = true
+            $('#AutoGenerateSidebar a').removeClass("active");
+            $(rightNavItem[i]).addClass("active");
+        }
+    }
+    if (!flag) {
+        $('#AutoGenerateSidebar a').removeClass("active");
+        $(rightNavItem[0]).addClass("active");
+    }
+}
 
 function openChildMenuTree(obj, needIcon) {
     if (needIcon && $(obj).parent().hasClass("collapseListStyle")) {
@@ -641,5 +652,9 @@ function mutationObserverFunc() {
         childList: true,
         subtree: true
     });
+}
+
+function closeThanksDownloading() {
+    $(".dbrThanksDownloading").hide()
 }
 
