@@ -58,9 +58,8 @@ jobs:
       - name: 'Extract Tar files'
         shell: cmd
         run: |
-          [ -d ${{ github.workspace }}/_site ] && rm -rf ${{ github.workspace }}/_site
-          mkdir ${{ github.workspace }}/_site
-          tar -xf built-doc-site.tar -C ${{ github.workspace }}/_site
+          mkdir ${{ runner.temp }}/DocHome/_site
+          tar -xf built-doc-site.tar -C ${{ runner.temp }}/DocHome/_site
 
       - name: Sync files
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
@@ -69,6 +68,6 @@ jobs:
           username: ${{ secrets.FTP_TEST_SITE_USER }}
           password: ${{ secrets.FTP_TEST_SITE_PASSWORD }}
           port: 7500 
-          local-dir: ${{ github.workspace }}/_site/
+          local-dir: ${{ runner.temp }}/DocHome/_site/
           server-dir: /www.dynamsoft.com/${{ inputs.doc-url }}/        
 
