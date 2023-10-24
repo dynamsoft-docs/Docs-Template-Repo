@@ -259,6 +259,31 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                         initFoldPanel();
                         init();
 
+                        // multi panel switching start
+                        let multiPanelListSwitchingItems = $(".multi-panel-switching-prefix")
+                        for (let i =0; i < multiPanelListSwitchingItems.length; i++) {
+                            let multiPanelSwitchBtns = $(multiPanelListSwitchingItems[i]).find("+ul > li")
+                            let hash = location.hash
+                            let switchIndex = 0
+                            if (hash && hash != "") {
+                                for(let j=0; j < multiPanelSwitchBtns.length; j++) {
+                                    if ($(multiPanelSwitchBtns[j]).find("a").attr("href") == hash) {
+                                        switchIndex = j
+                                    }
+                                }
+                            }
+                            $(multiPanelSwitchBtns[switchIndex]).addClass("on")
+                            let nextSiblings = $(multiPanelListSwitchingItems[i]).find("+ul ~")
+                            showSelectMultiPanel(nextSiblings, switchIndex)
+                        }
+
+                        $(".multi-panel-switching-prefix + ul > li").on("click", function() {
+                            $(this).parent("ul").find("li").removeClass("on")
+                            $(this).addClass("on")
+                            let nextSiblings = $(this).parent("ul").find("~")
+                            showSelectMultiPanel(nextSiblings, $(this).index())
+                        })
+
                         var treeHeight = $('#fullTreeMenuListContainer')[0].clientHeight;
                         var treeOffsetTop = $('#fullTreeMenuListContainer').offset() ? $('#fullTreeMenuListContainer').offset().top : 0;
                         var nodeOffsetTop = $('#fullTreeMenuListContainer .activeLink').length > 0 ? $('#fullTreeMenuListContainer .activeLink').offset().top : 0;
@@ -805,3 +830,52 @@ function getSideBarIframeSrc(pageUrl, lang, product=null, repoType=null) {
 function getDocumentationLink(product, repoType) {
     return "/" + getDoumentName(product) + '/docs/'+ repoType + "/introduction/"
 }
+
+function showSelectMultiPanel(nextSiblings, findItemIndex) {
+    let isFind = false, findItemCount = 0, aTags = [], isFindTag = false, findTagName = 'h2';
+    for(let j = 0; j < nextSiblings.length; j++) {
+        if ($(nextSiblings[j]).hasClass("multi-panel-switching-end")) {
+            break;
+        }
+        if ($(nextSiblings[j]).hasClass("multi-panel-start")) {
+            if (findItemCount == findItemIndex) {
+                isFind = true
+            }
+            findItemCount++
+        }
+        if (isFind && $(nextSiblings[j]).hasClass("multi-panel-end")) {
+            isFind = false
+        }
+        if (isFind) {
+          if($(nextSiblings[j]).is("table")) {
+            let objs = $(nextSiblings[j]).find("a")
+            for(let i = 0; i < objs.length; i++) {
+              let id = '#' + $(objs[i]).attr("href").split("#")[1]
+              aTags.push(id)
+            }
+          }
+          $(nextSiblings[j]).show()
+        } else {
+          let id = nextSiblings[j].id
+          if (aTags.includes('#' + id)) {
+            findTagName = nextSiblings[j].tagName
+            isFindTag = true
+            $(nextSiblings[j]).show()
+          } else if (isFindTag && !$(nextSiblings[j]).is(findTagName)) {
+            $(nextSiblings[j]).show()
+          } else {
+            isFindTag = false
+            $(nextSiblings[j]).hide()
+          }
+        }
+    }
+    let sidebarList = $("#AutoGenerateSidebar> ul > li")
+    for(let i=0; i < sidebarList.length; i++) {
+      let aTag = $(sidebarList[i]).find("a").attr("href")
+      if (aTags.includes(aTag)) {
+        $(sidebarList[i]).show()
+      } else {
+        $(sidebarList[i]).hide()
+      }
+    }
+  }
