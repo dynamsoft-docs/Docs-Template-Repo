@@ -14,9 +14,9 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
 
-  Build-And-Sync-To-Testing:
+  Build-Site-Preview:
     # The type of runner that the job will run on
-    runs-on: [self-hosted]
+    runs-on: [self-hosted, doc-build]
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -31,7 +31,36 @@ jobs:
           cp -rfp ./Docs-Template-Repo/* ./DocHome/
           sed -i -e "1,3s/blob\/master$/blob\/preview/" \
           -e "1,3s/blob\/main$/blob\/preview/" ${{ runner.temp }}/DocHome/_config.yml
-          cd DocHome && bundle exec jekyll build
+          cd DocHome && bundle install && bundle exec jekyll build
+
+      - name: 'Create Tar files'
+        run: tar -czvf ${{ inputs.doc-repo }}.tar.gz -C ${{ runner.temp }}/DocHome/_site .
+
+      - name: Upload the built site as a single artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ inputs.doc-repo }}
+          path: ${{ inputs.doc-repo }}.tar.gz
+          retention-days: 2
+
+  Sync-To-Testing:
+    # The type of runner that the job will run on
+    runs-on: [self-hosted, upload-test]
+    needs: Build-Site-Preview
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Runs a set of commands using the runners shell
+      - name: Download the artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ inputs.doc-repo }}
+
+      - name: 'Extract Tar files'
+        shell: cmd
+        run: |
+          mkdir ${{ runner.temp }}\DocHome\_site
+          tar -xzf ${{ inputs.doc-repo }}.tar.gz -C ${{ runner.temp }}\DocHome\_site
 
       - name: Sync files
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
@@ -40,7 +69,6 @@ jobs:
           username: ${{ secrets.FTP_TEST_SITE_USER }}
           password: ${{ secrets.FTP_TEST_SITE_PASSWORD }}
           port: 7500 
-          local-dir: ${{ runner.temp }}/DocHome/_site/
+          local-dir: ${{ runner.temp }}\DocHome\_site/
           server-dir: /www.dynamsoft.com/${{ inputs.doc-url }}/        
-
 

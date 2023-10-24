@@ -16,7 +16,7 @@ jobs:
 
   Build-And-Sync-To-Production:
     # The type of runner that the job will run on
-    runs-on: [self-hosted]
+    runs-on: [self-hosted, doc-build]
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -29,7 +29,7 @@ jobs:
           git clone --depth 1 https://github.com/dynamsoft-docs/Docs-Template-Repo.git Docs-Template-Repo
           cp -rfp ./${{ inputs.doc-repo }}/* ./DocHome/
           cp -rfp ./Docs-Template-Repo/* ./DocHome/
-          cd DocHome && bundle exec jekyll build
+          cd DocHome && bundle install && bundle exec jekyll build
 
       - name: Sync files
         uses: SamKirkland/FTP-Deploy-Action@4.3.0

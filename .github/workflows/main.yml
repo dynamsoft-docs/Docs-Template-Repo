@@ -18,7 +18,7 @@ jobs:
 
   Update-DBR-Core-On-Main-Change:
     if: ${{ github.ref == 'refs/heads/main' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@main
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: barcode-reader-docs
       doc-url: barcode-reader/docs/core
@@ -26,7 +26,7 @@ jobs:
 
   Update-DBR-Server-On-Main-Change:
     if: ${{ github.ref == 'refs/heads/main' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@main
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: barcode-reader-docs-server
       doc-url: barcode-reader/docs/server
@@ -34,7 +34,7 @@ jobs:
 
   Update-DBR-Mobile-On-Main-Change:
     if: ${{ github.ref == 'refs/heads/main' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@main
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: barcode-reader-docs-mobile
       doc-url: barcode-reader/docs/mobile
@@ -42,7 +42,7 @@ jobs:
 
   Update-DBR-Js-On-Main-Change:
     if: ${{ github.ref == 'refs/heads/main' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@main
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: barcode-reader-docs-js
       doc-url: barcode-reader/docs/web
@@ -51,7 +51,7 @@ jobs:
 
   Update-DCV-Core-On-Main-Change:
     if: ${{ github.ref == 'refs/heads/main' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@main
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: capture-vision-docs
       doc-url: capture-vision/docs/core
@@ -59,7 +59,7 @@ jobs:
 
   Update-DCV-Server-On-Main-Change:
     if: ${{ github.ref == 'refs/heads/main' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@main
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: capture-vision-docs-server
       doc-url: capture-vision/docs/server
@@ -68,7 +68,7 @@ jobs:
 
   Update-DCV-Mobile-On-Main-Change:
     if: ${{ github.ref == 'refs/heads/main' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@main
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: capture-vision-docs-mobile
       doc-url: capture-vision/docs/mobile
@@ -77,7 +77,7 @@ jobs:
 
   Update-DCV-Js-On-Main-Change:
     if: ${{ github.ref == 'refs/heads/main' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@main
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: capture-vision-docs-js
       doc-url: capture-vision/docs/web
@@ -86,7 +86,7 @@ jobs:
 
   Update-DLR-Core-On-Main-Change:
     if: ${{ github.ref == 'refs/heads/main' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@main
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: label-recognition-docs
       doc-url: label-recognition/docs/core
@@ -95,7 +95,7 @@ jobs:
 
   Update-DLR-Server-On-Main-Change:
     if: ${{ github.ref == 'refs/heads/main' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@main
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: label-recognition-docs-server
       doc-url: label-recognition/docs/server
@@ -104,7 +104,7 @@ jobs:
 
   Update-DLR-Mobile-On-Main-Change:
     if: ${{ github.ref == 'refs/heads/main' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@main
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: label-recognition-docs-mobile
       doc-url: label-recognition/docs/mobile
@@ -113,7 +113,7 @@ jobs:
 
   Update-DLR-Js-On-Main-Change:
     if: ${{ github.ref == 'refs/heads/main' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@main
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: label-recognition-docs-js
       doc-url: label-recognition/docs/web
@@ -122,7 +122,7 @@ jobs:
 
   Update-DDN-Core-On-Main-Change:
     if: ${{ github.ref == 'refs/heads/main' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@main
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: document-normalizer-docs
       doc-url: document-normalizer/docs/core
@@ -130,7 +130,7 @@ jobs:
 
   Update-DDN-Server-On-Main-Change:
     if: ${{ github.ref == 'refs/heads/main' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@main
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: document-normalizer-docs-server
       doc-url: document-normalizer/docs/server
@@ -138,7 +138,7 @@ jobs:
 
   Update-DDN-Mobile-On-Main-Change:
     if: ${{ github.ref == 'refs/heads/main' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@main
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: document-normalizer-docs-mobile
       doc-url: document-normalizer/docs/mobile
@@ -147,7 +147,7 @@ jobs:
 
   Update-DDN-Js-On-Main-Change:
     if: ${{ github.ref == 'refs/heads/main' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@main
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: document-normalizer-docs-js
       doc-url: document-normalizer/docs/web
@@ -156,7 +156,7 @@ jobs:
 
   Update-DCP-Core-On-Main-Change:
     if: ${{ github.ref == 'refs/heads/main' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@main
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: code-parser-docs
       doc-url: code-parser/docs/core
@@ -164,7 +164,7 @@ jobs:
 
   Update-DCP-Server-On-Main-Change:
     if: ${{ github.ref == 'refs/heads/main' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@main
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: code-parser-docs-server
       doc-url: code-parser/docs/server
@@ -172,7 +172,7 @@ jobs:
 
   #Update-DCP-Mobile-On-Main-Change:
   #  if: ${{ github.ref == 'refs/heads/main' }}
-  #  uses: ./.github/workflows/called-workflow-build-sync-testing.yml@main
+  #  uses: ./.github/workflows/called-workflow-build-sync-production.yml
   #  with:
   #    doc-repo: code-parser-docs-mobile
   #    doc-url: code-parser/docs/mobile
@@ -180,7 +180,7 @@ jobs:
 
   Update-DCP-Js-On-Main-Change:
     if: ${{ github.ref == 'refs/heads/main' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@main
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: code-parser-docs-js
       doc-url: code-parser/docs/web
@@ -189,7 +189,7 @@ jobs:
 
   Update-DCE-Core-On-Main-Change:
     if: ${{ github.ref == 'refs/heads/main' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@main
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: camera-enhancer-docs
       doc-url: camera-enhancer/docs/core
@@ -198,7 +198,7 @@ jobs:
 
   #Update-DCE-Server-On-Main-Change:
   #  if: ${{ github.ref == 'refs/heads/main' }}
-  #  uses: ./.github/workflows/called-workflow-build-sync-testing.yml@main
+  #  uses: ./.github/workflows/called-workflow-build-sync-production.yml
   #  with:
   #    doc-repo: camera-enhancer-docs-server
   #    doc-url: camera-enhancer/docs/server
@@ -207,7 +207,7 @@ jobs:
 
   Update-DCE-Mobile-On-Main-Change:
     if: ${{ github.ref == 'refs/heads/main' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@main
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: camera-enhancer-docs-mobile
       doc-url: camera-enhancer/docs/mobile
@@ -215,7 +215,7 @@ jobs:
 
   Update-DCE-JS-On-Main-Change:
     if: ${{ github.ref == 'refs/heads/main' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@main
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: camera-enhancer-docs-js
       doc-url: camera-enhancer/docs/web
@@ -224,7 +224,7 @@ jobs:
 
   Update-DBR-Core-On-Preview-Change:
     if: ${{ github.ref == 'refs/heads/preview' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@preview
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
     with:
       doc-repo: barcode-reader-docs
       doc-url: barcode-reader/docs/core
@@ -232,7 +232,7 @@ jobs:
 
   Update-DBR-Server-On-Preview-Change:
     if: ${{ github.ref == 'refs/heads/preview' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@preview
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
     with:
       doc-repo: barcode-reader-docs-server
       doc-url: barcode-reader/docs/server
@@ -240,7 +240,7 @@ jobs:
 
   Update-DBR-Mobile-On-Preview-Change:
     if: ${{ github.ref == 'refs/heads/preview' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@preview
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
     with:
       doc-repo: barcode-reader-docs-mobile
       doc-url: barcode-reader/docs/mobile
@@ -248,7 +248,7 @@ jobs:
 
   Update-DBR-Js-On-Preview-Change:
     if: ${{ github.ref == 'refs/heads/preview' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@preview
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
     with:
       doc-repo: barcode-reader-docs-js
       doc-url: barcode-reader/docs/web
@@ -257,7 +257,7 @@ jobs:
 
   Update-DCV-Core-On-Preview-Change:
     if: ${{ github.ref == 'refs/heads/preview' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@preview
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
     with:
       doc-repo: capture-vision-docs
       doc-url: capture-vision/docs/core
@@ -265,7 +265,7 @@ jobs:
 
   Update-DCV-Server-On-Preview-Change:
     if: ${{ github.ref == 'refs/heads/preview' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@preview
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
     with:
       doc-repo: capture-vision-docs-server
       doc-url: capture-vision/docs/server
@@ -274,7 +274,7 @@ jobs:
 
   Update-DCV-Mobile-On-Preview-Change:
     if: ${{ github.ref == 'refs/heads/preview' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@preview
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
     with:
       doc-repo: capture-vision-docs-mobile
       doc-url: capture-vision/docs/mobile
@@ -283,7 +283,7 @@ jobs:
 
   Update-DCV-Js-On-Preview-Change:
     if: ${{ github.ref == 'refs/heads/preview' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@preview
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
     with:
       doc-repo: capture-vision-docs-js
       doc-url: capture-vision/docs/web
@@ -292,7 +292,7 @@ jobs:
 
   Update-DLR-Core-On-Preview-Change:
     if: ${{ github.ref == 'refs/heads/preview' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@preview
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
     with:
       doc-repo: label-recognition-docs
       doc-url: label-recognition/docs/core
@@ -301,7 +301,7 @@ jobs:
 
   Update-DLR-Server-On-Preview-Change:
     if: ${{ github.ref == 'refs/heads/preview' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@preview
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
     with:
       doc-repo: label-recognition-docs-server
       doc-url: label-recognition/docs/server
@@ -310,7 +310,7 @@ jobs:
 
   Update-DLR-Mobile-On-Preview-Change:
     if: ${{ github.ref == 'refs/heads/preview' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@preview
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
     with:
       doc-repo: label-recognition-docs-mobile
       doc-url: label-recognition/docs/mobile
@@ -319,7 +319,7 @@ jobs:
 
   Update-DLR-Js-On-Preview-Change:
     if: ${{ github.ref == 'refs/heads/preview' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@preview
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
     with:
       doc-repo: label-recognition-docs-js
       doc-url: label-recognition/docs/web
@@ -328,7 +328,7 @@ jobs:
 
   Update-DDN-Core-On-Preview-Change:
     if: ${{ github.ref == 'refs/heads/preview' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@preview
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
     with:
       doc-repo: document-normalizer-docs
       doc-url: document-normalizer/docs/core
@@ -336,7 +336,7 @@ jobs:
 
   Update-DDN-Server-On-Preview-Change:
     if: ${{ github.ref == 'refs/heads/preview' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@preview
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
     with:
       doc-repo: document-normalizer-docs-server
       doc-url: document-normalizer/docs/server
@@ -344,7 +344,7 @@ jobs:
 
   Update-DDN-Mobile-On-Preview-Change:
     if: ${{ github.ref == 'refs/heads/preview' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@preview
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
     with:
       doc-repo: document-normalizer-docs-mobile
       doc-url: document-normalizer/docs/mobile
@@ -353,7 +353,7 @@ jobs:
 
   Update-DDN-Js-On-Preview-Change:
     if: ${{ github.ref == 'refs/heads/preview' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@preview
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
     with:
       doc-repo: document-normalizer-docs-js
       doc-url: document-normalizer/docs/web
@@ -362,7 +362,7 @@ jobs:
 
   Update-DCP-Core-On-Preview-Change:
     if: ${{ github.ref == 'refs/heads/preview' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@preview
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
     with:
       doc-repo: code-parser-docs
       doc-url: code-parser/docs/core
@@ -370,7 +370,7 @@ jobs:
 
   Update-DCP-Server-On-Preview-Change:
     if: ${{ github.ref == 'refs/heads/preview' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@preview
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
     with:
       doc-repo: code-parser-docs-server
       doc-url: code-parser/docs/server
@@ -378,7 +378,7 @@ jobs:
 
   #Update-DCP-Mobile-On-Preview-Change:
   #  if: ${{ github.ref == 'refs/heads/preview' }}
-  #  uses: ./.github/workflows/called-workflow-build-sync-testing.yml@preview
+  #  uses: ./.github/workflows/called-workflow-build-sync-testing.yml
   #  with:
   #    doc-repo: code-parser-docs-mobile
   #    doc-url: code-parser/docs/mobile
@@ -386,7 +386,7 @@ jobs:
 
   Update-DCP-Js-On-Preview-Change:
     if: ${{ github.ref == 'refs/heads/preview' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@preview
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
     with:
       doc-repo: code-parser-docs-js
       doc-url: code-parser/docs/web
@@ -395,7 +395,7 @@ jobs:
 
   Update-DCE-Core-On-Preview-Change:
     if: ${{ github.ref == 'refs/heads/preview' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@preview
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
     with:
       doc-repo: camera-enhancer-docs
       doc-url: camera-enhancer/docs/core
@@ -404,7 +404,7 @@ jobs:
 
   #Update-DCE-Server-On-Preview-Change:
   #  if: ${{ github.ref == 'refs/heads/preview' }}
-  #  uses: ./.github/workflows/called-workflow-build-sync-testing.yml@preview
+  #  uses: ./.github/workflows/called-workflow-build-sync-testing.yml
   #  with:
   #    doc-repo: camera-enhancer-docs-server
   #    doc-url: camera-enhancer/docs/server
@@ -413,7 +413,7 @@ jobs:
 
   Update-DCE-Mobile-On-Preview-Change:
     if: ${{ github.ref == 'refs/heads/preview' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@preview
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
     with:
       doc-repo: camera-enhancer-docs-mobile
       doc-url: camera-enhancer/docs/mobile
@@ -421,7 +421,7 @@ jobs:
 
   Update-DCE-JS-On-Preview-Change:
     if: ${{ github.ref == 'refs/heads/preview' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml@preview
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
     with:
       doc-repo: camera-enhancer-docs-js
       doc-url: camera-enhancer/docs/web
