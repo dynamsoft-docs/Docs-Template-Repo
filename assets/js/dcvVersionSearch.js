@@ -82,6 +82,16 @@ var dcvVersionList =
         }
     },
     {
+        dbr: "10.0.20",
+        repoType: "mobile",
+        matchList: 
+        {
+            dcv:["2.0.20"],
+            dce:["4.0.1"],
+            ddn:["2.0.20"]
+        }
+    },
+    {
         dbr: "9.0.0",
         repoType: "mobile",
         matchList: 
