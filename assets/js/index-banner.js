@@ -776,13 +776,19 @@ function getCurrentUrlLang(url, needFilterLang=false) {
             }
             return result
         } else {
-            var arr = repoType == "server" ? url.split("/docs/server/")[1].split("/") : (repoType == "mobile" ? url.split("/docs/mobile/")[1].split("/"): '')
+            var arr = []
+            if (repoType == "server" && url.split("/docs/server/").length > 1) {
+                arr = url.split("/docs/server/")[1].split("/")
+            }
+            if (repoType == "mobile" && url.split("/docs/mobile/").length > 1) {
+                arr = url.split("/docs/mobile/")[1].split("/")
+            }
             if (repoType == "mobile" && ["objectivec-swift", "android", "xamarin", "react-native", "flutter", "cordova"].indexOf(arr[1]) < 0) {
                 return "objectivec-swift"
             } else if (repoType == "web" || repoType == "js") {
                 return "javascript"
             } else {
-                return arr[1]
+                return arr.length > 1 ? arr[1] : ''
             }
         }
     } else {
