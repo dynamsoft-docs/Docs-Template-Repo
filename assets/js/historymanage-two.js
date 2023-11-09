@@ -191,10 +191,16 @@ function RequestNewPage(aTag, paramLink, onlyLoadContent=false) {
         var hash = paramLink.split("#").length > 1 ? paramLink.split("#")[1].toLowerCase() : null
         var sd = $(window).scrollTop()
         if (hash && $("#" + hash).length > 0) {
-            window.scrollTo(0, $("#" + hash).offset().top)
+            var scrollTop = $("#" + hash).offset().top
+            setTimeout(function() {
+                window.scrollTo(0, scrollTop)
+            }, 100)
         } else {
             if (sd > 0) {
-                window.scrollTo(0, sd > $('#overall-header').height() ? $('#overall-header').height() : sd)
+                var scrollTop = sd > $('#overall-header').height() ? $('#overall-header').height() : sd
+                setTimeout(function() {
+                    window.scrollTo(0, scrollTop)
+                }, 100)
             }
         }
 
@@ -253,7 +259,10 @@ function findCurLinkOnFullTree(aTag, paramLink, onlyLoadContent=false) {
     
     if (curDocUrl == targetHref && (aTag.href.split("#").length > 1 || document.URL.split("#").length > 1)) {
         var hash = aTag.href.split("#").length > 1 ? aTag.href.split("#")[1].toLowerCase() : null
-        window.scrollTo(0, hash && $("#" + hash).length > 0 ? $("#" + hash).offset().top : 0)
+        var scrollTop = hash && $("#" + hash).length > 0 ? $("#" + hash).offset().top: 0
+        setTimeout(function() {
+            window.scrollTo(0, scrollTop)
+        }, 100)
         !onlyLoadContent&&history.pushState(null, null, paramLink)
     } else {
         var flag = false
