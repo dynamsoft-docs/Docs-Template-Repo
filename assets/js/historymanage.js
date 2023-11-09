@@ -660,11 +660,17 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
             // scroll to the start of article
             var hash = paramLink.split("#").length > 1 ? paramLink.split("#")[1].toLowerCase() : null
             var sd = $(window).scrollTop()
-            if (hash && $("#" + hash.toLowerCase()).length > 0) {
-                window.scrollTo(0, $("#" + hash.toLowerCase()).offset().top)
+            if (hash && $("#" + hash).length > 0) {
+                var scrollTop = $("#" + hash).offset().top
+                setTimeout(function() {
+                    window.scrollTo(0, scrollTop)
+                }, 100)
             } else {
                 if (sd > 0) {
-                    window.scrollTo(0, sd > $('#overall-header').height() ? $('#overall-header').height() : sd)
+                    var scrollTop = sd > $('#overall-header').height() ? $('#overall-header').height() : sd
+                    setTimeout(function() {
+                        window.scrollTo(0, scrollTop)
+                    }, 100)
                 }
             }
 
