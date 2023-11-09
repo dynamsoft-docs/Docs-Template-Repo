@@ -852,21 +852,18 @@ div, .sideBar .mainPage {
     scrollbar-color: #bfbfbf rgb(239, 239, 239);
     scrollbar-width: thin;
 }
-div::-webkit-scrollbar,
-ul::-webkit-scrollbar {
+::-webkit-scrollbar {
     width: 8px;
     height: 8px;
     position: absolute;
 }
 
-div::-webkit-scrollbar-track,
-ul::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
     background: rgb(239, 239, 239);
     border-radius: 2px;
 }
 
-div::-webkit-scrollbar-thumb,
-ul::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
     background: #bfbfbf;
     border-radius: 8px;
     -webkit-border-radius: 8px;
@@ -875,13 +872,11 @@ ul::-webkit-scrollbar-thumb {
     -o-border-radius: 8px;
 }
 
-div::-webkit-scrollbar-thumb:hover,
-ul::-webkit-scrollbar-thumb:hover {
+::-webkit-scrollbar-thumb:hover {
     background: #999;
 }
 
-div::-webkit-scrollbar-corner,
-ul::-webkit-scrollbar-corner {
+::-webkit-scrollbar-corner {
     background: #179a16;
 }
 
@@ -3120,7 +3115,7 @@ a#toTop {
 
 #categoryMenuTree #fullTreeMenuListContainer li i.icon-arrow {
     position: absolute;
-    right: 15px;
+    right: 25px;
     top: 0;
     width: 20px;
     height: 32px;
