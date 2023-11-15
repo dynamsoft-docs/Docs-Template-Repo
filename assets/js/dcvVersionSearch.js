@@ -162,7 +162,31 @@ var dcvVersionList =
                         version: '2.0.20'
                     }
                 ],
-                dce: "4.0.1"
+                dce: "4.0.1",
+                dcvRepoCore: [
+                    {
+                        path: '/parameters/reference/capture-vision-template',
+                        version: '2.0.20'
+                    },{
+                        path: '/parameters/reference/target-roi-def',
+                        version: '2.0.20'
+                    },{
+                        path: '/parameters/reference/barcode-reader-task-settings',
+                        version: '10.0.20'
+                    },{
+                        path: '/parameters/reference/image-parameter',
+                        version: '3.0.20'
+                    },{
+                        path: '/parameters/reference/barcode-format-specification',
+                        version: '10.0.20'
+                    },{
+                        path: '/parameters/reference/image-source-options',
+                        version: '3.0.20'
+                    },{
+                        path: '/parameters/reference/global-parameter',
+                        version: '2.0.20'
+                    }
+                ]
             }
         }
     },{
@@ -198,6 +222,30 @@ var dcvVersionList =
                         path: '/enums/core',
                         version: '3.0.10',
                     },{
+                        path: '/parameters/reference/capture-vision-template',
+                        version: '2.0.10'
+                    },{
+                        path: '/parameters/reference/target-roi-def',
+                        version: '2.0.10'
+                    },{
+                        path: '/parameters/reference/barcode-reader-task-settings',
+                        version: '10.0.10'
+                    },{
+                        path: '/parameters/reference/image-parameter',
+                        version: '3.0.10'
+                    },{
+                        path: '/parameters/reference/barcode-format-specification',
+                        version: '10.0.10'
+                    },{
+                        path: '/parameters/reference/image-source-options',
+                        version: '3.0.10'
+                    },{
+                        path: '/parameters/reference/global-parameter',
+                        version: '2.0.10'
+                    }
+                ],
+                dcvRepoCore: [
+                    {
                         path: '/parameters/reference/capture-vision-template',
                         version: '2.0.10'
                     },{
@@ -255,6 +303,30 @@ var dcvVersionList =
                         path: '/enums/core',
                         version: '3.0.0',
                     },{
+                        path: '/parameters/reference/capture-vision-template',
+                        version: '2.0.0'
+                    },{
+                        path: '/parameters/reference/target-roi-def',
+                        version: '2.0.0'
+                    },{
+                        path: '/parameters/reference/barcode-reader-task-settings',
+                        version: '10.0.0'
+                    },{
+                        path: '/parameters/reference/image-parameter',
+                        version: '3.0.0'
+                    },{
+                        path: '/parameters/reference/barcode-format-specification',
+                        version: '10.0.0'
+                    },{
+                        path: '/parameters/reference/image-source-options',
+                        version: '3.0.0'
+                    },{
+                        path: '/parameters/reference/global-parameter',
+                        version: '2.0.0'
+                    }
+                ],
+                dcvRepoCore: [
+                    {
                         path: '/parameters/reference/capture-vision-template',
                         version: '2.0.0'
                     },{
