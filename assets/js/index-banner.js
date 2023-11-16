@@ -826,7 +826,7 @@ function getSideBarIframeSrc(pageUrl, lang, product=null) {
         if (['javascript', 'js'].indexOf(lang) >= 0) {
             reporType = "web"
         }
-        if (['android', 'objective-c', 'objc', 'swift', 'ios'].indexOf(lang) >= 0) {
+        if (['android', 'objective-c', 'objc', 'swift', 'ios', 'objectivec-swift'].indexOf(lang) >= 0) {
             reporType = "mobile"
         }
         if (['c', 'cpp', 'c++', 'cplusplus', 'csharp', 'dotnet', 'java', 'python'].indexOf(lang) >= 0) {

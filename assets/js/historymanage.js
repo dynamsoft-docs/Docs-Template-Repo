@@ -301,6 +301,7 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
         let curLang = $(".languageWrap .languageSelectDown > div.on").data("value")
         if (urlLang) {
             hrefVal = hrefVal.replace('lang=' + urlLang, 'lang=' + curLang)
+            
         } else {
             hrefVal = `${hrefVal}${hrefVal.indexOf("?")>0?'&':'?'}lang=${curLang}`
         }
@@ -498,6 +499,8 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
     $("#loadingContent").show()
     var fetchUrl = redirectUrl ? redirectUrl : aTag.href
     var oldLang = getCurrentUrlLang(document.URL)
+
+    console.log(paramLink)
     fetch(fetchUrl, {cache: "no-cache"}).then(function(response) {
         return response.text()
     }).then(function(data) {
@@ -525,8 +528,9 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
                     $(".languageWrap").attr("class", className)
                     // mobile - ios 页面
                     var urlLang = getUrlVars(paramLink)["lang"]
-                    if ($(".languageWrap.multiProgrammingLanguage").length > 0 && getCurrentUrlLang(paramLink, true) == "objectivec-swift") {
+                    if ($(".languageWrap.multiProgrammingLanguage").length > 0 && isInIOSDos(document.URL, paramLink)) {
                         var curLang = $(".languageWrap .languageSelectDown > div.on").data("value")
+                        console.log(curLang, urlLang)
                         if (!$(".languageWrap").hasClass("enableLanguageSelection")) {
                             let singleLang = ""
                             if ($(data).find(".language-swift").length > 0) {
@@ -561,7 +565,17 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
                         }
                     } else {
                         if (urlLang) {
-                            paramLink = paramLink.replace('lang=' + urlLang, '')
+                            if (isInIOSDos(document.URL, paramLink)) {
+                                paramLink = paramLink.replace('lang=' + urlLang, '')
+                                if(paramLink && paramLink.indexOf("?") >= 0) {
+                                    var item = paramLink.split("?")[1].trim()
+                                    if (item == "" || item[0] == "#") {
+                                        paramLink = paramLink.replace('?', '')
+                                    }
+                                }
+                            } else {
+                                paramLink = paramLink.replace('lang=' + urlLang, 'lang=objc,swift')
+                            }
                         }
                     }
                 }
@@ -698,7 +712,11 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
             
             // load sample-code style
             if($(".markdown-body .sample-code-prefix").length > 0 && getUrlVars(document.URL)["lang"]) {
-                var langs = getUrlVars(document.URL)["lang"].toLowerCase().trim().split(",")
+                var langs =  getUrlVars(document.URL)["lang"]
+                if(langs!= undefined && langs == "objectivec-swift") {
+                    langs = "objc,swift"
+                }
+                langs = langs.toLowerCase().trim().split(",")
                 if (langs) {
                     if (langs.length == 1) {
                         sampleCodeSingleLangInit(langs[0])
@@ -1296,7 +1314,7 @@ function getProductLangLatestVersion(product, lang) {
 }
 
 function getFormatVal(inputVer) {
-    if (inputVer == "latest") {
+    if (!inputVer|| inputVer == "latest") {
         return 999999
     }
     var arr = inputVer.split(".")
@@ -1309,6 +1327,20 @@ function getFormatVal(inputVer) {
         sum = sum * 100 + num
     }
     return sum
+}
+
+function isInIOSDos(curUrl, linkUrl) {
+    var curProduct = getCurrentUrlProductName(curUrl)
+    var linkProduct = getCurrentUrlProductName(linkUrl)
+    if (curProduct != linkProduct) {
+        return false
+    } else {
+        if (linkUrl.indexOf("/docs/mobile/programming/objectivec-swift/") > 0) {
+            return true
+        } else {
+            return false
+        }
+    }
 }
 
 window.addEventListener("popstate", function(e) {
