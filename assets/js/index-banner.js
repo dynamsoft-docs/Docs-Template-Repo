@@ -157,6 +157,7 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
     else {
         if (getUrlVars(pageUrl)["product"] || getUrlVars(pageUrl)["lang"]) {
             var sideBarIframeSrc = getSideBarIframeSrc(pageUrl, getUrlVars(pageUrl)["lang"], getUrlVars(pageUrl)["product"])
+            console.log(sideBarIframeSrc)
             if (sideBarIframeSrc) {
                 $("#sideBarIframe").attr('src', sideBarIframeSrc)
                 needFilterLangTree = true
@@ -828,7 +829,7 @@ function getSideBarIframeSrc(pageUrl, lang, product=null) {
         if (['android', 'objective-c', 'objc', 'swift', 'ios'].indexOf(lang) >= 0) {
             reporType = "mobile"
         }
-        if (['c', 'cpp', 'c++', 'csharp', 'dotnet', 'java', 'python'].indexOf(lang) >= 0) {
+        if (['c', 'cpp', 'c++', 'cplusplus', 'csharp', 'dotnet', 'java', 'python'].indexOf(lang) >= 0) {
             reporType = "server"
         }
     } else {

@@ -15,8 +15,16 @@ function UrlReplace()
             }
         }
     }
+
     if (matchVer == undefined && ver != undefined) {
-        RedirToGivenVersionPage(ver);
+        var productVersion = getUrlVars(docUrl)[product]
+        if (product != undefined && product != docProduct && productVersion == undefined) {
+            productVersion = getLinkVersion(ver, docUrl, product, getUrlVars(docUrl)["lang"] ? getUrlVars(docUrl)["lang"] : 'core', docProduct)
+            docUrl = docUrl.replace("ver="+ver, "ver="+productVersion+"&"+product+"="+ver)
+            window.location.replace(docUrl);
+        } else {
+            RedirToGivenVersionPage(ver);
+        }
     }
     if (ver == undefined) {
         if (docUrl.indexOf("-v") > 0 && (docUrl.indexOf("-v") < docUrl.indexOf("?") || docUrl.indexOf("?") < 0)) {
@@ -256,6 +264,10 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
     let productName = getUrlVars(document.URL)["product"] || getCurrentUrlProductName(document.URL)
     let lang = getUrlVars(document.URL)["lang"] || getCurrentUrlLang(document.URL, true)
     let currentDocDomain = document.URL.split("/docs/")[0] + '/docs/';
+    let p_ver = getUrlVars(document.URL)[productName]
+    if (p_ver != undefined) {
+        verText = p_ver
+    }
 
     if(hrefVal == "") return;
 
@@ -263,6 +275,8 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
         window.open(aTag.href)
         return
     }
+
+    console.log(aTag, verText)
 
     // #region hash & src,lang,ver
     // get hash string
@@ -1141,6 +1155,7 @@ function getRequestNewPageVersion(linkUrl) {
         // different product
         var product = queryProduct || getCurrentUrlProductName(linkUrl)
         var lang = queryLang || getCurrentUrlLang(linkUrl, true)
+        console.log(curVersion, product, lang,  getCurrentUrlProductName(linkUrl))
         var returnVersion = getLinkVersion(curVersion, linkUrl, product, lang ? lang : 'core', getCurrentUrlProductName(linkUrl))
         return returnVersion == -1 ? curVersion : returnVersion
     }
@@ -1161,15 +1176,18 @@ function getRequestNewPageVersion(linkUrl) {
  * getLinkVersion("10.0.10", "https://www.dynamsoft.com/capture-vision/docs/core/enums/utility/region-predetection.html", "dbr", "core", "dcv")
  * getLinkVersion("10.0.10", "https://www.dynamsoft.com/capture-vision/docs/core/enums/utility/region-predetection.html", "dbr", "cpp", "dcv")
  */
+
 function getLinkVersion(curVersion, linkUrl, curProduct=null, curLang=null, linkProduct=null) {
     // 需要得到是 currcent link: product, language
     // 得到 product
     let product = curProduct ? curProduct : (getUrlVars(document.URL)["product"] ? getUrlVars(document.URL)["product"] : getCurrentUrlProductName())
     // 得到 language 
     let lang = curLang ? curLang : (getUrlVars(document.URL)["lang"] ? getUrlVars(document.URL)["lang"] : getCurrentUrlLang(document.URL, true))
+    
     lang = lang == "cplusplus" ? "cpp" : lang
     lang = ["objectivec-swift", "objectivec", "objc", "swift"].includes(lang) ? "ios" : lang
     lang = lang == "core" ? "" : lang
+
     // 找到对应的 matchList
     let filteredItems = dcvVersionList.filter(function(item) {
         let productVersion = item[product+'Core']
@@ -1221,6 +1239,8 @@ function getLinkVersion(curVersion, linkUrl, curProduct=null, curLang=null, link
         item.productVersion = item[product+'Core']
         return isReturn
     })
+
+    console.log(filteredItems)
     filteredItems.sort(function(a, b) {
         return getFormatVal(b.productVersion) - getFormatVal(a.productVersion)
     })
