@@ -193,15 +193,15 @@ function RequestNewPage(aTag, paramLink, onlyLoadContent=false) {
         if (hash && $("#" + hash).length > 0) {
             var scrollTop = $("#" + hash).offset().top
             setTimeout(function() {
-                console.log(111)
-                $("a[href='#"+hash+"']").click()
-            }, 100)
+                window.scrollTo(0, scrollTop)
+                //$("a[href='#"+hash+"']").click()
+            }, 200)
         } else {
             if (sd > 0) {
                 var scrollTop = sd > $('#overall-header').height() ? $('#overall-header').height() : sd
                 setTimeout(function() {
                     window.scrollTo(0, scrollTop)
-                }, 100)
+                }, 200)
             }
         }
 
@@ -263,7 +263,7 @@ function findCurLinkOnFullTree(aTag, paramLink, onlyLoadContent=false) {
         var scrollTop = hash && $("#" + hash).length > 0 ? $("#" + hash).offset().top: 0
         setTimeout(function() {
             window.scrollTo(0, scrollTop)
-        }, 100)
+        }, 200)
         !onlyLoadContent&&history.pushState(null, null, paramLink)
     } else {
         var flag = false
