@@ -193,7 +193,8 @@ function RequestNewPage(aTag, paramLink, onlyLoadContent=false) {
         if (hash && $("#" + hash).length > 0) {
             var scrollTop = $("#" + hash).offset().top
             setTimeout(function() {
-                window.scrollTo(0, scrollTop)
+                console.log(111)
+                $("a[href='#"+hash+"']").click()
             }, 100)
         } else {
             if (sd > 0) {
