@@ -193,8 +193,11 @@ function RequestNewPage(aTag, paramLink, onlyLoadContent=false) {
         if (hash && $("#" + hash).length > 0) {
             var scrollTop = $("#" + hash).offset().top
             setTimeout(function() {
-                window.scrollTo(0, scrollTop)
-                //$("a[href='#"+hash+"']").click()
+                if ($("a[href='#"+hash+"']").length > 0) {
+                    $("a[href='#"+hash+"']").click()
+                } else {
+                    window.scrollTo(0, scrollTop)
+                }
             }, 200)
         } else {
             if (sd > 0) {
