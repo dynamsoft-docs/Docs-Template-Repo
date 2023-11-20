@@ -2,6 +2,7 @@ var dcvVersionList = []
 async function UrlReplace()
 {
     dcvVersionList = await getVersionSearchList();
+    console.log(dcvVersionList)
     initHistoryVersionList();
 
     var docUrl = document.URL;
@@ -1210,6 +1211,7 @@ function getLinkVersion(curVersion, linkUrl, curProduct=null, curLang=null, link
     lang = ["objectivec-swift", "objectivec", "objc", "swift"].includes(lang) ? "ios" : lang
     lang = lang == "core" ? "" : lang
 
+    console.log(dcvVersionList)
     // 找到对应的 matchList
     let filteredItems = dcvVersionList.filter(function(item) {
         //let productVersion = item[product+'Core']
@@ -1378,7 +1380,7 @@ async function getVersionSearchList() {
     try{
         let request = await fetch(`${location.origin}/${getDoumentName(product)}/docs/${repoType}/assets/js/${product}${titleCase(repoType)}VersionSearch.json`, {cache: "no-cache"})
         let test = await request.text()
-        return JSON.parse(JSON.stringify(test))
+        return JSON.parse(test)
     } catch(error) {
         console.log(error)
     }
