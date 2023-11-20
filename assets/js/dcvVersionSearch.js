@@ -4,7 +4,7 @@ var dcvVersionList =
         dbrCore: "10.0.20",
         matchList: {
             cpp: {
-                dcvRepo: [
+                dcvRepoServer: [
                     {
                         path: '/programming/cplusplus/api-reference/utility',
                         version: '1.0.20'
@@ -193,7 +193,7 @@ var dcvVersionList =
         dbrCore: "10.0.10",
         matchList: {
             cpp: {
-                dcvRepo: [
+                dcvRepoServer: [
                     {
                         path: '/programming/cplusplus/api-reference/utility',
                         version: '1.0.10'
@@ -382,7 +382,7 @@ var dcvVersionList =
         dbrCore: "10.0.0",
         matchList: {
             cpp: {
-                dcvRepo: [
+                dcvRepoServer: [
                     {
                         path: '/programming/cplusplus/api-reference/utility',
                         version: '1.0.0'
