@@ -56,6 +56,7 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
         generateDocHead = false;
     }
     var verArray = SearchVersion();
+    console.log(verArray)
     if (!useVersionTree) {
         var allHerf1 = $(".docContainer .content, #docHead, #AutoGenerateSidebar, .sideBar, #crumbs").find("a");
         for (var i = 0; i < allHerf1.length; i++)
@@ -372,6 +373,9 @@ function SearchVersion() {
     else{
         curVerFromUrl = "latest"
     }
+    console.log(ver, curVerFromUrl)
+
+    var productName = getUrlVars(docUrl)["product"];
 
     var compatiableDiv = document.getElementById( "compatibleInfo");
     if (ver == undefined){
@@ -390,7 +394,6 @@ function SearchVersion() {
             else{
                 curVerTag[0].innerText = "version " + ver;
             }
-            var productName = getUrlVars(docUrl)["product"];
             if (productName != undefined) {
                 var productVersion = getUrlVars(docUrl)[productName];
                 if (productVersion != undefined) {
@@ -405,7 +408,6 @@ function SearchVersion() {
         if (compatiableDiv != null && compatibleTag != null) {
             compatiableDiv.style.display = "block";
             compatibleTag[0].innerText = "Version "+ ver;
-            var productName = getUrlVars(docUrl)["product"];
             if (productName != undefined) {
                 var productVersion = getUrlVars(docUrl)[productName];
                 if (productVersion != undefined) {
@@ -424,7 +426,12 @@ function SearchVersion() {
     else if (compatiableDiv != null){
         compatiableDiv.style.display = "none";
     }
-
+    if (productName != undefined) {
+        var productVersion = getUrlVars(docUrl)[productName];
+        if (productVersion != undefined) {
+            ver = productVersion
+        }
+    }
     var verArray = new Array(ver, curVerFromUrl);
     return verArray;
 }
@@ -912,4 +919,4 @@ function showSelectMultiPanel(nextSiblings, findItemIndex) {
         $(sidebarList[i]).hide()
       }
     }
-  }
+}

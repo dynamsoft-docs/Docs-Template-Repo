@@ -1,11 +1,15 @@
-function UrlReplace()
+var dcvVersionList = []
+async function UrlReplace()
 {
-    initHistoryVersionList()
+    dcvVersionList = await getVersionSearchList();
+    initHistoryVersionList();
+
     var docUrl = document.URL;
     var ver = getUrlVars(docUrl)["ver"];
     var matchVer = getUrlVars(docUrl)["matchVer"];
     var product = getUrlVars(docUrl)["product"];
     var docProduct = getCurrentUrlProductName();
+
     if (ver != undefined && ver != "latest") {
         if (product == undefined || product == docProduct) {
             var tempVer = findNearestVersion(ver);
@@ -18,14 +22,14 @@ function UrlReplace()
 
     var productVersion = getUrlVars(docUrl)[product]
     if (matchVer == undefined && (ver != undefined || productVersion != undefined)) {
-        if (product != undefined && product != docProduct && productVersion == undefined && ver == undefined) {
+        if (product != undefined && product != docProduct && productVersion == undefined && ver != undefined) {
             productVersion = getLinkVersion(ver, docUrl, product, getUrlVars(docUrl)["lang"] ? getUrlVars(docUrl)["lang"] : 'core', docProduct)
             if (productVersion == -1) {
                 productVersion = "latest"
             }
             docUrl = docUrl.replace("ver="+ver, "ver="+productVersion+"&"+product+"="+ver)
             window.location.replace(docUrl)
-        } else if (product != undefined && product != docProduct && ver == undefined && productVersion != undefined) {
+        } else if (product != undefined && product != docProduct && productVersion != undefined && ver == undefined) {
             var curPageVer = getLinkVersion(productVersion, docUrl, product, getUrlVars(docUrl)["lang"] ? getUrlVars(docUrl)["lang"] : 'core', docProduct)
             if (curPageVer == -1) {
                 curPageVer = "latest"
@@ -100,9 +104,6 @@ function RedirToGivenVersionPage(inputVer, currentUrl = null)
     var productParam = getUrlVars(docUrl)["product"];
     var langParam = getUrlVars(docUrl)["lang"];
     
-    console.log(productParam, langParam)
-    
-
     var historyList = $(".otherVersions");
     if (historyList != null)
     {
@@ -151,11 +152,8 @@ function RedirToGivenVersionPage(inputVer, currentUrl = null)
                             redirectUrl = redirectUrl + productVar
                         }
                         if (inputVer == 'latest') {
-                            console.log(redirectUrl + anchorVal)
-                            console.log(1)
                             window.location.replace(redirectUrl + anchorVal)
                         } else {
-                            console.log(2)
                             window.location.replace(`${redirectUrl}${redirectUrl.indexOf("?") > 0?'&':'?'}ver=${inputVer}&matchVer=true${changeVer}${anchorVal}`)
                         }
                        return;
@@ -178,7 +176,6 @@ function RedirToGivenVersionPage(inputVer, currentUrl = null)
         if (aTag.length > 0) {
             var exp = new RegExp(/[?]+([^=]+)=/gi)
             if (exp.exec(aTag[0].href) != null){
-                console.log(5)
                 window.location.replace(aTag[0].href + "&ver=" +inputVer+"&matchVer=true"+ changeVer + anchorVal);
                 return;
             } else {
@@ -196,7 +193,6 @@ function RedirToGivenVersionPage(inputVer, currentUrl = null)
                         productVar += ("&"+productParam + "=" + getUrlVars(docUrl)[productParam])
                     }
                 }
-                console.log(3)
                 window.location.replace(`${redirectUrl}${redirectUrl.indexOf("?") > 0?'&':'?'}ver=${inputVer}&matchVer=true${productVar}${changeVer}${anchorVal}`)
                 return;
             }
@@ -219,7 +215,6 @@ function RedirToGivenVersionPage(inputVer, currentUrl = null)
             }
             redirectUrl = redirectUrl + productVar
         }
-        console.log(4)
         window.location.replace(redirectUrl + anchorVal);
     }
 
@@ -238,8 +233,6 @@ function GetVersionDiff(inputVer, compareVer)
     var inputChar = inputVer ? inputVer.split('.') : inputVer;
     var compareChar = compareVer ? compareVer.split('.') : compareVer;
 
-    console.log(inputChar, compareChar)
-    
     var diff = 0;
 
     var maxLength = Math.max(inputChar.length, compareChar.length);
@@ -283,15 +276,14 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
         verText = p_ver
     }
 
+    console.log(verText, p_ver)
+
     if(hrefVal == "") return;
 
     if (hrefVal.indexOf("/docs/") <= 0 || hrefVal.indexOf(location.host) < 0)  {
         window.open(aTag.href)
         return
     }
-
-    console.log(aTag, verText)
-
     // #region hash & src,lang,ver
     // get hash string
     let hashIndex = hrefVal.indexOf("#")
@@ -340,6 +332,7 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
         verStr = expQueryStr.exec(hrefVal) != null ? ("&ver=" + verText) : ("?ver=" + verText)
     }
     hrefVal = hrefVal + verStr
+    console.log(hrefVal, verStr)
     // #endregion
 
     // #region 分析出 productVar, langVar
@@ -366,6 +359,7 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
             productVar = `${expQueryStr.exec(hrefVal) == null?'?':'&'}product=${getUrlVars(document.URL)['product']}`;
             isNeedAddLang = true
             isNeedAddProductVersion = true
+            console.log(productVar)
         }
 
         if (isNeedAddLang) {
@@ -377,6 +371,7 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
                 }
             }
         }
+        console.log(productVar)
     }
     // same docs, different language
     if (!getUrlVars(hrefVal)["lang"]) {
@@ -393,7 +388,7 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
     hrefVal = hrefVal + productVar
     // #endregion
 
-    console.log(`2. hrefVal: ${hrefVal}`)
+    console.log(hrefVal)
 
     if (aTag.target == '_blank') {
         if (getUrlVars(originHref)["ver"]!=undefined) {
@@ -497,12 +492,12 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
         if (fromSourse == "sidebar") {
             // request link
             if (!$(aTag).hasClass("activeLink")) {
-                RequestNewPage(aTag, hrefVal + hashStr, needh3)
+               RequestNewPage(aTag, hrefVal + hashStr, needh3)
             }
         } else if (fromSourse == "docContainer") {
-            findCurLinkOnFullTree(aTag, hrefVal + hashStr, needh3)
+           findCurLinkOnFullTree(aTag, hrefVal + hashStr, needh3)
         } else {
-            window.location.href = hrefVal + hashStr;
+           window.location.href = hrefVal + hashStr;
         }
     }
 	return;
@@ -514,12 +509,10 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
     var fetchUrl = redirectUrl ? redirectUrl : aTag.href
     var oldLang = getCurrentUrlLang(document.URL)
 
-    console.log(paramLink)
     fetch(fetchUrl, {cache: "no-cache"}).then(function(response) {
         return response.text()
     }).then(function(data) {
         var inputVer = getRequestNewPageVersion(paramLink)
-        console.log(inputVer)
         var otherVersions = $(data).find(".otherVersions > li")
 
         var needToSearchHistory = false
@@ -544,7 +537,6 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
                     var urlLang = getUrlVars(paramLink)["lang"]
                     if ($(".languageWrap.multiProgrammingLanguage").length > 0 && isInIOSDos(document.URL, paramLink)) {
                         var curLang = $(".languageWrap .languageSelectDown > div.on").data("value")
-                        console.log(curLang, urlLang)
                         if (!$(".languageWrap").hasClass("enableLanguageSelection")) {
                             let singleLang = ""
                             if ($(data).find(".language-swift").length > 0) {
@@ -1031,7 +1023,6 @@ function changeVersion (liTag)
 function findNearestVersion(ver) {
     var versionList = $(".fullVersionInfo li:not(.hideLi)")
     var bestVer = ver, verDiff=null
-    // console.log(versionList)
     for (var i=0; i<versionList.length; i++) {
         var tempVer = $(versionList[i]).text().toLowerCase()
         if (tempVer == "latest version"){
@@ -1187,7 +1178,6 @@ function getRequestNewPageVersion(linkUrl) {
         // different product
         var product = queryProduct || getCurrentUrlProductName(linkUrl)
         var lang = queryLang || getCurrentUrlLang(linkUrl, true)
-        console.log(curVersion, product, lang,  getCurrentUrlProductName(linkUrl))
         var returnVersion = getLinkVersion(curVersion, linkUrl, product, lang ? lang : 'core', getCurrentUrlProductName(linkUrl))
         return returnVersion == -1 ? curVersion : returnVersion
     }
@@ -1216,24 +1206,21 @@ function getLinkVersion(curVersion, linkUrl, curProduct=null, curLang=null, link
     // 得到 language 
     let lang = curLang ? curLang : (getUrlVars(document.URL)["lang"] ? getUrlVars(document.URL)["lang"] : getCurrentUrlLang(document.URL, true))
     
-    console.log(product, lang)
-
     lang = lang == "cplusplus" ? "cpp" : lang
     lang = ["objectivec-swift", "objectivec", "objc", "swift"].includes(lang) ? "ios" : lang
     lang = lang == "core" ? "" : lang
 
     // 找到对应的 matchList
     let filteredItems = dcvVersionList.filter(function(item) {
-        let productVersion = item[product+'Core']
+        //let productVersion = item[product+'Core']
+        let productVersion = item.version
         let isReturn = false
         let matchItems = null
         if (productVersion && getFormatVal(productVersion) <= getFormatVal(curVersion)) {
             for(var matchItem in item.matchList) {
                 if (lang && lang != "") {
                     if (matchItem == lang) {
-                        console.log(matchItem)
                         var tempMatchItems = item.matchList[matchItem]
-                        console.log(tempMatchItems)
                         for(var subMatchItems in tempMatchItems) {
                             if (linkProduct != "dcv") {
                                 if (subMatchItems == linkProduct) {
@@ -1268,11 +1255,10 @@ function getLinkVersion(curVersion, linkUrl, curProduct=null, curLang=null, link
             }
         }
         item.matchItems = matchItems
-        item.productVersion = item[product+'Core']
+        item.productVersion = productVersion
         return isReturn
     })
 
-    console.log(filteredItems)
     filteredItems.sort(function(a, b) {
         return getFormatVal(b.productVersion) - getFormatVal(a.productVersion)
     })
@@ -1291,7 +1277,6 @@ function getLinkVersion(curVersion, linkUrl, curProduct=null, curLang=null, link
     }
 }
 
-
 function titleCase(s) {  
     var i, ss = s.toLowerCase().split(/\s+/);  
     for (i = 0; i < ss.length; i++) {  
@@ -1303,7 +1288,8 @@ function titleCase(s) {
 //getDCVLangVersion('flutter', 'dbr', '10.0.0')
 function getDCVLangVersion(linkLang, curProduct, curVersion) {
     let filteredItems = dcvVersionList.filter(function(item){
-        let productVersion = item[curProduct+'Core']
+        // let productVersion = item[curProduct+'Core']
+        let productVersion = item.version
         let isReturn = false
         let linkLangDCVVersion = null
         if (productVersion && getFormatVal(productVersion) <= getFormatVal(curVersion)) {
@@ -1315,7 +1301,7 @@ function getDCVLangVersion(linkLang, curProduct, curVersion) {
             }
         }
         item.linkLangDCVVersion = linkLangDCVVersion
-        item.productVersion = item[curProduct+'Core']
+        item.productVersion = productVersion
         return isReturn
     })
 
@@ -1363,6 +1349,38 @@ function isInIOSDos(curUrl, linkUrl) {
         } else {
             return false
         }
+    }
+}
+
+async function getVersionSearchList() {
+    var product = getUrlVars(document.URL)["product"] || getCurrentUrlProductName(document.URL)
+    var lang = getUrlVars(document.URL)["lang"]
+    var repoType = "Core"
+    if (lang != undefined) {
+        if (lang && lang != "core") {
+            lang = lang.toLowerCase().trim().split(",")[0]
+            if (['javascript', 'js'].indexOf(lang) >= 0) {
+                repoType = "web"
+            }
+            if (['android', 'objective-c', 'objc', 'swift', 'ios'].indexOf(lang) >= 0) {
+                repoType = "mobile"
+            }
+            if (['c', 'cpp', 'c++', 'csharp', 'dotnet', 'java', 'python'].indexOf(lang) >= 0) {
+                repoType = "server"
+            }
+        } else {
+            repoType = "core"
+        }
+    } else {
+        repoType = getCurrentUrlRepoType(document.URL);
+    }
+
+    try{
+        let request = await fetch(`${location.origin}/${getDoumentName(product)}/docs/${repoType}/assets/js/${product}${titleCase(repoType)}VersionSearch.json`, {cache: "no-cache"})
+        let test = await request.text()
+        return JSON.parse(JSON.stringify(test))
+    } catch(error) {
+        console.log(error)
     }
 }
 
