@@ -16,17 +16,27 @@ function UrlReplace()
         }
     }
 
-    if (matchVer == undefined && ver != undefined) {
-        var productVersion = getUrlVars(docUrl)[product]
-        if (product != undefined && product != docProduct && productVersion == undefined) {
+    var productVersion = getUrlVars(docUrl)[product]
+    if (matchVer == undefined && (ver != undefined || productVersion != undefined)) {
+        if (product != undefined && product != docProduct && productVersion == undefined && ver == undefined) {
             productVersion = getLinkVersion(ver, docUrl, product, getUrlVars(docUrl)["lang"] ? getUrlVars(docUrl)["lang"] : 'core', docProduct)
+            if (productVersion == -1) {
+                productVersion = "latest"
+            }
             docUrl = docUrl.replace("ver="+ver, "ver="+productVersion+"&"+product+"="+ver)
-            window.location.replace(docUrl);
+            window.location.replace(docUrl)
+        } else if (product != undefined && product != docProduct && ver == undefined && productVersion != undefined) {
+            var curPageVer = getLinkVersion(productVersion, docUrl, product, getUrlVars(docUrl)["lang"] ? getUrlVars(docUrl)["lang"] : 'core', docProduct)
+            if (curPageVer == -1) {
+                curPageVer = "latest"
+            }
+            docUrl = docUrl.replace(product+"="+productVersion, product+"="+productVersion+"&ver="+curPageVer)
+            RedirToGivenVersionPage(curPageVer, docUrl);
         } else {
-            RedirToGivenVersionPage(ver);
+            RedirToGivenVersionPage(ver?ver:'latest');
         }
     }
-    if (ver == undefined) {
+    if (ver == undefined && productVersion == undefined) {
         if (docUrl.indexOf("-v") > 0 && (docUrl.indexOf("-v") < docUrl.indexOf("?") || docUrl.indexOf("?") < 0)) {
             var docVer = docUrl.split("-v")[1]
             if (parseInt(docVer[0]) <= 9 && parseInt(docVer[0]) >= 0 && docVer.indexOf('.html') > 0) {
@@ -46,7 +56,7 @@ function allHerfClick(_this, ver) {
     return false;
 }
 
-function RedirToGivenVersionPage(inputVer)
+function RedirToGivenVersionPage(inputVer, currentUrl = null)
 {
     var curVerTag = $(".currentVersion");
     var bestVerIndex = -1;
@@ -70,7 +80,9 @@ function RedirToGivenVersionPage(inputVer)
         }
     }
     var anchorVal = "";
-    var curDocUrl = document.URL;
+    var docUrl = currentUrl || document.URL;
+    var curDocUrl = currentUrl || document.URL;
+
     if (curDocUrl.indexOf("#") != -1){
 		var urlAry = curDocUrl.split("#");
 		if (urlAry.length == 2){
@@ -79,14 +91,14 @@ function RedirToGivenVersionPage(inputVer)
 	}
 
     var changeVer = "";
-    var ifChangeVersion = getUrlVars(document.URL)["cVer"];
+    var ifChangeVersion = getUrlVars(docUrl)["cVer"];
     if (ifChangeVersion != undefined) {
         changeVer = "&cVer=true";
     }
 
     var productVar = ""
-    var productParam = getUrlVars(document.URL)["product"];
-    var langParam = getUrlVars(document.URL)["lang"];
+    var productParam = getUrlVars(docUrl)["product"];
+    var langParam = getUrlVars(docUrl)["lang"];
     
     console.log(productParam, langParam)
     
@@ -111,8 +123,8 @@ function RedirToGivenVersionPage(inputVer)
                     if (exp.exec(aTag[0].href) != null) { // aTag[0].href中有参数
                         if (productParam != undefined && getCurrentUrlProductName() == productParam) {
                             productVar = `&product=${productParam}${langParam!=undefined?'&lang='+langParam:''}`
-                            if (getUrlVars(document.URL)[productParam] != undefined) {
-                                productVar += ("&"+productParam + "=" + getUrlVars(document.URL)[productParam])
+                            if (getUrlVars(docUrl)[productParam] != undefined) {
+                                productVar += ("&"+productParam + "=" + getUrlVars(docUrl)[productParam])
                             }
                         }
                         if (inputVer == 'latest') {
@@ -123,7 +135,7 @@ function RedirToGivenVersionPage(inputVer)
                         return;
                     }
                     else {
-                        var srcVal = getUrlVars(document.URL)["src"]
+                        var srcVal = getUrlVars(docUrl)["src"]
                         var redirectUrl = aTag[0].href
                     	if (srcVal != undefined){
                             redirectUrl = redirectUrl + '?src=' + srcVal
@@ -133,8 +145,8 @@ function RedirToGivenVersionPage(inputVer)
                         }
                         if (productParam != undefined && getCurrentUrlProductName() != productParam) {
                             productVar = `${redirectUrl.indexOf("?") > 0 ? '&' : '?'}product=${productParam}`
-                            if (getUrlVars(document.URL)[productParam] != undefined) {
-                                productVar += ("&"+productParam + "=" + getUrlVars(document.URL)[productParam])
+                            if (getUrlVars(docUrl)[productParam] != undefined) {
+                                productVar += ("&"+productParam + "=" + getUrlVars(docUrl)[productParam])
                             }
                             redirectUrl = redirectUrl + productVar
                         }
@@ -170,7 +182,7 @@ function RedirToGivenVersionPage(inputVer)
                 window.location.replace(aTag[0].href + "&ver=" +inputVer+"&matchVer=true"+ changeVer + anchorVal);
                 return;
             } else {
-                var srcVal = getUrlVars(document.URL)["src"]
+                var srcVal = getUrlVars(docUrl)["src"]
                 var redirectUrl = aTag[0].href
                 if (srcVal != undefined){
                     redirectUrl = redirectUrl + "?src="+ srcVal
@@ -180,8 +192,8 @@ function RedirToGivenVersionPage(inputVer)
                 }
                 if (productParam != undefined && getCurrentUrlProductName() != productParam) {
                     productVar = "&product=" + productParam
-                    if (getUrlVars(document.URL)[productParam] != undefined) {
-                        productVar += ("&"+productParam + "=" + getUrlVars(document.URL)[productParam])
+                    if (getUrlVars(docUrl)[productParam] != undefined) {
+                        productVar += ("&"+productParam + "=" + getUrlVars(docUrl)[productParam])
                     }
                 }
                 console.log(3)
@@ -202,8 +214,8 @@ function RedirToGivenVersionPage(inputVer)
         }
         if (productParam != undefined && getCurrentUrlProductName() != productParam) {
             productVar = `${redirectUrl.indexOf("?") > 0 ? '&' : '?'}product=${productParam}`
-            if (getUrlVars(document.URL)[productParam] != undefined) {
-                productVar += ("&"+productParam + "=" + getUrlVars(document.URL)[productParam])
+            if (getUrlVars(docUrl)[productParam] != undefined) {
+                productVar += ("&"+productParam + "=" + getUrlVars(docUrl)[productParam])
             }
             redirectUrl = redirectUrl + productVar
         }
@@ -225,6 +237,8 @@ function GetVersionDiff(inputVer, compareVer)
     }
     var inputChar = inputVer ? inputVer.split('.') : inputVer;
     var compareChar = compareVer ? compareVer.split('.') : compareVer;
+
+    console.log(inputChar, compareChar)
     
     var diff = 0;
 
@@ -1202,6 +1216,8 @@ function getLinkVersion(curVersion, linkUrl, curProduct=null, curLang=null, link
     // 得到 language 
     let lang = curLang ? curLang : (getUrlVars(document.URL)["lang"] ? getUrlVars(document.URL)["lang"] : getCurrentUrlLang(document.URL, true))
     
+    console.log(product, lang)
+
     lang = lang == "cplusplus" ? "cpp" : lang
     lang = ["objectivec-swift", "objectivec", "objc", "swift"].includes(lang) ? "ios" : lang
     lang = lang == "core" ? "" : lang
@@ -1215,7 +1231,9 @@ function getLinkVersion(curVersion, linkUrl, curProduct=null, curLang=null, link
             for(var matchItem in item.matchList) {
                 if (lang && lang != "") {
                     if (matchItem == lang) {
+                        console.log(matchItem)
                         var tempMatchItems = item.matchList[matchItem]
+                        console.log(tempMatchItems)
                         for(var subMatchItems in tempMatchItems) {
                             if (linkProduct != "dcv") {
                                 if (subMatchItems == linkProduct) {
@@ -1223,12 +1241,10 @@ function getLinkVersion(curVersion, linkUrl, curProduct=null, curLang=null, link
                                     isReturn = true
                                 }
                             } else {
-                                if (linkUrl.indexOf("/docs/core/") > 0 && subMatchItems == "dcvRepoCore") {
-                                    matchItems = tempMatchItems["dcvRepoCore"]
-                                    isReturn = true
-                                }
-                                if (linkUrl.indexOf("/docs/core/") < 0 && subMatchItems == "dcvRepo") {
-                                    matchItems = tempMatchItems["dcvRepo"]
+                                var linkUrlReop = titleCase(getCurrentUrlRepoType(linkUrl))
+                                var dcvRepoName = "dcvRepo" + linkUrlReop
+                                if (subMatchItems == dcvRepoName) {
+                                    matchItems = tempMatchItems[subMatchItems]
                                     isReturn = true
                                 }
                             }
@@ -1241,12 +1257,10 @@ function getLinkVersion(curVersion, linkUrl, curProduct=null, curLang=null, link
                             isReturn = true
                         }
                     } else {
-                        if (linkUrl.indexOf("/docs/core/") > 0 && matchItem == "dcvRepoCore") {
-                            matchItems = item.matchList["dcvRepoCore"]
-                            isReturn = true
-                        }
-                        if (linkUrl.indexOf("/docs/core/") < 0 && matchItem == "dcvRepo") {
-                            matchItems = item.matchList["dcvRepo"]
+                        var linkUrlReop = titleCase(getCurrentUrlRepoType(linkUrl))
+                        var dcvRepoName = "dcvRepo" + linkUrlReop
+                        if (matchItem == dcvRepoName) {
+                            matchItems = tempMatchItems[matchItem]
                             isReturn = true
                         }
                     }
@@ -1276,6 +1290,15 @@ function getLinkVersion(curVersion, linkUrl, curProduct=null, curLang=null, link
         return -1
     }
 }
+
+
+function titleCase(s) {  
+    var i, ss = s.toLowerCase().split(/\s+/);  
+    for (i = 0; i < ss.length; i++) {  
+        ss[i] = ss[i].slice(0, 1).toUpperCase() + ss[i].slice(1);  
+    }  
+    return ss.join(' ');  
+} 
 
 //getDCVLangVersion('flutter', 'dbr', '10.0.0')
 function getDCVLangVersion(linkLang, curProduct, curVersion) {
