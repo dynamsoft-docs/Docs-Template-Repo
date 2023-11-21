@@ -316,7 +316,7 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
 
     // get src string, href += src string (准备把这个参数和lang参数统一，以后只考虑lang)
     var srcString = ""
-    expQueryStr = new RegExp(/[?]+([^=]+)=/gi);
+    var expQueryStr = new RegExp(/[?]+([^=]+)=/gi);
     if (hrefVal.indexOf("/server/programming/c-cplusplus/") > 0 && !getUrlVars(hrefVal)["src"]) {
         if (getUrlVars(document.URL)["src"]) {
             srcString = expQueryStr.exec(hrefVal) == null ? "?src=" + getUrlVars(document.URL)["src"] : "&src=" + getUrlVars(document.URL)["src"]
@@ -345,11 +345,11 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
         if (hrefVal.indexOf(currentDocDomain) < 0 && hrefVal.indexOf(document.location.host) >= 0 && hrefVal.indexOf("/docs/") > 0) {
             if (!getUrlVars(document.URL)["product"]) {
                 // dbr js --> dce
-                productVar = `${expQueryStr.exec(hrefVal) == null?'?':'&'}product=${productName}`;
+                productVar = `${hrefVal.indexOf("?") < 0?'?':'&'}product=${productName}`;
                 isNeedAddLang = true
             } else if (getUrlVars(document.URL)["product"] != getCurrentUrlProductName(hrefVal)) {
                 // dce dbr --> dlr
-                productVar = `${expQueryStr.exec(hrefVal) == null?'?':'&'}product=${getUrlVars(document.URL)['product']}`;
+                productVar = `${hrefVal.indexOf("?") < 0?'?':'&'}product=${getUrlVars(document.URL)['product']}`;
                 isNeedAddLang=true
             } else if (getUrlVars(document.URL)["product"] == getCurrentUrlProductName(hrefVal) && getCurrentUrlLang(hrefVal, true) != lang) {
                 // dce-dbrjs --> dbr core 需要加上 lang
@@ -357,7 +357,7 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
             }
         } else if (hrefVal.indexOf(currentDocDomain) >= 0 && getUrlVars(document.URL)["product"]) {
             // dce-dbr --> dce -- dbr
-            productVar = `${expQueryStr.exec(hrefVal) == null?'?':'&'}product=${getUrlVars(document.URL)['product']}`;
+            productVar = `${hrefVal.indexOf("?") < 0?'?':'&'}product=${getUrlVars(document.URL)['product']}`;
             isNeedAddLang = true
             isNeedAddProductVersion = true
             console.log(productVar)
@@ -368,7 +368,7 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
                 if (getUrlVars(hrefVal)["lang"]) {
                     hrefVal.replace(`lang=${getUrlVars(hrefVal)["lang"]}`, `lang=${lang}`)
                 } else {
-                    productVar += `${expQueryStr.exec(hrefVal) == null && productVar==""?'?':'&'}lang=${lang}`
+                    productVar += `${hrefVal.indexOf("?") < 0 && productVar==""?'?':'&'}lang=${lang}`
                 }
             }
         }
