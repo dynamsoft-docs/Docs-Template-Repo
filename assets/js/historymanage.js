@@ -509,7 +509,6 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
     $("#loadingContent").show()
     var fetchUrl = redirectUrl ? redirectUrl : aTag.href
     var oldLang = getCurrentUrlLang(document.URL)
-
     fetch(fetchUrl, {cache: "no-cache"}).then(function(response) {
         return response.text()
     }).then(function(data) {
@@ -1249,7 +1248,7 @@ function getLinkVersion(curVersion, linkUrl, curProduct=null, curLang=null, link
                         var linkUrlReop = titleCase(getCurrentUrlRepoType(linkUrl))
                         var dcvRepoName = "dcvRepo" + linkUrlReop
                         if (matchItem == dcvRepoName) {
-                            matchItems = tempMatchItems[matchItem]
+                            matchItems = item.matchList[matchItem]
                             isReturn = true
                         }
                     }
