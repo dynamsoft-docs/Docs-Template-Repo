@@ -1318,6 +1318,7 @@ function getDCVLangVersion(linkLang, curProduct, curVersion) {
 }
 
 function getProductLangLatestVersion(product, lang) {
+    lang = lang == "react-native" ? "reactNative" : lang
     var productMatch = docsLangLatestVersion[product]
     var langVersion = productMatch[lang]
     return langVersion
