@@ -2,7 +2,7 @@ var dcvVersionList = []
 async function UrlReplace()
 {
     dcvVersionList = await getVersionSearchList();
-    console.log(dcvVersionList)
+    // console.log(dcvVersionList)
     initHistoryVersionList();
 
     var docUrl = document.URL;
@@ -277,7 +277,7 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
         verText = p_ver
     }
 
-    console.log(verText, p_ver)
+    // console.log(verText, p_ver)
 
     if(hrefVal == "") return;
 
@@ -333,7 +333,7 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
         verStr = expQueryStr.exec(hrefVal) != null ? ("&ver=" + verText) : ("?ver=" + verText)
     }
     hrefVal = hrefVal + verStr
-    console.log(hrefVal, verStr)
+    // console.log(hrefVal, verStr)
     // #endregion
 
     // #region 分析出 productVar, langVar
@@ -360,7 +360,7 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
             productVar = `${hrefVal.indexOf("?") < 0?'?':'&'}product=${getUrlVars(document.URL)['product']}`;
             isNeedAddLang = true
             isNeedAddProductVersion = true
-            console.log(productVar)
+            // console.log(productVar)
         }
 
         if (isNeedAddLang) {
@@ -372,7 +372,7 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
                 }
             }
         }
-        console.log(productVar)
+        // console.log(productVar)
     }
     // same docs, different language
     if (!getUrlVars(hrefVal)["lang"]) {
@@ -389,7 +389,7 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
     hrefVal = hrefVal + productVar
     // #endregion
 
-    console.log(hrefVal)
+    // console.log(hrefVal)
 
     if (aTag.target == '_blank') {
         if (getUrlVars(originHref)["ver"]!=undefined) {
@@ -1210,7 +1210,7 @@ function getLinkVersion(curVersion, linkUrl, curProduct=null, curLang=null, link
     lang = ["objectivec-swift", "objectivec", "objc", "swift"].includes(lang) ? "ios" : lang
     lang = lang == "core" ? "" : lang
 
-    console.log(dcvVersionList)
+    // console.log(dcvVersionList)
     // 找到对应的 matchList
     let filteredItems = dcvVersionList.filter(function(item) {
         //let productVersion = item[product+'Core']
@@ -1382,7 +1382,7 @@ async function getVersionSearchList() {
         let test = await request.text()
         return JSON.parse(test)
     } catch(error) {
-        console.log(error)
+        // console.log(error)
     }
 }
 

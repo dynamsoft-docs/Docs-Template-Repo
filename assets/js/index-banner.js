@@ -56,7 +56,7 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
         generateDocHead = false;
     }
     var verArray = SearchVersion();
-    console.log(verArray)
+    // console.log(verArray)
     if (!useVersionTree) {
         var allHerf1 = $(".docContainer .content, #docHead, #AutoGenerateSidebar, .sideBar, #crumbs").find("a");
         for (var i = 0; i < allHerf1.length; i++)
@@ -158,7 +158,7 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
     else {
         if (getUrlVars(pageUrl)["product"] || getUrlVars(pageUrl)["lang"]) {
             var sideBarIframeSrc = getSideBarIframeSrc(pageUrl, getUrlVars(pageUrl)["lang"], getUrlVars(pageUrl)["product"])
-            console.log(sideBarIframeSrc)
+            // console.log(sideBarIframeSrc)
             if (sideBarIframeSrc) {
                 $("#sideBarIframe").attr('src', sideBarIframeSrc)
                 needFilterLangTree = true
@@ -373,7 +373,7 @@ function SearchVersion() {
     else{
         curVerFromUrl = "latest"
     }
-    console.log(ver, curVerFromUrl)
+    // console.log(ver, curVerFromUrl)
 
     var productName = getUrlVars(docUrl)["product"];
 
