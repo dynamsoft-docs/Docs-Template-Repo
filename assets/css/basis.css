@@ -3142,11 +3142,13 @@ a#toTop {
     transform: rotate(-45deg);
     transition: all ease-in-out 0.5s;
 }
+
 #categoryMenuTree #fullTreeMenuListContainer li.expandListStyle > i.icon-arrow::before {
     border-color: #AAAAAA;
     transform: rotate(-135deg);
     transition: all ease-in-out 0.5s;
 }
+
 #categoryMenuTree #fullTreeMenuListContainer li i.icon-arrow:hover::before {
     border-color: #AAAAAA;
 }
@@ -3284,7 +3286,7 @@ a#toTop {
     float: right;
     color: #F5F5F5;
     font-size: 16px;
-    margin-top: 32px;
+    margin-top: 21px;
     margin-right: 20px;
 }
 

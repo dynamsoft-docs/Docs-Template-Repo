@@ -56,6 +56,7 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
         generateDocHead = false;
     }
     var verArray = SearchVersion();
+    // console.log(verArray)
     if (!useVersionTree) {
         var allHerf1 = $(".docContainer .content, #docHead, #AutoGenerateSidebar, .sideBar, #crumbs").find("a");
         for (var i = 0; i < allHerf1.length; i++)
@@ -155,15 +156,9 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
         }
     }
     else {
-        if (pageUrl.indexOf("/docs/core/") > 0 && getUrlVars(pageUrl)["lang"]) {
-            var sideBarIframeSrc = getSideBarIframeSrc(pageUrl, getUrlVars(pageUrl)["lang"])
-            if (sideBarIframeSrc) {
-                $("#sideBarIframe").attr('src', sideBarIframeSrc)
-                needFilterLangTree = true
-            } 
-        }
-        if (getUrlVars(pageUrl)["product"] || getUrlVars(pageUrl)["repoType"]) {
-            var sideBarIframeSrc = getSideBarIframeSrc(pageUrl, null, getUrlVars(pageUrl)["product"], getUrlVars(pageUrl)["repoType"])
+        if (getUrlVars(pageUrl)["product"] || getUrlVars(pageUrl)["lang"]) {
+            var sideBarIframeSrc = getSideBarIframeSrc(pageUrl, getUrlVars(pageUrl)["lang"], getUrlVars(pageUrl)["product"])
+            // console.log(sideBarIframeSrc)
             if (sideBarIframeSrc) {
                 $("#sideBarIframe").attr('src', sideBarIframeSrc)
                 needFilterLangTree = true
@@ -177,14 +172,16 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                 // Start Nav change
                 // if page is dcv but used in ddn or other docs, need to change navbar
                 // the nav bar in the (DDN or other docs's) Hide_Tree_Page.html file
-                if (getUrlVars(pageUrl)["product"]) {
+                if (getUrlVars(pageUrl)["product"] || (getUrlVars(pageUrl)["lang"] && pageUrl.indexOf("/docs/core") >= 0)) {
                     var navBar = $('#sideBarIframe').contents().find('#docsNavBar');
                     if (navBar && navBar.length > 0) {
-                        $(".productMenu").parent().html($(navBar[0]).html())
-                        if (getCurrentUrlProductName() == "dcv") {
-                            var historyVersion = $('#sideBarIframe').contents().find('.fullVersionHistory');
-                            if (historyVersion && historyVersion.length > 0) {
-                                $("#categoryMenuTree_history .fullVersionHistory").html($(historyVersion[0]).html());
+                        if (getUrlVars(pageUrl)["product"]) {
+                            $(".productMenu").parent().html($(navBar[0]).html())
+                        }
+                        var historyVersion = $('#sideBarIframe').contents().find('.fullVersionHistory');
+                        if (historyVersion && historyVersion.length > 0) {
+                            $("#categoryMenuTree_history .fullVersionHistory").html($(historyVersion[0]).html());
+                            if (getUrlVars(pageUrl)["product"] && getCurrentUrlProductName() != getUrlVars(pageUrl)["product"]) {
                                 var product = getUrlVars(pageUrl)["product"]
                                 var productVersion = getUrlVars(pageUrl)[product]
                                 if(productVersion != undefined) {
@@ -206,29 +203,29 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                 var product = getUrlVars(document.URL)["product"]
                 var productVersion = getUrlVars(document.URL)[product]
                 var curProduct = getCurrentUrlProductName(document.URL)
-                if (product && productVersion && curProduct == 'dcv') {
+                if (product && productVersion && curProduct != product) {
                     curPageVersion = (productVersion == 'latest' ? 'latest_version' : productVersion)
                 }
-                // console.log(version_tree_list, curPageVersion);
                 version_tree_list = $('#sideBarIframe').contents().find('#version_tree_list ul.version-tree-container');
-                // console.log(version_tree_list, curPageVersion);
+                //console.log(version_tree_list, curPageVersion);
                 if (version_tree_list && version_tree_list.length > 0  && curPageVersion) {
                     for(var i = 0; i<version_tree_list.length; i++) {
-                        // console.log($(version_tree_list[i]).attr('id'), 'version_tree_' + curPageVersion);
+                        //console.log($(version_tree_list[i]).attr('id'), 'version_tree_' + curPageVersion);
                         if ($(version_tree_list[i]).attr('id') == 'version_tree_' + curPageVersion) {
+                            //console.log($(version_tree_list[i]).html())
                             $('#fullTreeMenuListContainer').html($(version_tree_list[i]).html());
                         }
                     }
                     var allHerf1 = $(".docContainer .content, #docHead, #AutoGenerateSidebar, .sideBar, #crumbs").find("a");
                     for (var i = 0; i < allHerf1.length; i++)
                     {
-                        allHerf1[i].onclick = function(){
+                        allHerf1[i].onclick = function() {
                             if (!$(this).hasClass("refreshLink") && $(this).parents(".sideBar").length > 0 && $("#articleContent").length > 0) {
-                              addParam(this, verArray[0], 'sidebar', needh3); 
+                                addParam(this, verArray[0], 'sidebar', needh3); 
                             } else if (!$(this).hasClass("refreshLink") && $(this).parents(".markdown-body").length > 0 && $("#articleContent").length > 0) {
                                 addParam(this, verArray[0], 'docContainer', needh3); 
                             } else {
-                              addParam(this, verArray[0]); 
+                                addParam(this, verArray[0]); 
                             }
                             return false;
                         };
@@ -376,6 +373,9 @@ function SearchVersion() {
     else{
         curVerFromUrl = "latest"
     }
+    // console.log(ver, curVerFromUrl)
+
+    var productName = getUrlVars(docUrl)["product"];
 
     var compatiableDiv = document.getElementById( "compatibleInfo");
     if (ver == undefined){
@@ -394,7 +394,6 @@ function SearchVersion() {
             else{
                 curVerTag[0].innerText = "version " + ver;
             }
-            var productName = getUrlVars(docUrl)["product"];
             if (productName != undefined) {
                 var productVersion = getUrlVars(docUrl)[productName];
                 if (productVersion != undefined) {
@@ -409,7 +408,6 @@ function SearchVersion() {
         if (compatiableDiv != null && compatibleTag != null) {
             compatiableDiv.style.display = "block";
             compatibleTag[0].innerText = "Version "+ ver;
-            var productName = getUrlVars(docUrl)["product"];
             if (productName != undefined) {
                 var productVersion = getUrlVars(docUrl)[productName];
                 if (productVersion != undefined) {
@@ -428,7 +426,12 @@ function SearchVersion() {
     else if (compatiableDiv != null){
         compatiableDiv.style.display = "none";
     }
-
+    if (productName != undefined) {
+        var productVersion = getUrlVars(docUrl)[productName];
+        if (productVersion != undefined) {
+            ver = productVersion
+        }
+    }
     var verArray = new Array(ver, curVerFromUrl);
     return verArray;
 }
@@ -675,7 +678,7 @@ function initCrumbs() {
     var crumbul = $('#crumbs').children("ul")
     if (crumbul.length != 0) {
         if (getUrlVars(document.URL)["product"]) {
-            var documentationLink = getDocumentationLink(getUrlVars(document.URL)["product"], getUrlVars(document.URL)["repoType"])
+            var documentationLink = getDocumentationLink(getUrlVars(document.URL)["product"], getUrlVars(document.URL)["lang"])
             var menuLis = $("#fullTreeMenuListContainer > li")
             var flag = false
             for(var i=0;i<menuLis.length;i++) {
@@ -733,12 +736,49 @@ function FilterLangFullTree(needFilterLang=false) {
     // console.log("-------------- End Filter Lang Full Tree --------------")
 }
 
-function getCurrentUrlLang(url, needFilterLang=false) {
-    let repoType = getUrlVars(url)["repoType"]
-    if (repoType == undefined) {
-        repoType = getCurrentUrlRepoType(url)
+function getCurrentUrlRepoType(url) {
+    var currentPath = url
+    if (currentPath.includes("/docs/server/")) {
+        return 'server'
     }
-    if (repoType == "server" || repoType == "mobile" || needFilterLang) {
+    if (currentPath.includes("/docs/core/")) {
+        return 'core'
+    }
+    if (currentPath.includes("/docs/mobile/")) {
+        return 'mobile'
+    }
+    if (currentPath.includes("/docs/web/")) {
+        return 'web'
+    }
+}
+
+function getCurrentUrlLang(url, needFilterLang=false) {
+    if (getUrlVars(url)["lang"] || getUrlVars(url)["src"]) {
+        var result = ""
+        if (!getUrlVars(url)["lang"]) {
+            result = getUrlVars(url)["src"]
+        } else {
+            result = getUrlVars(url)["lang"].toLowerCase().trim().split(",")[0]
+        }
+        if (result == "js") {
+            result = "javascript"
+        }
+        if (result == "ios" || result == "objective-c" || result == "objc" || result == "swift") {
+            result = "objectivec-swift"
+        }
+        if (result == "c++" || result == "cpp") {
+            result = "cplusplus"
+        }
+        if (result == "c") {
+            result = "c"
+        }
+        if(result == 'csharp') {
+            result = "dotnet"
+        }
+        return result
+    }
+    let reporType = getCurrentUrlRepoType(url)
+    if (reporType == "server" || reporType == "mobile" || needFilterLang) {
         if (url.indexOf("/c-cplusplus/") > 0) {
             if (getUrlVars(url)["src"]) {
                 var src = getUrlVars(url)["src"].toLowerCase().trim()
@@ -752,40 +792,17 @@ function getCurrentUrlLang(url, needFilterLang=false) {
             } else {
                 return "c"
             }
-        } else if (getUrlVars(url)["lang"] || getUrlVars(url)["src"]) {
-            var result = ""
-            if (!getUrlVars(url)["lang"]) {
-                result = getUrlVars(url)["src"]
-            } else {
-                result = getUrlVars(url)["lang"].toLowerCase().trim().split(",")[0]
-            }
-            if (result == "js") {
-                result = "javascript"
-            }
-            if (result == "ios" || result == "objective-c" || result == "objc" || result == "swift") {
-                result = "objectivec-swift"
-            }
-            if (result == "c++" || result == "cpp") {
-                result = "cplusplus"
-            }
-            if (result == "c") {
-                result = "c"
-            }
-            if(result == 'csharp') {
-                result = "dotnet"
-            }
-            return result
         } else {
             var arr = []
-            if (repoType == "server" && url.split("/docs/server/").length > 1) {
+            if (reporType == "server" && url.split("/docs/server/").length > 1) {
                 arr = url.split("/docs/server/")[1].split("/")
             }
-            if (repoType == "mobile" && url.split("/docs/mobile/").length > 1) {
+            if (reporType == "mobile" && url.split("/docs/mobile/").length > 1) {
                 arr = url.split("/docs/mobile/")[1].split("/")
             }
-            if (repoType == "mobile" && ["objectivec-swift", "android", "xamarin", "react-native", "flutter", "cordova"].indexOf(arr[1]) < 0) {
+            if (reporType == "mobile" && ["objectivec-swift", "android", "xamarin", "react-native", "flutter", "cordova"].indexOf(arr[1]) < 0) {
                 return "objectivec-swift"
-            } else if (repoType == "web" || repoType == "js") {
+            } else if (reporType == "web" || reporType == "js") {
                 return "javascript"
             } else {
                 return arr.length > 1 ? arr[1] : ''
@@ -809,32 +826,50 @@ function getDoumentName(product) {
     }
 }
 
-function getSideBarIframeSrc(pageUrl, lang, product=null, repoType=null) {
-    if (lang) {
+function getSideBarIframeSrc(pageUrl, lang, product=null) {
+    var reporType = null
+    if (lang && lang != "core") {
         lang = lang.toLowerCase().trim().split(",")[0]
         if (['javascript', 'js'].indexOf(lang) >= 0) {
-            return '/barcode-reader/docs/web/Hide_Tree_Page.html'
+            reporType = "web"
         }
-        if (['android', 'objective-c', 'objc', 'swift'].indexOf(lang) >= 0) {
-            return '/barcode-reader/docs/mobile/Hide_Tree_Page.html'
+        if (['android', 'objective-c', 'objc', 'swift', 'ios', 'objectivec-swift'].indexOf(lang) >= 0) {
+            reporType = "mobile"
         }
-        if (['c', 'cpp', 'c++', 'csharp', 'dotnet', 'java', 'python'].indexOf(lang) >= 0) {
-            return '/barcode-reader/docs/server/Hide_Tree_Page.html'
+        if (['c', 'cpp', 'c++', 'cplusplus', 'csharp', 'dotnet', 'java', 'python'].indexOf(lang) >= 0) {
+            reporType = "server"
         }
     } else {
-        if (product == null && repoType != null) {
-            product = getCurrentUrlProductName()
-        }
-        if (getDoumentName(product)) {
-            repoType = repoType == null ? 'core' : repoType
-            return '/'+ getDoumentName(product) +'/docs/'+ repoType +'/Hide_Tree_Page.html'
-        }
+        reporType = "core"
+    } 
+    
+    if (!product) {
+        product = getCurrentUrlProductName(pageUrl)
+    }
+    if (getDoumentName(product)) {
+        reporType = reporType == null ? 'core' : reporType
+        return '/'+ getDoumentName(product) +'/docs/'+ reporType +'/Hide_Tree_Page.html'
     }
     return null
 }
 
-function getDocumentationLink(product, repoType) {
-    return "/" + getDoumentName(product) + '/docs/'+ repoType + "/introduction/"
+function getDocumentationLink(product, lang) {
+    var reporType = null
+    if (lang && lang != "core") {
+        lang = lang.toLowerCase().trim().split(",")[0]
+        if (['javascript', 'js'].indexOf(lang) >= 0) {
+            reporType = "web"
+        }
+        if (['android', 'objective-c', 'objc', 'swift', 'ios'].indexOf(lang) >= 0) {
+            reporType = "mobile"
+        }
+        if (['c', 'cpp', 'c++', 'csharp', 'dotnet', 'java', 'python'].indexOf(lang) >= 0) {
+            reporType = "server"
+        }
+    } else {
+        reporType = "core"
+    }
+    return "/" + getDoumentName(product) + '/docs/'+ reporType + "/introduction/"
 }
 
 function showSelectMultiPanel(nextSiblings, findItemIndex) {
@@ -884,4 +919,4 @@ function showSelectMultiPanel(nextSiblings, findItemIndex) {
         $(sidebarList[i]).hide()
       }
     }
-  }
+}
