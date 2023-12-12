@@ -76,7 +76,7 @@ function RedirToGivenVersionPage(inputVer, currentUrl = null)
             curVer = verText.replace('version ','');
         }
         if (curVer == inputVer) {
-            return;
+            // return;
         }
         else {
             bestVerIndex = -1;
@@ -106,6 +106,7 @@ function RedirToGivenVersionPage(inputVer, currentUrl = null)
     var langParam = getUrlVars(docUrl)["lang"];
     
     var historyList = $(".otherVersions");
+
     if (historyList != null)
     {
         var listAry = historyList[0].getElementsByTagName("li");
