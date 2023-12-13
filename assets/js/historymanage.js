@@ -87,7 +87,8 @@ function RedirToGivenVersionPage(inputVer, currentUrl = null)
         }
         else {
             bestVerIndex = -1;
-            verDiff = GetVersionDiff(inputVer, curVer);
+            verDiff = GetVersionDiff(inputVer, pageVersion ? pageVersion : curVer);
+            // console.log(verDiff)
             bestVersion = curVer;
         }
     }
@@ -113,15 +114,15 @@ function RedirToGivenVersionPage(inputVer, currentUrl = null)
     
     var historyList = $(".otherVersions");
 
-    console.log(historyList, curVer)
+    // console.log(historyList, curVer)
 
     if (historyList != null)
     {
         var listAry = historyList[0].getElementsByTagName("li");
-        console.log(listAry)
+        // console.log(listAry)
         for (var i = 0; i < listAry.length; i++) {
             var tmpVerText = listAry[i].innerText;
-            console.log(tmpVerText)
+            // console.log(tmpVerText)
             var tmpVer = null;
             if (tmpVerText == "latest version"){
                 tmpVer = "latest"
@@ -129,7 +130,7 @@ function RedirToGivenVersionPage(inputVer, currentUrl = null)
             else{
                 tmpVer = tmpVerText.replace('version ','');
             }
-            console.log(tmpVer, inputVer)
+            // console.log(tmpVer, inputVer)
             if (tmpVer == inputVer){
                 var aTag = $(listAry[i]).children("a");
                 if (aTag.length > 0 && aTag[0].href) {
@@ -180,10 +181,11 @@ function RedirToGivenVersionPage(inputVer, currentUrl = null)
                     verDiff = tmpDiff;
                     bestVersion = tmpVer;
                 }
+                // console.log(tmpDiff)
             }
         }
     }
-
+    // console.log(bestVerIndex)
     if (bestVerIndex >= 0){
         var aTag = $(listAry[bestVerIndex]).children("a");
         if (aTag.length > 0) {
