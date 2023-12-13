@@ -359,8 +359,8 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
     }
 }
 
-function SearchVersion() {
-    var docUrl = document.URL;    
+function SearchVersion(currentUrl = null) {
+    var docUrl = currentUrl || document.URL;    
     var ver = getUrlVars(docUrl)["ver"];
     var curVerFromUrl = "";
     var tmpExp = new RegExp(/-v[0-9]+[^\/^?^#]*((\/)|(.html))/g);
