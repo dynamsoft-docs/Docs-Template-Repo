@@ -10,7 +10,7 @@ async function UrlReplace()
     var matchVer = getUrlVars(docUrl)["matchVer"];
     var product = getUrlVars(docUrl)["product"];
     var docProduct = getCurrentUrlProductName();
-
+    
     if (ver != undefined && ver != "latest") {
         if (product == undefined || product == docProduct) {
             var tempVer = findNearestVersion(ver);
@@ -63,10 +63,13 @@ function allHerfClick(_this, ver) {
 
 function RedirToGivenVersionPage(inputVer, currentUrl = null)
 {
+    //https://officecn.dynamsoft.com:808/camera-enhancer/docs/web/programming/javascript/api-reference/drawingitem-v3.3.8.html?ver=3.3.8
     var curVerTag = $(".currentVersion");
     var bestVerIndex = -1;
     var verDiff = -1;
     var curVer = null;
+    var docUrl = currentUrl || document.URL;
+    var curDocUrl = currentUrl || document.URL;
     if (curVerTag != null) {
         var verText = (curVerTag[0].innerHTML).toLowerCase();
         if (verText == "latest version"){
@@ -75,8 +78,12 @@ function RedirToGivenVersionPage(inputVer, currentUrl = null)
         else{
             curVer = verText.replace('version ','');
         }
-        if (curVer == inputVer) {
-            // return;
+        var pageVersion = null
+        if (docUrl.indexOf("-v")>0 && docUrl.indexOf("?") > 0) {
+            pageVersion = SearchVersion(docUrl.split("?")[0])[0]
+        }
+        if (curVer == inputVer && pageVersion && pageVersion==inputVer) {
+            return;
         }
         else {
             bestVerIndex = -1;
@@ -85,8 +92,7 @@ function RedirToGivenVersionPage(inputVer, currentUrl = null)
         }
     }
     var anchorVal = "";
-    var docUrl = currentUrl || document.URL;
-    var curDocUrl = currentUrl || document.URL;
+    
 
     if (curDocUrl.indexOf("#") != -1){
 		var urlAry = curDocUrl.split("#");
@@ -107,11 +113,15 @@ function RedirToGivenVersionPage(inputVer, currentUrl = null)
     
     var historyList = $(".otherVersions");
 
+    console.log(historyList, curVer)
+
     if (historyList != null)
     {
         var listAry = historyList[0].getElementsByTagName("li");
+        console.log(listAry)
         for (var i = 0; i < listAry.length; i++) {
             var tmpVerText = listAry[i].innerText;
+            console.log(tmpVerText)
             var tmpVer = null;
             if (tmpVerText == "latest version"){
                 tmpVer = "latest"
@@ -119,6 +129,7 @@ function RedirToGivenVersionPage(inputVer, currentUrl = null)
             else{
                 tmpVer = tmpVerText.replace('version ','');
             }
+            console.log(tmpVer, inputVer)
             if (tmpVer == inputVer){
                 var aTag = $(listAry[i]).children("a");
                 if (aTag.length > 0 && aTag[0].href) {
