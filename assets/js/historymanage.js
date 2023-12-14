@@ -88,10 +88,13 @@ function RedirToGivenVersionPage(inputVer, currentUrl = null)
         }
         else {
             bestVerIndex = -1;
-            console.log(inputVer, pageVersion ? pageVersion : curVer)
+            // console.log(inputVer, pageVersion ? pageVersion : curVer)
             verDiff = GetVersionDiff(inputVer, pageVersion ? pageVersion : 'latest');
             // console.log(verDiff)
             bestVersion = curVer;
+            if (verDiff == 0) {
+                return;
+            }
         }
     }
     var anchorVal = "";
