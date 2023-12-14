@@ -70,6 +70,7 @@ function RedirToGivenVersionPage(inputVer, currentUrl = null)
     var curVer = null;
     var docUrl = currentUrl || document.URL;
     var curDocUrl = currentUrl || document.URL;
+    // console.log(curDocUrl)
     if (curVerTag != null) {
         var verText = (curVerTag[0].innerHTML).toLowerCase();
         if (verText == "latest version"){
@@ -79,15 +80,16 @@ function RedirToGivenVersionPage(inputVer, currentUrl = null)
             curVer = verText.replace('version ','');
         }
         var pageVersion = null
-        if (docUrl.indexOf("-v")>0 && docUrl.indexOf("?") > 0) {
-            pageVersion = SearchVersion(docUrl.split("?")[0])[0]
+        if (docUrl.indexOf("-v")>0) {
+            pageVersion = SearchVersion(docUrl.indexOf("?") > 0 ? docUrl.split("?")[0] : docUrl)[0]
         }
         if (curVer == inputVer && pageVersion && pageVersion==inputVer) {
             return;
         }
         else {
             bestVerIndex = -1;
-            verDiff = GetVersionDiff(inputVer, pageVersion ? pageVersion : curVer);
+            console.log(inputVer, pageVersion ? pageVersion : curVer)
+            verDiff = GetVersionDiff(inputVer, pageVersion ? pageVersion : 'latest');
             // console.log(verDiff)
             bestVersion = curVer;
         }
