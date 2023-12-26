@@ -88,10 +88,13 @@ function RedirToGivenVersionPage(inputVer, currentUrl = null)
         }
         else {
             bestVerIndex = -1;
-            console.log(inputVer, pageVersion ? pageVersion : curVer)
+            // console.log(inputVer, pageVersion ? pageVersion : curVer)
             verDiff = GetVersionDiff(inputVer, pageVersion ? pageVersion : 'latest');
             // console.log(verDiff)
             bestVersion = curVer;
+            if (verDiff == 0) {
+                return;
+            }
         }
     }
     var anchorVal = "";
@@ -910,7 +913,9 @@ function findCurLinkOnFullTree(aTag, paramLink, needh3=false, onlyLoadContent=fa
 
     if (curDocUrl == targetHref && (aTag.href.split("#").length > 1 || document.URL.split("#").length > 1)) {
         var hash = aTag.href.split("#").length > 1 ? aTag.href.split("#")[1].toLowerCase() : null
-        window.scrollTo(0, hash && $("#" + hash.toLowerCase()).length > 0 ? $("#" + hash.toLowerCase()).offset().top : 0)
+        if (hash && $("#" + hash.toLowerCase()).length > 0) {
+            window.scrollTo(0, $("#" + hash.toLowerCase()).offset().top)
+        }
         !onlyLoadContent&&history.pushState(null, null, paramLink)
     } else {
         var flag = false
