@@ -5,9 +5,8 @@ $(document).ready(function(){
     mutationObserverFunc();
     initPageLayout();
     
-    
-
     $(window).resize(function() {
+        console.log("");
         var objs = $(".fold-panel-prefix")
         for(var i = 0; i<objs.length; i++) {
             var obj = $(".fold-panel-prefix").eq(i)
