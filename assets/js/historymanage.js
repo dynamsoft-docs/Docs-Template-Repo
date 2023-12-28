@@ -966,7 +966,11 @@ function findCurLinkOnFullTree(aTag, paramLink, needh3=false, onlyLoadContent=fa
         }
         if (!flag) {
             // use modal to display page if not in the menu tree
-            showPageContentInModal(paramLink)
+            if (document.URL.indexOf("/mobile-web-capture/docs/") > 0) {
+                window.location.href = paramLink;
+            } else {
+                showPageContentInModal(paramLink)
+            }
             // window.location.href = paramLink;
         }
     }
