@@ -133,7 +133,6 @@ function RequestNewPage(aTag, paramLink, onlyLoadContent=false) {
             $(aTag).parents("li.expandListStyle").find(" > ul").slideDown()
         }
         $(aTag).parents("li.expandListStyle").addClass("hasActiveLinkList")
-        // $("#articleContent").html($(data).find("#articleContent").html()).removeClass("hidden")
         
         // show article content
         var showRightSideMenu = $("#articleContent").hasClass("showRightSideMenu")
@@ -142,7 +141,8 @@ function RequestNewPage(aTag, paramLink, onlyLoadContent=false) {
             $("#articleContent").find(".rightSideMenu, .markdown-body").removeClass("showRightSideMenu")
         }
         $("#loadingContent").hide()
-        needh3 =  $(data).find("#articleContent").data("needh3") == true ? true : false
+        needh3 = $(data).find("#articleContent").data("needh3") == true ? true : false
+
         // if full tree has scroll bar, scroll to activelink position
         var scrollDiv = document.getElementsByClassName("mainPage")[0]
         if (scrollDiv.scrollHeight > scrollDiv.clientHeight) {
@@ -160,8 +160,10 @@ function RequestNewPage(aTag, paramLink, onlyLoadContent=false) {
         }
 
         // replace edit url link
-        var editMdFileLink = $(data).find("#docHead").find(".iconsBox a")[0].href
-        $("#docHead .iconsBox a").attr("href", editMdFileLink)
+        if ($(data).find("#docHead").find(".iconsBox a").length > 0) {
+            var editMdFileLink = $(data).find("#docHead").find(".iconsBox a")[0].href
+            $("#docHead .iconsBox a").attr("href", editMdFileLink)
+        }
 
         // add addParam click function for all a tags in article content
         var articleContentATags = $("#articleContent").find("a")
@@ -173,39 +175,29 @@ function RequestNewPage(aTag, paramLink, onlyLoadContent=false) {
             };
         }
 
+        // load breadcrumbs add right side menu
         if ($("#AutoGenerateSidebar").length > 0) {
-            GenerateContentByHead(false);
+            $('#fullTreeMenuListContainer').removeClass('needh3');
+            if (needh3) {
+                $('#fullTreeMenuListContainer').addClass('needh3');
+            }
+            GenerateContentByHead(needh3);
+            if ($("#AutoGenerateSidebar > ul > li").length == 0) {
+                $(".rightSideMenu > p").hide()
+            } else {
+                $(".rightSideMenu > p").show()
+            }
         }
         
         $('#crumbs > ul').html($('#crumbs > ul > li').eq(0))
         initCrumbs()
+        // init()
 
         var preList = $('.markdown-body .highlight pre')
         for (var i=0; i<preList.length; i++) {
             var iconItem = document.createElement("i")
             iconItem.className = "copyIcon fa fa-copy"
             preList[i].appendChild(iconItem)
-        }
-
-        // scroll to the start of article
-        var hash = paramLink.split("#").length > 1 ? paramLink.split("#")[1].toLowerCase() : null
-        var sd = $(window).scrollTop()
-        if (hash && $("#" + hash).length > 0) {
-            var scrollTop = $("#" + hash).offset().top
-            setTimeout(function() {
-                if ($("a[href='#"+hash+"']").length > 0) {
-                    $("a[href='#"+hash+"']").click()
-                } else {
-                    window.scrollTo(0, scrollTop)
-                }
-            }, 200)
-        } else {
-            if (sd > 0) {
-                var scrollTop = sd > $('#overall-header').height() ? $('#overall-header').height() : sd
-                setTimeout(function() {
-                    window.scrollTo(0, scrollTop)
-                }, 200)
-            }
         }
 
         // multi panel switching start
@@ -251,19 +243,35 @@ function RequestNewPage(aTag, paramLink, onlyLoadContent=false) {
         }
 
         anchors.add();
+
+        // scroll to the start of article
+        var hash = paramLink.split("#").length > 1 ? paramLink.split("#")[1].toLowerCase() : null
+        var sd = $(window).scrollTop()
+        if (hash && $("#" + hash).length > 0) {
+            var scrollTop = $("#" + hash).offset().top
+            setTimeout(function() {
+                window.scrollTo(0, scrollTop)
+            }, 100)
+        } else {
+            if (sd > 0) {
+                var scrollTop = sd > $('#overall-header').height() ? $('#overall-header').height() : sd
+                setTimeout(function() {
+                    window.scrollTo(0, scrollTop)
+                }, 100)
+            }
+        }
     })
 }
 
-function findCurLinkOnFullTree(aTag, paramLink, onlyLoadContent=false) {
+function findCurLinkOnFullTree(aTag, paramLink, onlyLoadContent=false, isRequestNewPage = false) {
     var fullTreeATags = $("#fullTreeMenuListContainer").find("a")
     var targetHref = aTag.href.toLowerCase()
     var curDocUrl = document.URL.toLowerCase()
     targetHref = targetHref.indexOf("?") > 0 ? targetHref.split("?")[0] : (targetHref.indexOf("#") > 0 ? targetHref.split("#")[0] : targetHref) 
     curDocUrl = curDocUrl.indexOf("?") > 0 ? curDocUrl.split("?")[0] : (curDocUrl.indexOf("#") > 0 ? curDocUrl.split("#")[0] : curDocUrl)
-    
-    if (curDocUrl == targetHref && (aTag.href.split("#").length > 1 || document.URL.split("#").length > 1)) {
+    if (curDocUrl == targetHref && (aTag.href.split("#").length > 1 || document.URL.split("#").length > 1) && !isRequestNewPage) {
         var hash = aTag.href.split("#").length > 1 ? aTag.href.split("#")[1].toLowerCase() : null
-        var scrollTop = hash && $("#" + hash).length > 0 ? $("#" + hash).offset().top: 0
+        var scrollTop = hash && $("#" + hash.toLowerCase()).length > 0 ? $("#" + hash).offset().top: 0
         setTimeout(function() {
             window.scrollTo(0, scrollTop)
         }, 200)
@@ -275,12 +283,11 @@ function findCurLinkOnFullTree(aTag, paramLink, onlyLoadContent=false) {
             searchHref = searchHref.indexOf("index.html") > 0 ? searchHref.replace("index.html", "") : searchHref
             targetHref = targetHref.indexOf("index.html") > 0 ? targetHref.replace("index.html", "") : targetHref
             searchHref = searchHref.indexOf("?") > 0 ? searchHref.split("?")[0] : (searchHref.indexOf("#") > 0 ? searchHref.split("#")[0] : searchHref) 
-            if (searchHref && searchHref.toLowerCase() == targetHref) {
+            if (searchHref && searchHref.toLowerCase() == targetHref.toLowerCase()) {
                 flag = true
                 RequestNewPage(fullTreeATags[i], paramLink, onlyLoadContent)
             }
         }
-    
         if (!flag) {
             window.location.href = paramLink;
         }
@@ -355,5 +362,5 @@ function findNearestVersion(ver) {
 
 
 window.addEventListener("popstate", function(e) {
-    findCurLinkOnFullTree(location, location.href, true)
+    findCurLinkOnFullTree({href: location.href}, location.href, true, true)
 }, false)
