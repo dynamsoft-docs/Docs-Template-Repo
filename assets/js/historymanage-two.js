@@ -274,7 +274,7 @@ function findCurLinkOnFullTree(aTag, paramLink, onlyLoadContent=false, isRequest
         var scrollTop = hash && $("#" + hash.toLowerCase()).length > 0 ? $("#" + hash).offset().top: 0
         setTimeout(function() {
             window.scrollTo(0, scrollTop)
-        }, 300)
+        }, 100)
         !onlyLoadContent&&history.pushState(null, null, paramLink)
     } else {
         var flag = false
