@@ -2380,6 +2380,11 @@ i.dbr-white-logo {
         margin-top: 0;
     }
 
+    .mobileProductMenu .productLogo i.dlr-logo,
+    .mobileProductMenu .productLogo i.ddv-logo {
+        margin-top: 5px;
+    }
+
     .mobileProductMenu .productLogo i.dwt-logo {
         display: inline-block;
         width: 163px;
