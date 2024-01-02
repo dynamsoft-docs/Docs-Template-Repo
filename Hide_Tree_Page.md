@@ -26,13 +26,22 @@ regenerate: true
                             {%- assign arr = childVersion | split: "_" -%}
                             {%- assign c_version = arr.first -%}
                         {%- endif -%}
+                        {%- if c_version contains ' (' -%}
+                            {%- assign arr = c_version | split: " (" -%}
+                            {%- assign c_version = arr.first -%}
+                        {%- endif -%}
                         {%- assign curId = "version_tree_" | append: c_version | replace: " ", "_" | downcase -%}
                         <ul class="version-tree-container " id="{{ curId }}">
                             {%- include liquid_searchVersionTreeFile.html ver=childVersion curPath="" targetRelativePath="sidelist-full-tree.html" -%}
                         </ul>
                     {%- endfor -%}
                 {%- else -%}
-                    {%- assign curId = "version_tree_" | append: verInfo.value | replace: " ", "_" | downcase -%}
+                    {%- assign c_version = verInfo.value | downcase | strip -%}
+                    {%- if c_version contains ' (' -%}
+                        {%- assign arr = c_version | split: " (" -%}
+                        {%- assign c_version = arr.first -%}
+                    {%- endif -%}
+                    {%- assign curId = "version_tree_" | append: c_version | replace: " ", "_" | downcase -%}
                     <ul class="version-tree-container " id="{{ curId }}">
                     {%- include liquid_searchVersionTreeFile.html ver=verInfo.value curPath="" targetRelativePath="sidelist-full-tree.html" -%}
                     </ul>
@@ -40,7 +49,12 @@ regenerate: true
             {%- endfor -%}
         {%- else -%}
             {%- for verInfo in validVerInfo -%}
-                {%- assign curId = "version_tree_" | append: verInfo | replace: " ", "_" | downcase -%}
+                {%- assign c_version = verInfo | downcase | strip -%}
+                {%- if c_version contains ' (' -%}
+                    {%- assign arr = c_version | split: " (" -%}
+                    {%- assign c_version = arr.first -%}
+                {%- endif -%}
+                {%- assign curId = "version_tree_" | append: c_version | replace: " ", "_" | downcase -%}
                 <ul class="version-tree-container " id="{{ curId }}">
                 {%- include liquid_searchVersionTreeFile.html ver=verInfo curPath="" targetRelativePath="sidelist-full-tree.html" -%}
                 </ul>

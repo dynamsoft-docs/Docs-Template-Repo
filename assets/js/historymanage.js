@@ -73,7 +73,7 @@ function RedirToGivenVersionPage(inputVer, currentUrl = null)
     // console.log(curDocUrl)
     if (curVerTag != null) {
         var verText = (curVerTag[0].innerHTML).toLowerCase();
-        if (verText == "latest version"){
+        if (verText.indexOf("latest version") >= 0){
             curVer = "latest"
         }
         else{
@@ -129,7 +129,7 @@ function RedirToGivenVersionPage(inputVer, currentUrl = null)
             var tmpVerText = listAry[i].innerText;
             // console.log(tmpVerText)
             var tmpVer = null;
-            if (tmpVerText == "latest version"){
+            if (tmpVerText.indexOf("latest version") >= 0){
                 tmpVer = "latest"
             }
             else{
@@ -434,7 +434,7 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
                 }
             }
             let currentVersion = $(".currentVersion").text().toLowerCase()
-            currentVersion = currentVersion == "latest version" ? "latest" : (currentVersion.replace("version ", ""))
+            currentVersion = currentVersion.indexOf("latest version") >= 0 ? "latest" : (currentVersion.replace("version ", ""))
             
             if (getUrlVars(originHref)["product"] != undefined) {
                 // dbr 文档中打开 dcv.....?product=dlr
@@ -858,7 +858,7 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
                 for (var i = 0; i < listAry.length; i++) {
                     var tmpVerText = listAry[i].innerText;
                     var tmpVer = null;
-                    if (tmpVerText == "latest version"){
+                    if (tmpVerText.indexOf("latest version") >= 0){
                         tmpVer = "latest"
                     }
                     else{
@@ -980,7 +980,7 @@ function changeVersion (liTag)
 {
 	var innertext = (liTag.innerText).toLowerCase();
 	var ver = null;
-	if (innertext == "latest version"){
+	if (innertext.indexOf("latest version")>=0){
 		ver = "latest"
 	} else {
 		ver = innertext.replace('version ','');
@@ -1050,7 +1050,7 @@ function findNearestVersion(ver) {
     var bestVer = ver, verDiff=null
     for (var i=0; i<versionList.length; i++) {
         var tempVer = $(versionList[i]).text().toLowerCase()
-        if (tempVer == "latest version"){
+        if (tempVer.indexOf("latest version") >= 0){
             tempVer = "latest"
         } else {
             tempVer = tempVer.replace('version ','');
