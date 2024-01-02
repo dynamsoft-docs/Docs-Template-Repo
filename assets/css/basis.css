@@ -1787,10 +1787,20 @@ i.ddn-logo {
 
 i.dlr-logo {
     display: inline-block;
-    width: 275px;
-    height: 36px;
-    background: url(../img-icon/dlr.png) no-repeat left;
+    width: 229px;
+    height: 30px;
+    background: url(../img-icon/ddv-logo.png) no-repeat left;
     background-size: contain;
+    margin-top: 5px;
+}
+
+i.ddv-logo {
+    display: inline-block;
+    width: 235px;
+    height: 30px;
+    background: url(../img-icon/ddv-logo.png) no-repeat left;
+    background-size: contain;
+    margin-top: 5px;
 }
 
 i.dce-logo {
@@ -2233,6 +2243,7 @@ i.dbr-white-logo {
         font-size: 20px;
         margin-top: 12px;
         cursor: pointer;
+        color: #FFF;
     }
 
     .mobileProductMenu .productLogo i.dbr-logo,
@@ -2350,7 +2361,9 @@ i.dbr-white-logo {
     }
 
     .mobileProductMenu .productLogo {
-        margin-top: 8px;
+        margin-top: 5px;
+        line-height: 36px;
+        font-size: 18px;
     }
 
     .mobileProductMenu .productLogo i.dbr-logo,
@@ -2360,9 +2373,11 @@ i.dbr-white-logo {
     .mobileProductMenu .productLogo i.ddn-logo,
     .mobileProductMenu .productLogo i.dcp-logo,
     .mobileProductMenu .productLogo i.dcv-logo,
-    .mobileProductMenu .productLogo i.dlr-logo {
+    .mobileProductMenu .productLogo i.dlr-logo,
+    .mobileProductMenu .productLogo i.ddv-logo {
         height: 25px;
         width: 188px;
+        margin-top: 0;
     }
 
     .mobileProductMenu .productLogo i.dwt-logo {
@@ -2375,7 +2390,7 @@ i.dbr-white-logo {
 
     .mobileProductMenu .productLogo i.icon-orange-angle {
         vertical-align: top;
-        margin-top: 8px;
+        margin-top: 13px;
         margin-left: 15px;
     }
 

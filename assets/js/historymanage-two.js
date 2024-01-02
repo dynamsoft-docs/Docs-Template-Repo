@@ -109,7 +109,6 @@ function addParam (aTag, fromSourse=null, needh3=false)
 }
 
 function RequestNewPage(aTag, paramLink, onlyLoadContent=false) {
-    console.log("")
     $("#articleContent").addClass("hidden")
     $("#loadingContent").show()
     fetch(aTag.href).then(function(response) {

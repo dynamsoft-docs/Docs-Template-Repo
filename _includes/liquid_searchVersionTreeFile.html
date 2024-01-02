@@ -2,7 +2,7 @@
 {%- assign validTreeFiles = site.data.full_tree.tree_file_list -%}
 
 {%- assign targetVer = include.ver | strip -%}
-{%- if targetVer == "latest version" -%}
+{%- if targetVer contains "latest version" -%}
         {%- assign targetVer = "10000" -%}
 {%- endif -%}
 
