@@ -96,8 +96,8 @@
 		{%- continue -%}
 	{%- endunless -%}
 
-	{%- if tmpPageVersion == "latest version" -%}
-		<li><a href = "{{ site.firstLevelUrl }}{{ my_page.url }}" class="otherLinkColour">latest version</a></li>
+	{%- if tmpPageVersion contains "latest version" -%}
+		<li><a href = "{{ site.firstLevelUrl }}{{ my_page.url }}" class="otherLinkColour">{{tmpPageVersion}}</a></li>
 	{%- else -%}
 		<li><a href = "{{ site.firstLevelUrl }}{{ my_page.url }}" class="otherLinkColour">{{ "version " | append: tmpPageVersion }}</a></li>
 	{%- endif -%}

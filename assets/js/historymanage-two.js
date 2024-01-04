@@ -342,7 +342,7 @@ function findNearestVersion(ver) {
     var bestVer = ver, verDiff=null
     for (var i=0; i<versionList.length; i++) {
         var tempVer = $(versionList[i]).text().toLowerCase()
-        if (tempVer == "latest version"){
+        if (tempVer.indexOf("latest version")>=0){
             tempVer = "latest"
         } else{
             tempVer = tempVer.replace('version ','');
