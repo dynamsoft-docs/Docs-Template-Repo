@@ -214,14 +214,14 @@ function RequestNewPage(aTag, paramLink, onlyLoadContent=false) {
             }
             $(multiPanelSwitchBtns[switchIndex]).addClass("on")
             let nextSiblings = $(multiPanelListSwitchingItems[i]).find("+ul ~")
-            showSelectMultiPanel(nextSiblings, switchIndex)
+            showSelectMultiPanel(nextSiblings, switchIndex, needh3)
         }
 
         $(".multi-panel-switching-prefix + ul > li").on("click", function() {
             $(this).parent("ul").find("li").removeClass("on")
             $(this).addClass("on")
             let nextSiblings = $(this).parent("ul").find("~")
-            showSelectMultiPanel(nextSiblings, $(this).index())
+            showSelectMultiPanel(nextSiblings, $(this).index(), needh3)
         })
     
         if($(".markdown-body .sample-code-prefix").length > 0 && getUrlVars(document.URL)["lang"]) {

@@ -1,9 +1,14 @@
 function GenerateContentByHead(needh3 = true) {
-    var titleList, appendHtml='<ul>';
+    var titleList=[], tempTitleList, appendHtml='<ul>';
     if (needh3) {
-        titleList = document.querySelectorAll('.content h2, .content h3');
+        tempTitleList = document.querySelectorAll('.content h2, .content h3');
     } else {
-        titleList = document.querySelectorAll('.content h2');
+        tempTitleList = document.querySelectorAll('.content h2');
+    }
+    for(let i=0;i<tempTitleList.length;i++) {
+        if ($(tempTitleList[i]).is(":visible")) {
+            titleList.push(tempTitleList[i])
+        }
     }
     for(var i = 0; i < titleList.length; i++) {
         var curH2Text = $(titleList[i]).text();
@@ -29,6 +34,7 @@ function GenerateContentByHead(needh3 = true) {
     }
     appendHtml += '</ul>'
     if ($('#AutoGenerateSidebar').length != 0) {
+        $('#AutoGenerateSidebar').html("")
         $('#AutoGenerateSidebar').append(appendHtml);
         if ($("#AutoGenerateSidebar > ul > li").length == 0) {
             $(".rightSideMenu > p").hide()
@@ -271,14 +277,14 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                             }
                             $(multiPanelSwitchBtns[switchIndex]).addClass("on")
                             let nextSiblings = $(multiPanelListSwitchingItems[i]).find("+ul ~")
-                            showSelectMultiPanel(nextSiblings, switchIndex)
+                            showSelectMultiPanel(nextSiblings, switchIndex, needh3)
                         }
 
                         $(".multi-panel-switching-prefix + ul > li").on("click", function() {
                             $(this).parent("ul").find("li").removeClass("on")
                             $(this).addClass("on")
                             let nextSiblings = $(this).parent("ul").find("~")
-                            showSelectMultiPanel(nextSiblings, $(this).index())
+                            showSelectMultiPanel(nextSiblings, $(this).index(), needh3)
                         })
 
                         var treeHeight = $('#fullTreeMenuListContainer')[0].clientHeight;
@@ -872,7 +878,7 @@ function getDocumentationLink(product, lang) {
     return "/" + getDoumentName(product) + '/docs/'+ reporType + "/introduction/"
 }
 
-function showSelectMultiPanel(nextSiblings, findItemIndex) {
+function showSelectMultiPanel(nextSiblings, findItemIndex, needh3) {
     let isFind = false, findItemCount = 0, aTags = [], isFindTag = false, findTagName = 'h2';
     for(let j = 0; j < nextSiblings.length; j++) {
         if ($(nextSiblings[j]).hasClass("multi-panel-switching-end")) {
@@ -910,13 +916,14 @@ function showSelectMultiPanel(nextSiblings, findItemIndex) {
           }
         }
     }
-    let sidebarList = $("#AutoGenerateSidebar> ul > li")
-    for(let i=0; i < sidebarList.length; i++) {
-      let aTag = $(sidebarList[i]).find("a").attr("href")
-      if (aTags.includes(aTag)) {
-        $(sidebarList[i]).show()
-      } else {
-        $(sidebarList[i]).hide()
-      }
-    }
+    GenerateContentByHead(needh3)
+    // let sidebarList = $("#AutoGenerateSidebar> ul > li")
+    // for(let i=0; i < sidebarList.length; i++) {
+    //   let aTag = $(sidebarList[i]).find("a").attr("href")
+    //   if (aTags.includes(aTag)) {
+    //     $(sidebarList[i]).show()
+    //   } else {
+    //     $(sidebarList[i]).hide()
+    //   }
+    // }
 }
