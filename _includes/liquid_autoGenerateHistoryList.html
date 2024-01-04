@@ -21,8 +21,8 @@
 	{%- assign curUsedToMatchUrl = curUsedToMatchUrl | remove: 'index.html' -%}
 {%- endif -%}
 
-{%- if curPageVersion == "latest version" -%}
-	<p class="currentVersion fontOswald">latest version</p>		
+{%- if curPageVersion contains "latest version" -%}
+	<p class="currentVersion fontOswald">{{ curPageVersion }}</p>		
 {%- else -%}
 	<p class="currentVersion fontOswald">{{ "version " | append: curPageVersion }}</p>
 {%- endif -%}
