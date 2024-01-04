@@ -24,7 +24,7 @@
                     {%- assign ver = arr.first -%}
                     {%- assign editions = ver | remove: arr.first | remove_first: '_' -%}
                 {%- endif -%}
-                {%- if ver == "latest version"-%}
+                {%- if ver contains "latest version"-%}
                     {%- assign curVerText = ver | capitalize -%}
                 {%- else -%}
                     {%- assign curVerText = "Version " | append: ver -%}
@@ -42,7 +42,7 @@
                                 {%- assign c_version = arr.first -%}
                                 {%- assign c_editions = childVersion | remove: arr.first | remove_first: '_' -%}
                             {%- endif -%}
-                            {%- if c_version == "latest version"-%}
+                            {%- if c_version contains "latest version"-%}
                                 {%- assign curVerText = c_version | capitalize -%}
                             {%- else -%}
                                 {%- assign curVerText = "Version " | append: c_version -%}
@@ -59,7 +59,7 @@
             {%- for verInfo in validVerInfo -%}
                 {%- assign curVerText = "" -%}
                 {%- assign verInfo = verInfo | downcase | strip -%}
-                {%- if verInfo == "latest version"-%}
+                {%- if verInfo contains "latest version"-%}
                     {%- assign curVerText = verInfo | capitalize -%}
                 {%- else -%}
                     {%- assign curVerText = "Version " | append: verInfo -%}
