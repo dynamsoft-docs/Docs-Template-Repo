@@ -26,9 +26,8 @@ regenerate: true
                             {%- assign arr = childVersion | split: "_" -%}
                             {%- assign c_version = arr.first -%}
                         {%- endif -%}
-                        {%- if c_version contains ' (' -%}
-                            {%- assign arr = c_version | split: " (" -%}
-                            {%- assign c_version = arr.first -%}
+                        {%- if c_version contains 'latest version' -%}
+                            {%- assign c_version = 'latest version' -%}
                         {%- endif -%}
                         {%- assign curId = "version_tree_" | append: c_version | replace: " ", "_" | downcase -%}
                         <ul class="version-tree-container " id="{{ curId }}">
@@ -37,9 +36,8 @@ regenerate: true
                     {%- endfor -%}
                 {%- else -%}
                     {%- assign c_version = verInfo.value | downcase | strip -%}
-                    {%- if c_version contains ' (' -%}
-                        {%- assign arr = c_version | split: " (" -%}
-                        {%- assign c_version = arr.first -%}
+                    {%- if c_version contains 'latest version' -%}
+                        {%- assign c_version = 'latest version' -%}
                     {%- endif -%}
                     {%- assign curId = "version_tree_" | append: c_version | replace: " ", "_" | downcase -%}
                     <ul class="version-tree-container " id="{{ curId }}">
@@ -50,9 +48,8 @@ regenerate: true
         {%- else -%}
             {%- for verInfo in validVerInfo -%}
                 {%- assign c_version = verInfo | downcase | strip -%}
-                {%- if c_version contains ' (' -%}
-                    {%- assign arr = c_version | split: " (" -%}
-                    {%- assign c_version = arr.first -%}
+                {%- if c_version contains 'latest version' -%}
+                    {%- assign c_version = 'latest version' -%}
                 {%- endif -%}
                 {%- assign curId = "version_tree_" | append: c_version | replace: " ", "_" | downcase -%}
                 <ul class="version-tree-container " id="{{ curId }}">
