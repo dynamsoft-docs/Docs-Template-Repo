@@ -694,23 +694,6 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
                 preList[i].appendChild(iconItem)
             }
 
-            // scroll to the start of article
-            var hash = paramLink.split("#").length > 1 ? paramLink.split("#")[1].toLowerCase() : null
-            var sd = $(window).scrollTop()
-            if (hash && $("#" + hash).length > 0) {
-                var scrollTop = $("#" + hash).offset().top
-                setTimeout(function() {
-                    window.scrollTo(0, scrollTop)
-                }, 100)
-            } else {
-                if (sd > 0) {
-                    var scrollTop = sd > $('#overall-header').height() ? $('#overall-header').height() : sd
-                    setTimeout(function() {
-                        window.scrollTo(0, scrollTop)
-                    }, 100)
-                }
-            }
-
             // multi panel switching start
             let multiPanelListSwitchingItems = $(".multi-panel-switching-prefix")
             for (let i =0; i < multiPanelListSwitchingItems.length; i++) {
@@ -845,6 +828,23 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
             }, 500)
 
             anchors.add();
+
+            // scroll to the start of article
+            var hash = paramLink.split("#").length > 1 ? paramLink.split("#")[1].toLowerCase() : null
+            var sd = $(window).scrollTop()
+            if (hash && $("#" + hash).length > 0) {
+                var scrollTop = $("#" + hash).offset().top
+                setTimeout(function() {
+                    window.scrollTo(0, scrollTop)
+                }, 100)
+            } else {
+                if (sd > 0) {
+                    var scrollTop = sd > $('#overall-header').height() ? $('#overall-header').height() : sd
+                    setTimeout(function() {
+                        window.scrollTo(0, scrollTop)
+                    }, 100)
+                }
+            }
         } else {
             var bestVerIndex = -1;
             var verDiff = -1;
@@ -904,14 +904,14 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
     })
 }
 
-function findCurLinkOnFullTree(aTag, paramLink, needh3=false, onlyLoadContent=false) {
+function findCurLinkOnFullTree(aTag, paramLink, needh3=false, onlyLoadContent=false, isRequestNewPage = false) {
     var fullTreeATags = $("#fullTreeMenuListContainer").find("a")
     var targetHref = aTag.href.toLowerCase()
     var curDocUrl = document.URL.toLowerCase()
     targetHref = targetHref.indexOf("?") > 0 ? targetHref.split("?")[0] : (targetHref.indexOf("#") > 0 ? targetHref.split("#")[0] : targetHref) 
     curDocUrl = curDocUrl.indexOf("?") > 0 ? curDocUrl.split("?")[0] : (curDocUrl.indexOf("#") > 0 ? curDocUrl.split("#")[0] : curDocUrl)
 
-    if (curDocUrl == targetHref && (aTag.href.split("#").length > 1 || document.URL.split("#").length > 1)) {
+    if (curDocUrl == targetHref && (aTag.href.split("#").length > 1 || document.URL.split("#").length > 1) && !isRequestNewPage) {
         var hash = aTag.href.split("#").length > 1 ? aTag.href.split("#")[1].toLowerCase() : null
         if (hash && $("#" + hash.toLowerCase()).length > 0) {
             window.scrollTo(0, $("#" + hash.toLowerCase()).offset().top)
@@ -925,7 +925,7 @@ function findCurLinkOnFullTree(aTag, paramLink, needh3=false, onlyLoadContent=fa
             targetHref = targetHref.indexOf("index.html") > 0 ? targetHref.replace("index.html", "") : targetHref
             searchHref = searchHref.indexOf("?") > 0 ? searchHref.split("?")[0] : (searchHref.indexOf("#") > 0 ? searchHref.split("#")[0] : searchHref) 
             
-            if (searchHref && searchHref.toLowerCase() == targetHref) {
+            if (searchHref && searchHref.toLowerCase() == targetHref.toLowerCase()) {
                 // item is visible
                 if (fullTreeATags[i].offsetParent !== null) {
                     flag = true
@@ -1412,5 +1412,5 @@ async function getVersionSearchList() {
 }
 
 window.addEventListener("popstate", function(e) {
-    findCurLinkOnFullTree(location, location.href, false, true)
+    findCurLinkOnFullTree({href: location.href}, location.href, true, true, true)
 }, false)
