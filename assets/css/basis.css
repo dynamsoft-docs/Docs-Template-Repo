@@ -3608,3 +3608,7 @@ div.blockquote-important + blockquote::before {
     border-color: #8250df;
     color: #8250df;
 }
+
+#searchResult td.gsc-clear-button {
+    display: none!important;
+}
