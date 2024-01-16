@@ -1,7 +1,7 @@
 var docsLangLatestVersion = {
     dbr: {
-        core: "10.0.20",
-        cpp: "10.0.20",
+        core: "10.2.0",
+        cpp: "10.2.0",
         c: "9.6.30",
         java: "9.6.30",
         python: "9.6.30",
@@ -11,19 +11,19 @@ var docsLangLatestVersion = {
         javaScript: "9.6.32",
     },
     dcv:{
-        core: "2.0.21",
-        cpp: "2.0.20",
+        core: "2.2.0",
+        cpp: "2.2.0",
         android: "2.0.21",
         ios: "2.0.21",
         javaScript: "2.0.10",
         xamarin: "1.0.5",
         flutter: "1.2.2",
-        cordova: "1.0.4",
+        cordova: "1.0.5",
         reactNative: "1.1.12"
     },
     dlr: {
-        core: "3.0.20",
-        cpp: "3.0.20",
+        core: "3.2.0",
+        cpp: "3.2.0",
         java: "2.0.0",
         dotnet: "2.0.0",
         android: "3.0.20",
@@ -31,17 +31,17 @@ var docsLangLatestVersion = {
         javaScript: "2.2.31",
     },
     ddn: {
-        core: "2.0.20",
-        cpp: "2.0.20",
+        core: "2.2.0",
+        cpp: "2.2.0",
         xamarin: "1.0.5",
         android: "2.0.10",
         ios: "2.0.10",
         javaScript: "2.0.11",
     },
     dce: {
-        core: "4.0.2",
-        android: "4.0.2",
-        ios: "4.0.2",
+        core: "4.2.0",
+        android: "4.2.0",
+        ios: "4.2.0",
         javaScript: "4.0.0",
     }
 }

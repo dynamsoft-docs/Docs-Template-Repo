@@ -271,10 +271,12 @@ function findCurLinkOnFullTree(aTag, paramLink, onlyLoadContent=false, isRequest
     curDocUrl = curDocUrl.indexOf("?") > 0 ? curDocUrl.split("?")[0] : (curDocUrl.indexOf("#") > 0 ? curDocUrl.split("#")[0] : curDocUrl)
     if (curDocUrl == targetHref && (aTag.href.split("#").length > 1 || document.URL.split("#").length > 1) && !isRequestNewPage) {
         var hash = aTag.href.split("#").length > 1 ? aTag.href.split("#")[1].toLowerCase() : null
-        var scrollTop = hash && $("#" + hash.toLowerCase()).length > 0 ? $("#" + hash).offset().top: 0
-        setTimeout(function() {
-            window.scrollTo(0, scrollTop)
-        }, 100)
+        var ulTags = $(aTag).parents("ul")
+        if (ulTags.length <= 0 || !$(ulTags[0]).prev().hasClass("multi-panel-switching-prefix")) {
+            if (hash && $("#" + hash.toLowerCase()).length > 0) {
+                window.scrollTo(0, $("#" + hash.toLowerCase()).offset().top)
+            }
+        } 
         !onlyLoadContent&&history.pushState(null, null, paramLink)
     } else {
         var flag = false
