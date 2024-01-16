@@ -168,6 +168,13 @@ $(document).ready(function(){
         }
         e.stopPropagation()
     })
+
+    $(document).delegate("#fullTreeMenuListContainer li > a", "mouseenter", function() {
+        var title = $(this).attr("title")
+        if (title == undefined || title == "") {
+            $(this).prop("title", $(this).text())
+        }
+    })
 })
 
 

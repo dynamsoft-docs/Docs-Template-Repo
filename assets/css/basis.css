@@ -3080,6 +3080,9 @@ a#toTop {
 #categoryMenuTree #fullTreeMenuListContainer li > a {
     display: block;
     padding: 6px 35px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
 }
 
 #categoryMenuTree #fullTreeMenuListContainer > li {
