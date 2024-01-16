@@ -913,9 +913,12 @@ function findCurLinkOnFullTree(aTag, paramLink, needh3=false, onlyLoadContent=fa
 
     if (curDocUrl == targetHref && (aTag.href.split("#").length > 1 || document.URL.split("#").length > 1) && !isRequestNewPage) {
         var hash = aTag.href.split("#").length > 1 ? aTag.href.split("#")[1].toLowerCase() : null
-        if (hash && $("#" + hash.toLowerCase()).length > 0) {
-            window.scrollTo(0, $("#" + hash.toLowerCase()).offset().top)
-        }
+        var ulTags = $(aTag).parents("ul")
+        if (ulTags.length <= 0 || !$(ulTags[0]).prev().hasClass("multi-panel-switching-prefix")) {
+            if (hash && $("#" + hash.toLowerCase()).length > 0) {
+                window.scrollTo(0, $("#" + hash.toLowerCase()).offset().top)
+            }
+        } 
         !onlyLoadContent&&history.pushState(null, null, paramLink)
     } else {
         var flag = false
