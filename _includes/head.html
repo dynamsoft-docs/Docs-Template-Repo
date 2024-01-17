@@ -46,13 +46,11 @@
     <link rel="stylesheet" href="{{ site.assets }}css/basis.min.css?v={{ 'now' | date: "%s"}}">
     <link rel="stylesheet" href="{{ site.assets }}css/footer.css">
 
-    {%- unless site.docFullPath contains 'label-recognition' -%}
     <link rel="preload" as="font" href="{{ site.assets }}font-face/Oswald-Regular.ttf" type="font/ttf" crossorigin="anonymous">
     <link rel="preload" as="font" href="{{ site.assets }}font-face/OpenSans-Regular.woff" type="font/woff" crossorigin="anonymous">
     <link rel="preload" as="font" href="{{ site.assets }}font-face/fontawesome-webfont.woff2" type="font/woff2" crossorigin="anonymous">
     <link rel="preload" as="font" href="{{ site.assets }}font-face/Oswald-Light.ttf" type="font/ttf" crossorigin="anonymous">
     <link rel="preload" as="font" href="{{ site.assets }}font-face/OpenSans-Semibold.woff" type="font/woff" crossorigin="anonymous">
-    {%- endunless -%}
 
     {%- assign showNoIndexStyle = false -%}
     {%- if page.noTitleIndex or page.url contains 'release-notes' -%}
