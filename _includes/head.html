@@ -117,4 +117,11 @@
         }
     </style>
     {%- endif -%}
+
+    {%- if page.url contains '/search.html' -%}
+    <style>
+        #BarcodeReader, #WebTwain, #DocumentNormalizer, #CameraEnhancer, .subHeadWrapper { position: sticky; top: 0; z-index: 111; border-bottom: 0;}
+        .productMenu { position: static!important; }
+    </style>
+    {%- endif -%}
 </head>
