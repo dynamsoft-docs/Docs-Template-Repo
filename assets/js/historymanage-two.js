@@ -98,6 +98,23 @@ function addParam (aTag, fromSourse=null, needh3=false)
         } else {
             findCurLinkOnFullTree(aTag, changeHref)
         }
+    } else if (fromSourse == "rightMenuContainer") {
+        if (hashStr && $(hashStr.toLowerCase()).length > 0) {
+            window.scrollTo(0, $(hashStr.toLowerCase()).offset().top)
+            var currentLinkHash = window.location.hash
+            var currentLink = document.URL
+            if (currentLinkHash) {
+                currentLink = currentLink.replace(currentLinkHash, hashStr)
+            } else {
+                currentLink += ("#" + hashStr)
+            }
+            if (!$(aTag).hasClass("active")) {
+                history.pushState(null, null, currentLink)
+            }
+        } 
+        else {
+            window.location.href = hrefVal + hashStr;
+        }
     } else {
         if (aTag.target == '_blank') {
             window.open(changeHref);
@@ -251,12 +268,14 @@ function RequestNewPage(aTag, paramLink, onlyLoadContent=false) {
             var scrollTop = $("#" + hash).offset().top
             setTimeout(function() {
                 window.scrollTo(0, scrollTop)
+                realFunc()
             }, 100)
         } else {
             if (sd > 0) {
                 var scrollTop = sd > $('#overall-header').height() ? $('#overall-header').height() : sd
                 setTimeout(function() {
                     window.scrollTo(0, scrollTop)
+                    realFunc()
                 }, 100)
             }
         }

@@ -6,7 +6,9 @@ function FullTreeMenuList(generateDocHead, needh3=true) {
         if (!$(this).hasClass("refreshLink") && $(this).parents(".sideBar").length > 0 && $("#articleContent").length > 0) {
           addParam(this, 'sidebar', needh3); 
         } else if (!$(this).hasClass("refreshLink") && $(this).parents(".markdown-body").length > 0 && $("#articleContent").length > 0) {
-            addParam(this, 'docContainer', needh3); 
+          addParam(this, 'docContainer', needh3); 
+        } else if (!$(this).hasClass("refreshLink") && $(this).parents("#AutoGenerateSidebar").length > 0) {
+          addParam(this, 'rightMenuContainer', needh3); 
         } else {
           addParam(this); 
         }
@@ -119,6 +121,14 @@ function GenerateContentByHead(needh3 = true) {
       $(".rightSideMenu > p").hide()
     } else {
       $(".rightSideMenu > p").show()
+    }
+    var rightMenuATags = $("#AutoGenerateSidebar").find("a")
+    for (var i = 0; i < rightMenuATags.length; i++)
+    {
+      rightMenuATags[i].onclick = function(){
+        addParam(this, 'rightMenuContainer', needh3); 
+        return false;
+      };
     }
   }
 }

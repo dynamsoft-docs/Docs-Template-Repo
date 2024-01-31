@@ -41,6 +41,14 @@ function GenerateContentByHead(needh3 = true) {
         } else {
             $(".rightSideMenu > p").show()
         }
+        var rightMenuATags = $("#AutoGenerateSidebar").find("a")
+        for (var i = 0; i < rightMenuATags.length; i++)
+        {
+            rightMenuATags[i].onclick = function(){
+                addParam(this, SearchVersion()[0], 'rightMenuContainer', needh3); 
+                return false;
+            };
+        }
     }
 }
 
@@ -72,6 +80,8 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                   addParam(this, verArray[0], 'sidebar', needh3); 
                 } else if (!$(this).hasClass("refreshLink") && $(this).parents(".markdown-body").length > 0 && $("#articleContent").length > 0) {
                     addParam(this, verArray[0], 'docContainer', needh3); 
+                } else if (!$(this).hasClass("refreshLink") && $(this).parents("#AutoGenerateSidebar").length > 0) {
+                    addParam(this, verArray[0], 'rightMenuContainer', needh3); 
                 } else {
                   addParam(this, verArray[0]); 
                 }
@@ -230,6 +240,8 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                                 addParam(this, verArray[0], 'sidebar', needh3); 
                             } else if (!$(this).hasClass("refreshLink") && $(this).parents(".markdown-body").length > 0 && $("#articleContent").length > 0) {
                                 addParam(this, verArray[0], 'docContainer', needh3); 
+                            } else if (!$(this).hasClass("refreshLink") && $(this).parents("#AutoGenerateSidebar").length > 0) {
+                                addParam(this, verArray[0], 'rightMenuContainer', needh3); 
                             } else {
                                 addParam(this, verArray[0]); 
                             }

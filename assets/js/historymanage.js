@@ -516,6 +516,18 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
             }
         } else if (fromSourse == "docContainer") {
            findCurLinkOnFullTree(aTag, hrefVal + hashStr, needh3)
+        } else if (fromSourse == "rightMenuContainer") {
+            if (hashStr && $(hashStr.toLowerCase()).length > 0) {
+                window.scrollTo(0, $(hashStr.toLowerCase()).offset().top)
+                var currentLinkHash = window.location.hash
+                var currentLink = currentLinkHash ? document.URL.replace(currentLinkHash, hashStr) : (document.URL + hashStr)
+                if (!$(aTag).hasClass("active")) {
+                    history.pushState(null, null, currentLink)
+                }
+            } 
+            else {
+                window.location.href = hrefVal + hashStr;
+            }
         } else {
            window.location.href = hrefVal + hashStr;
         }
@@ -836,12 +848,14 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
                 var scrollTop = $("#" + hash).offset().top
                 setTimeout(function() {
                     window.scrollTo(0, scrollTop)
+                    realFunc()
                 }, 100)
             } else {
                 if (sd > 0) {
                     var scrollTop = sd > $('#overall-header').height() ? $('#overall-header').height() : sd
                     setTimeout(function() {
                         window.scrollTo(0, scrollTop)
+                        realFunc()
                     }, 100)
                 }
             }
@@ -918,7 +932,7 @@ function findCurLinkOnFullTree(aTag, paramLink, needh3=false, onlyLoadContent=fa
             if (hash && $("#" + hash.toLowerCase()).length > 0) {
                 window.scrollTo(0, $("#" + hash.toLowerCase()).offset().top)
             }
-        } 
+        }
         !onlyLoadContent&&history.pushState(null, null, paramLink)
     } else {
         var flag = false
@@ -974,7 +988,6 @@ function findCurLinkOnFullTree(aTag, paramLink, needh3=false, onlyLoadContent=fa
             } else {
                 showPageContentInModal(paramLink)
             }
-            // window.location.href = paramLink;
         }
     }
 }

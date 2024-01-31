@@ -6,7 +6,6 @@ $(document).ready(function(){
     initPageLayout();
     
     $(window).resize(function() {
-        console.log("");
         var objs = $(".fold-panel-prefix")
         for(var i = 0; i<objs.length; i++) {
             var obj = $(".fold-panel-prefix").eq(i)
@@ -292,7 +291,6 @@ function realFunc() {
     } else {
         $("a#toTop").hide()
     }
-    
     $('.rightSideMenu').css({'padding-top': $('#docHead').outerHeight()+'px'});
     if (breakpoint() == 'lg') {
         var subHeight = $('.subHeadWrapper').length > 0 ? $('.subHeadWrapper').height() : $('.productMenu').height();
