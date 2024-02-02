@@ -920,8 +920,8 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
 
 function findCurLinkOnFullTree(aTag, paramLink, needh3=false, onlyLoadContent=false, isRequestNewPage = false) {
     var fullTreeATags = $("#fullTreeMenuListContainer").find("a")
-    var targetHref = aTag.href.toLowerCase().replaceAll("//", "/").replace("https:/", "https://")
-    var curDocUrl = document.URL.toLowerCase().replaceAll("//", "/").replace("https:/", "https://")
+    var targetHref = aTag.href.toLowerCase()
+    var curDocUrl = document.URL.toLowerCase()
     targetHref = targetHref.indexOf("?") > 0 ? targetHref.split("?")[0] : (targetHref.indexOf("#") > 0 ? targetHref.split("#")[0] : targetHref) 
     curDocUrl = curDocUrl.indexOf("?") > 0 ? curDocUrl.split("?")[0] : (curDocUrl.indexOf("#") > 0 ? curDocUrl.split("#")[0] : curDocUrl)
 
