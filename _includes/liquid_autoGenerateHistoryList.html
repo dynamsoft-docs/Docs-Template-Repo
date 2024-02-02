@@ -96,10 +96,17 @@
 		{%- continue -%}
 	{%- endunless -%}
 
+	{%- assign firstLevelUrl = site.firstLevelUrl -%}
+	{%- assign firstLevelUrlLastChar = firstLevelUrl | split:'' | last -%}
+	{%- if firstLevelUrlLastChar contains '/' -%}	
+			{%- assign truncateDocHomePageSize = firstLevelUrl | size | minus:1 -%}
+			{%- assign firstLevelUrl = firstLevelUrl | slice: 0, truncateDocHomePageSize -%}
+	{%- endif -%}
+
 	{%- if tmpPageVersion contains "latest version" -%}
-		<li><a href = "{{ site.firstLevelUrl }}{{ my_page.url }}" class="otherLinkColour">{{tmpPageVersion}}</a></li>
+		<li><a href = "{{ firstLevelUrl }}{{ my_page.url }}" class="otherLinkColour">{{tmpPageVersion}}</a></li>
 	{%- else -%}
-		<li><a href = "{{ site.firstLevelUrl }}{{ my_page.url }}" class="otherLinkColour">{{ "version " | append: tmpPageVersion }}</a></li>
+		<li><a href = "{{ firstLevelUrl }}{{ my_page.url }}" class="otherLinkColour">{{ "version " | append: tmpPageVersion }}</a></li>
 	{%- endif -%}
 
 	{%- assign historyRecode = historyRecode | append: '\nextUrlRecode\' | append: tmpPageVersion -%}
