@@ -82,6 +82,21 @@ function addParam (aTag, fromSourse=null, needh3=false)
     if(hrefVal == "")
         return;
 
+    // get hash string
+    let hashIndex = hrefVal.indexOf("#")
+    let queryIndex = hrefVal.indexOf("?")
+    let hashStr = ""
+    if (hashIndex != -1) {
+        if (queryIndex != 1 && hashIndex < queryIndex) {
+            var urlQuery = hrefVal.split("?")
+            var urlHash = urlQuery[0].split("#")
+            hashStr = "#" + urlHash[1]
+        } else {
+            var urlAry = hrefVal.split("#");
+            hashStr = urlAry.length == 2 ? ("#" + urlAry[1]) : ""
+        }
+    }
+
     if (fromSourse == "sidebar") {
         var currentDocDomain = document.URL.split("/docs/")[0] + '/docs/';
         if (aTag.href.indexOf(currentDocDomain) < 0) {
