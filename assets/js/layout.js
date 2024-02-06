@@ -292,10 +292,10 @@ function realFunc() {
         $("a#toTop").hide()
     }
     $('.rightSideMenu').css({'padding-top': $('#docHead').outerHeight()+'px'});
+    var sd = $(window).scrollTop();
     if (breakpoint() == 'lg') {
         var subHeight = $('.subHeadWrapper').length > 0 ? $('.subHeadWrapper').height() : $('.productMenu').height();
         var menuHeight = $('#dynamsoft-header').height() + subHeight;
-        var sd = $(window).scrollTop();
         var basicFullTreeIncrease = $(window).outerWidth() > 1680 ? 130 : 140
         if (sd > $('#dynamsoft-header').height()) {
             if ($('#footerWrapper').offset().top - $(document).scrollTop() < $(window).height()) {
@@ -356,15 +356,21 @@ function realFunc() {
         $('.docContainer .main, .rightSideMenu, .markdown-body').removeClass('showRightSideMenu')
     }
 
-    // right menu active link
-    var title = document.querySelectorAll('.markdown-body h2');
+    // right menu active link 
+    var title = []
+    var tempTitle = document.querySelectorAll('.markdown-body h2');
     if ($('#fullTreeMenuListContainer').hasClass('needh3')) {
-        title = document.querySelectorAll('.markdown-body h2, .markdown-body h3');
+        tempTitle = document.querySelectorAll('.markdown-body h2, .markdown-body h3');
+    }
+    for(let i=0;i<tempTitle.length;i++) {
+        if ($(tempTitle[i]).is(":visible")) {
+            title.push(tempTitle[i])
+        }
     }
     var rightNavItem = $('#AutoGenerateSidebar a');
     var flag = false
     for(i=0; i<title.length; i++){
-        if($(title[i]).offset().top - 100 <= sd) {
+        if($(title[i]).is(":visible") && $(title[i]).offset().top - 100 <= sd) {
             flag = true
             $('#AutoGenerateSidebar a').removeClass("active");
             $(rightNavItem[i]).addClass("active");
