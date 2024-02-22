@@ -839,7 +839,8 @@ function getDoumentName(product) {
         case 'dce': return 'camera-enhancer';
         case 'dcp': return 'code-parser';
         case 'ddn': return 'document-normalizer';
-        case 'dcv': return 'capture-vision'
+        case 'dcv': return 'capture-vision';
+        case 'mwc': return 'mobile-web-capture';
         default: return '';
     }
 }

@@ -358,49 +358,51 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
     // #region 分析出 productVar, langVar
     // different docs, different language
     var productVar = ""
-    if (!getUrlVars(hrefVal)["product"]) {
-        var isNeedAddProductVersion = false
-        var isNeedAddLang = false
-        if (hrefVal.indexOf(currentDocDomain) < 0 && hrefVal.indexOf(document.location.host) >= 0 && hrefVal.indexOf("/docs/") > 0) {
-            if (!getUrlVars(document.URL)["product"]) {
-                // dbr js --> dce
-                productVar = `${hrefVal.indexOf("?") < 0?'?':'&'}product=${productName}`;
-                isNeedAddLang = true
-            } else if (getUrlVars(document.URL)["product"] != getCurrentUrlProductName(hrefVal)) {
-                // dce dbr --> dlr
+    if (dcvVersionList) {
+        if (!getUrlVars(hrefVal)["product"]) {
+            var isNeedAddProductVersion = false
+            var isNeedAddLang = false
+            if (hrefVal.indexOf(currentDocDomain) < 0 && hrefVal.indexOf(document.location.host) >= 0 && hrefVal.indexOf("/docs/") > 0) {
+                if (!getUrlVars(document.URL)["product"]) {
+                    // dbr js --> dce
+                    productVar = `${hrefVal.indexOf("?") < 0?'?':'&'}product=${productName}`;
+                    isNeedAddLang = true
+                } else if (getUrlVars(document.URL)["product"] != getCurrentUrlProductName(hrefVal)) {
+                    // dce dbr --> dlr
+                    productVar = `${hrefVal.indexOf("?") < 0?'?':'&'}product=${getUrlVars(document.URL)['product']}`;
+                    isNeedAddLang=true
+                } else if (getUrlVars(document.URL)["product"] == getCurrentUrlProductName(hrefVal) && getCurrentUrlLang(hrefVal, true) != lang) {
+                    // dce-dbrjs --> dbr core 需要加上 lang
+                    isNeedAddLang = true
+                }
+            } else if (hrefVal.indexOf(currentDocDomain) >= 0 && getUrlVars(document.URL)["product"]) {
+                // dce-dbr --> dce -- dbr
                 productVar = `${hrefVal.indexOf("?") < 0?'?':'&'}product=${getUrlVars(document.URL)['product']}`;
-                isNeedAddLang=true
-            } else if (getUrlVars(document.URL)["product"] == getCurrentUrlProductName(hrefVal) && getCurrentUrlLang(hrefVal, true) != lang) {
-                // dce-dbrjs --> dbr core 需要加上 lang
                 isNeedAddLang = true
+                isNeedAddProductVersion = true
+                // console.log(productVar)
             }
-        } else if (hrefVal.indexOf(currentDocDomain) >= 0 && getUrlVars(document.URL)["product"]) {
-            // dce-dbr --> dce -- dbr
-            productVar = `${hrefVal.indexOf("?") < 0?'?':'&'}product=${getUrlVars(document.URL)['product']}`;
-            isNeedAddLang = true
-            isNeedAddProductVersion = true
-            // console.log(productVar)
-        }
 
-        if (isNeedAddLang) {
-            if (lang != "") {
-                if (getUrlVars(hrefVal)["lang"]) {
-                    hrefVal.replace(`lang=${getUrlVars(hrefVal)["lang"]}`, `lang=${lang}`)
-                } else {
-                    productVar += `${hrefVal.indexOf("?") < 0 && productVar==""?'?':'&'}lang=${lang}`
+            if (isNeedAddLang) {
+                if (lang != "") {
+                    if (getUrlVars(hrefVal)["lang"]) {
+                        hrefVal.replace(`lang=${getUrlVars(hrefVal)["lang"]}`, `lang=${lang}`)
+                    } else {
+                        productVar += `${hrefVal.indexOf("?") < 0 && productVar==""?'?':'&'}lang=${lang}`
+                    }
                 }
             }
+            // console.log(productVar)
         }
-        // console.log(productVar)
-    }
-    // same docs, different language
-    if (!getUrlVars(hrefVal)["lang"]) {
-        if (hrefVal.indexOf(currentDocDomain) >= 0 && !getUrlVars(document.URL)["product"]) {
-            if (getCurrentUrlLang(hrefVal, true) != lang && lang != "") {
-                if (getUrlVars(hrefVal)["lang"]) {
-                    hrefVal.replace(`lang=${getUrlVars(hrefVal)["lang"]}`, `lang=${lang}`)
-                } else {
-                    productVar += `${expQueryStr.exec(hrefVal) == null && productVar==""?'?':'&'}lang=${lang}`
+        // same docs, different language
+        if (!getUrlVars(hrefVal)["lang"]) {
+            if (hrefVal.indexOf(currentDocDomain) >= 0 && !getUrlVars(document.URL)["product"]) {
+                if (getCurrentUrlLang(hrefVal, true) != lang && lang != "") {
+                    if (getUrlVars(hrefVal)["lang"]) {
+                        hrefVal.replace(`lang=${getUrlVars(hrefVal)["lang"]}`, `lang=${lang}`)
+                    } else {
+                        productVar += `${expQueryStr.exec(hrefVal) == null && productVar==""?'?':'&'}lang=${lang}`
+                    }
                 }
             }
         }
@@ -1140,7 +1142,8 @@ function getCurrentUrlProductName(url=null) {
         case 'camera-enhancer': return 'dce';
         case 'code-parser': return 'dcp';
         case 'document-normalizer': return 'ddn';
-        case 'capture-vision': return 'dcv'
+        case 'capture-vision': return 'dcv';
+        case 'mobile-web-capture': return 'mwc';
         default: return '';
     }
 }
@@ -1253,66 +1256,70 @@ function getLinkVersion(curVersion, linkUrl, curProduct=null, curLang=null, link
 
     // console.log(dcvVersionList)
     // 找到对应的 matchList
-    let filteredItems = dcvVersionList.filter(function(item) {
-        //let productVersion = item[product+'Core']
-        let productVersion = item.version
-        let isReturn = false
-        let matchItems = null
-        if (productVersion && getFormatVal(productVersion) <= getFormatVal(curVersion)) {
-            for(var matchItem in item.matchList) {
-                if (lang && lang != "") {
-                    if (matchItem == lang) {
-                        var tempMatchItems = item.matchList[matchItem]
-                        for(var subMatchItems in tempMatchItems) {
-                            if (linkProduct != "dcv") {
-                                if (subMatchItems == linkProduct) {
-                                    matchItems = tempMatchItems[subMatchItems]
-                                    isReturn = true
-                                }
-                            } else {
-                                var linkUrlReop = titleCase(getCurrentUrlRepoType(linkUrl))
-                                var dcvRepoName = "dcvRepo" + linkUrlReop
-                                if (subMatchItems == dcvRepoName) {
-                                    matchItems = tempMatchItems[subMatchItems]
-                                    isReturn = true
+    if (dcvVersionList) {
+        let filteredItems = dcvVersionList.filter(function(item) {
+            //let productVersion = item[product+'Core']
+            let productVersion = item.version
+            let isReturn = false
+            let matchItems = null
+            if (productVersion && getFormatVal(productVersion) <= getFormatVal(curVersion)) {
+                for(var matchItem in item.matchList) {
+                    if (lang && lang != "") {
+                        if (matchItem == lang) {
+                            var tempMatchItems = item.matchList[matchItem]
+                            for(var subMatchItems in tempMatchItems) {
+                                if (linkProduct != "dcv") {
+                                    if (subMatchItems == linkProduct) {
+                                        matchItems = tempMatchItems[subMatchItems]
+                                        isReturn = true
+                                    }
+                                } else {
+                                    var linkUrlReop = titleCase(getCurrentUrlRepoType(linkUrl))
+                                    var dcvRepoName = "dcvRepo" + linkUrlReop
+                                    if (subMatchItems == dcvRepoName) {
+                                        matchItems = tempMatchItems[subMatchItems]
+                                        isReturn = true
+                                    }
                                 }
                             }
                         }
-                    }
-                } else {
-                    if (linkProduct != "dcv") {
-                        if (matchItem == linkProduct) {
-                            matchItems = item.matchList[matchItem]
-                            isReturn = true
-                        }
                     } else {
-                        var linkUrlReop = titleCase(getCurrentUrlRepoType(linkUrl))
-                        var dcvRepoName = "dcvRepo" + linkUrlReop
-                        if (matchItem == dcvRepoName) {
-                            matchItems = item.matchList[matchItem]
-                            isReturn = true
+                        if (linkProduct != "dcv") {
+                            if (matchItem == linkProduct) {
+                                matchItems = item.matchList[matchItem]
+                                isReturn = true
+                            }
+                        } else {
+                            var linkUrlReop = titleCase(getCurrentUrlRepoType(linkUrl))
+                            var dcvRepoName = "dcvRepo" + linkUrlReop
+                            if (matchItem == dcvRepoName) {
+                                matchItems = item.matchList[matchItem]
+                                isReturn = true
+                            }
                         }
                     }
                 }
             }
-        }
-        item.matchItems = matchItems
-        item.productVersion = productVersion
-        return isReturn
-    })
-
-    filteredItems.sort(function(a, b) {
-        return getFormatVal(b.productVersion) - getFormatVal(a.productVersion)
-    })
-    if (filteredItems && filteredItems.length > 0) {
-        var findMatchItems = filteredItems[0]["matchItems"]
-        if (linkProduct != "dcv") {
-            return findMatchItems
+            item.matchItems = matchItems
+            item.productVersion = productVersion
+            return isReturn
+        })
+    
+        filteredItems.sort(function(a, b) {
+            return getFormatVal(b.productVersion) - getFormatVal(a.productVersion)
+        })
+        if (filteredItems && filteredItems.length > 0) {
+            var findMatchItems = filteredItems[0]["matchItems"]
+            if (linkProduct != "dcv") {
+                return findMatchItems
+            } else {
+                var dcvMatchItem = findMatchItems.filter(function(dcvMatch) {
+                    return linkUrl.indexOf(dcvMatch.path) > 0
+                })
+                return dcvMatchItem && dcvMatchItem.length > 0 ? dcvMatchItem[0].version : -1
+            }
         } else {
-            var dcvMatchItem = findMatchItems.filter(function(dcvMatch) {
-                return linkUrl.indexOf(dcvMatch.path) > 0
-            })
-            return dcvMatchItem && dcvMatchItem.length > 0 ? dcvMatchItem[0].version : -1
+            return -1
         }
     } else {
         return -1
