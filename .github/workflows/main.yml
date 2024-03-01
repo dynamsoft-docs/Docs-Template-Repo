@@ -170,13 +170,13 @@ jobs:
       doc-url: code-parser/docs/server
     secrets: inherit
 
-  #Update-DCP-Mobile-On-Main-Change:
-  #  if: ${{ github.ref == 'refs/heads/main' }}
-  #  uses: ./.github/workflows/called-workflow-build-sync-production.yml
-  #  with:
-  #    doc-repo: code-parser-docs-mobile
-  #    doc-url: code-parser/docs/mobile
-  #  secrets: inherit
+  Update-DCP-Mobile-On-Main-Change:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
+    with:
+      doc-repo: code-parser-docs-mobile
+      doc-url: code-parser/docs/mobile
+    secrets: inherit
 
   Update-DCP-Js-On-Main-Change:
     if: ${{ github.ref == 'refs/heads/main' }}
