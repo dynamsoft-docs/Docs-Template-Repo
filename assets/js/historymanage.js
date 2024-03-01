@@ -435,6 +435,9 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
                     }
                 }
             }
+            if(anchorVal && anchorVal != "") {
+                originHref = originHref.replace(anchorVal, "")
+            }
             let currentVersion = $(".currentVersion").text().toLowerCase()
             currentVersion = currentVersion.indexOf("latest version") >= 0 ? "latest" : (currentVersion.replace("version ", ""))
             
@@ -470,7 +473,6 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
                 var linkProduct = getCurrentUrlProductName(originHref)
                 var linkLang = getCurrentUrlLang(originHref, true)
                 var dceLang = ["cordova", "xamarin", "flutter", "react-native"]
-
                 if (isCoreDocs && (linkLang && linkProduct == productName || linkProduct == 'dce' && dceLang.includes(linkLang))) {
                     if (linkLang && linkProduct == productName) { // core-> normal lang 
                         window.open(`${originHref}${currentVersion=='latest' ? '' : (queryIndex > 0 ? '&ver=' + currentVersion : '?ver=' + currentVersion)}${anchorVal}`); 
