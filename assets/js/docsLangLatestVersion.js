@@ -8,14 +8,14 @@ var docsLangLatestVersion = {
         dotnet: "9.6.30",
         android: "10.0.21",
         ios: "10.0.21",
-        javaScript: "10.0.20",
+        javascript: "10.0.20",
     },
     dcv:{
         core: "2.2.10",
         cpp: "2.2.10",
         android: "2.2.10",
         ios: "2.2.10",
-        javaScript: "2.0.30",
+        javascript: "2.0.30",
         xamarin: "1.0.5",
         flutter: "1.2.2",
         cordova: "1.0.5",
@@ -28,7 +28,7 @@ var docsLangLatestVersion = {
         dotnet: "2.0.0",
         android: "3.0.20",
         ios: "3.0.20",
-        javaScript: "3.0.30",
+        javascript: "3.0.30",
     },
     ddn: {
         core: "2.2.10",
@@ -36,19 +36,19 @@ var docsLangLatestVersion = {
         xamarin: "1.0.5",
         android: "2.2.10",
         ios: "2.2.10",
-        javaScript: "2.0.21",
+        javascript: "2.0.21",
     },
     dce: {
         core: "4.2.0",
         android: "4.2.0",
         ios: "4.2.0",
-        javaScript: "4.0.1",
+        javascript: "4.0.1",
     },
     dcp: {
         core: "2.2.10",
         cpp: "2.2.10",
         android: "2.0.20",
         ios: "2.0.20",
-        javaScript: "2.0.20",
+        javascript: "2.0.20",
     }
 }

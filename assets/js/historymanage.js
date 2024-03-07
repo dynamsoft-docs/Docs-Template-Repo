@@ -1140,7 +1140,7 @@ function initHistoryVersionList() {
 
     var firstItem = $(".fullVersionInfo li").eq(0)
     if (firstItem.text().toLowerCase() == "latest version") {
-        var latestVersion = getProductLangLatestVersion(productName, lang)
+        var latestVersion = getProductLangLatestVersion(productName, lang == "" ? "core" : lang)
         firstItem.text("latest version (" + latestVersion + ")")
     }
 }
