@@ -1118,9 +1118,13 @@ function loadActiveTagMenu(aTag) {
 }
 
 function initHistoryVersionList() {
+    let productName = getUrlVars(document.URL)["product"] || getCurrentUrlProductName(document.URL)
     let lang = getCurrentUrlLang(document.URL, true)
     if (lang == 'objectivec-swift') {
         lang = 'ios'
+    }
+    if (lang == 'react-native') {
+        lang = 'reactNative'
     }
     let obj = $(".fullVersionInfo li")
     for (var i=0; i<obj.length; i++) {
@@ -1128,6 +1132,19 @@ function initHistoryVersionList() {
         if (edition && edition != "" && edition.split('_').indexOf(lang) < 0) {
             $(obj[i]).addClass("hideLi").hide()
         }
+    }
+    let obj2 = $(".fullVersionInfo .hasChildLi")
+    for (var i=0; i<obj2.length; i++) {
+        var childItem = $(obj2[i]).find("> ul > li:not(.hideLi)")
+        if (childItem.length == 0) {
+            $(obj2[i]).addClass("hideLi").hide()
+        }
+    }
+
+    var firstItem = $(".fullVersionInfo li").eq(0)
+    if (firstItem.text().toLowerCase() == "latest version") {
+        var latestVersion = getProductLangLatestVersion(productName, lang == "" ? "core" : lang)
+        latestVersion != undefined && firstItem.text("latest version (" + latestVersion + ")")
     }
 }
 
