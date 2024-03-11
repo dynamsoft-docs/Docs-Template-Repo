@@ -1123,6 +1123,9 @@ function initHistoryVersionList() {
     if (lang == 'objectivec-swift') {
         lang = 'ios'
     }
+    if (lang == 'react-native') {
+        lang = 'reactNative'
+    }
     let obj = $(".fullVersionInfo li")
     for (var i=0; i<obj.length; i++) {
         let edition = $(obj[i]).data("editions")
