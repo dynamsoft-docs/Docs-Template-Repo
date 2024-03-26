@@ -244,44 +244,46 @@ function RedirToGivenVersionPage(inputVer, currentUrl = null)
 function GetVersionDiff(inputVer, compareVer)
 {
     if (compareVer == "latest"){
-        return 100;
+        return 999999;
     }
 
-    if (compareVer < inputVer){
-        return -1;
-    }
-    var inputChar = inputVer ? inputVer.split('.') : inputVer;
-    var compareChar = compareVer ? compareVer.split('.') : compareVer;
+    // if (compareVer < inputVer){
+    //     return -1;
+    // }
 
-    var diff = 0;
+    return getFormatVal(compareVer) - getFormatVal(inputVer)
+    // var inputChar = inputVer ? inputVer.split('.') : inputVer;
+    // var compareChar = compareVer ? compareVer.split('.') : compareVer;
 
-    var maxLength = Math.max(inputChar.length, compareChar.length);
+    // var diff = 0;
 
-    var curWeight = 1;
-    for (var i = 0; i < maxLength; i++){
-        var tmpInput = i < inputChar.length ? inputChar[i] : 0;
-        if (isNaN(tmpInput)){
-            diff = diff + curWeight;
-            break;
-        }
-        var tmpCompare = i < compareChar.length ? compareChar[i] : 0;
-        if (isNaN(tmpCompare)){
-            diff = diff + curWeight;
-            break;
-        }
-        var tmpDiff = tmpCompare - tmpInput;
-        if (tmpDiff >= 0){
-            curWeight = curWeight / 10;
-            diff = diff + curWeight * tmpDiff;
-        }
-        else{
-            diff = diff - curWeight;
-            curWeight = curWeight / 10;
-            diff = diff + curWeight * (tmpDiff + 10);
-        }
-    }
+    // var maxLength = Math.max(inputChar.length, compareChar.length);
+
+    // var curWeight = 1;
+    // for (var i = 0; i < maxLength; i++){
+    //     var tmpInput = i < inputChar.length ? inputChar[i] : 0;
+    //     if (isNaN(tmpInput)){
+    //         diff = diff + curWeight;
+    //         break;
+    //     }
+    //     var tmpCompare = i < compareChar.length ? compareChar[i] : 0;
+    //     if (isNaN(tmpCompare)){
+    //         diff = diff + curWeight;
+    //         break;
+    //     }
+    //     var tmpDiff = tmpCompare - tmpInput;
+    //     if (tmpDiff >= 0){
+    //         curWeight = curWeight / 10;
+    //         diff = diff + curWeight * tmpDiff;
+    //     }
+    //     else{
+    //         diff = diff - curWeight;
+    //         curWeight = curWeight / 10;
+    //         diff = diff + curWeight * (tmpDiff + 10);
+    //     }
+    // }
     
-    return diff;
+    //return diff;
 }
 
 function addParam (aTag, verText, fromSourse=null, needh3=false)
@@ -1069,19 +1071,21 @@ function findNearestVersion(ver) {
     var versionList = $(".fullVersionInfo li:not(.hideLi)")
     var bestVer = ver, verDiff=null
     for (var i=0; i<versionList.length; i++) {
-        var tempVer = $(versionList[i]).text().toLowerCase()
-        if (tempVer.indexOf("latest version") >= 0){
-            tempVer = "latest"
-        } else {
-            tempVer = tempVer.replace('version ','');
-        }
-        if (tempVer == ver) {
-            return tempVer
-        } else {
-            var tmpDiff = GetVersionDiff(ver, tempVer);
-            if (verDiff == null || (tmpDiff >= 0 && (tmpDiff < verDiff || verDiff < 0))){
-                verDiff = tmpDiff;
-                bestVer = tempVer;
+        if (!$(versionList[i]).hasClass("hasChildLi")) {
+            var tempVer = $(versionList[i]).text().toLowerCase()
+            if (tempVer.indexOf("latest version") >= 0){
+                tempVer = "latest"
+            } else {
+                tempVer = tempVer.replace('version ','');
+            }
+            if (tempVer == ver) {
+                return tempVer
+            } else {
+                var tmpDiff = GetVersionDiff(ver, tempVer);
+                if (verDiff == null || (tmpDiff >= 0 && (tmpDiff < verDiff || verDiff < 0))){
+                    verDiff = tmpDiff;
+                    bestVer = tempVer;
+                }
             }
         }
     }
