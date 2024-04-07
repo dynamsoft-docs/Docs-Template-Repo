@@ -1260,6 +1260,7 @@ function getRequestNewPageVersion(linkUrl) {
  * @returns 
  * 
  * test example
+ * getLinkVersion("2.0.20", document.URL, "ddn", "javascript", "dcv")
  * getLinkVersion("10.0.10", null, "dbr", "cpp", "dlr")
  * getLinkVersion("10.0.10", null, "dbr", "core", "dlr")
  * getLinkVersion("10.0.10", "https://www.dynamsoft.com/capture-vision/docs/core/enums/utility/region-predetection.html", "dbr", "core", "dcv")
@@ -1276,8 +1277,6 @@ function getLinkVersion(curVersion, linkUrl, curProduct=null, curLang=null, link
     lang = lang == "cplusplus" ? "cpp" : lang
     lang = ["objectivec-swift", "objectivec", "objc", "swift"].includes(lang) ? "ios" : lang
     lang = lang == "core" ? "" : lang
-
-    // console.log(dcvVersionList)
     // 找到对应的 matchList
     if (dcvVersionList) {
         let filteredItems = dcvVersionList.filter(function(item) {
@@ -1287,6 +1286,8 @@ function getLinkVersion(curVersion, linkUrl, curProduct=null, curLang=null, link
             let matchItems = null
             if (productVersion && getFormatVal(productVersion) <= getFormatVal(curVersion)) {
                 for(var matchItem in item.matchList) {
+                    matchItem = matchItem == "js" || matchItem == "javascript" ? "js" : matchItem
+                    lang = lang == "js" || lang == "javascript" ? "js" : lang
                     if (lang && lang != "") {
                         if (matchItem == lang) {
                             var tempMatchItems = item.matchList[matchItem]
@@ -1327,7 +1328,7 @@ function getLinkVersion(curVersion, linkUrl, curProduct=null, curLang=null, link
             item.productVersion = productVersion
             return isReturn
         })
-    
+
         filteredItems.sort(function(a, b) {
             return getFormatVal(b.productVersion) - getFormatVal(a.productVersion)
         })
