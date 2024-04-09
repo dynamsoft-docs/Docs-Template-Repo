@@ -2,7 +2,6 @@ var dcvVersionList = []
 async function UrlReplace()
 {
     dcvVersionList = await getVersionSearchList();
-    // console.log(dcvVersionList)
     initHistoryVersionList();
 
     var docUrl = document.URL;
@@ -10,13 +9,25 @@ async function UrlReplace()
     var matchVer = getUrlVars(docUrl)["matchVer"];
     var product = getUrlVars(docUrl)["product"];
     var docProduct = getCurrentUrlProductName();
-    
+
     if (ver != undefined && ver != "latest") {
-        if (product == undefined || product == docProduct) {
+        if (product == undefined && docProduct == "dcv" && matchVer == "true") {
+            return
+        }
+        if ((product == undefined || product == docProduct)) {
             var tempVer = findNearestVersion(ver);
-            if (tempVer != ver) {
+            if (docProduct == "dcv") {
+                tempVer = getLinkVersion(ver, document.URL, null, null, docProduct)
+                if (tempVer == -1) {
+                    tempVer = "latest"
+                }
+            }
+            if (tempVer != ver && docProduct != "dcv") {
                 var replaceUrl = docUrl.replace("ver=" + ver, "ver=" + tempVer)
                 window.location.replace(replaceUrl);
+            } else if (docProduct == "dcv") {
+                RedirToGivenVersionPageForDCV(tempVer, ver)
+                return
             }
         }
     }
@@ -59,6 +70,114 @@ async function UrlReplace()
 function allHerfClick(_this, ver) {
     addParam(_this, ver);
     return false;
+}
+
+function RedirToGivenVersionPageForDCV(pageVer, docVer) {
+    //https://officecn.dynamsoft.com:808/capture-vision/docs/core/parameters/reference/barcode-reader-task-settings/dpm-code-reading-modes.html?ver=2.2.0
+    var bestVerIndex = -1;
+    var verDiff = -1;
+    var curVer = pageVer;
+    var bestVersion = pageVer;
+    var anchorVal = "";
+    var historyList = $(".otherVersions");
+
+    var curPageVersion = null
+    if (document.URL.indexOf("-v")>0) {
+        curPageVersion = SearchVersion(document.URL.indexOf("?") > 0 ? document.URL.split("?")[0] : document.URL)[0]
+    }
+
+    if (curPageVersion && curPageVersion==pageVer) {
+        return;
+    } else {
+        bestVerIndex = -1;
+        verDiff = GetVersionDiff(pageVer, curPageVersion ? curPageVersion : 'latest');
+        bestVersion = curVer;
+        if (verDiff == 0) {
+            return;
+        }
+    }
+
+    if (document.URL.indexOf("#") != -1){
+		var urlAry = document.URL.split("#");
+		if (urlAry.length == 2){
+            anchorVal = "#" + urlAry[1].toLowerCase();
+		}
+	}
+
+    if (historyList != null) {
+        var listAry = historyList [0].getElementsByTagName("li");
+        for (var i = 0; i < listAry.length; i++) {
+            var tmpVerText = listAry[i].innerText;
+            var tmpVer = null;
+            if (tmpVerText.indexOf("latest version") >= 0) {
+                tmpVer = "latest"
+            } else {
+                tmpVer = tmpVerText.replace('version ','');
+            }
+            if (tmpVer == pageVer) {
+                var aTag = $(listAry[i]).children("a");
+                if (aTag.length > 0 && aTag[0].href) {
+                    var exp = new RegExp(/[?]+([^=]+)=/gi)
+                    if (exp.exec(aTag[0].href) != null) {
+                        if (inputVer == 'latest') {
+                            window.location.replace(aTag[0].href)
+                        } else {
+                            window.location.replace(aTag[0].href + "&ver=" + docVer + "&matchVer=true" + anchorVal)
+                        }
+                        return;
+                    } else {
+                        var redirectUrl = aTag[0].href
+                        if (inputVer == 'latest') {
+                            window.location.replace(redirectUrl + anchorVal)
+                        } else {
+                            window.location.replace(`${redirectUrl}${redirectUrl.indexOf("?") > 0?'&':'?'}ver=${docVer}&matchVer=true${anchorVal}`)
+                        }
+                       return;
+                    }
+                }
+            } else {
+                var tmpDiff = GetVersionDiff(pageVer, tmpVer);
+                if (tmpDiff >= 0 && (tmpDiff < verDiff || verDiff < 0)){
+                    bestVerIndex = i;
+                    verDiff = tmpDiff;
+                    bestVersion = tmpVer;
+                }
+            }
+        }
+    }
+
+    if (bestVerIndex >= 0){
+        var aTag = $(listAry[bestVerIndex]).children("a");
+        if (aTag.length > 0) {
+            var exp = new RegExp(/[?]+([^=]+)=/gi)
+            if (exp.exec(aTag[0].href) != null){
+                window.location.replace(aTag[0].href + "&ver="+docVer+"&matchVer=true" + anchorVal)
+                return;
+            } else {
+                var srcVal = getUrlVars(document.URL)["src"]
+                var redirectUrl = aTag[0].href
+                if (srcVal != undefined){
+                    redirectUrl = redirectUrl + "?src="+ srcVal
+                }
+                window.location.replace(`${redirectUrl}${redirectUrl.indexOf("?") > 0?'&':'?'}ver=${docVer}&matchVer=true${anchorVal}`)
+                return;
+            }
+        }
+    }
+
+    if (pageVer == "latest" || bestVerIndex == -1) {
+        var srcVal = getUrlVars(document.URL)["src"]
+        var redirectUrl = document.URL.indexOf("?") > 0 ? document.URL.split("?")[0] : document.URL
+        if (srcVal != undefined) {
+            redirectUrl = redirectUrl + '?src='+ srcVal
+        }
+        if (pageVer == "latest") {
+            window.location.replace(`${redirectUrl}${redirectUrl.indexOf("?") > 0?'&':'?'}matchVer=true${anchorVal}`)
+        } else {
+            window.location.replace(`${redirectUrl}${redirectUrl.indexOf("?") > 0?'&':'?'}ver=${docVer}&matchVer=true${anchorVal}`)
+        }
+    }
+    return;
 }
 
 function RedirToGivenVersionPage(inputVer, currentUrl = null)
@@ -247,43 +366,7 @@ function GetVersionDiff(inputVer, compareVer)
         return 999999;
     }
 
-    // if (compareVer < inputVer){
-    //     return -1;
-    // }
-
     return getFormatVal(compareVer) - getFormatVal(inputVer)
-    // var inputChar = inputVer ? inputVer.split('.') : inputVer;
-    // var compareChar = compareVer ? compareVer.split('.') : compareVer;
-
-    // var diff = 0;
-
-    // var maxLength = Math.max(inputChar.length, compareChar.length);
-
-    // var curWeight = 1;
-    // for (var i = 0; i < maxLength; i++){
-    //     var tmpInput = i < inputChar.length ? inputChar[i] : 0;
-    //     if (isNaN(tmpInput)){
-    //         diff = diff + curWeight;
-    //         break;
-    //     }
-    //     var tmpCompare = i < compareChar.length ? compareChar[i] : 0;
-    //     if (isNaN(tmpCompare)){
-    //         diff = diff + curWeight;
-    //         break;
-    //     }
-    //     var tmpDiff = tmpCompare - tmpInput;
-    //     if (tmpDiff >= 0){
-    //         curWeight = curWeight / 10;
-    //         diff = diff + curWeight * tmpDiff;
-    //     }
-    //     else{
-    //         diff = diff - curWeight;
-    //         curWeight = curWeight / 10;
-    //         diff = diff + curWeight * (tmpDiff + 10);
-    //     }
-    // }
-    
-    //return diff;
 }
 
 function addParam (aTag, verText, fromSourse=null, needh3=false)
@@ -1260,6 +1343,7 @@ function getRequestNewPageVersion(linkUrl) {
  * @returns 
  * 
  * test example
+ * getLinkVersion("2.0.20", document.URL, "ddn", "javascript", "dcv")
  * getLinkVersion("10.0.10", null, "dbr", "cpp", "dlr")
  * getLinkVersion("10.0.10", null, "dbr", "core", "dlr")
  * getLinkVersion("10.0.10", "https://www.dynamsoft.com/capture-vision/docs/core/enums/utility/region-predetection.html", "dbr", "core", "dcv")
@@ -1277,7 +1361,6 @@ function getLinkVersion(curVersion, linkUrl, curProduct=null, curLang=null, link
     lang = ["objectivec-swift", "objectivec", "objc", "swift"].includes(lang) ? "ios" : lang
     lang = lang == "core" ? "" : lang
 
-    // console.log(dcvVersionList)
     // 找到对应的 matchList
     if (dcvVersionList) {
         let filteredItems = dcvVersionList.filter(function(item) {
@@ -1287,6 +1370,8 @@ function getLinkVersion(curVersion, linkUrl, curProduct=null, curLang=null, link
             let matchItems = null
             if (productVersion && getFormatVal(productVersion) <= getFormatVal(curVersion)) {
                 for(var matchItem in item.matchList) {
+                    matchItem = matchItem == "js" || matchItem == "javascript" ? "js" : matchItem
+                    lang = lang == "js" || lang == "javascript" ? "js" : lang
                     if (lang && lang != "") {
                         if (matchItem == lang) {
                             var tempMatchItems = item.matchList[matchItem]
@@ -1327,7 +1412,7 @@ function getLinkVersion(curVersion, linkUrl, curProduct=null, curLang=null, link
             item.productVersion = productVersion
             return isReturn
         })
-    
+
         filteredItems.sort(function(a, b) {
             return getFormatVal(b.productVersion) - getFormatVal(a.productVersion)
         })
