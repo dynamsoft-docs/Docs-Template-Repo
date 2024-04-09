@@ -11,8 +11,8 @@ var docsLangLatestVersion = {
         javascript: "10.2.10",
     },
     dcv:{
-        core: "2.2.10",
-        cplusplus: "2.2.10",
+        core: "2.2.20",
+        cplusplus: "2.2.20",
         android: "2.2.10",
         ios: "2.2.10",
         javascript: "2.2.10",
@@ -22,8 +22,8 @@ var docsLangLatestVersion = {
         reactNative: "1.1.12"
     },
     dlr: {
-        core: "3.2.10",
-        cplusplus: "3.2.10",
+        core: "3.2.20",
+        cplusplus: "3.2.20",
         java: "2.0.0",
         dotnet: "2.0.0",
         android: "3.0.20",

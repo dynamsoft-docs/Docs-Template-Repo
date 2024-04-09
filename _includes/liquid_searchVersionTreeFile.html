@@ -5,6 +5,9 @@
 {%- if targetVer contains "latest version" -%}
         {%- assign targetVer = "10000" -%}
 {%- endif -%}
+{%- if targetVer contains "_" -%}
+        {%- assign targetVer = targetVer | split: "_" | first -%}
+{%- endif -%}
 
 {%- assign nearestFile = "" -%}
 {%- assign findTargetFile = false -%}
