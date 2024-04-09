@@ -3,7 +3,7 @@
 
 {%- assign targetVer = include.ver | strip -%}
 {%- if targetVer contains "latest version" -%}
-        {%- assign targetVer = "10000" -%}
+        {%- assign targetVer = "100000" -%}
 {%- endif -%}
 {%- if targetVer contains "_" -%}
         {%- assign targetVer = targetVer | split: "_" | first -%}
@@ -11,11 +11,11 @@
 
 {%- assign nearestFile = "" -%}
 {%- assign findTargetFile = false -%}
-{%- assign nearestVer = "10000" -%}
-{%- assign nearestVerDiff = 10000 -%}
+{%- assign nearestVer = "100000" -%}
+{%- assign nearestVerDiff = 100000 -%}
 
 {%- for treeFile in validTreeFiles -%}
-        {%- assign curTreeFileVer = "10000" -%}
+        {%- assign curTreeFileVer = "100000" -%}
         {%- assign treeFile = treeFile | strip -%}
         {%- assign matchUrl = treeFile -%}
         {%- if treeFile contains '-v' -%}
@@ -28,7 +28,7 @@
                         {%- assign findTargetFile = true -%}
                         {%- break -%}
                 {%- else -%}
-                        {%- assign verDiff = 10000 -%}
+                        {%- assign verDiff = 100000 -%}
                         {%- assign validVer = false -%}
                         {%- assign needCheckSize = true -%}
                         {%- assign targetVerArray = targetVer | split:'.' -%}
