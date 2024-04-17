@@ -35,7 +35,7 @@ var docsLangLatestVersion = {
         cplusplus: "2.2.10",
         xamarin: "1.0.5",
         android: "2.2.10",
-        ios: "2.2.10",
+        ios: "2.2.11",
         javascript: "2.2.10",
     },
     dce: {
