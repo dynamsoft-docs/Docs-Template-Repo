@@ -818,7 +818,7 @@ function getCurrentUrlLang(url, needFilterLang=false) {
             if (reporType == "mobile" && url.split("/docs/mobile/").length > 1) {
                 arr = url.split("/docs/mobile/")[1].split("/")
             }
-            if (reporType == "mobile" && ["objectivec-swift", "android", "xamarin", "react-native", "flutter", "cordova"].indexOf(arr[1]) < 0) {
+            if (reporType == "mobile" && ["objectivec-swift", "android", "xamarin", "react-native", "flutter", "cordova", "maui"].indexOf(arr[1]) < 0) {
                 return "objectivec-swift"
             } else if (reporType == "web" || reporType == "js") {
                 return "javascript"

@@ -493,6 +493,9 @@ function getlangText(lang) {
         case 'xamarin':
             langText = 'Xamarin'
             break;
+        case 'maui':
+            langText = 'MAUI'
+            break;
         case 'react-native':
             langText = 'React Native'
             break;

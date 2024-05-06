@@ -9,21 +9,23 @@ var docsLangLatestVersion = {
         android: "10.2.10",
         ios: "10.2.10",
         javascript: "10.2.10",
+        maui: "10.2.200"
     },
     dcv:{
-        core: "2.2.20",
-        cplusplus: "2.2.20",
+        core: "2.2.30",
+        cplusplus: "2.2.30",
         android: "2.2.10",
         ios: "2.2.11",
         javascript: "2.2.10",
         xamarin: "1.0.5",
         flutter: "1.2.2",
         cordova: "1.0.5",
-        reactNative: "1.1.12"
+        reactNative: "1.1.12",
+        maui: "2.2.300"
     },
     dlr: {
-        core: "3.2.20",
-        cplusplus: "3.2.20",
+        core: "3.2.30",
+        cplusplus: "3.2.30",
         java: "2.0.0",
         dotnet: "2.0.0",
         android: "3.0.20",
@@ -50,5 +52,6 @@ var docsLangLatestVersion = {
         android: "2.2.10",
         ios: "2.2.10",
         javascript: "2.2.10",
+        maui: "2.2.110"
     }
 }

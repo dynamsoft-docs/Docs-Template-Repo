@@ -557,7 +557,7 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
                 // link product & link language
                 var linkProduct = getCurrentUrlProductName(originHref)
                 var linkLang = getCurrentUrlLang(originHref, true)
-                var dceLang = ["cordova", "xamarin", "flutter", "react-native"]
+                var dceLang = ["cordova", "xamarin", "flutter", "react-native", "maui"]
                 if (isCoreDocs && (linkLang && linkProduct == productName || linkProduct == 'dce' && dceLang.includes(linkLang))) {
                     if (linkLang && linkProduct == productName) { // core-> normal lang 
                         window.open(`${originHref}${currentVersion=='latest' ? '' : (queryIndex > 0 ? '&ver=' + currentVersion : '?ver=' + currentVersion)}${anchorVal}`); 
@@ -1315,7 +1315,7 @@ function getRequestNewPageVersion(linkUrl) {
             if (curVersion == "latest") {
                 var searchLang = queryLang
                 var productName = getCurrentUrlProductName(linkUrl)
-                var dceLang = ["cordova", "xamarin", "flutter", "react-native"]
+                var dceLang = ["cordova", "xamarin", "flutter", "react-native", "maui"]
                 var langLV = getProductLangLatestVersion(dceLang.includes(searchLang) && productName != "dcv" ? "dcv" : productName, searchLang)
                 var coreLV = getProductLangLatestVersion(getCurrentUrlProductName(linkUrl), "core")
                 if (getFormatVal(langLV) < getFormatVal(coreLV)) {
