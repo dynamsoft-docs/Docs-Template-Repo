@@ -8,11 +8,11 @@ var docsLangLatestVersion = {
         dotnet: "9.6.40",
         android: "10.2.10",
         ios: "10.2.10",
-        javascript: "10.2.10",
+        javascript: "10.2.10"
     },
     dcv:{
-        core: "2.2.20",
-        cplusplus: "2.2.20",
+        core: "2.2.30",
+        cplusplus: "2.2.30",
         android: "2.2.10",
         ios: "2.2.11",
         javascript: "2.2.10",
@@ -22,8 +22,8 @@ var docsLangLatestVersion = {
         reactNative: "1.1.12"
     },
     dlr: {
-        core: "3.2.20",
-        cplusplus: "3.2.20",
+        core: "3.2.30",
+        cplusplus: "3.2.30",
         java: "2.0.0",
         dotnet: "2.0.0",
         android: "3.0.20",
@@ -49,6 +49,6 @@ var docsLangLatestVersion = {
         cplusplus: "2.2.10",
         android: "2.2.10",
         ios: "2.2.10",
-        javascript: "2.2.10",
+        javascript: "2.2.10"
     }
 }
