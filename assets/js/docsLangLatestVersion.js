@@ -8,8 +8,7 @@ var docsLangLatestVersion = {
         dotnet: "9.6.40",
         android: "10.2.10",
         ios: "10.2.10",
-        javascript: "10.2.10",
-        maui: "10.2.200"
+        javascript: "10.2.10"
     },
     dcv:{
         core: "2.2.30",
@@ -20,8 +19,7 @@ var docsLangLatestVersion = {
         xamarin: "1.0.5",
         flutter: "1.2.2",
         cordova: "1.0.5",
-        reactNative: "1.1.12",
-        maui: "2.2.300"
+        reactNative: "1.1.12"
     },
     dlr: {
         core: "3.2.30",
@@ -51,7 +49,6 @@ var docsLangLatestVersion = {
         cplusplus: "2.2.10",
         android: "2.2.10",
         ios: "2.2.10",
-        javascript: "2.2.10",
-        maui: "2.2.110"
+        javascript: "2.2.10"
     }
 }
