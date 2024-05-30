@@ -5,7 +5,7 @@ var docsLangLatestVersion = {
         c: "9.6.40",
         java: "9.6.40",
         python: "9.6.40",
-        dotnet: "9.6.40",
+        dotnet: "10.2.10",
         android: "10.2.10",
         ios: "10.2.10",
         javascript: "10.2.10"
@@ -14,6 +14,7 @@ var docsLangLatestVersion = {
         core: "2.2.30",
         cplusplus: "2.2.30",
         android: "2.2.10",
+        dotnet: "2.2.30",
         ios: "2.2.11",
         javascript: "2.2.10",
         xamarin: "1.0.5",
@@ -25,7 +26,7 @@ var docsLangLatestVersion = {
         core: "3.2.30",
         cplusplus: "3.2.30",
         java: "2.0.0",
-        dotnet: "2.0.0",
+        dotnet: "3.2.30",
         android: "3.0.20",
         ios: "3.0.20",
         javascript: "3.0.30",
@@ -33,6 +34,7 @@ var docsLangLatestVersion = {
     ddn: {
         core: "2.2.10",
         cplusplus: "2.2.10",
+        dotnet: "2.2.10",
         xamarin: "1.0.5",
         android: "2.2.10",
         ios: "2.2.11",
@@ -47,6 +49,7 @@ var docsLangLatestVersion = {
     dcp: {
         core: "2.2.10",
         cplusplus: "2.2.10",
+        dotnet: "2.2.20",
         android: "2.2.10",
         ios: "2.2.10",
         javascript: "2.2.10"
