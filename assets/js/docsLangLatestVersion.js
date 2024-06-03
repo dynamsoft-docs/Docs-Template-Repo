@@ -6,8 +6,8 @@ var docsLangLatestVersion = {
         java: "9.6.40",
         python: "9.6.40",
         dotnet: "10.2.10",
-        android: "10.2.10",
-        ios: "10.2.10",
+        android: "10.2.11",
+        ios: "10.2.11",
         javascript: "10.2.10"
     },
     dcv:{
@@ -18,17 +18,17 @@ var docsLangLatestVersion = {
         ios: "2.2.11",
         javascript: "2.2.10",
         xamarin: "1.0.5",
-        flutter: "1.2.2",
+        flutter: "1.3.0",
         cordova: "1.0.5",
-        reactNative: "1.1.12"
+        reactNative: "1.1.14"
     },
     dlr: {
         core: "3.2.30",
         cplusplus: "3.2.30",
         java: "2.0.0",
         dotnet: "3.2.30",
-        android: "3.0.20",
-        ios: "3.0.20",
+        android: "3.2.30",
+        ios: "3.2.30",
         javascript: "3.0.30",
     },
     ddn: {
@@ -36,7 +36,7 @@ var docsLangLatestVersion = {
         cplusplus: "2.2.10",
         dotnet: "2.2.10",
         xamarin: "1.0.5",
-        android: "2.2.10",
+        android: "2.2.11",
         ios: "2.2.11",
         javascript: "2.2.10",
     },
@@ -50,7 +50,7 @@ var docsLangLatestVersion = {
         core: "2.2.10",
         cplusplus: "2.2.10",
         dotnet: "2.2.20",
-        android: "2.2.10",
+        android: "2.2.11",
         ios: "2.2.10",
         javascript: "2.2.10"
     }
