@@ -580,7 +580,7 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
                     } else {
                         // e.g. core to dcv..., 
                         // e.g. dbr文档中打开 dlr链接，注意查找到dlr相对于dbr的版本号
-                        let hrefVal_ProductVersion = getLinkVersion(currentVersion, originHref, productName, lang)
+                        let hrefVal_ProductVersion = getLinkVersion(currentVersion, originHref, productName, lang, linkProduct)
                         if (hrefVal_ProductVersion == -1) {
                             hrefVal_ProductVersion = currentVersion
                         }
