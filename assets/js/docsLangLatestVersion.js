@@ -41,9 +41,9 @@ var docsLangLatestVersion = {
         javascript: "2.2.10",
     },
     dce: {
-        core: "4.2.0",
-        android: "4.2.0",
-        ios: "4.2.1",
+        core: "4.2.10",
+        android: "4.2.10",
+        ios: "4.2.10",
         javascript: "4.0.2",
     },
     dcp: {
