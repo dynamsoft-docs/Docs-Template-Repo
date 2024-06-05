@@ -1008,12 +1008,14 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
 }
 
 function findCurLinkOnFullTree(aTag, paramLink, needh3=false, onlyLoadContent=false, isRequestNewPage = false) {
+    console.log(aTag)
     var fullTreeATags = $("#fullTreeMenuListContainer").find("a")
     var targetHref = aTag.href.toLowerCase()
     var curDocUrl = document.URL.toLowerCase()
+    console.log(fullTreeATags)
     targetHref = targetHref.indexOf("?") > 0 ? targetHref.split("?")[0] : (targetHref.indexOf("#") > 0 ? targetHref.split("#")[0] : targetHref) 
     curDocUrl = curDocUrl.indexOf("?") > 0 ? curDocUrl.split("?")[0] : (curDocUrl.indexOf("#") > 0 ? curDocUrl.split("#")[0] : curDocUrl)
-
+    console.log(targetHref, curDocUrl)
     if (curDocUrl == targetHref && (aTag.href.split("#").length > 1 || document.URL.split("#").length > 1) && !isRequestNewPage) {
         var hash = aTag.href.split("#").length > 1 ? aTag.href.split("#")[1].toLowerCase() : null
         var ulTags = $(aTag).parents("ul")
@@ -1025,12 +1027,16 @@ function findCurLinkOnFullTree(aTag, paramLink, needh3=false, onlyLoadContent=fa
         !onlyLoadContent&&history.pushState(null, null, paramLink)
     } else {
         var flag = false
+        targetHref = targetHref.replace(/\/index-v[0-9]+[^\/]*.html/g,"/");
+        targetHref = targetHref.replace(/-v[0-9]+[^\/]*\//g,"/");
+        targetHref = targetHref.replace(/-v[0-9]+[^\/]*.html/g,".html");
         for(var i=0; i<fullTreeATags.length; i++) {
             var searchHref = fullTreeATags[i].href
-            searchHref = searchHref.indexOf("index.html") > 0 ? searchHref.replace("index.html", "") : searchHref
-            targetHref = targetHref.indexOf("index.html") > 0 ? targetHref.replace("index.html", "") : targetHref
+            searchHref = searchHref.replace(/\/index-v[0-9]+[^\/]*.html/g,"/");
+            searchHref = searchHref.replace(/-v[0-9]+[^\/]*\//g,"/");
+            searchHref = searchHref.replace(/-v[0-9]+[^\/]*.html/g,".html");
             searchHref = searchHref.indexOf("?") > 0 ? searchHref.split("?")[0] : (searchHref.indexOf("#") > 0 ? searchHref.split("#")[0] : searchHref) 
-            
+            console.log(searchHref, targetHref, searchHref == targetHref)
             if (searchHref && searchHref.toLowerCase() == targetHref.toLowerCase()) {
                 // item is visible
                 if (fullTreeATags[i].offsetParent !== null) {
