@@ -1027,12 +1027,14 @@ function findCurLinkOnFullTree(aTag, paramLink, needh3=false, onlyLoadContent=fa
         targetHref = targetHref.replace(/\/index-v[0-9]+[^\/]*.html/g,"/");
         targetHref = targetHref.replace(/-v[0-9]+[^\/]*\//g,"/");
         targetHref = targetHref.replace(/-v[0-9]+[^\/]*.html/g,".html");
+        targetHref = targetHref.indexOf("index.html") > 0 ? targetHref.replace("index.html", "") : targetHref
         for(var i=0; i<fullTreeATags.length; i++) {
             var searchHref = fullTreeATags[i].href
             searchHref = searchHref.replace(/\/index-v[0-9]+[^\/]*.html/g,"/");
             searchHref = searchHref.replace(/-v[0-9]+[^\/]*\//g,"/");
             searchHref = searchHref.replace(/-v[0-9]+[^\/]*.html/g,".html");
             searchHref = searchHref.indexOf("?") > 0 ? searchHref.split("?")[0] : (searchHref.indexOf("#") > 0 ? searchHref.split("#")[0] : searchHref) 
+            searchHref = searchHref.indexOf("index.html") > 0 ? searchHref.replace("index.html", "") : searchHref
             if (searchHref && searchHref.toLowerCase() == targetHref.toLowerCase()) {
                 // item is visible
                 if (fullTreeATags[i].offsetParent !== null) {
