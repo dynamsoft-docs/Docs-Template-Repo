@@ -311,15 +311,15 @@ ul.disc>li p:hover {
 }
 
 #docHead {
-    position: fixed;
+    position: sticky;
     z-index: 12;
-    top: 150px;
-    padding: 20px 0 20px 0;
+    top: 70px!important;
+    padding: 20px;
     margin-top: 0px;
 }
 
 .noSubMenuDoc #docHead {
-    top: 80px;
+    /* top: 80px; */
 }
 
 #docHead .crumbsBox {
@@ -471,7 +471,7 @@ ul.disc>li p:hover {
 }
 
 .markdown-body {
-    margin-top: 66px;
+    margin-top: 0;
     box-sizing: border-box;
     min-height: auto;
     padding-bottom: 50px;
@@ -640,7 +640,7 @@ ul.disc>li p:hover {
 
 .sideBar,
 .docContainer {
-    padding-top: 60px;
+    /* padding-top: 60px; */
     visibility: hidden;
 }
 
@@ -659,7 +659,7 @@ ul.disc>li p:hover {
 }
 
 .docContainer {
-    padding-top: 70px;
+    /* padding-top: 70px; */
 }
 
 .dlrDoc #sideBarCnt.sidebar-fixed {
@@ -1021,16 +1021,16 @@ div, .sideBar .mainPage {
 
 @media (max-width: 1679px) {
     #docHead {
-        top: 133px;
-        width: calc(100% - 360px);
+        /* top: 133px; */
+        width: calc(100% - 10px);
     }
 
     .noSubMenuDoc #docHead {
-        top: 73px
+        /* top: 73px */
     }
 
     .dlrDoc #docHead {
-        top: 154px;
+        /* top: 154px; */
     }
 
     .subHeadWrapper {
@@ -1059,7 +1059,7 @@ div, .sideBar .mainPage {
 
     .docContainer {
         width: calc(100% - 280px);
-        padding-top: 72px;
+        /* padding-top: 72px; */
     }
 
     .docContainer .main {
@@ -1118,7 +1118,7 @@ div, .sideBar .mainPage {
 
     /* .container .docContainer .head  .editLinkColour  { padding: 0; } */
     .markdown-body {
-        margin-top: 110px;
+        /* margin-top: 110px; */
     }
 
     #docHead {
@@ -1190,11 +1190,11 @@ div, .sideBar .mainPage {
 
 @media (max-width: 1679px) {
     #docHead {
-        top: 133px;
+        /* top: 133px; */
     }
 
     .dlrDoc #docHead {
-        top: 154px;
+        /* top: 154px; */
     }
 
     .subHeadWrapper {
@@ -1207,7 +1207,7 @@ div, .sideBar .mainPage {
     }
 
     .dlrDoc .docContainer {
-        padding-top: 72px;
+        /* padding-top: 72px; */
     }
 
     .dlrDoc .rightSideMenu.rsm-fixed {
@@ -1256,7 +1256,7 @@ div, .sideBar .mainPage {
     }
 
     .markdown-body {
-        margin-top: 0px !important;
+        /* margin-top: 0px !important; */
     }
 
     
@@ -1269,7 +1269,7 @@ div, .sideBar .mainPage {
 
     .markdown-body {
         min-height: calc(100vh - 378px);
-        margin-top: 40px !important;
+        /* margin-top: 40px !important; */
     }
 
     .rightSideMenu {
@@ -1378,7 +1378,7 @@ div, .sideBar .mainPage {
     }
 
     .markdown-body {
-        margin-top: 20px !important;
+        /* margin-top: 20px !important; */
         min-height: calc(100vh - 348px);
     }
 
@@ -1945,14 +1945,19 @@ i.dbr-white-logo {
 }
 
 /*  Sub Navigation  */
+#CaptureVision, #BarcodeReader, #DocumentNormalizer, #LabelRecognizer,  #WebTwain,  #DocWebCapture {
+    position: sticky;
+    top: 0;
+    z-index: 111;
+}
 .productMenu {
     width: 100%;
     height: 70px;
     font-size: 14px;
     background: #323234;
-    position: fixed;
+    /* position: fixed;
     left: 0;
-    right: 0;
+    right: 0; */
     z-index: 111;
 }
 
@@ -2469,7 +2474,7 @@ i.dbr-white-logo {
 
 /* version style adjust 2021-06-04 */
 .sideBar {
-    padding-top: 132px !important;
+    padding-top: 62px !important;
 }
 
 #sideBarCnt.sidebar-fixed {
@@ -2637,7 +2642,7 @@ i.dbr-white-logo {
 
 @media (max-width: 1679px) {
     .sideBar {
-        padding-top: 134px !important;
+        padding-top: 62px !important;
         max-width: 280px;
     }
 
@@ -3234,7 +3239,7 @@ a#toTop {
     } */
 
     #categoryMenuTree #docHead {
-        left: 360px;
+        left: 330px;
     }
 
     /* #categoryMenuTree #fullTreeMenuListContainer {
@@ -3260,7 +3265,7 @@ a#toTop {
     } */
 
     #categoryMenuTree #docHead {
-        left: 270px;
+        /* left: 270px; */
         display: none;
     }
 
