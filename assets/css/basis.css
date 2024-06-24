@@ -334,6 +334,10 @@ ul.disc>li p:hover {
     text-align: right;
 }
 
+#docHead .iconsBox > span {
+    cursor: pointer;
+}
+
 .dlrDoc .subHeadWrapper {
     width: 100%;
     height: 95px;
