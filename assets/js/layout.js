@@ -1,5 +1,13 @@
 var currentCountry = null;
-$(document).ready(function(){ 
+$(document).ready(function(){
+    var dataTooltipList = $("[data-toggle=tooltip]")
+    for (var i = 0; i < dataTooltipList.length; i++) {
+        var obj = dataTooltipList[i]
+        var parent = $(obj).parent()
+        $(obj).tooltip({
+            container: parent
+        })
+    }
     init();
     getLocation();
     mutationObserverFunc();
@@ -80,6 +88,13 @@ $(document).ready(function(){
     })
 
     $(document).delegate(".rightMenuControlBtn", 'click', function() {
+        $(this).toggleClass("hideMenuIcon")
+        if ($(this).hasClass("hideMenuIcon")) {
+            $(this).find("img").prop("title", "show menu").tooltip("fixTitle").tooltip("show")
+        } else {
+            $(this).find("img").prop("title", "hide menu").tooltip("fixTitle").tooltip("show")
+        }
+        
         $('.docContainer .main, .rightSideMenu, .markdown-body').toggleClass('showRightSideMenu')
     })
 
