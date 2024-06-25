@@ -14,15 +14,15 @@
     <div>
         {%- if page.category -%}
             {%- if page.category == 'js-repo' -%}
-                <a href="{{ site.repositoryUrlJS }}/{{ page.path | strip }}" class="editLinkColour"><img src="{{ site.assets }}/img-icon/Edit-pencil-write-2.svg" width="30px" height="30px" style="vertical-align: middle;"  title="edit document" data-placement="bottom" data-toggle="tooltip" data-html="true" /></a>
+                <a href="{{ site.repositoryUrlJS }}/{{ page.path | strip }}" class="editLinkColour"><img src="{{ site.assets }}/img-icon/Edit-pencil-write-2.svg" width="30px" height="30px" style="vertical-align: middle;"  title="Edit this page" data-placement="bottom" data-toggle="tooltip" data-html="true" /></a>
             {%- elsif page.category == 'mobile-repo' -%}
-                <a href="{{ site.repositoryUrlMobile }}/{{ page.path | strip }}" class="editLinkColour"><img src="{{ site.assets }}/img-icon/Edit-pencil-write-2.svg" width="30px" height="30px" style="vertical-align: middle;"  title="edit document" data-placement="bottom" data-toggle="tooltip" data-html="true" /></a>
+                <a href="{{ site.repositoryUrlMobile }}/{{ page.path | strip }}" class="editLinkColour"><img src="{{ site.assets }}/img-icon/Edit-pencil-write-2.svg" width="30px" height="30px" style="vertical-align: middle;"  title="Edit this page" data-placement="bottom" data-toggle="tooltip" data-html="true" /></a>
             {%- else -%}
-                <a href="{{ site.repositoryUrl }}/{{ page.path | strip }}" class="editLinkColour"><img src="{{ site.assets }}/img-icon/Edit-pencil-write-2.svg" width="30px" height="30px" style="vertical-align: middle;" title="edit document" data-placement="bottom" data-toggle="tooltip" data-html="true"  /></a>
+                <a href="{{ site.repositoryUrl }}/{{ page.path | strip }}" class="editLinkColour"><img src="{{ site.assets }}/img-icon/Edit-pencil-write-2.svg" width="30px" height="30px" style="vertical-align: middle;" title="Edit this page" data-placement="bottom" data-toggle="tooltip" data-html="true"  /></a>
             {%- endif -%}
         {%- else -%}
-            <a href="{{ site.repositoryUrl }}/{{ page.path | strip }}" class="editLinkColour"><img src="{{ site.assets }}/img-icon/Edit-pencil-write-2.svg" width="30px" height="30px" style="vertical-align: middle;" title="edit document" data-placement="bottom" data-toggle="tooltip" data-html="true"  /></a>
+            <a href="{{ site.repositoryUrl }}/{{ page.path | strip }}" class="editLinkColour"><img src="{{ site.assets }}/img-icon/Edit-pencil-write-2.svg" width="30px" height="30px" style="vertical-align: middle;" title="Edit this page" data-placement="bottom" data-toggle="tooltip" data-html="true"  /></a>
         {%- endif -%}
-        <span class="rightMenuControlBtn" style="margin-left: 15px;"><img src="{{ site.assets }}/img-icon/Menu-navigation-menu-4.svg" width="30px" height="30px" style="vertical-align: middle;"  title="hide menu" data-placement="bottom" data-toggle="tooltip" data-html="true" /></span>
+        <span class="rightMenuControlBtn" style="margin-left: 15px;"><img src="{{ site.assets }}/img-icon/Menu-navigation-menu-4.svg" width="30px" height="30px" style="vertical-align: middle;"  title="Collapse Sidebar" data-placement="bottom" data-toggle="tooltip" data-html="true" /></span>
     </div>
 </div>

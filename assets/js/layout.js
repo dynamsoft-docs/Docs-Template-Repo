@@ -91,9 +91,9 @@ $(function() {
     $(document).delegate(".rightMenuControlBtn", 'click', function() {
         $(this).toggleClass("hideMenuIcon")
         if ($(this).hasClass("hideMenuIcon")) {
-            $(this).find("img").prop("title", "show menu").tooltip("fixTitle").tooltip("show")
+            $(this).find("img").prop("title", "Show Sidebar").tooltip("fixTitle").tooltip("show")
         } else {
-            $(this).find("img").prop("title", "hide menu").tooltip("fixTitle").tooltip("show")
+            $(this).find("img").prop("title", "Collapse Sidebar").tooltip("fixTitle").tooltip("show")
         }
         
         $('.docContainer .main, .rightSideMenu, .markdown-body').toggleClass('showRightSideMenu')
