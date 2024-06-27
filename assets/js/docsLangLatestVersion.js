@@ -27,7 +27,7 @@ var docsLangLatestVersion = {
     dlr: {
         core: "3.2.32",
         cplusplus: "3.2.30",
-        java: "2.0.0",
+        java: "2.2.10",
         dotnet: "3.2.32",
         android: "3.2.30",
         ios: "3.2.30",
