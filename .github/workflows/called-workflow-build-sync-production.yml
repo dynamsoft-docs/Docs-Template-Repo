@@ -32,10 +32,14 @@ jobs:
           # cd DocHome && bundle install && bundle exec jekyll build
           cd DocHome && bundle exec jekyll build
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '16'
+        
       - name: Sync files
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
-          node-version: '16'
           server: ${{ secrets.FTP_DYNAMSOFT_LOCAL_SERVER }}
           username: ${{ secrets.FTP_DYNAMSOFT_LOCAL_USER }}
           password: ${{ secrets.FTP_DYNAMSOFT_LOCAL_PASSWORD }}
