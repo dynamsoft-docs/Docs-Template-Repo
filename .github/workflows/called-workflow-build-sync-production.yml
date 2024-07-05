@@ -22,7 +22,7 @@ jobs:
     steps:
       # Runs a set of commands using the runners shell
       - name: Set up Node.js 16
-        run: echo "${{ runner.temp }}/../../externals/node16/bin" >> ${{ GITHUB_PATH }}
+        run: echo "${{ runner.temp }}/../../externals/node16/bin" >> $GITHUB_PATH
         
       - name: Build the full site - main
         run: |
