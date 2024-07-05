@@ -21,6 +21,9 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Runs a set of commands using the runners shell
+      - name: Set up Node.js 16
+        run: echo "${{ runner.temp }}/../../externals/node16/bin" >> ${{ GITHUB_PATH }}
+        
       - name: Build the full site - main
         run: |
           cd ${{ runner.temp }}
@@ -31,11 +34,6 @@ jobs:
           cp -rfp ./Docs-Template-Repo/* ./DocHome/
           # cd DocHome && bundle install && bundle exec jekyll build
           cd DocHome && bundle exec jekyll build
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '16'
         
       - name: Sync files
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
