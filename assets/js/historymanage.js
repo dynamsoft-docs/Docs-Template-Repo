@@ -33,9 +33,6 @@ async function UrlReplace()
     }
 
     var productVersion = getUrlVars(docUrl)[product]
-    if (product && product != docProduct && productVersion == undefined && ver == undefined) {
-        productVersion = "latest"
-    }
     if (matchVer == undefined && (ver != undefined || productVersion != undefined)) {
         if (product != undefined && product != docProduct && productVersion == undefined && ver != undefined) {
             productVersion = getLinkVersion(ver, docUrl, product, getUrlVars(docUrl)["lang"] ? getUrlVars(docUrl)["lang"] : 'core', docProduct)
@@ -80,7 +77,6 @@ function RedirToGivenVersionPageForDCV(pageVer, docVer) {
     var bestVerIndex = -1;
     var verDiff = -1;
     var curVer = pageVer;
-    var bestVersion = pageVer;
     var anchorVal = "";
     var historyList = $(".otherVersions");
 
@@ -495,6 +491,7 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
             }
         }
     }
+
     hrefVal = hrefVal + productVar
     // #endregion
 
