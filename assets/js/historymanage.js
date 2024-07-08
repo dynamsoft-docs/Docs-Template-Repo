@@ -33,6 +33,9 @@ async function UrlReplace()
     }
 
     var productVersion = getUrlVars(docUrl)[product]
+    if (product && product != docProduct && productVersion == undefined && ver == undefined) {
+        productVersion = "latest"
+    }
     if (matchVer == undefined && (ver != undefined || productVersion != undefined)) {
         if (product != undefined && product != docProduct && productVersion == undefined && ver != undefined) {
             productVersion = getLinkVersion(ver, docUrl, product, getUrlVars(docUrl)["lang"] ? getUrlVars(docUrl)["lang"] : 'core', docProduct)

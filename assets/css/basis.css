@@ -1945,7 +1945,7 @@ i.dbr-white-logo {
 }
 
 /*  Sub Navigation  */
-#CaptureVision, #BarcodeReader, #DocumentNormalizer, #LabelRecognizer,  #WebTwain,  #DocWebCapture, #CodeParser, #CameraEnhancer {
+#CaptureVision, #BarcodeReader, #DocumentNormalizer, #LabelRecognizer,  #WebTwain,  #DocWebCapture, #CodeParser, #CameraEnhancer, #DocumentViewer{
     position: sticky;
     top: 0;
     z-index: 111;
