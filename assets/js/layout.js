@@ -615,6 +615,15 @@ function init() {
             }
         }
     }
+
+    var queryProduct = getUrlVars(document.URL)["product"] ? getUrlVars(document.URL)["product"] : getCurrentUrlProductName(document.URL)
+    var queryLang = getCurrentUrlLang(document.URL, true)
+    var currentVersion = $(".currentVersion").text().toLowerCase()
+    currentVersion = currentVersion.indexOf("latest version") >= 0 ? "latest" : (currentVersion.replace("version ", ""))
+    var majorVersion = currentVersion != "latest" ? Number(currentVersion.split(".")[0]) : "latest"
+    if (queryProduct == "dbr" && majorVersion != "latest" && majorVersion <= 9 && $("#versionNote").length == 0) {
+        loadOldVersionNotes(queryProduct, queryLang);
+    }
 }
 
 function initFoldPanel() {
@@ -685,4 +694,16 @@ function mutationObserverFunc() {
 
 function closeThanksDownloading() {
     $(".dbrThanksDownloading").hide()
+}
+
+function loadOldVersionNotes(product, lang) {
+    let productCurrentVersion = $(".currentVersion").text().toLowerCase()
+    productCurrentVersion = productCurrentVersion.indexOf("latest version") >= 0 ? "latest" : (productCurrentVersion.replace("version ", ""))
+    var productLatestVersion = getProductLangLatestVersion(product, lang)
+    var docsHomePage = getDocumentationLink(product, lang)
+    console.log(product, lang, docsHomePage)
+    let noteHtml = `
+        <div id="versionNote" style="width: 100%; padding: 20px; background: #b42727; color: #ffffff;border-radius: 5px;">This is the archived documentation for <span id="versionNoteOldVersion">${productCurrentVersion}</span>. If you are using the latest version<span id="versionNoteLatestVersion"> ${productLatestVersion}</span>, please visit <a class="noVersionAdd" href="${docsHomePage}" style="color: #ffffff;text-decoration: underline !important;">this link</a>.
+    `
+    $(".markdown-body").prepend(noteHtml)
 }
