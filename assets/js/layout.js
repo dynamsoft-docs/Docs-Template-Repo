@@ -703,7 +703,7 @@ function loadOldVersionNotes(product, lang) {
     var docsHomePage = getDocumentationLink(product, lang)
     console.log(product, lang, docsHomePage)
     let noteHtml = `
-        <div id="versionNote" style="width: 100%; padding: 20px; background: #b42727; color: #ffffff;border-radius: 5px;">This is the archived documentation for <span id="versionNoteOldVersion">${productCurrentVersion}</span>. If you are using the latest version<span id="versionNoteLatestVersion"> ${productLatestVersion}</span>, please visit <a class="noVersionAdd" href="${docsHomePage}" style="color: #ffffff;text-decoration: underline !important;">this link</a>.
+        <div id="versionNote" style="width: 100%; padding: 20px; background: #b42727; color: #ffffff;border-radius: 5px;">This is the archived documentation for <span id="versionNoteOldVersion">${productCurrentVersion}</span>. If you are using the latest version<span id="versionNoteLatestVersion"> ${productLatestVersion}</span>, please visit <a class="noVersionAdd refreshLink" href="${docsHomePage}" style="color: #ffffff;text-decoration: underline !important;">this link</a>.
     `
     $(".markdown-body").prepend(noteHtml)
 }
