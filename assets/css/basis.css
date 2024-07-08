@@ -1234,7 +1234,7 @@ div, .sideBar .mainPage {
         padding-right: 36px;
         width: calc(50% - 175px);
         cursor: pointer;
-        margin-top: 72px;
+        margin-top: 0px;
     }
 
     .noSubMenuDoc .sideBarIcon {

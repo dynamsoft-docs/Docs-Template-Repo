@@ -9,6 +9,12 @@ async function UrlReplace()
     var matchVer = getUrlVars(docUrl)["matchVer"];
     var product = getUrlVars(docUrl)["product"];
     var docProduct = getCurrentUrlProductName();
+    var productVersion = product ? getUrlVars(docUrl)[product] : null
+
+    if (docProduct && product && docProduct == "dcv" && docProduct != product && ver==undefined && productVersion == undefined) {
+        ver = "latest"
+        docUrl = docUrl.replace("product=" + product, "product=" + product + "&ver=latest")
+    }
 
     if (ver != undefined && ver != "latest") {
         if (product == undefined && docProduct == "dcv" && matchVer == "true") {
@@ -32,7 +38,7 @@ async function UrlReplace()
         }
     }
 
-    var productVersion = getUrlVars(docUrl)[product]
+    productVersion = getUrlVars(docUrl)[product]
     if (matchVer == undefined && (ver != undefined || productVersion != undefined)) {
         if (product != undefined && product != docProduct && productVersion == undefined && ver != undefined) {
             productVersion = getLinkVersion(ver, docUrl, product, getUrlVars(docUrl)["lang"] ? getUrlVars(docUrl)["lang"] : 'core', docProduct)
