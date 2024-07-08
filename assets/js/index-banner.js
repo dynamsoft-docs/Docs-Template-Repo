@@ -892,7 +892,7 @@ function getDocumentationLink(product, lang) {
         lang = lang == "js" ? "javascript" : lang
         lang = ['objective-c', 'objc', 'swift', 'ios'].indexOf(lang) >= 0 ? "objectivec-swift" : lang
         lang = ['cpp', 'c++'].indexOf(lang) >= 0 ? "cplusplus" : lang
-        return "/" + getDoumentName(product) + '/docs/'+ reporType + "/programming/" + lang
+        return "/" + getDoumentName(product) + '/docs/'+ reporType + "/programming/" + lang + "/"
     } else {
         return "/" + getDoumentName(product) + '/docs/'+ reporType + "/introduction/"
     }
