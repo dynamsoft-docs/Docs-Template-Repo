@@ -77,13 +77,15 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
         {
             allHerf1[i].onclick = function(){
                 if (!$(this).hasClass("refreshLink") && $(this).parents(".sideBar").length > 0 && $("#articleContent").length > 0) {
-                  addParam(this, verArray[0], 'sidebar', needh3); 
+                    addParam(this, verArray[0], 'sidebar', needh3); 
                 } else if (!$(this).hasClass("refreshLink") && $(this).parents(".markdown-body").length > 0 && $("#articleContent").length > 0) {
                     addParam(this, verArray[0], 'docContainer', needh3); 
                 } else if (!$(this).hasClass("refreshLink") && $(this).parents("#AutoGenerateSidebar").length > 0) {
                     addParam(this, verArray[0], 'rightMenuContainer', needh3); 
                 } else if (!$(this).hasClass("refreshLink") && !$(this).hasClass("noVersionAdd")) {
-                  addParam(this, verArray[0]); 
+                    addParam(this, verArray[0]); 
+                } else {
+                    return true
                 }
                 return false;
             };
@@ -244,6 +246,8 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                                 addParam(this, verArray[0], 'rightMenuContainer', needh3); 
                             } else if (!$(this).hasClass("refreshLink") && !$(this).hasClass("noVersionAdd")) {
                                 addParam(this, verArray[0]); 
+                            } else {
+                                return true
                             }
                             return false;
                         };
