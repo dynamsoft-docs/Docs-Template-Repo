@@ -82,7 +82,7 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                     addParam(this, verArray[0], 'docContainer', needh3); 
                 } else if (!$(this).hasClass("refreshLink") && $(this).parents("#AutoGenerateSidebar").length > 0) {
                     addParam(this, verArray[0], 'rightMenuContainer', needh3); 
-                } else {
+                } else if (!$(this).hasClass("refreshLink") && !$(this).hasClass("noVersionAdd")) {
                   addParam(this, verArray[0]); 
                 }
                 return false;
@@ -242,7 +242,7 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                                 addParam(this, verArray[0], 'docContainer', needh3); 
                             } else if (!$(this).hasClass("refreshLink") && $(this).parents("#AutoGenerateSidebar").length > 0) {
                                 addParam(this, verArray[0], 'rightMenuContainer', needh3); 
-                            } else {
+                            } else if (!$(this).hasClass("refreshLink") && !$(this).hasClass("noVersionAdd")) {
                                 addParam(this, verArray[0]); 
                             }
                             return false;
