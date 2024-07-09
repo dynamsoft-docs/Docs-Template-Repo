@@ -257,3 +257,64 @@ function showSelectMultiPanel(nextSiblings, findItemIndex, needh3) {
   //   }
   // }
 }
+
+function getCurrentUrlLang(url, needFilterLang=false) {
+  if (getUrlVars(url)["lang"] || getUrlVars(url)["src"]) {
+      var result = ""
+      if (!getUrlVars(url)["lang"]) {
+          result = getUrlVars(url)["src"]
+      } else {
+          result = getUrlVars(url)["lang"].toLowerCase().trim().split(",")[0]
+      }
+      if (result == "js") {
+          result = "javascript"
+      }
+      if (result == "ios" || result == "objective-c" || result == "objc" || result == "swift") {
+          result = "objectivec-swift"
+      }
+      if (result == "c++" || result == "cpp") {
+          result = "cplusplus"
+      }
+      if (result == "c") {
+          result = "c"
+      }
+      if(result == 'csharp') {
+          result = "dotnet"
+      }
+      return result
+  }
+  let reporType = getCurrentUrlRepoType(url)
+  if (reporType == "server" || reporType == "mobile" || needFilterLang) {
+      if (url.indexOf("/c-cplusplus/") > 0) {
+          if (getUrlVars(url)["src"]) {
+              var src = getUrlVars(url)["src"].toLowerCase().trim()
+              if (src == "c") {
+                  return "c"
+              } else if (src == "cplusplus" || src == "cpp") {
+                  return "cplusplus"
+              } else {
+                  return "c"
+              }
+          } else {
+              return "c"
+          }
+      } else {
+          var arr = []
+          if (reporType == "server" && url.split("/docs/server/").length > 1) {
+              arr = url.split("/docs/server/")[1].split("/")
+          }
+          if (reporType == "mobile" && url.split("/docs/mobile/").length > 1) {
+              arr = url.split("/docs/mobile/")[1].split("/")
+          }
+          if (reporType == "mobile" && ["objectivec-swift", "android", "xamarin", "react-native", "flutter", "cordova", "maui"].indexOf(arr[1]) < 0) {
+              return "objectivec-swift"
+          } else if (reporType == "web" || reporType == "js") {
+              return "javascript"
+          } else {
+              return arr.length > 1 ? arr[1] : ''
+          }
+      }
+  } else {
+      return ""
+  }
+}

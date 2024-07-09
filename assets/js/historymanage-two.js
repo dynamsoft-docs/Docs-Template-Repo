@@ -396,6 +396,25 @@ function findNearestVersion(ver) {
     if (verDiff) {return bestVer} else {return "latest"}
 }
 
+function getCurrentUrlProductName(url=null) {
+    url = url ? url.replace("https://", "") : null
+    url = url ? url.replace("http://", "") : null
+    var currentPath = url ? url.replace(url.split('/')[0], "") : document.location.pathname
+    currentPath = currentPath.slice(1, currentPath.length)
+    var productParam = currentPath.split('/')[0]
+    switch (productParam) {
+        case 'web-twain': return 'dwt';
+        case 'barcode-reader': return 'dbr';
+        case 'label-recognition': return 'dlr';
+        case 'camera-enhancer': return 'dce';
+        case 'code-parser': return 'dcp';
+        case 'document-normalizer': return 'ddn';
+        case 'capture-vision': return 'dcv';
+        case 'mobile-web-capture': return 'mwc';
+        default: return '';
+    }
+}
+
 
 window.addEventListener("popstate", function(e) {
     findCurLinkOnFullTree({href: location.href}, location.href, true, true)
