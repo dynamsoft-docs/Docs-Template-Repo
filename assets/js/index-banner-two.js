@@ -318,3 +318,19 @@ function getCurrentUrlLang(url, needFilterLang=false) {
       return ""
   }
 }
+
+function getCurrentUrlRepoType(url) {
+  var currentPath = url
+  if (currentPath.includes("/docs/server/")) {
+      return 'server'
+  }
+  if (currentPath.includes("/docs/core/")) {
+      return 'core'
+  }
+  if (currentPath.includes("/docs/mobile/")) {
+      return 'mobile'
+  }
+  if (currentPath.includes("/docs/web/")) {
+      return 'web'
+  }
+}

@@ -617,12 +617,14 @@ function init() {
     }
 
     var queryProduct = getUrlVars(document.URL)["product"] ? getUrlVars(document.URL)["product"] : getCurrentUrlProductName(document.URL)
-    var queryLang = getCurrentUrlLang(document.URL, true)
-    var currentVersion = $(".currentVersion").text().toLowerCase()
-    currentVersion = currentVersion.indexOf("latest version") >= 0 ? "latest" : (currentVersion.replace("version ", ""))
-    var majorVersion = currentVersion != "latest" ? Number(currentVersion.split(".")[0]) : "latest"
-    if (queryProduct == "dbr" && (queryLang == "js" || queryLang == "javascript") && majorVersion != "latest" && majorVersion <= 9 && $("#versionNote").length == 0) {
-        loadOldVersionNotes(queryProduct, queryLang);
+    if (queryProduct == "dbr") {
+        var queryLang = getCurrentUrlLang(document.URL, true)
+        var currentVersion = $(".currentVersion").text().toLowerCase()
+        currentVersion = currentVersion.indexOf("latest version") >= 0 ? "latest" : (currentVersion.replace("version ", ""))
+        var majorVersion = currentVersion != "latest" ? Number(currentVersion.split(".")[0]) : "latest"
+        if ((queryLang == "js" || queryLang == "javascript") && majorVersion != "latest" && majorVersion <= 9 && $("#versionNote").length == 0) {
+            loadOldVersionNotes(queryProduct, queryLang);
+        }
     }
 }
 
