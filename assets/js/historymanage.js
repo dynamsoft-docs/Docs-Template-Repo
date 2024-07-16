@@ -1035,29 +1035,39 @@ function findCurLinkOnFullTree(aTag, paramLink, needh3=false, onlyLoadContent=fa
         targetHref = targetHref.replace(/-v[0-9]+[^\/]*.html/g,".html");
         targetHref = targetHref.indexOf("index.html") > 0 ? targetHref.replace("index.html", "") : targetHref
         for(var i=0; i<fullTreeATags.length; i++) {
-            var searchHref = fullTreeATags[i].href
-            searchHref = searchHref.replace(/\/index-v[0-9]+[^\/]*.html/g,"/");
-            searchHref = searchHref.replace(/-v[0-9]+[^\/]*\//g,"/");
-            searchHref = searchHref.replace(/-v[0-9]+[^\/]*.html/g,".html");
-            searchHref = searchHref.indexOf("?") > 0 ? searchHref.split("?")[0] : (searchHref.indexOf("#") > 0 ? searchHref.split("#")[0] : searchHref) 
-            searchHref = searchHref.indexOf("index.html") > 0 ? searchHref.replace("index.html", "") : searchHref
-            if (searchHref && searchHref.toLowerCase() == targetHref.toLowerCase()) {
-                // item is visible
-                if (fullTreeATags[i].offsetParent !== null) {
-                    flag = true
-                    if ($(fullTreeATags[i]).hasClass("refreshLink")) {
-                        $(fullTreeATags[i]).click()
-                    } else {
-                        RequestNewPage(fullTreeATags[i], paramLink, needh3, null, onlyLoadContent)
-                    }
-                } else {
-                    var objs = $(fullTreeATags[i]).parents("li")
-                    var ifOtherLangTag = false
-                    for(var j=0; j<objs.length; j++) {
-                        if ($(objs[j]).attr("otherlang") != undefined) {
-                            ifOtherLangTag = true
+            if (!flag) {
+                var searchHref = fullTreeATags[i].href
+                searchHref = searchHref.replace(/\/index-v[0-9]+[^\/]*.html/g,"/");
+                searchHref = searchHref.replace(/-v[0-9]+[^\/]*\//g,"/");
+                searchHref = searchHref.replace(/-v[0-9]+[^\/]*.html/g,".html");
+                searchHref = searchHref.indexOf("?") > 0 ? searchHref.split("?")[0] : (searchHref.indexOf("#") > 0 ? searchHref.split("#")[0] : searchHref) 
+                searchHref = searchHref.indexOf("index.html") > 0 ? searchHref.replace("index.html", "") : searchHref
+                if (searchHref && searchHref.toLowerCase() == targetHref.toLowerCase()) {
+                    // item is visible
+                    if (fullTreeATags[i].offsetParent !== null) {
+                        flag = true
+                        if ($(fullTreeATags[i]).hasClass("refreshLink")) {
+                            $(fullTreeATags[i]).click()
+                        } else {
+                            RequestNewPage(fullTreeATags[i], paramLink, needh3, null, onlyLoadContent)
                         }
-                        if (!flag && $(objs[j]).attr("otherlang") == undefined && $(objs[j]).attr("lang") || document.URL.indexOf("/docs/web/") > 0) {
+                    } else {
+                        var objs = $(fullTreeATags[i]).parents("li")
+                        var ifOtherLangTag = false
+                        for(var j=0; j<objs.length; j++) {
+                            if ($(objs[j]).attr("otherlang") != undefined) {
+                                ifOtherLangTag = true
+                            }
+                            if (!flag && ($(objs[j]).attr("otherlang") == undefined && $(objs[j]).attr("lang") || document.URL.indexOf("/docs/web/") > 0)) {
+                                flag = true
+                                if ($(fullTreeATags[i]).hasClass("refreshLink")) {
+                                    $(fullTreeATags[i]).click()
+                                } else {
+                                    RequestNewPage(fullTreeATags[i], paramLink, needh3, null, onlyLoadContent)
+                                }
+                            }
+                        }
+                        if (!ifOtherLangTag && !flag) {
                             flag = true
                             if ($(fullTreeATags[i]).hasClass("refreshLink")) {
                                 $(fullTreeATags[i]).click()
@@ -1066,19 +1076,12 @@ function findCurLinkOnFullTree(aTag, paramLink, needh3=false, onlyLoadContent=fa
                             }
                         }
                     }
-                    if (!ifOtherLangTag && !flag) {
-                        flag = true
-                        if ($(fullTreeATags[i]).hasClass("refreshLink")) {
-                            $(fullTreeATags[i]).click()
-                        } else {
-                            RequestNewPage(fullTreeATags[i], paramLink, needh3, null, onlyLoadContent)
-                        }
-                    }
+                } else if (searchHref.toLowerCase() == targetHref && (fullTreeATags[i]).hasClass("refreshLink")) {
+                    flag = true
+                    $(fullTreeATags[i]).click()
                 }
-            } else if (searchHref.toLowerCase() == targetHref && (fullTreeATags[i]).hasClass("refreshLink")) {
-                flag = true
-                $(fullTreeATags[i]).click()
             }
+            
         }
         if (!flag) {
             // use modal to display page if not in the menu tree

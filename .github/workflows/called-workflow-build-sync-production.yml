@@ -19,10 +19,9 @@ jobs:
     runs-on: [self-hosted, doc-build]
     env:
       ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
-
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Runs a set of commands using the runners shell     
+      # Runs a set of commands using the runners shell
       - name: Build the full site - main
         run: |
           cd ${{ runner.temp }}
@@ -33,7 +32,7 @@ jobs:
           cp -rfp ./Docs-Template-Repo/* ./DocHome/
           # cd DocHome && bundle install && bundle exec jekyll build
           cd DocHome && bundle exec jekyll build
-        
+
       - name: Sync files
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
