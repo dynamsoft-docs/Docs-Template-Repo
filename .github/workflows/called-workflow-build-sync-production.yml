@@ -17,7 +17,8 @@ jobs:
   Build-And-Sync-To-Production:
     # The type of runner that the job will run on
     runs-on: [self-hosted, doc-build]
-
+    env:
+      ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Runs a set of commands using the runners shell
