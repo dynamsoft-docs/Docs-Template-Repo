@@ -229,6 +229,30 @@ jobs:
       doc-url: web-twain/docs
     secrets: inherit
 
+  Update-DDV-On-Main-Change:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
+    with:
+      doc-repo: document-viewer-docs
+      doc-url: document-viewer/docs
+    secrets: inherit
+
+  Update-MWC-On-Main-Change:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
+    with:
+      doc-repo: mobile-web-capture-docs
+      doc-url: mobile-web-capture/docs
+    secrets: inherit
+
+  Update-DLS-On-Main-Change:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
+    with:
+      doc-repo: license-server-docs
+      doc-url: license-server/docs
+    secrets: inherit
+
 
 #  build:
 #    # The type of runner that the job will run on
@@ -240,17 +264,7 @@ jobs:
 #      #- uses: actions/checkout@v2
 #
 #      # Runs a set of commands using the runners shell
-#          
-#      - name: Build DLS Doc
-#        run: |
-#          cd /home/ubuntu
-#          [ ! -d DLSDoc ] && mkdir -p DLSDoc
-#          [ ! -d license-server-docs ] && git clone --depth 1 https://github.com/dynamsoft-docs/license-server-docs.git
-#          cd license-server-docs && git pull && cd .. && cp -rfp ./license-server-docs/* ./DLSDoc/
-#          cp -rfp ./Docs-Template-Repo/* ./DLSDoc/
-#          cd DLSDoc && bundle exec jekyll build
-#          python3 /home/ubuntu/ftp.py /home/ubuntu/DLSDoc/_site/ ./www.dynamsoft.com/license-server/docs/ prod
-          
+#                    
 #      - name: Build DNT Doc
 #        run: |
 #          cd /home/ubuntu
