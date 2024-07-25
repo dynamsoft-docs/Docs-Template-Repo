@@ -794,6 +794,7 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
             $('#crumbs > ul').html($('#crumbs > ul > li').eq(0))
             initCrumbs()
             init()
+            initNoteForOldVersions(otherVersions)
             var preList = $('.markdown-body .highlight pre')
             for (var i=0; i<preList.length; i++) {
                 var iconItem = document.createElement("i")

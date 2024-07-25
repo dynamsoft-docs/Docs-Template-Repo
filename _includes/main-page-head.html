@@ -26,3 +26,7 @@
         <span class="rightMenuControlBtn" style="margin-left: 15px;"><img src="{{ site.assets }}/img-icon/Menu-navigation-menu-4.svg" width="30px" height="30px" style="vertical-align: middle;"  title="Collapse Sidebar" data-placement="bottom" data-toggle="tooltip" data-html="true" /></span>
     </div>
 </div>
+
+{%- if page.latestPageUri -%}
+<input id="latestPageUri" type="hidden" value="{{page.latestPageUri}}" />
+{%- endif -%}
