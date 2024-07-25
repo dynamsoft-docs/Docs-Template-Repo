@@ -10,6 +10,7 @@ $(function() {
     }
 
     init();
+    initNoteForOldVersions();
     //getLocation();
     mutationObserverFunc();
     initPageLayout();
@@ -615,17 +616,6 @@ function init() {
             }
         }
     }
-
-    var queryProduct = getUrlVars(document.URL)["product"] ? getUrlVars(document.URL)["product"] : getCurrentUrlProductName(document.URL)
-    if (queryProduct == "dbr") {
-        var queryLang = getCurrentUrlLang(document.URL, true)
-        var currentVersion = $(".currentVersion").text().toLowerCase()
-        currentVersion = currentVersion.indexOf("latest version") >= 0 ? "latest" : (currentVersion.replace("version ", ""))
-        var majorVersion = currentVersion != "latest" ? Number(currentVersion.split(".")[0]) : "latest"
-        if ((queryLang == "js" || queryLang == "javascript") && majorVersion != "latest" && majorVersion <= 9 && $("#versionNote").length == 0) {
-            loadOldVersionNotes(queryProduct, queryLang);
-        }
-    }
 }
 
 function initFoldPanel() {
@@ -698,14 +688,50 @@ function closeThanksDownloading() {
     $(".dbrThanksDownloading").hide()
 }
 
-function loadOldVersionNotes(product, lang) {
-    let productCurrentVersion = $(".currentVersion").text().toLowerCase()
-    productCurrentVersion = productCurrentVersion.indexOf("latest version") >= 0 ? "latest" : (productCurrentVersion.replace("version ", ""))
-    var productLatestVersion = getProductLangLatestVersion(product, lang)
-    var docsHomePage = getDocumentationLink(product, lang)
-    console.log(product, lang, docsHomePage)
-    let noteHtml = `
-        <div id="versionNote" style="width: 100%; padding: 20px; background: #b42727; color: #ffffff;border-radius: 5px;">This is the archived documentation for <span id="versionNoteOldVersion">${productCurrentVersion}</span>. If you are using the latest version<span id="versionNoteLatestVersion"> ${productLatestVersion}</span>, please visit <a class="noVersionAdd refreshLink" href="${docsHomePage}" style="color: #ffffff;text-decoration: underline !important;">this link</a>.
-    `
-    $(".markdown-body").prepend(noteHtml)
+function initNoteForOldVersions(historyList = null) {
+    var queryProduct = getUrlVars(document.URL)["product"] ? getUrlVars(document.URL)["product"] : getCurrentUrlProductName(document.URL)
+    if (queryProduct == "dbr") {
+        var queryLang = getCurrentUrlLang(document.URL, true)
+        var currentVersion = $(".currentVersion").text().toLowerCase()
+        currentVersion = currentVersion.indexOf("latest version") >= 0 ? "latest" : (currentVersion.replace("version ", ""))
+        var majorVersion = currentVersion != "latest" ? Number(currentVersion.split(".")[0]) : "latest"
+        if ((queryLang == "js" || queryLang == "javascript") && majorVersion != "latest" && majorVersion <= 9) {
+            loadOldVersionNotes(queryProduct, queryLang, historyList);
+        }
+    }
+}
+
+function loadOldVersionNotes(product, lang, historyList = null) {
+    let lastestPageUri = $("#lastestPageUri").val()
+    if (!lastestPageUri || lastestPageUri == "") {
+        let historyLists = historyList? historyList : $("#categoryMenuTree_history .otherVersions li")
+        let flag = false
+        for(let i=0; i<historyLists.length; i++) {
+            let versionText = $(historyLists[i]).find("a").text().toLowerCase()
+            if (versionText.indexOf("latest") >= 0) {
+                lastestPageUri = $(historyLists[i]).find("a")[0].href
+                flag = true
+            }
+        }
+        if (!flag) {
+            lastestPageUri = location.origin + location.pathname
+        }
+    }
+    if (getCurrentUrlProductName(lastestPageUri) != product) {
+        lastestPageUri += ("?product=" + product + "&lang=" + lang)
+    }
+    if (getCurrentUrlProductName(lastestPageUri) == product && getCurrentUrlLang(lastestPageUri, true) != lang) {
+        lastestPageUri += ("?lang=" + lang)
+    }
+    if($("#versionNote").length == 0) {
+        let productCurrentVersion = $(".currentVersion").text().toLowerCase()
+        productCurrentVersion = productCurrentVersion.indexOf("latest version") >= 0 ? "latest" : (productCurrentVersion.replace("version ", ""))
+        var productLatestVersion = getProductLangLatestVersion(product, lang)
+        let noteHtml = `
+            <div id="versionNote" style="width: 100%; padding: 20px; background: #b42727; color: #ffffff;border-radius: 5px;">This is the archived documentation for <span id="versionNoteOldVersion">${productCurrentVersion}</span>. If you are using the latest version<span id="versionNoteLatestVersion"> ${productLatestVersion}</span>, please visit <a class="noVersionAdd refreshLink" href="${lastestPageUri}" style="color: #ffffff;text-decoration: underline !important;">this link</a>.
+        `
+        $(".markdown-body").prepend(noteHtml)
+    } else {
+        $("#versionNote .noVersionAdd").prop("href", lastestPageUri)
+    }
 }
