@@ -689,49 +689,65 @@ function closeThanksDownloading() {
 }
 
 function initNoteForOldVersions(historyList = null) {
-    var queryProduct = getUrlVars(document.URL)["product"] ? getUrlVars(document.URL)["product"] : getCurrentUrlProductName(document.URL)
+    let latestPageUri = $("#latestPageUri").val()
+    let queryProduct = getUrlVars(document.URL)["product"] ? getUrlVars(document.URL)["product"] : getCurrentUrlProductName(document.URL)
     if (queryProduct == "dbr") {
-        var queryLang = getCurrentUrlLang(document.URL, true)
-        var currentVersion = $(".currentVersion").text().toLowerCase()
+        let queryLang = getCurrentUrlLang(document.URL, true)
+        let currentVersion = $(".currentVersion").text().toLowerCase()
         currentVersion = currentVersion.indexOf("latest version") >= 0 ? "latest" : (currentVersion.replace("version ", ""))
-        var majorVersion = currentVersion != "latest" ? Number(currentVersion.split(".")[0]) : "latest"
-        if ((queryLang == "js" || queryLang == "javascript") && majorVersion != "latest" && majorVersion <= 9) {
-            loadOldVersionNotes(queryProduct, queryLang, historyList);
+        let majorVersion = currentVersion != "latest" ? Number(currentVersion.split(".")[0]) : "latest"
+        if ((queryLang == "js" || queryLang == "javascript") && (majorVersion != "latest" && majorVersion <= 9 || latestPageUri && latestPageUri!="")) {
+            loadOldVersionNotes(latestPageUri, queryProduct, queryLang, historyList);
+        } else {
+            $("#versionNote").remove()
         }
     }
 }
 
-function loadOldVersionNotes(product, lang, historyList = null) {
-    let lastestPageUri = $("#lastestPageUri").val()
-    if (!lastestPageUri || lastestPageUri == "") {
+function loadOldVersionNotes(latestPageUri, product, lang, historyList = null) {
+    let isShowVersionNotes = false
+    if (!latestPageUri || latestPageUri == "") {
         let historyLists = historyList? historyList : $("#categoryMenuTree_history .otherVersions li")
         let flag = false
         for(let i=0; i<historyLists.length; i++) {
             let versionText = $(historyLists[i]).find("a").text().toLowerCase()
             if (versionText.indexOf("latest") >= 0) {
-                lastestPageUri = $(historyLists[i]).find("a")[0].href
+                latestPageUri = $(historyLists[i]).find("a")[0].href
                 flag = true
             }
         }
         if (!flag) {
-            lastestPageUri = location.origin + location.pathname
+            latestPageUri = location.origin + location.pathname
+        }
+    } else {
+        isShowVersionNotes = true
+    }
+
+    if (latestPageUri.indexOf(location.origin) >= 0 && latestPageUri.indexOf("/docs/") > 0) {
+        if (getCurrentUrlProductName(latestPageUri) != product) {
+            latestPageUri += ("?product=" + product + "&lang=" + lang)
+        }
+        if (getCurrentUrlProductName(latestPageUri) == product && getCurrentUrlLang(latestPageUri, true) != lang) {
+            latestPageUri += ("?lang=" + lang)
         }
     }
-    if (getCurrentUrlProductName(lastestPageUri) != product) {
-        lastestPageUri += ("?product=" + product + "&lang=" + lang)
-    }
-    if (getCurrentUrlProductName(lastestPageUri) == product && getCurrentUrlLang(lastestPageUri, true) != lang) {
-        lastestPageUri += ("?lang=" + lang)
-    }
+
     if($("#versionNote").length == 0) {
-        let productCurrentVersion = $(".currentVersion").text().toLowerCase()
-        productCurrentVersion = productCurrentVersion.indexOf("latest version") >= 0 ? "latest" : (productCurrentVersion.replace("version ", ""))
-        var productLatestVersion = getProductLangLatestVersion(product, lang)
-        let noteHtml = `
-            <div id="versionNote" style="width: 100%; padding: 20px; background: #b42727; color: #ffffff;border-radius: 5px;">This is the archived documentation for <span id="versionNoteOldVersion">${productCurrentVersion}</span>. If you are using the latest version<span id="versionNoteLatestVersion"> ${productLatestVersion}</span>, please visit <a class="noVersionAdd refreshLink" href="${lastestPageUri}" style="color: #ffffff;text-decoration: underline !important;">this link</a>.
-        `
-        $(".markdown-body").prepend(noteHtml)
+        if (isShowVersionNotes) {
+            let noteHtml = `
+                <div id="versionNote" style="width: 100%; padding: 20px; background: #b42727; color: #ffffff;border-radius: 5px;">This is the archived documentation. For the latest version, please visit <a class="noVersionAdd refreshLink" href="${latestPageUri}" style="color: #ffffff;text-decoration: underline !important;">this link</a>.
+            `
+            $(".markdown-body").prepend(noteHtml)
+        } else {
+            let productCurrentVersion = $(".currentVersion").text().toLowerCase()
+            productCurrentVersion = productCurrentVersion.indexOf("latest version") >= 0 ? "latest" : (productCurrentVersion.replace("version ", ""))
+            let productLatestVersion = getProductLangLatestVersion(product, lang)
+            let noteHtml = `
+                <div id="versionNote" style="width: 100%; padding: 20px; background: #b42727; color: #ffffff;border-radius: 5px;">This is the archived documentation for <span id="versionNoteOldVersion">${productCurrentVersion}</span>. If you are using the latest version<span id="versionNoteLatestVersion"> ${productLatestVersion}</span>, please visit <a class="noVersionAdd refreshLink" href="${latestPageUri}" style="color: #ffffff;text-decoration: underline !important;">this link</a>.
+            `
+            $(".markdown-body").prepend(noteHtml)
+        }
     } else {
-        $("#versionNote .noVersionAdd").prop("href", lastestPageUri)
+        $("#versionNote .noVersionAdd").prop("href", latestPageUri)
     }
 }
