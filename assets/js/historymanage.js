@@ -791,6 +791,23 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
                     $(".rightSideMenu > p").show()
                 }
             }
+
+            let latestPageUri = $(data).find("#latestPageUri")
+            let curPageLatestPageUri = $("#latestPageUri")
+            if (curPageLatestPageUri && curPageLatestPageUri.length > 0) {
+                if (latestPageUri && latestPageUri.length > 0) {
+                    let urlVal = $(latestPageUri).val()
+                    $(curPageLatestPageUri).val(urlVal)
+                } else {
+                    $(curPageLatestPageUri).val("")
+                }
+            } else {
+                if (latestPageUri && latestPageUri.length > 0) {
+                    $("#docHead").append(latestPageUri)
+                }
+            }
+            
+
             $('#crumbs > ul').html($('#crumbs > ul > li').eq(0))
             initCrumbs()
             init()
