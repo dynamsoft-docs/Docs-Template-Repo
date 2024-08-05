@@ -122,11 +122,8 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                 $('#fullTreeMenuListContainer').scrollTop(nodeOffsetTop - treeOffsetTop - lineHeight);
             }
             
-            
-
             navWrap = document.getElementById("fullTreeMenuListContainer");
             var liAry = navWrap.getElementsByTagName("li");
-
             for (var i = 0, len = liAry.length; i < len; i++) {
                 liAry[i].onclick = (function (i) {
                     return function (event) {
@@ -221,17 +218,22 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                 var product = getUrlVars(document.URL)["product"]
                 var productVersion = getUrlVars(document.URL)[product]
                 var curProduct = getCurrentUrlProductName(document.URL)
+                var curLang = getCurrentUrlLang(document.URL, true)
                 if (product && productVersion && curProduct != product) {
                     curPageVersion = (productVersion == 'latest' ? 'latest_version' : productVersion)
                 }
                 version_tree_list = $('#sideBarIframe').contents().find('#version_tree_list ul.version-tree-container');
-                //console.log(version_tree_list, curPageVersion);
                 if (version_tree_list && version_tree_list.length > 0  && curPageVersion) {
                     for(var i = 0; i<version_tree_list.length; i++) {
-                        //console.log($(version_tree_list[i]).attr('id'), 'version_tree_' + curPageVersion);
                         if ($(version_tree_list[i]).attr('id') == 'version_tree_' + curPageVersion) {
-                            //console.log($(version_tree_list[i]).html())
-                            $('#fullTreeMenuListContainer').html($(version_tree_list[i]).html());
+                            $('#fullTreeMenuListContainer').html("");
+                            var objs = $(version_tree_list[i]).find("> li")
+                            for(var j=0; j<objs.length; j++) {
+                                var itemLang = $(objs[j]).attr("lang")
+                                if (!itemLang || itemLang.toLowerCase() == curLang.toLowerCase()) {
+                                    $('#fullTreeMenuListContainer').append($(objs[j]))
+                                }
+                            }
                         }
                     }
                     var allHerf1 = $(".docContainer .content, #docHead, #AutoGenerateSidebar, .sideBar, #crumbs").find("a");
