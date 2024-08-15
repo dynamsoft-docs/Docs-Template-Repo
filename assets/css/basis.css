@@ -348,7 +348,7 @@ ul.disc>li p:hover {
 }
 
 .dlrDoc #docHead {
-    position: fixed;
+    position: sticky;
     z-index: 12;
     top: 150px;
     padding: 20px 0 20px 0;
