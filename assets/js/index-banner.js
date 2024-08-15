@@ -847,6 +847,8 @@ function getDoumentName(product) {
         case 'ddn': return 'document-normalizer';
         case 'dcv': return 'capture-vision';
         case 'mwc': return 'mobile-web-capture';
+        case 'ddv': return 'document-viewer';
+        case 'lts': return 'license-server';
         default: return '';
     }
 }

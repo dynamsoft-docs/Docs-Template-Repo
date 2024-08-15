@@ -1281,6 +1281,8 @@ function getCurrentUrlProductName(url=null) {
         case 'document-normalizer': return 'ddn';
         case 'capture-vision': return 'dcv';
         case 'mobile-web-capture': return 'mwc';
+        case 'document-viewer': return 'ddv';
+        case 'license-server': return 'lts';
         default: return '';
     }
 }

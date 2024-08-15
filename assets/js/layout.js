@@ -689,6 +689,7 @@ function closeThanksDownloading() {
 }
 
 function initNoteForOldVersions(historyList = null) {
+    VideoListener()
     let latestPageUri = $("#latestPageUri").val()
     let queryProduct = getUrlVars(document.URL)["product"] ? getUrlVars(document.URL)["product"] : getCurrentUrlProductName(document.URL)
     if (queryProduct == "dbr") {
@@ -749,5 +750,29 @@ function loadOldVersionNotes(latestPageUri, product, lang, historyList = null) {
         }
     } else {
         $("#versionNote .noVersionAdd").prop("href", latestPageUri)
+    }
+}
+
+function VideoListener() {
+    let lazyVideos = [].slice.call(document.querySelectorAll("video.lazyload"));
+    if ("IntersectionObserver" in window) {
+        let lazyVideoObserver = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(function(video) {
+                if (video.isIntersecting) {
+                    for (let source in video.target.children) {
+                        let videoSource = video.target.children[source];
+                        if (typeof videoSource.tagName === "string" && videoSource.tagName === "SOURCE") {
+                            videoSource.src = videoSource.dataset.src;
+                        }
+                    }
+                    video.target.load();
+                    video.target.classList.remove("lazyload");
+                    lazyVideoObserver.unobserve(video.target);
+                }
+            });
+        });
+        lazyVideos.forEach(function(video) {
+            lazyVideoObserver.observe(video);
+        });
     }
 }
