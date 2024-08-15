@@ -336,7 +336,7 @@ ul.disc>li p:hover {
     cursor: pointer;
 }
 
-.dlrDoc .subHeadWrapper {
+/* .dlrDoc .subHeadWrapper {
     width: 100%;
     height: 95px;
     line-height: 58px;
@@ -345,15 +345,15 @@ ul.disc>li p:hover {
     position: fixed;
     top: 95px;
     z-index: 12
-}
+} */
 
-.dlrDoc #docHead {
-    position: fixed;
+/* .dlrDoc #docHead {
+    position: sticky;
     z-index: 12;
     top: 150px;
     padding: 20px 0 20px 0;
     margin-top: 0px;
-}
+} */
 
 .subHeadWrapper .subHeaderMenuUl {
     list-style: none;
@@ -438,7 +438,7 @@ ul.disc>li p:hover {
     padding-left: 20px;
 }
 
-.dlrDoc .rightSideMenu {
+/* .dlrDoc .rightSideMenu {
     border-left: 3px solid #306877;
     padding-top: 66px;
     max-height: calc(100vh - 290px);
@@ -454,7 +454,7 @@ ul.disc>li p:hover {
     font-size: 14px;
     line-height: 22px;
     padding-left: 20px;
-}
+} */
 
 .rightSideMenu ul li {
     margin-bottom: 5px;
@@ -656,15 +656,15 @@ ul.disc>li p:hover {
     visibility: visible;
 }
 
-.docContainer {
-    /* padding-top: 70px; */
-}
+/* .docContainer {
+    padding-top: 70px;
+} */
 
-.dlrDoc #sideBarCnt.sidebar-fixed {
+/* .dlrDoc #sideBarCnt.sidebar-fixed {
     position: fixed;
     top: 70px;
     max-height: unset;
-}
+} */
 
 #fullTreeMenuListContainer ul {
     display: none;
@@ -1026,7 +1026,7 @@ div, .sideBar .mainPage {
         top: 72px;
     }
 
-    .dlrDoc .subHeadWrapper {
+    /* .dlrDoc .subHeadWrapper {
         height: 72px;
         top: 72px;
     }
@@ -1044,7 +1044,7 @@ div, .sideBar .mainPage {
         position: fixed;
         top: 72px;
         max-height: unset;
-    }
+    } */
 
     .docContainer {
         width: calc(100% - 280px);
@@ -1176,7 +1176,7 @@ div, .sideBar .mainPage {
         top: 72px;
     }
 
-    .dlrDoc .subHeadWrapper {
+    /* .dlrDoc .subHeadWrapper {
         height: 72px;
         top: 72px;
     }
@@ -1190,7 +1190,7 @@ div, .sideBar .mainPage {
         position: fixed;
         top: 72px;
         max-height: unset;
-    }
+    } */
 }
 
 @media (max-width: 1199px) {
@@ -1250,11 +1250,11 @@ div, .sideBar .mainPage {
         top: 0;
     }
 
-    .dlrDoc .subHeadWrapper {
+    /* .dlrDoc .subHeadWrapper {
         position: relative;
         top: 0;
         height: 60px;
-    }
+    } */
 
     #docHead {
         position: relative;
