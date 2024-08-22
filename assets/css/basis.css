@@ -33,7 +33,6 @@ strong {
 .markdown-body h1 {
     font-size: 26px;
     line-height: 36px;
-    margin-top: 30px;
 }
 
 .markdown-body h2 {
@@ -428,7 +427,7 @@ ul.disc>li p:hover {
 }
 
 .markdown-body {
-    margin-top: 0;
+    margin-top: 20px;
     box-sizing: border-box;
     min-height: auto;
     padding-bottom: 50px;
@@ -922,7 +921,7 @@ div, .sideBar .mainPage {
     padding: 30px 20px;
     text-align: center;
     margin-bottom: 20px;
-    margin-top: -53px;
+    margin-top: -80px;
     z-index: 111;
 }
 
@@ -1990,8 +1989,8 @@ i.dbr-white-logo {
 .productMenu .downloadBtn {
     display: inline-block;
     padding: 0 25px;
-    height: 36px;
-    line-height: 36px;
+    height: 40px;
+    line-height: 40px;
     font-size: 18px;
     text-align: center;
     cursor: pointer;
