@@ -613,7 +613,7 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
            findCurLinkOnFullTree(aTag, hrefVal + hashStr, needh3)
         } else if (fromSourse == "rightMenuContainer") {
             if (hashStr && $(hashStr.toLowerCase()).length > 0) {
-                window.scrollTo(0, $(hashStr.toLowerCase()).offset().top)
+                window.scrollTo(0, $(hashStr.toLowerCase()).offset().top - 160)
                 var currentLinkHash = window.location.hash
                 var currentLink = currentLinkHash ? document.URL.replace(currentLinkHash, hashStr) : (document.URL + hashStr)
                 if (!$(aTag).hasClass("active")) {
@@ -960,7 +960,7 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
             if (hash && $("#" + hash).length > 0) {
                 var scrollTop = $("#" + hash).offset().top
                 setTimeout(function() {
-                    window.scrollTo(0, scrollTop)
+                    window.scrollTo(0, scrollTop - 160)
                     realFunc()
                 }, 100)
             } else {
@@ -1042,7 +1042,7 @@ function findCurLinkOnFullTree(aTag, paramLink, needh3=false, onlyLoadContent=fa
         var ulTags = $(aTag).parents("ul")
         if (ulTags.length <= 0 || !$(ulTags[0]).prev().hasClass("multi-panel-switching-prefix")) {
             if (hash && $("#" + hash.toLowerCase()).length > 0) {
-                window.scrollTo(0, $("#" + hash.toLowerCase()).offset().top)
+                window.scrollTo(0, $("#" + hash.toLowerCase()).offset().top - 160)
             }
         }
         !onlyLoadContent&&history.pushState(null, null, paramLink)
