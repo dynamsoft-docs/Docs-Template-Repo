@@ -1,50 +1,7 @@
-@font-face {
-    font-family: Oswald-Regular;
-    src: local('☺'), url('../font-face/Oswald-Regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-    font-display: optional;
-}
-
-@font-face {
-    font-family: Oswald-Light;
-    src: local('☺'), url('../font-face/Oswald-Light.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-    font-display: optional;
-}
-
-@font-face {
-    font-family: OpenSans-Light;
-    src: url('../font-face/OpenSans-Light.eot');
-    src: local('☺'), url('../font-face/OpenSans-Light.eot?#iefix') format('embedded-opentype'), url('../font-face/OpenSans-Light.woff') format('woff'), url('../font-face/OpenSans-Light.ttf') format('truetype'), url('../font-face/OpenSans-Light.svg#webfontOTINA1xY') format('svg');
-    font-weight: normal;
-    font-style: normal;
-    font-display: optional;
-}
-
-@font-face {
-    font-family: OpenSans-Regular;
-    src: url('../font-face/OpenSans-Regular.eot');
-    src: local('☺'), url('../font-face/OpenSans-Regular.eot?#iefix') format('embedded-opentype'), url('../font-face/OpenSans-Regular.woff') format('woff'), url('../font-face/OpenSans-Regular.ttf') format('truetype'), url('../font-face/OpenSans-Regular.svg#webfontOTINA1xY') format('svg');
-    font-weight: normal;
-    font-style: normal;
-    font-display: optional;
-}
-
-@font-face {
-    font-family: OpenSans-Semibold;
-    src: url('../font-face/OpenSans-Semibold.eot');
-    src: local('☺'), url('../font-face/OpenSans-Semibold.eot?#iefix') format('embedded-opentype'), url('../font-face/OpenSans-Semibold.woff') format('woff'), url('../font-face/OpenSans-Semibold.ttf') format('truetype'), url('../font-face/OpenSans-Semibold.svg#webfontOTINA1xY') format('svg');
-    font-weight: normal;
-    font-style: normal;
-    font-display: optional;
-}
-
 /*  NORMAL STYLE  */
 html {
     font-size: 10px;
-    color: #606060;
+    color: #444444;
     font-family: OpenSans-Regular;
 }
 
@@ -62,48 +19,42 @@ h2,
 h3,
 h4,
 h5 {
-    color: #444;
+    color: #323234;
     font-family: Oswald-Light, 'Myriad Pro', 'Gloucester MT', myriad-pro, 'Agency FB';
     font-weight: normal;
 }
 
 
 strong {
-    color: #444;
+    color: #323234;
     font-family: OpenSans-Semibold;
 }
 
-.h1,
-h1 {
-    font-size: 30px;
-    font-size: 3rem;
-    line-height: 42px
+.markdown-body article {
+    margin-top: 30px;
 }
 
-.h2,
-h2 {
-    font-size: 24px;
-    font-size: 2.4rem;
-    line-height: 36px
+.markdown-body h1 {
+    font-size: 26px;
+    line-height: 36px;
 }
 
-.h3,
-h3 {
+.markdown-body h2 {
+    font-size: 20px;
+    line-height: 30px;
+}
+
+.markdown-body h3 {
     font-size: 18px;
-    font-size: 1.8rem;
-    line-height: 27px
+    line-height: 26px;
 }
 
-.h4,
-h4 {
+.markdown-body h4 {
     font-size: 16px;
-    font-size: 1.6rem;
-    line-height: 26px
+    line-height: 24px;
 }
 
-.h5,
-h5 {
-    font-family: OpenSans-Semibold;
+.markdown-body h5 {
     font-size: 14px;
     font-size: 1.4rem;
     line-height: 24px
@@ -116,6 +67,13 @@ h5 {
 .markdown-body h5,
 .markdown-body h6 {
     font-weight: normal;
+    font-family: OpenSans-Semibold;
+    padding: 0;
+    margin: 0
+}
+
+.markdown-body h1 {
+    font-family: OpenSans-Regular;
 }
 
 .markdown-body h4 {
@@ -312,12 +270,16 @@ ul.disc>li p:hover {
     position: sticky;
     z-index: 12;
     top: 70px!important;
-    padding: 20px;
+    padding: 20px 0;
     margin-top: 0px;
 }
 
 .noSubMenuDoc #docHead {
     top: 0px!important;
+}
+
+.noSubMenuDoc #dynamsoft-header {
+    border-bottom: 1px solid #ddd;
 }
 
 #docHead .crumbsBox {
@@ -535,28 +497,52 @@ ul.disc>li p:hover {
 
 .markdown-body h1 {
     border-bottom: 0;
-    font-size: 30px;
+    margin-bottom: 30px;
 }
 
 .markdown-body h2 {
-    padding-top: 160px;
-    margin-top: -130px;
+    margin-top: 50px;
+    margin-bottom: 15px;
     border-bottom: 0;
     font-size: 20px;
 }
 
 .markdown-body h3 {
-    padding-top: 160px;
-    margin-top: -160px;
+    margin-top: 25px;
     border-bottom: 0;
     font-size: 18px;
+    margin-bottom: 15px;
 }
 
 .markdown-body h4 {
-    padding-top: 160px;
-    margin-top: -160px;
+    margin-top: 10px;
+    margin-bottom: 15px;
     font-weight: normal;
 }
+
+/*
+.markdown-body h2 {
+    padding-top: 170px;
+    margin-top: -130px;
+    margin-bottom: 15px;
+    border-bottom: 0;
+    font-size: 20px;
+}
+
+.markdown-body h3 {
+    padding-top: 180px;
+    margin-top: -160px;
+    border-bottom: 0;
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.markdown-body h4 {
+    padding-top: 170px;
+    margin-top: -160px;
+    margin-bottom: 15px;
+    font-weight: normal;
+} */
 
 .markdown-body code.language-plaintext {
     padding: 3px 5px;
@@ -581,8 +567,28 @@ ul.disc>li p:hover {
 
 .markdown-body ul,
 .markdown-body ul li {
-    list-style: disc;
+    list-style: none;
     margin-left: 0;
+}
+
+.markdown-body ul li {
+    line-height: 26px;
+    margin-bottom: 5px;
+    position: relative;
+}
+
+.markdown-body ul li::before {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #444;
+    border-radius: 50%;
+    vertical-align: top;
+    margin-top: 9px;
+    margin-right: 12px;
+    position: absolute;
+    left: -20px;
 }
 
 .markdown-body a,
@@ -973,40 +979,24 @@ div, .sideBar .mainPage {
 }
 
 @media (min-width: 768px) {
-
-    .h1,
-    h1 {
-        font-size: 36px;
-        font-size: 3.6rem;
-        line-height: 48px
-    }
-
-    .h2,
-    h2 {
-        font-size: 30px;
-        font-size: 3rem;
-        line-height: 45px
-    }
-
-    .h3,
-    h3 {
-        font-size: 24px;
-        font-size: 2.4rem;
+    .markdown-body h1 {
+        font-size: 26px;
         line-height: 36px;
     }
 
-    .h4,
-    h4 {
-        font-size: 16px;
-        font-size: 1.6rem;
-        line-height: 26px
+    .markdown-body h2 {
+        font-size: 20px;
+        line-height: 30px;
     }
 
-    .h5,
-    h5 {
-        font-size: 14px;
-        font-size: 1.4rem;
-        line-height: 24px
+    .markdown-body h3 {
+        font-size: 18px;
+        line-height: 26px;
+    }
+
+    .markdown-body h4 {
+        font-size: 16px;
+        line-height: 24px;
     }
 
     #subMenu .subMenuContent ul li a,
@@ -1402,19 +1392,23 @@ div, .sideBar .mainPage {
 
 @media (min-width: 992px) {
     .markdown-body h1 {
-        font-size: 40px;
+        font-size: 26px;
+        line-height: 36px;
     }
 
     .markdown-body h2 {
-        font-size: 30px;
+        font-size: 20px;
+        line-height: 30px;
     }
 
     .markdown-body h3 {
-        font-size: 22px;
+        font-size: 18px;
+        line-height: 26px;
     }
 
     .markdown-body h4 {
-        font-size: 18px;
+        font-size: 16px;
+        line-height: 24px;
     }
 
     .markdown-body {
@@ -1451,19 +1445,23 @@ div, .sideBar .mainPage {
 
 @media (min-width: 1200px) {
     .markdown-body h1 {
-        font-size: 40px;
+        font-size: 30px;
+        line-height: 40px;
     }
 
     .markdown-body h2 {
-        font-size: 30px;
+        font-size: 26px;
+        line-height: 36px;
     }
 
     .markdown-body h3 {
-        font-size: 22px;
+        font-size: 20px;
+        line-height: 30px;
     }
 
     .markdown-body h4 {
         font-size: 18px;
+        line-height: 26px;
     }
 
     .markdown-body {
@@ -1503,19 +1501,23 @@ div, .sideBar .mainPage {
 
 @media (min-width: 1680px) {
     .markdown-body h1 {
-        font-size: 50px;
+        font-size: 30px;
+        line-height: 40px;
     }
 
     .markdown-body h2 {
-        font-size: 40px;
+        font-size: 26px;
+        line-height: 36px;
     }
 
     .markdown-body h3 {
-        font-size: 30px;
+        font-size: 20px;
+        line-height: 30px;
     }
 
     .markdown-body h4 {
-        font-size: 22px;
+        font-size: 18px;
+        line-height: 26px;
     }
 
     .subHeadWrapper .subHeaderMenuUl li.title {
@@ -2593,7 +2595,7 @@ i.dbr-white-logo {
 }
 .fullVersionHistory .fullVersionInfo .hasChildLi.expand > div i.icon-arrow::before {
     border-color: #AAAAAA;
-    transform: rotate(-135deg);
+    transform: rotate(45deg);
 }
 .fullVersionHistory .fullVersionInfo .hasChildLi > div i.icon-arrow:hover::before {
     border-color: #AAAAAA;
@@ -3141,7 +3143,7 @@ a#toTop {
 
 #categoryMenuTree #fullTreeMenuListContainer li.expandListStyle > i.icon-arrow::before {
     border-color: #AAAAAA;
-    transform: rotate(-135deg);
+    transform: rotate(45deg);
     transition: all ease-in-out 0.5s;
 }
 
