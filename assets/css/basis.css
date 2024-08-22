@@ -30,13 +30,10 @@ strong {
     font-family: OpenSans-Semibold;
 }
 
-.markdown-body article {
-    margin-top: 30px;
-}
-
 .markdown-body h1 {
     font-size: 26px;
     line-height: 36px;
+    margin-top: 30px;
 }
 
 .markdown-body h2 {
