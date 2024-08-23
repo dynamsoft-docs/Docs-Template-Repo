@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+{%- include head.html -%}
+
+<body>
+  {%- include page_header.html -%}
+
+  {%- include productNav.html -%}
+  <div class="sideBarIcon"><i class="fa fa-list" style="margin-right: 5px;"></i> Table of contents</div>
+  <div class="container" id="searchContent">
+    <div class="row">
+      <div class="docContainer col-xs-12" style="border-left: 0;">
+        <div class="main row">
+          <div id="searchResult" class="container pt40 pb60 sm-pt50">
+            <div class="row">
+              <div class="col-xs-12">
+                <h1>Search</h1>
+                <script async src="https://cse.google.com/cse.js?cx={{page.cx}}"></script>
+                <div class="gcse-search"></div>
+              </div>
+            </div>
+          </div>
+          <div class="content markdown-body headCounter col-xs-12" style="min-height: unset;">
+            {{ content }}
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="footerWrapper">
+    {%- include page_footer.html -%}
+  </div>
+
+  <script type="text/javascript">
+    $('#sideBarCnt').css({ 'width': $('.sideBar').width() + 'px' })
+    $('.container .head').css({ 'width': $('.docContainer').width() + 'px' })
+
+    $(window).resize(function () {
+      $('#sideBarCnt').css({ 'width': $('.sideBar').width() + 'px' })
+      $('.container .head').css({ 'width': $('.docContainer').width() + 'px' })
+      realFunc()
+    })
+
+    window.addEventListener('scroll', realFunc);
+
+    function realFunc() {
+        if (breakpoint() == 'lg') {
+            var sd = $(window).scrollTop();
+            if (sd > $('#dynamsoft-header').height()) {
+                // head and sidebar fixed
+                if ($('.subHeadWrapper').length > 0) {
+                    $('.subHeadWrapper').css({'top': '0px'});
+                } else if ($('.productMenu').length > 0) {
+                    $('.productMenu').css({'top': '0px'});
+                }
+            } else {
+                // head and sidebar fixed
+                if ($('.subHeadWrapper').length > 0) {
+                    $('.subHeadWrapper').css({'top': ($('#dynamsoft-header').height()-sd) + 'px'});
+                } else if ($('.productMenu').length > 0) {
+                    $('.productMenu').css({'top': ($('#dynamsoft-header').height()-sd) + 'px'});
+                }
+            }
+        } else {
+            $('.subHeadWrapper').css({'top': 'unset'});
+            $('.productMenu').css({'top': 'unset'});
+        }
+    }
+  </script>
+  {%- include livehelp.html -%}
+</body>
+
+</html>

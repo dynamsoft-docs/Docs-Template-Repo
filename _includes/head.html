@@ -37,14 +37,20 @@
         {%- assign docFullPath = docFullPath | slice: 0, truncateDocHomePageSize -%}
     {%- endif -%}
     <link href="{{ docFullPath }}{{ targetUrl }}" rel="canonical">
+
+    {%- assign assetsPath = 'https://www.dynamsoft.com/webres/wwwroot' -%}
     
-    <link rel="stylesheet" href="{{ site.assets }}css/dm-style.min.css?v={{ 'now' | date: "%s"}}">
-    <link rel="stylesheet" href="{{ site.assets }}css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ site.assets }}css/font-awesome.min.css">
-    <link rel="stylesheet" href="{{ site.assets }}css/basis-bs.min.css?v={{ 'now' | date: "%s"}}">
-    <link href="https://www.dynamsoft.com/webres/wwwroot/css/header_bs.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="{{ site.assets }}css/basis.min.css?v={{ 'now' | date: "%s"}}">
-    <link rel="stylesheet" href="{{ site.assets }}css/footer.css">
+    <link rel="stylesheet" href="{{ site.assets }}css/dm-style.min.css?v={{ 'now' | date: "%s"}}" />
+    <link rel="stylesheet" href="{{ site.assets }}css/bootstrap.min.css" />
+    <link rel="stylesheet" href="{{ site.assets }}css/font-awesome.min.css" />
+    <link rel="stylesheet" href="{{ assetsPath }}/css/docs/basis-bs.min.css?v={{ 'now' | date: "%s"}}" />
+    <link rel="stylesheet" href="{{ assetsPath }}/css/header_bs.min.css" />
+    <link rel="stylesheet" href="{{ assetsPath }}/css/docs/basis.min.css?v={{ 'now' | date: "%s"}}" />
+    <link rel="stylesheet" href="{{ assetsPath }}/css/docs/footer.css" />
+
+    {%- if page.layout contains 'search-' -%}
+    <link rel="stylesheet" href="{{ assetsPath }}/css/docs/searchPage.min.css" />
+    {%- endif -%}
 
     <link rel="preload" as="font" href="{{ site.assets }}font-face/Oswald-Regular.ttf" type="font/ttf" crossorigin="anonymous">
     <link rel="preload" as="font" href="{{ site.assets }}font-face/OpenSans-Regular.woff" type="font/woff" crossorigin="anonymous">
@@ -85,22 +91,21 @@
 
     <script type="text/javascript" src="{{ site.assets }}js/jquery-3.5.0.min.js"></script>
     <script type="text/javascript" src="{{ site.assets }}js/bootstrap.min.js"></script>
-    <script src="https://www.dynamsoft.com/webres/wwwroot/js/util.min.js"></script>
-    <script src="https://www.dynamsoft.com/webres/wwwroot/js/site.min.js"></script>
-    <script src="https://www.dynamsoft.com/webres/wwwroot/js/header.min.js"></script>
+    <script src="{{ assetsPath }}/js/util.min.js"></script>
+    <script src="{{ assetsPath }}/js/site.min.js"></script>
+    <script src="{{ assetsPath }}/js/header.min.js"></script>
     <script type="text/javascript" src="{{ site.assets }}js/ds-jquery-bs.min.js"></script>
 
     {%- if site.useVersionTreeV2 -%}
-    <script type="text/javascript" src="{{ site.assets }}js/index-banner-two.min.js?v={{ 'now' | date: "%s"}}"></script>
-    <script type="text/javascript" src="{{ site.assets }}js/historymanage-two.min.js?v={{ 'now' | date: "%s"}}"></script>
+    <script type="text/javascript" src="{{ assetsPath }}/js/docs/index-banner-two.min.js?v={{ 'now' | date: "%s"}}"></script>
+    <script type="text/javascript" src="{{ assetsPath }}/js/docs/historymanage-two.min.js?v={{ 'now' | date: "%s"}}"></script>
     {%- else -%}
-    <!-- <script type="text/javascript" src="{{ site.assets }}js/dcvVersionSearch.min.js?v={{ 'now' | date: "%s"}}"></script> -->
     <script type="text/javascript" src="{{ site.assets }}js/docsLangLatestVersion.js?v={{ 'now' | date: "%s"}}"></script>
-    <script type="text/javascript" src="{{ site.assets }}js/index-banner.min.js?v={{ 'now' | date: "%s"}}"></script>
-    <script type="text/javascript" src="{{ site.assets }}js/historymanage.min.js?v={{ 'now' | date: "%s"}}"></script>
+    <script type="text/javascript" src="{{ assetsPath }}/js/docs/index-banner.min.js?v={{ 'now' | date: "%s"}}"></script>
+    <script type="text/javascript" src="{{ assetsPath }}/js/docs/historymanage.min.js?v={{ 'now' | date: "%s"}}"></script>
     {%- endif -%}
 
-    <script type="text/javascript" src="{{ site.assets }}js/layout.min.js?v={{ 'now' | date: "%s"}}"></script>
+    <script type="text/javascript" src="{{ assetsPath }}/js/docs/layout.min.js?v={{ 'now' | date: "%s"}}"></script>
     <script type="text/javascript" src="{{ site.assets }}js/anchor.min.js"></script>
 
     {%- if page.hasCustomLdJson -%}
