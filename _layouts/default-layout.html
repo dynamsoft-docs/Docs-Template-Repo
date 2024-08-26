@@ -7,6 +7,11 @@
     {%- assign noTitleIndex = "noTitleIndex" -%}
 {%- endif -%}
 
+{%- assign noSubMenuDoc = "" -%}
+{%- site.firstLevelUrl contains 'license-server' -%}
+    {%- assign noSubMenuDoc = "noSubMenuDoc"  -%}
+{%- endif -%}
+
 {%- if site.firstLevelUrl contains 'web-twain' -%}
 <style>
     .DWT17Note {position: relative; padding: 15px 20px 15px 20px;background: #e5f5ff;border: 1px solid #c7dbe8;color: #4788b3;margin-bottom: 20px;}
@@ -17,7 +22,7 @@
 </style>
 {%- endif -%}
 
-<body>
+<body class="{{noSubMenuDoc}}">
     {%- include page_header.html -%}
     {%- include productNav.html -%}
 
