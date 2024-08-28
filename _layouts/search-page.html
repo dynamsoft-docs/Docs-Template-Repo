@@ -7,7 +7,27 @@
 {%- if site.firstLevelUrl contains 'barcode-reader' -%}
   {%- assign cx = '32039cdf85bc7ae2b' -%}
 {%- endif -%}
-
+{%- if site.firstLevelUrl contains 'document-normalizer' -%}
+  {%- assign cx = '90b37820e9a5e454e' -%}
+{%- endif -%}
+{%- if site.firstLevelUrl contains 'label-recognition' -%}
+  {%- assign cx = '53a201f66061dfc84' -%}
+{%- endif -%}
+{%- if site.firstLevelUrl contains 'capture-vision' -%}
+  {%- assign cx = 'b5ca9ca31b6a640a2' -%}
+{%- endif -%}
+{%- if site.firstLevelUrl contains 'camera-enhancer' -%}
+  {%- assign cx = '90b37820e9a5e454e' -%}
+{%- endif -%}
+{%- if site.firstLevelUrl contains 'document-viewer' -%}
+  {%- assign cx = 'f23c4a8497eb34b71' -%}
+{%- endif -%}
+{%- if site.firstLevelUrl contains 'code-parser' -%}
+  {%- assign cx = '53a201f66061dfc84' -%}
+{%- endif -%}
+{%- if site.firstLevelUrl contains 'mobile-web-capture' -%}
+  {%- assign cx = '912cbb35fff874a8d' -%}
+{%- endif -%}
 
 <body>
   {%- include page_header.html -%}
