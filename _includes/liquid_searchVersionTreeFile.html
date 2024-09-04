@@ -90,5 +90,5 @@
                 {%- assign needRemoveStr = nearestFile |  split: '/' | last | strip -%}
                 {%- assign curDirPath = nearestFile | remove: needRemoveStr -%}
         {%- endif -%}
-        {%- include {{ nearestFile }} ver=include.ver curPath=curDirPath -%}
+        {%- include {{ nearestFile }} ver=include.ver curPath=curDirPath lang=include.lang -%}
 {%- endif -%}
