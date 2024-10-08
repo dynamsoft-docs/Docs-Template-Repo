@@ -70,3 +70,11 @@
     </ul>
     <a class="fvChange fontOswald" href="javascript:;">Change +</a>
 </span>
+
+{%- if site.firstLevelUrl contains 'web-twain' -%}
+    {%- for redirectLink in page.redirect_from -%}
+    <input type="hidden" class="dwtReditectLink" value="{{redirectLink}}">
+    {%- endfor -%}
+{%- endif -%}
+
+
