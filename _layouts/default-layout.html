@@ -98,7 +98,7 @@
                 {%- include version-list.html -%}
                 <div id="dwtRedirectList">
                     {%- for redirectLink in page.redirect_from -%}
-                    <input type="hidden" class="dwtReditectLink" value="{{redirectLink}}">
+                    <input type="hidden" class="dwtReditectLink" value="{{site.firstLevelUrl}}{{redirectLink}}">
                     {%- endfor -%}
                 </div>
                 {%- else -%}
