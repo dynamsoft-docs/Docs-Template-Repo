@@ -22,7 +22,12 @@
 </style>
 {%- endif -%}
 
-<body class="{{noSubMenuDoc}}">
+{%- assign isDCV = "false" -%}
+{%- if site.isDCV -%}
+    {%- assign isDCV = "true"  -%}
+{%- endif -%}
+
+<body class="{{noSubMenuDoc}}" isDCV="{{isDCV}}">
     {%- include page_header.html -%}
     {%- include productNav.html -%}
 
@@ -112,13 +117,10 @@
         {%- include page_footer.html -%}
     </footer>
 
-    <script type="text/javascript">
-        anchors.add();
-        UrlReplace();
-    </script>
-
     {%- if site.firstLevelUrl contains 'web-twain' -%}
     <script>
+        anchors.add();
+        UrlReplace();
         $(".currentVersion").text("latest version (18.5)");
         FullTreeMenuList('{{page.needAutoGenerateSidebar}}', '{{page.needGenerateH3Content}}');
         $(document).ready(function() {
@@ -132,16 +134,13 @@
         })
     </script>
     {%- else -%}
-    <iframe id="sideBarIframe" src="{{site.firstLevelUrl}}/Hide_Tree_Page.html" allow="" height="0" frameborder="0"></iframe>
     <script type="text/javascript">
-        FullTreeMenuList('{{page.needAutoGenerateSidebar}}', '{{page.needGenerateH3Content}}', '{{page.pageStartVer}}', '{{site.useVersionTree}}');
+        var sideBarIframeSrc = "{{site.firstLevelUrl}}/Hide_Tree_Page.html";
+        anchors.add();
+        PageCreateInit('{{page.needAutoGenerateSidebar}}', '{{page.needGenerateH3Content}}', '{{page.pageStartVer}}', '{{site.useVersionTree}}');
     </script>
     {%- endif -%}
-
-    
-
     {%- include livehelp.html -%}
-
     <script type="text/javascript">
         function getCookie(name) {
             var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
@@ -176,7 +175,6 @@
             }
         })
     </script>
-
     <!-- Google Tag Manager -->
     <noscript>
         <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-538F83" height="0" width="0" style="display:none;visibility:hidden"></iframe>

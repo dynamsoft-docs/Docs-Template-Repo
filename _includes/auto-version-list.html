@@ -67,6 +67,12 @@
                 <li onclick="changeVersion(this)">{{ curVerText }}</li>
             {%- endfor -%}
         {%- endif -%}
+
+        {%- assign documentHomePage = "/capture-vision/docs/core/" -%}
+        {%- if site.firstLevelUrl contains 'barcode-reader' -%}
+        {%- assign documentHomePage = "/barcode-reader/docs/core/" -%}
+        {%- endif -%}
+        <li><a href="{{documentHomePage}}" target="_blank" style="color: #323234!important;">Documentation Homepage</a></li>
     </ul>
     <a class="fvChange fontOswald" href="javascript:;">Change +</a>
 </span>
