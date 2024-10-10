@@ -159,19 +159,19 @@
                         if (['javascript', 'js'].indexOf(lang) >= 0) {
                             reporType = "web"
                         }
-                        if (['objectivec-swift', 'android', 'objective-c', 'objc', 'swift', 'ios', 'react-native', 'maui', 'flutter', 'xamarin', 'cordova'].indexOf(lang) >= 0) {
+                        if (['android', 'objective-c', 'objc', 'swift', 'ios', 'react-native', 'maui', 'flutter', 'xamarin', 'cordova'].indexOf(lang) >= 0) {
                             reporType = "mobile"
                         }
-                        if (['c', 'cpp', 'c++', 'csharp', 'dotnet', 'java', 'python', 'cpluscplus'].indexOf(lang) >= 0) {
+                        if (['c', 'cpp', 'c++', 'csharp', 'dotnet', 'java', 'python'].indexOf(lang) >= 0) {
                             reporType = "server"
                         }
                     } else {
                         reporType = "core"
                     }
-                    window.location.href = "/" + getDoumentName(product) + "/docs/" + reporType + "/search.html?q=" + $('#txtSearch').val()
+                    window.location.href = "/" + getDoumentName(product) + "/docs-archive/" + reporType + "/search.html?q=" + $('#txtSearch').val()
                 } else {
-                    let preUrl = document.URL.split("/docs/")[0]
-                    window.location.href = preUrl + "/docs/search.html?q=" + $('#txtSearch').val()
+                    let preUrl = document.URL.split("/docs-archive/")[0]
+                    window.location.href = preUrl + "/docs-archive/search.html?q=" + $('#txtSearch').val()
                 }
             }
         })

@@ -1,4 +1,5 @@
 var dcvVersionList = []
+var latestVer = null
 async function UrlReplace()
 {
     dcvVersionList = await getVersionSearchList();
@@ -25,7 +26,7 @@ async function UrlReplace()
             if (docProduct == "dcv") {
                 tempVer = getLinkVersion(ver, document.URL, null, null, docProduct)
                 if (tempVer == -1) {
-                    tempVer = "latest"
+                    tempVer = latestVer
                 }
             }
             if (tempVer != ver && docProduct != "dcv") {
@@ -43,14 +44,14 @@ async function UrlReplace()
         if (product != undefined && product != docProduct && productVersion == undefined && ver != undefined) {
             productVersion = getLinkVersion(ver, docUrl, product, getUrlVars(docUrl)["lang"] ? getUrlVars(docUrl)["lang"] : 'core', docProduct)
             if (productVersion == -1) {
-                productVersion = "latest"
+                productVersion = latestVer
             }
             docUrl = docUrl.replace("ver="+ver, "ver="+productVersion+"&"+product+"="+ver)
             window.location.replace(docUrl)
         } else if (product != undefined && product != docProduct && productVersion != undefined && ver == undefined) {
             var curPageVer = getLinkVersion(productVersion, docUrl, product, getUrlVars(docUrl)["lang"] ? getUrlVars(docUrl)["lang"] : 'core', docProduct)
             if (curPageVer == -1) {
-                curPageVer = "latest"
+                curPageVer = latestVer
             }
             docUrl = docUrl.replace(product+"="+productVersion, product+"="+productVersion+"&ver="+curPageVer)
             RedirToGivenVersionPage(curPageVer, docUrl);
@@ -79,7 +80,6 @@ function allHerfClick(_this, ver) {
 }
 
 function RedirToGivenVersionPageForDCV(pageVer, docVer) {
-    //https://officecn.dynamsoft.com:808/capture-vision/docs/core/parameters/reference/barcode-reader-task-settings/dpm-code-reading-modes.html?ver=2.2.0
     var bestVerIndex = -1;
     var verDiff = -1;
     var curVer = pageVer;
@@ -95,7 +95,7 @@ function RedirToGivenVersionPageForDCV(pageVer, docVer) {
         return;
     } else {
         bestVerIndex = -1;
-        verDiff = GetVersionDiff(pageVer, curPageVersion ? curPageVersion : 'latest');
+        verDiff = GetVersionDiff(pageVer, curPageVersion ? curPageVersion : latestVer);
         bestVersion = curVer;
         if (verDiff == 0) {
             return;
@@ -115,7 +115,7 @@ function RedirToGivenVersionPageForDCV(pageVer, docVer) {
             var tmpVerText = listAry[i].innerText;
             var tmpVer = null;
             if (tmpVerText.indexOf("latest version") >= 0) {
-                tmpVer = "latest"
+                tmpVer = latestVer
             } else {
                 tmpVer = tmpVerText.replace('version ','');
             }
@@ -155,7 +155,7 @@ function RedirToGivenVersionPageForDCV(pageVer, docVer) {
         var aTag = $(listAry[bestVerIndex]).children("a");
         if (aTag.length > 0) {
             var exp = new RegExp(/[?]+([^=]+)=/gi)
-            if (exp.exec(aTag[0].href) != null){
+            if (exp.exec(aTag[0].href) != null) {
                 window.location.replace(aTag[0].href + "&ver="+docVer+"&matchVer=true" + anchorVal)
                 return;
             } else {
@@ -170,13 +170,13 @@ function RedirToGivenVersionPageForDCV(pageVer, docVer) {
         }
     }
 
-    if (pageVer == "latest" || bestVerIndex == -1) {
+    if (pageVer == latestVer || bestVerIndex == -1) {
         var srcVal = getUrlVars(document.URL)["src"]
         var redirectUrl = document.URL.indexOf("?") > 0 ? document.URL.split("?")[0] : document.URL
         if (srcVal != undefined) {
             redirectUrl = redirectUrl + '?src='+ srcVal
         }
-        if (pageVer == "latest") {
+        if (pageVer == latestVer) {
             window.location.replace(`${redirectUrl}${redirectUrl.indexOf("?") > 0?'&':'?'}matchVer=true${anchorVal}`)
         } else {
             window.location.replace(`${redirectUrl}${redirectUrl.indexOf("?") > 0?'&':'?'}ver=${docVer}&matchVer=true${anchorVal}`)
@@ -187,7 +187,6 @@ function RedirToGivenVersionPageForDCV(pageVer, docVer) {
 
 function RedirToGivenVersionPage(inputVer, currentUrl = null)
 {
-    //https://officecn.dynamsoft.com:808/camera-enhancer/docs/web/programming/javascript/api-reference/drawingitem-v3.3.8.html?ver=3.3.8
     var curVerTag = $(".currentVersion");
     var bestVerIndex = -1;
     var verDiff = -1;
@@ -380,7 +379,7 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
     let hrefVal = aTag.href;
     let productName = getUrlVars(document.URL)["product"] || getCurrentUrlProductName(document.URL)
     let lang = getUrlVars(document.URL)["lang"] || getCurrentUrlLang(document.URL, true)
-    let currentDocDomain = document.URL.split("/docs/")[0] + '/docs/';
+    let currentDocDomain = document.URL.split("/docs-archive/")[0] + '/docs-archive/';
     let p_ver = getUrlVars(document.URL)[productName]
     if (p_ver != undefined) {
         verText = p_ver
@@ -390,7 +389,7 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
 
     if(hrefVal == "") return;
 
-    if (hrefVal.indexOf("/docs/") <= 0 || hrefVal.indexOf(location.host) < 0)  {
+    if ((hrefVal.indexOf("/docs-archive/") <= 0 && hrefVal.indexOf("/docs/") <= 0) || hrefVal.indexOf(location.host) < 0)  {
         window.open(aTag.href)
         return
     }
@@ -452,7 +451,7 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
         if (!getUrlVars(hrefVal)["product"]) {
             var isNeedAddProductVersion = false
             var isNeedAddLang = false
-            if (hrefVal.indexOf(currentDocDomain) < 0 && hrefVal.indexOf(document.location.host) >= 0 && hrefVal.indexOf("/docs/") > 0) {
+            if (hrefVal.indexOf(currentDocDomain) < 0 && hrefVal.indexOf(document.location.host) >= 0 && hrefVal.indexOf("/docs-archive/") > 0) {
                 if (!getUrlVars(document.URL)["product"]) {
                     // dbr js --> dce
                     productVar = `${hrefVal.indexOf("?") < 0?'?':'&'}product=${productName}`;
@@ -557,7 +556,7 @@ function addParam (aTag, verText, fromSourse=null, needh3=false)
                 let isCoreDocs = false
                 if (getUrlVars(document.URL)["product"] && !getUrlVars(document.URL)["lang"]) {
                     isCoreDocs = true
-                } else if (document.URL.indexOf("/docs/core/")) {
+                } else if (document.URL.indexOf("/docs-archive/core/") || document.URL.indexOf("/docs/core/")) {
                     isCoreDocs = true
                 }
                 // link product & link language
@@ -844,7 +843,8 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
             })
             
             // load sample-code style
-            if($(".markdown-body .sample-code-prefix").length > 0 && getUrlVars(document.URL)["lang"]) {
+            if($(".markdown-body .sample-code-prefix").length > 0 && getUrlVars(document.URL)["lang"] != undefined) {
+                console.log(111)
                 var langs =  getUrlVars(document.URL)["lang"]
                 if(langs!= undefined && langs == "objectivec-swift") {
                     langs = "objc,swift"
@@ -852,7 +852,11 @@ function RequestNewPage(aTag, paramLink, needh3=false, redirectUrl = null, onlyL
                 langs = langs.toLowerCase().trim().split(",")
                 if (langs) {
                     if (langs.length == 1) {
-                        sampleCodeSingleLangInit(langs[0])
+                        if (langs[0].toLowerCase() == "android") {
+                            sampleCodeLangsInit(['java', 'kotlin', 'android'])
+                        } else {
+                            sampleCodeSingleLangInit(langs[0])
+                        }
                     } else {
                         sampleCodeLangsInit(langs)
                     }
@@ -1076,7 +1080,7 @@ function findCurLinkOnFullTree(aTag, paramLink, needh3=false, onlyLoadContent=fa
                             if ($(objs[j]).attr("otherlang") != undefined) {
                                 ifOtherLangTag = true
                             }
-                            if (!flag && ($(objs[j]).attr("otherlang") == undefined && $(objs[j]).attr("lang") || document.URL.indexOf("/docs/web/") > 0)) {
+                            if (!flag && ($(objs[j]).attr("otherlang") == undefined && $(objs[j]).attr("lang") || document.URL.indexOf("/docs-archive/web/") > 0)) {
                                 flag = true
                                 if ($(fullTreeATags[i]).hasClass("refreshLink")) {
                                     $(fullTreeATags[i]).click()
@@ -1103,7 +1107,7 @@ function findCurLinkOnFullTree(aTag, paramLink, needh3=false, onlyLoadContent=fa
         }
         if (!flag) {
             // use modal to display page if not in the menu tree
-            if (document.URL.indexOf("/mobile-web-capture/docs/") > 0) {
+            if (document.URL.indexOf("/mobile-web-capture/docs-archive/") > 0) {
                 window.open(paramLink)
             } else {
                 showPageContentInModal(paramLink)
@@ -1121,6 +1125,9 @@ function changeVersion (liTag)
 	} else {
 		ver = innertext.replace('version ','');
 	}
+    if (ver == latestVer) {
+        ver = "latest"
+    }
 	var curUrl = document.URL;
 	var srcVal = getUrlVars(curUrl)["src"];
     var langVar = getUrlVars(curUrl)["lang"];
@@ -1262,7 +1269,8 @@ function initHistoryVersionList() {
     var firstItem = $(".fullVersionInfo li").eq(0)
     if (firstItem.text().toLowerCase() == "latest version") {
         var latestVersion = getProductLangLatestVersion(productName, lang == "" ? "core" : lang)
-        latestVersion != undefined && firstItem.text("latest version (" + latestVersion + ")")
+        latestVersion != undefined && firstItem.text("version " + latestVersion)
+        latestVer = latestVersion
     }
 }
 
@@ -1342,7 +1350,7 @@ function getRequestNewPageVersion(linkUrl) {
     var queryLang = getUrlVars(linkUrl)["lang"]
     if (queryProduct == undefined) {
         // same product
-        if (queryLang == undefined || linkUrl.indexOf("/docs/core/") < 0) { // same product, same language
+        if (queryLang == undefined || linkUrl.indexOf("/docs-archive/core/") < 0) { // same product, same language
             return curVersion
         } else { // same product, lang to core
             if (curVersion == "latest") {
@@ -1379,8 +1387,8 @@ function getRequestNewPageVersion(linkUrl) {
  * getLinkVersion("2.0.20", document.URL, "ddn", "javascript", "dcv")
  * getLinkVersion("10.0.10", null, "dbr", "cpp", "dlr")
  * getLinkVersion("10.0.10", null, "dbr", "core", "dlr")
- * getLinkVersion("10.0.10", "https://www.dynamsoft.com/capture-vision/docs/core/enums/utility/region-predetection.html", "dbr", "core", "dcv")
- * getLinkVersion("10.0.10", "https://www.dynamsoft.com/capture-vision/docs/core/enums/utility/region-predetection.html", "dbr", "cpp", "dcv")
+ * getLinkVersion("10.0.10", "https://www.dynamsoft.com/capture-vision/docs-archive/core/enums/utility/region-predetection.html", "dbr", "core", "dcv")
+ * getLinkVersion("10.0.10", "https://www.dynamsoft.com/capture-vision/docs-archive/core/enums/utility/region-predetection.html", "dbr", "cpp", "dcv")
  */
 
 function getLinkVersion(curVersion, linkUrl, curProduct=null, curLang=null, linkProduct=null) {
@@ -1535,7 +1543,7 @@ function isInIOSDos(curUrl, linkUrl) {
     if (curProduct != linkProduct) {
         return false
     } else {
-        if (linkUrl.indexOf("/docs/mobile/programming/objectivec-swift/") > 0) {
+        if (linkUrl.indexOf("/docs-archive/mobile/programming/objectivec-swift/") > 0) {
             return true
         } else {
             return false
@@ -1553,7 +1561,7 @@ async function getVersionSearchList() {
             if (['javascript', 'js'].indexOf(lang) >= 0) {
                 repoType = "web"
             }
-            if (['android', 'objective-c', 'objc', 'swift', 'ios'].indexOf(lang) >= 0) {
+            if (['android', 'objective-c', 'objc', 'swift', 'ios', 'android-kotlin'].indexOf(lang) >= 0) {
                 repoType = "mobile"
             }
             if (['c', 'cpp', 'c++', 'csharp', 'dotnet', 'java', 'python'].indexOf(lang) >= 0) {
@@ -1567,7 +1575,7 @@ async function getVersionSearchList() {
     }
 
     try{
-        let request = await fetch(`${location.origin}/${getDoumentName(product)}/docs/${repoType}/assets/js/${product}${titleCase(repoType)}VersionSearch.json`, {cache: "no-cache"})
+        let request = await fetch(`${location.origin}/${getDoumentName(product)}/docs-archive/${repoType}/assets/js/${product}${titleCase(repoType)}VersionSearch.json`, {cache: "no-cache"})
         let test = await request.text()
         return JSON.parse(test)
     } catch(error) {

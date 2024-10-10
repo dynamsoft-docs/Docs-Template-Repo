@@ -47,12 +47,12 @@
                             {%- else -%}
                                 {%- assign curVerText = "Version " | append: c_version -%}
                             {%- endif -%}
-                            <li onclick="changeVersion(this)" data-editions="{{c_editions}}">{{ curVerText }}</li>
+                            <li onclick="changeVersion(this)" data-editions="{{c_editions}}" data-version="{{ curVerText }}">{{ curVerText }}</li>
                         {%- endfor -%}
                     </ul>
                 </li>
                 {%- else -%}
-                <li onclick="changeVersion(this)" data-editions="{{editions}}">{{ curVerText }}</li>
+                <li onclick="changeVersion(this)" data-editions="{{editions}}" data-version="{{ curVerText }}">{{ curVerText }}</li>
                 {%- endif -%}
             {%- endfor -%}
         {%- else -%}
@@ -64,7 +64,7 @@
                 {%- else -%}
                     {%- assign curVerText = "Version " | append: verInfo -%}
                 {%- endif -%}
-                <li onclick="changeVersion(this)">{{ curVerText }}</li>
+                <li onclick="changeVersion(this)" data-version="{{ curVerText }}">{{ curVerText }}</li>
             {%- endfor -%}
         {%- endif -%}
     </ul>

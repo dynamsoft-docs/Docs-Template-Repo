@@ -2002,6 +2002,14 @@ i.dbr-white-logo {
     box-shadow: 0 0 0 0 #fff;
 }
 
+.productMenu .downloadBtn.borderBtn {
+    margin-right: 10px;
+    border: 2px solid #fe8e14;
+    background: transparent;
+    color: #fe8e14;
+    line-height: 36px;
+}
+
 .productMenu .downloadBtn:hover {
     box-shadow: -8px 8px 0 0 #FFFFFF;
     transform: translate(8px, -8px);

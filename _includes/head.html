@@ -43,13 +43,13 @@
     <link rel="stylesheet" href="{{ site.assets }}css/dm-style.min.css?v={{ 'now' | date: "%s"}}" />
     <link rel="stylesheet" href="{{ site.assets }}css/bootstrap.min.css" />
     <link rel="stylesheet" href="{{ site.assets }}css/font-awesome.min.css" />
-    <link rel="stylesheet" href="{{ assetsPath }}/css/docs/basis-bs.min.css?v={{ 'now' | date: "%s"}}" />
+    <link rel="stylesheet" href="{{ site.assets }}css/basis-bs.min.css?v={{ 'now' | date: "%s"}}" />
     <link rel="stylesheet" href="{{ assetsPath }}/css/header_bs.min.css" />
-    <link rel="stylesheet" href="{{ assetsPath }}/css/docs/basis.min.css?v={{ 'now' | date: "%s"}}" />
-    <link rel="stylesheet" href="{{ assetsPath }}/css/docs/footer.css" />
+    <link rel="stylesheet" href="{{ site.assets }}css/basis.min.css?v={{ 'now' | date: "%s"}}" />
+    <link rel="stylesheet" href="{{ assetsPath }}/css/docs-archive/footer.css" />
 
     {%- if page.layout contains 'search-' -%}
-    <link rel="stylesheet" href="{{ assetsPath }}/css/docs/searchPage.min.css" />
+    <link rel="stylesheet" href="{{ assetsPath }}/css/docs-archive/searchPage.min.css" />
     {%- endif -%}
 
     <link rel="preload" as="font" href="{{ site.assets }}font-face/Oswald-Regular.ttf" type="font/ttf" crossorigin="anonymous">
@@ -97,15 +97,15 @@
     <script type="text/javascript" src="{{ site.assets }}js/ds-jquery-bs.min.js"></script>
 
     {%- if site.useVersionTreeV2 -%}
-    <script type="text/javascript" src="{{ assetsPath }}/js/docs/index-banner-two.min.js?v={{ 'now' | date: "%s"}}"></script>
-    <script type="text/javascript" src="{{ assetsPath }}/js/docs/historymanage-two.min.js?v={{ 'now' | date: "%s"}}"></script>
+    <script type="text/javascript" src="{{ assetsPath }}/js/docs-archive/index-banner-two.min.js?v={{ 'now' | date: "%s"}}"></script>
+    <script type="text/javascript" src="{{ assetsPath }}/js/docs-archive/historymanage-two.min.js?v={{ 'now' | date: "%s"}}"></script>
     {%- else -%}
     <script type="text/javascript" src="{{ site.assets }}js/docsLangLatestVersion.js?v={{ 'now' | date: "%s"}}"></script>
-    <script type="text/javascript" src="{{ assetsPath }}/js/docs/index-banner.min.js?v={{ 'now' | date: "%s"}}"></script>
-    <script type="text/javascript" src="{{ assetsPath }}/js/docs/historymanage.min.js?v={{ 'now' | date: "%s"}}"></script>
+    <script type="text/javascript" src="{{ assetsPath }}/js/docs-archive/index-banner.min.js?v={{ 'now' | date: "%s"}}"></script>
+    <script type="text/javascript" src="{{ assetsPath }}/js/docs-archive/historymanage.min.js?v={{ 'now' | date: "%s"}}"></script>
     {%- endif -%}
 
-    <script type="text/javascript" src="{{ assetsPath }}/js/docs/layout.min.js?v={{ 'now' | date: "%s"}}"></script>
+    <script type="text/javascript" src="{{ assetsPath }}/js/docs-archive/layout.min.js?v={{ 'now' | date: "%s"}}"></script>
     <script type="text/javascript" src="{{ site.assets }}js/anchor.min.js"></script>
 
     {%- if page.hasCustomLdJson -%}

@@ -142,7 +142,11 @@ $(function() {
         var langs = getUrlVars(document.URL)["lang"] ? getUrlVars(document.URL)["lang"].toLowerCase().trim().split(",") : getUrlVars(document.URL)["src"].split(",")
         if (langs) {
             if (langs.length == 1) {
-                sampleCodeSingleLangInit(langs[0])
+                if (langs[0].toLowerCase() == "android") {
+                    sampleCodeLangsInit(['java', 'kotlin', 'android'])
+                } else {
+                    sampleCodeSingleLangInit(langs[0])
+                }
             } else {
                 sampleCodeLangsInit(langs)
             }
@@ -272,7 +276,7 @@ function initPageLayout() {
     }
     // sample code end
 
-    if (document.URL.indexOf("web-twain/docs/faq/") > 0  && document.URL.indexOf("web-twain/docs/faq/?ver") < 0) {
+    if (document.URL.indexOf("web-twain/docs-archive/faq/") > 0  && document.URL.indexOf("web-twain/docs-archive/faq/?ver") < 0) {
         $("#breadcrumbLastNode").text($("h1").text())
     }
 
@@ -455,7 +459,9 @@ function sampleCodeSingleLangInit(lang, langText, index, isInModal = false) {
         for (var i=0; i < sampleCodeList.length; i++) {
             var scLis = $(sampleCodeList[i]).find("ul li")
             for(var j=0;j<scLis.length;j++) {
-                if (scLis[j].textContent.toLowerCase() == langText.toLowerCase()) {
+                var a = scLis[j].textContent.toLowerCase()
+                var b = langText.toLowerCase()
+                if (a==b || (b=='android' && ['java', 'kotlin'].indexOf(a) >= 0)) {
                     $(scLis[j]).addClass("scChoosedLi")
                     if (!index || index == 1) {
                         $(scLis[j]).click()
@@ -521,6 +527,9 @@ function getlangText(lang) {
             break;
         case 'cordova':
             langText = 'Cordova'
+            break;
+        case 'kotlin':
+            langText = 'Kotlin'
             break;
         default:
             langText = null
@@ -710,6 +719,15 @@ function initNoteForOldVersions(historyList = null) {
         } else {
             $("#versionNote").remove()
         }
+    } else if (["dlr", "ddn", "dce", "dcp"].indexOf(queryProduct) >= 0) {
+        if($("#versionNote").length == 0) {
+            var redirectUrl = document.URL.split("?")[0]
+            redirectUrl = redirectUrl.replace("/docs-archive/", "/docs/")
+            let noteHtml = `
+                    <div id="versionNote" style="width: 100%; padding: 20px; background: #b42727; color: #ffffff;border-radius: 5px; margin-bottom: 20px;">Notice: This documentation is archived. For the latest product features and documentation, please visit <a class="noVersionAdd refreshLink" href="${redirectUrl}" style="color: #ffffff;text-decoration: underline !important;">Dynamsoft Capture Vision Documentation</a>.
+                `
+            $(".markdown-body").prepend(noteHtml)
+        }
     }
 }
 
@@ -732,7 +750,7 @@ function loadOldVersionNotes(latestPageUri, product, lang, historyList = null) {
         isShowVersionNotes = true
     }
 
-    if (latestPageUri.indexOf(location.origin) >= 0 && latestPageUri.indexOf("/docs/") > 0) {
+    if (latestPageUri.indexOf(location.origin) >= 0 && latestPageUri.indexOf("/docs-archive/") > 0) {
         if (getCurrentUrlProductName(latestPageUri) != product) {
             latestPageUri += ("?product=" + product + "&lang=" + lang)
         }

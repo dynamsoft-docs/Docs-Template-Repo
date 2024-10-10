@@ -53,7 +53,7 @@ function GenerateContentByHead(needh3 = true) {
 }
 
 function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefined, useVersionTree = false) {
-    // check if /docs/core && lang exist, update iframe src
+    // check if /docs-archive/core && lang exist, update iframe src
     var pageUrl = document.URL;
     var needFilterLangTree = false;
     
@@ -187,7 +187,7 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                 // Start Nav change
                 // if page is dcv but used in ddn or other docs, need to change navbar
                 // the nav bar in the (DDN or other docs's) Hide_Tree_Page.html file
-                if (getUrlVars(pageUrl)["product"] || (getUrlVars(pageUrl)["lang"] && pageUrl.indexOf("/docs/core") >= 0)) {
+                if (getUrlVars(pageUrl)["product"] || (getUrlVars(pageUrl)["lang"] && pageUrl.indexOf("/docs-archive/core") >= 0)) {
                     var navBar = $('#sideBarIframe').contents().find('#docsNavBar');
                     if (navBar && navBar.length > 0) {
                         if (getUrlVars(pageUrl)["product"]) {
@@ -212,8 +212,11 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                 // Start Version Tree
                 var version_tree_list = null
                 var curPageVersion = verArray[0];
+                curPageVersion = curPageVersion == latestVer ? 'latest_version' : curPageVersion
                 curPageVersion = curPageVersion == 'latest' || curPageVersion == null ? 'latest_version' : curPageVersion;
-
+                if (curPageVersion == "latest_version") {
+                    $("p.currentVersion").text("Version " + latestVer)
+                }
                 // if dcv docs but use in other docs, use other docs version
                 var product = getUrlVars(document.URL)["product"]
                 var productVersion = getUrlVars(document.URL)[product]
@@ -222,6 +225,7 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                 if (product && productVersion && curProduct != product) {
                     curPageVersion = (productVersion == 'latest' ? 'latest_version' : productVersion)
                 }
+                console.log("curPageVersion", curPageVersion)
                 version_tree_list = $('#sideBarIframe').contents().find('#version_tree_list ul.version-tree-container');
                 if (version_tree_list && version_tree_list.length > 0  && curPageVersion) {
                     for(var i = 0; i<version_tree_list.length; i++) {
@@ -412,8 +416,8 @@ function SearchVersion(currentUrl = null) {
         var curVerTag = $(".currentVersion ");
         var compatibleTag = $(".compatibleCurVersion")
         if (curVerTag != null) {
-            if (ver == "latest"){
-                curVerTag[0].innerText = "latest version";
+            if (ver == "latest" || ver == latestVer){
+                curVerTag[0].innerText = "version " + latestVer;
             }
             else{
                 curVerTag[0].innerText = "version " + ver;
@@ -536,7 +540,7 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
                 }
             }
             
-            if (document.URL.indexOf("web-twain/docs/faq/") < 0 || document.URL.indexOf("web-twain/docs/faq/?ver") > 0) {
+            if (document.URL.indexOf("web-twain/docs-archive/faq/") < 0 || document.URL.indexOf("web-twain/docs-archive/faq/?ver") > 0) {
                 curListATag[0].className = "otherLinkColour activeLink"
             }
 
@@ -742,7 +746,7 @@ function FilterLangFullTree(needFilterLang=false) {
     // console.log("-------------- Start Filter Lang Full Tree --------------")
     // console.log(needFilterLang)
     var curUrl = document.URL
-    if (curUrl.indexOf("/docs/server/") > 0 || curUrl.indexOf("/docs/mobile/") > 0 || needFilterLang) {
+    if (curUrl.indexOf("/docs-archive/server/") > 0 || curUrl.indexOf("/docs-archive/mobile/") > 0 || needFilterLang) {
         var lang = getCurrentUrlLang(curUrl, needFilterLang);
         // console.log(lang)
         var fullTreeLis = $("#fullTreeMenuListContainer > li")
@@ -762,16 +766,16 @@ function FilterLangFullTree(needFilterLang=false) {
 
 function getCurrentUrlRepoType(url) {
     var currentPath = url
-    if (currentPath.includes("/docs/server/")) {
+    if (currentPath.includes("/docs-archive/server/")) {
         return 'server'
     }
-    if (currentPath.includes("/docs/core/")) {
+    if (currentPath.includes("/docs-archive/core/")) {
         return 'core'
     }
-    if (currentPath.includes("/docs/mobile/")) {
+    if (currentPath.includes("/docs-archive/mobile/")) {
         return 'mobile'
     }
-    if (currentPath.includes("/docs/web/")) {
+    if (currentPath.includes("/docs-archive/web/")) {
         return 'web'
     }
 }
@@ -799,6 +803,9 @@ function getCurrentUrlLang(url, needFilterLang=false) {
         if(result == 'csharp') {
             result = "dotnet"
         }
+        if (result == 'android-kotlin') {
+            result = "android"
+        }
         return result
     }
     let reporType = getCurrentUrlRepoType(url)
@@ -818,13 +825,13 @@ function getCurrentUrlLang(url, needFilterLang=false) {
             }
         } else {
             var arr = []
-            if (reporType == "server" && url.split("/docs/server/").length > 1) {
-                arr = url.split("/docs/server/")[1].split("/")
+            if (reporType == "server" && url.split("/docs-archive/server/").length > 1) {
+                arr = url.split("/docs-archive/server/")[1].split("/")
             }
-            if (reporType == "mobile" && url.split("/docs/mobile/").length > 1) {
-                arr = url.split("/docs/mobile/")[1].split("/")
+            if (reporType == "mobile" && url.split("/docs-archive/mobile/").length > 1) {
+                arr = url.split("/docs-archive/mobile/")[1].split("/")
             }
-            if (reporType == "mobile" && ["objectivec-swift", "android", "xamarin", "react-native", "flutter", "cordova", "maui"].indexOf(arr[1]) < 0) {
+            if (reporType == "mobile" && ["objectivec-swift", "android", "android-kotlin", "xamarin", "react-native", "flutter", "cordova", "maui"].indexOf(arr[1]) < 0) {
                 return "objectivec-swift"
             } else if (reporType == "web" || reporType == "js") {
                 return "javascript"
@@ -860,7 +867,7 @@ function getSideBarIframeSrc(pageUrl, lang, product=null) {
         if (['javascript', 'js'].indexOf(lang) >= 0) {
             reporType = "web"
         }
-        if (['android', 'objective-c', 'objc', 'swift', 'ios', 'objectivec-swift', 'maui', 'react-native', 'reactNative', 'flutter', 'xamarin', 'cordova'].indexOf(lang) >= 0) {
+        if (['android', 'android-kotlin', 'objective-c', 'objc', 'swift', 'ios', 'objectivec-swift', 'maui', 'react-native', 'reactNative', 'flutter', 'xamarin', 'cordova'].indexOf(lang) >= 0) {
             reporType = "mobile"
         }
         if (['c', 'cpp', 'c++', 'cplusplus', 'csharp', 'dotnet', 'java', 'python'].indexOf(lang) >= 0) {
@@ -875,7 +882,7 @@ function getSideBarIframeSrc(pageUrl, lang, product=null) {
     }
     if (getDoumentName(product)) {
         reporType = reporType == null ? 'core' : reporType
-        return '/'+ getDoumentName(product) +'/docs/'+ reporType +'/Hide_Tree_Page.html'
+        return '/'+ getDoumentName(product) +'/docs-archive/'+ reporType +'/Hide_Tree_Page.html'
     }
     return null
 }
@@ -887,7 +894,7 @@ function getDocumentationLink(product, lang) {
         if (['javascript', 'js'].indexOf(lang) >= 0) {
             reporType = "web"
         }
-        if (['android', 'objective-c', 'objc', 'swift', 'ios'].indexOf(lang) >= 0) {
+        if (['android', 'android-kotlin', 'objective-c', 'objc', 'swift', 'ios'].indexOf(lang) >= 0) {
             reporType = "mobile"
         }
         if (['c', 'cpp', 'c++', 'csharp', 'dotnet', 'java', 'python'].indexOf(lang) >= 0) {
@@ -902,7 +909,9 @@ function getDocumentationLink(product, lang) {
         lang = ['cpp', 'c++'].indexOf(lang) >= 0 ? "cplusplus" : lang
         return "/" + getDoumentName(product) + '/docs/'+ reporType + "/programming/" + lang + "/"
     } else {
-        return "/" + getDoumentName(product) + '/docs/'+ reporType + "/introduction/"
+        if (product == "dbr") {
+            return "/" + getDoumentName(product) + '/docs-archive/'+ reporType + "/introduction/"
+        }
     }
 }
 
@@ -945,13 +954,4 @@ function showSelectMultiPanel(nextSiblings, findItemIndex, needh3) {
         }
     }
     GenerateContentByHead(needh3)
-    // let sidebarList = $("#AutoGenerateSidebar> ul > li")
-    // for(let i=0; i < sidebarList.length; i++) {
-    //   let aTag = $(sidebarList[i]).find("a").attr("href")
-    //   if (aTags.includes(aTag)) {
-    //     $(sidebarList[i]).show()
-    //   } else {
-    //     $(sidebarList[i]).hide()
-    //   }
-    // }
 }
