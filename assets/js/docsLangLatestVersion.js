@@ -6,7 +6,7 @@ var docsLangLatestVersion = {
         java: "9.6.40",
         python: "10.4.2000",
         dotnet: "10.4.2000",
-        android: "10.4.200",
+        android: "10.4.2000",
         ios: "10.4.2000",
         javascript: "10.4.2000",
         maui: "10.2.1101"
@@ -22,7 +22,7 @@ var docsLangLatestVersion = {
         flutter: "1.3.0",
         cordova: "1.0.5",
         reactNative: "1.1.14",
-        maui: "2.2.3000",
+        maui: "2.4.2000",
         python: "2.4.2000"
     },
     dce: {
