@@ -1,0 +1,14 @@
+<svg id="Cordova" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="31.103" height="30" viewBox="0 0 31.103 30">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_1908" data-name="Rectangle 1908" width="31.103" height="30" fill="none"/>
+    </clipPath>
+  </defs>
+  <path id="Path_7952" data-name="Path 7952" d="M18.37,7.861,18,5.734h4.806l2.69,5.538L24.153,22.823H7.063L5.583,11.469,8.364,5.734h4.757L12.8,7.861ZM7.091,0,0,11.393,2.806,30h5l-.341-4.279H9.969L10.319,30h10.53l.157-4.3h2.577l-.27,4.3h5.034L31.1,11.393,24.04,0Z" fill="#323234"/>
+  <g id="Group_2344" data-name="Group 2344" transform="translate(0 0)">
+    <g id="Group_2343" data-name="Group 2343" clip-path="url(#clip-path)">
+      <path id="Path_7953" data-name="Path 7953" d="M25.424,33.486c.422,0,.763,1.136.763,2.536s-.342,2.536-.763,2.536-.763-1.136-.763-2.536.342-2.536.763-2.536" transform="translate(-14.296 -19.412)" fill="#323234"/>
+      <path id="Path_7954" data-name="Path 7954" d="M47.112,33.486c.422,0,.763,1.136.763,2.536s-.342,2.536-.763,2.536-.763-1.136-.763-2.536.342-2.536.763-2.536" transform="translate(-26.868 -19.412)" fill="#323234"/>
+    </g>
+  </g>
+</svg>

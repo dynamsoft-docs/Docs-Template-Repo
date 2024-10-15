@@ -1,0 +1,16 @@
+<svg id="MAUI" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="25" height="25" viewBox="0 0 25 25">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_2543" data-name="Rectangle 2543" width="25" height="25" fill="none"/>
+    </clipPath>
+  </defs>
+  <rect id="Rectangle_2542" data-name="Rectangle 2542" width="25" height="25" fill="#252527"/>
+  <g id="Group_2507" data-name="Group 2507">
+    <g id="Group_2506" data-name="Group 2506" clip-path="url(#clip-path)">
+      <path id="Path_8167" data-name="Path 8167" d="M3.975,15.809a.63.63,0,0,1-.465-.195.673.673,0,0,1,.951-.952.657.657,0,0,1,.191.479.645.645,0,0,1-.193.477.658.658,0,0,1-.484.191" fill="#fff"/>
+      <path id="Path_8168" data-name="Path 8168" d="M11.351,15.7H10.166l-3.048-4.66-.143-.231c-.035-.058-.069-.115-.1-.173H6.85c.006.085.011.2.014.352s0,.332,0,.547V15.7H5.824V9.191H7.082l2.956,4.56.144.239c.04.068.082.141.124.22h.019c-.007-.085-.011-.2-.014-.354s-.005-.336-.005-.554V9.191h1.045Z" fill="#fff"/>
+      <path id="Path_8169" data-name="Path 8169" d="M16.524,15.7H12.868V9.191h3.511v.927h-2.43v1.83H16.2v.922H13.948v1.908h2.575Z" fill="#fff"/>
+      <path id="Path_8170" data-name="Path 8170" d="M21.683,10.109H19.862v5.6H18.781v-5.6H16.964V9.192h4.719Z" fill="#fff"/>
+    </g>
+  </g>
+</svg>
