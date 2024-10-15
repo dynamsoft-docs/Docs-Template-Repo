@@ -1,0 +1,13 @@
+<svg id="_.NET" data-name=".NET" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="38" height="13.691" viewBox="0 0 38 13.691">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_2541" data-name="Rectangle 2541" width="38" height="13.691" fill="none"/>
+    </clipPath>
+  </defs>
+  <g id="Group_2505" data-name="Group 2505" transform="translate(0 0)" clip-path="url(#clip-path)">
+    <path id="Path_8163" data-name="Path 8163" d="M1.363,14.221a1.3,1.3,0,0,1-.963-.4,1.406,1.406,0,0,1,0-1.968,1.339,1.339,0,0,1,.978-.4,1.333,1.333,0,0,1,.987.4,1.359,1.359,0,0,1,.394.992,1.333,1.333,0,0,1-.4.986,1.368,1.368,0,0,1-1,.395" transform="translate(0 -0.53)" fill="#1a1818"/>
+    <path id="Path_8164" data-name="Path 8164" d="M16.874,13.474H14.422L8.116,3.834c-.124-.2-.223-.361-.3-.48S7.677,3.117,7.609,3H7.562q.019.263.029.728c.006.311.009.688.009,1.132v8.617H5.439V0h2.6l6.117,9.434c.113.187.212.352.3.493s.171.293.258.456h.038q-.019-.263-.028-.733T14.712,8.5V0h2.162Z" transform="translate(-0.252 0)" fill="#1a1818"/>
+    <path id="Path_8165" data-name="Path 8165" d="M28.283,13.475H20.719V0h7.264V1.917H22.956V5.7h4.661V7.611H22.956v3.946h5.327Z" transform="translate(-0.959 0)" fill="#1a1818"/>
+    <path id="Path_8166" data-name="Path 8166" d="M39.37,1.9H35.6V13.474H33.365V1.9H29.607V0H39.37Z" transform="translate(-1.37 0)" fill="#1a1818"/>
+  </g>
+</svg>
