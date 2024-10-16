@@ -8,8 +8,12 @@
     
     <div class="markdown-body homepageContainer container">
         <div class="row">
-            <div class="col-xs-12 col-md-10 col-md-offset-1 col-xl-8 col-xl-offset-2">
-                <div class="content">
+            <div class="col-xs-12">
+                {% assign productNameClass = '' %}
+                {%- if site.firstLevelUrl contains 'barcode-reader/docs/server' -%}
+                    {% assign productNameClass = 'dbr-server' %}
+                {%- endif -%}
+                <div class="content {{productNameClass}}">
                     {{ content }}
                 </div>
             </div>
