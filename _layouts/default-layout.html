@@ -167,13 +167,35 @@
                     } else {
                         reporType = "core"
                     }
-                    window.location.href = "/" + getDoumentName(product) + "/docs/" + reporType + "/search.html?q=" + $('#txtSearch').val()
+
+                    var gscParam = ""
+                    if (product == "dcv") {
+                        gscParam = `#gsc.tab=0&gsc.q=${$('#txtSearch').val()}&gsc.ref=more%3A${getRefName(lang)}&gsc.sort=`
+                    }
+                    window.location.href = "/" + getDoumentName(product) + "/docs/" + reporType + "/search.html?lang="+ lang + "&q=" + $('#txtSearch').val() + gscParam
                 } else {
                     let preUrl = document.URL.split("/docs/")[0]
                     window.location.href = preUrl + "/docs/search.html?q=" + $('#txtSearch').val()
                 }
             }
         })
+
+        function getRefName(lang) {
+            lang = lang.toLowerCase()
+            if (['javascript', 'js'].indexOf(lang) >= 0) {
+                return "web"
+            } else if (['objectivec-swift','objective-c', 'objc', 'swift', 'ios'].indexOf(lang) >= 0) {
+                return "ios"
+            } else if (['c', 'cpp', 'c++', 'cplusplus'].indexOf(lang) >= 0) {
+                return "c++"
+            } else if (['csharp', 'dotnet'].indexOf(lang) >= 0) {
+                return ".net"
+            } else {
+                return lang
+            }
+        }
+
+        //https://officecn.dynamsoft.com:808/capture-vision/docs/web/search.html?lang=javascript&q=normalizer&%20task%20settings#gsc.tab=0&gsc.q=normalizer&gsc.ref=more%3Aandroid&gsc.sort=
     </script>
     <!-- Google Tag Manager -->
     <noscript>
