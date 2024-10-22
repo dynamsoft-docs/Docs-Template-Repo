@@ -170,7 +170,7 @@
 
                     var gscParam = ""
                     if (product == "dcv") {
-                        gscParam = `#gsc.tab=0&gsc.q=${$('#txtSearch').val()}&gsc.ref=more%3A${getRefName(lang)}&gsc.sort=`
+                        gscParam = `&ref=${getRefName(lang)}`
                     }
                     window.location.href = "/" + getDoumentName(product) + "/docs/" + reporType + "/search.html?lang="+ lang + "&q=" + $('#txtSearch').val() + gscParam
                 } else {
