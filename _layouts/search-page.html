@@ -60,7 +60,10 @@
   </div>
 
   <script type="text/javascript">
-    mutationObserverFuncForSearch()
+    var product = getCurrentUrlProductName(document.URL)
+    if (product == "dcv") {
+      mutationObserverFuncForSearch()
+    }
 
     $('#sideBarCnt').css({ 'width': $('.sideBar').width() + 'px' })
     $('.container .head').css({ 'width': $('.docContainer').width() + 'px' })
@@ -106,7 +109,7 @@
         var aTag = $(results[i]).find("a.gs-title")
         var aCtorig = $(aTag).attr("data-ctorig")
 
-        if (!getUrlVars(aCtorig)["product"] && !getUrlVars(aCtorig)["lang"]) {
+        if (aCtorig && !getUrlVars(aCtorig)["product"] && !getUrlVars(aCtorig)["lang"]) {
           var aCtorig_product = getCurrentUrlProductName(aCtorig)
           var aCtorig_lang = getCurrentUrlLang(aCtorig, true)
           var replaceOrig = aCtorig
@@ -132,12 +135,23 @@
     }
 
     function mutationObserverFuncForSearch() {
+      var ref = getUrlVars(document.URL)["ref"]
       var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
       var mo = new MutationObserver(function (records) {
         records.forEach(function (record) {
           var obj = record.addedNodes[0]
           var className = $(obj).attr("class")
           if (className && className.indexOf("gsc-result") >= 0) {
+            if (ref) {
+              var refinemenths = $(".gsc-refinementHeader")
+              for (var i = 0; i < refinemenths.length; i++) {
+                var refItem = refinemenths[i]
+                var refText = $(refItem).find("span").text().toLowerCase()
+                if (!$(refItem).hasClass("gsc-refinementhActive") && refText == ref.toLowerCase()) {
+                  $(refItem).click()
+                }
+              }
+            }
             changeGSCUrl()
           }
         })
