@@ -76,13 +76,13 @@
                     </div>
                 </div>
             </main>
-            <aside class="sideBar col-xs-12 col-md-3 hide-xs hide-sm">
+            <aside class="sideBar col-xs-12 col-md-3 hide-xs hide-sm" data-nosnippet="true">
                 <div id="sideBarCnt">
                     <div class="docSearchPart" style="margin-top: 30px;">
                         <input id="txtSearch" class="search" type="text">
                     </div>
                     <nav class="mainPage">
-                        <ul id="fullTreeMenuListContainer" name="listLevel1">
+                        <ul id="fullTreeMenuListContainer" name="listLevel1" data-nosnippet="true">
                             {%- if site.firstLevelUrl contains 'web-twain' -%}
                                 {%- assign treeList = site.data.full_tree.tree_list -%}
                                 {%- include liquid_generateFullTree.html treeList=treeList -%}
