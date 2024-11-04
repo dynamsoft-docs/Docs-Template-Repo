@@ -9,7 +9,7 @@ var docsLangLatestVersion = {
         android: "10.4.2000",
         ios: "10.4.2000",
         javascript: "10.4.2002",
-        maui: "10.4.2000"
+        maui: "10.4.2002"
     },
     dcv:{
         core: "2.4.2000",
