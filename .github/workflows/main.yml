@@ -8,6 +8,7 @@ on:
   push:
     branches: 
     - main 
+    - archive 
     #- preview 
 
   # Allows you to run this workflow manually from the Actions tab
@@ -251,6 +252,162 @@ jobs:
     with:
       doc-repo: license-server-docs
       doc-url: license-server/docs
+    secrets: inherit
+
+  Update-DCV-Core-On-Archive-Change:
+    if: ${{ github.ref == 'refs/heads/archive' }}
+    uses: ./.github/workflows/called-workflow-build-sync-archive.yml
+    with:
+      doc-repo: capture-vision-docs
+      doc-url: capture-vision/docs-archive/core
+    secrets: inherit
+
+  Update-DCV-Server-On-Archive-Change:
+    if: ${{ github.ref == 'refs/heads/archive' }}
+    uses: ./.github/workflows/called-workflow-build-sync-archive.yml
+    with:
+      doc-repo: capture-vision-docs-server
+      doc-url: capture-vision/docs-archive/server
+    secrets: inherit
+
+  Update-DCV-Mobile-On-Archive-Change:
+    if: ${{ github.ref == 'refs/heads/archive' }}
+    uses: ./.github/workflows/called-workflow-build-sync-archive.yml
+    with:
+      doc-repo: capture-vision-docs-mobile
+      doc-url: capture-vision/docs-archive/mobile
+    secrets: inherit
+
+  Update-DCV-Js-On-Archive-Change:
+    if: ${{ github.ref == 'refs/heads/archive' }}
+    uses: ./.github/workflows/called-workflow-build-sync-archive.yml
+    with:
+      doc-repo: capture-vision-docs-js
+      doc-url: capture-vision/docs-archive/web
+    secrets: inherit
+
+
+  Update-DLR-Core-On-Archive-Change:
+    if: ${{ github.ref == 'refs/heads/archive' }}
+    uses: ./.github/workflows/called-workflow-build-sync-archive.yml
+    with:
+      doc-repo: label-recognition-docs
+      doc-url: label-recognition/docs-archive/core
+    secrets: inherit
+
+  Update-DLR-Server-On-Archive-Change:
+    if: ${{ github.ref == 'refs/heads/archive' }}
+    uses: ./.github/workflows/called-workflow-build-sync-archive.yml
+    with:
+      doc-repo: label-recognition-docs-server
+      doc-url: label-recognition/docs-archive/server
+    secrets: inherit
+
+  Update-DLR-Mobile-On-Archive-Change:
+    if: ${{ github.ref == 'refs/heads/archive' }}
+    uses: ./.github/workflows/called-workflow-build-sync-archive.yml
+    with:
+      doc-repo: label-recognition-docs-mobile
+      doc-url: label-recognition/docs-archive/mobile
+    secrets: inherit
+
+  Update-DLR-Js-On-Archive-Change:
+    if: ${{ github.ref == 'refs/heads/archive' }}
+    uses: ./.github/workflows/called-workflow-build-sync-archive.yml
+    with:
+      doc-repo: label-recognition-docs-js
+      doc-url: label-recognition/docs-archive/web
+    secrets: inherit
+
+
+  Update-DDN-Core-On-Archive-Change:
+    if: ${{ github.ref == 'refs/heads/archive' }}
+    uses: ./.github/workflows/called-workflow-build-sync-archive.yml
+    with:
+      doc-repo: document-normalizer-docs
+      doc-url: document-normalizer/docs-archive/core
+    secrets: inherit
+
+  Update-DDN-Server-On-Archive-Change:
+    if: ${{ github.ref == 'refs/heads/archive' }}
+    uses: ./.github/workflows/called-workflow-build-sync-archive.yml
+    with:
+      doc-repo: document-normalizer-docs-server
+      doc-url: document-normalizer/docs-archive/server
+    secrets: inherit
+
+  Update-DDN-Mobile-On-Archive-Change:
+    if: ${{ github.ref == 'refs/heads/archive' }}
+    uses: ./.github/workflows/called-workflow-build-sync-archive.yml
+    with:
+      doc-repo: document-normalizer-docs-mobile
+      doc-url: document-normalizer/docs-archive/mobile
+    secrets: inherit
+
+  Update-DDN-Js-On-Archive-Change:
+    if: ${{ github.ref == 'refs/heads/archive' }}
+    uses: ./.github/workflows/called-workflow-build-sync-archive.yml
+    with:
+      doc-repo: document-normalizer-docs-js
+      doc-url: document-normalizer/docs-archive/web
+    secrets: inherit
+
+
+  Update-DCP-Core-On-Archive-Change:
+    if: ${{ github.ref == 'refs/heads/archive' }}
+    uses: ./.github/workflows/called-workflow-build-sync-archive.yml
+    with:
+      doc-repo: code-parser-docs
+      doc-url: code-parser/docs-archive/core
+    secrets: inherit
+
+  Update-DCP-Server-On-Archive-Change:
+    if: ${{ github.ref == 'refs/heads/archive' }}
+    uses: ./.github/workflows/called-workflow-build-sync-archive.yml
+    with:
+      doc-repo: code-parser-docs-server
+      doc-url: code-parser/docs-archive/server
+    secrets: inherit
+
+  Update-DCP-Mobile-On-Archive-Change:
+    if: ${{ github.ref == 'refs/heads/archive' }}
+    uses: ./.github/workflows/called-workflow-build-sync-archive.yml
+    with:
+      doc-repo: code-parser-docs-mobile
+      doc-url: code-parser/docs-archive/mobile
+    secrets: inherit
+
+  Update-DCP-Js-On-Archive-Change:
+    if: ${{ github.ref == 'refs/heads/archive' }}
+    uses: ./.github/workflows/called-workflow-build-sync-archive.yml
+    with:
+      doc-repo: code-parser-docs-js
+      doc-url: code-parser/docs-archive/web
+    secrets: inherit
+
+
+  Update-DCE-Core-On-Archive-Change:
+    if: ${{ github.ref == 'refs/heads/archive' }}
+    uses: ./.github/workflows/called-workflow-build-sync-archive.yml
+    with:
+      doc-repo: camera-enhancer-docs
+      doc-url: camera-enhancer/docs-archive/core
+    secrets: inherit
+
+  Update-DCE-Mobile-On-Archive-Change:
+    if: ${{ github.ref == 'refs/heads/archive' }}
+    uses: ./.github/workflows/called-workflow-build-sync-archive.yml
+    with:
+      doc-repo: camera-enhancer-docs-mobile
+      doc-url: camera-enhancer/docs-archive/mobile
+    secrets: inherit
+
+  Update-DCE-JS-On-Archive-Change:
+    if: ${{ github.ref == 'refs/heads/archive' }}
+    uses: ./.github/workflows/called-workflow-build-sync-archive.yml
+    with:
+      doc-repo: camera-enhancer-docs-js
+      doc-url: camera-enhancer/docs-archive/web
     secrets: inherit
 
 
