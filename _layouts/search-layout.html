@@ -3,117 +3,132 @@ layout: null
 ---
 <!DOCTYPE html>
 <html lang="en-US">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{{page.title}}</title>
+    <meta name="description" content="{{page.description}}">
+    <meta name="keywords" content="{{page.keywords}}">
+    <link rel="canonical" href="https://www.dynamsoft.com/web-twain/docs-search-test/" />
+    <link rel="stylesheet" href="https://www.dynamsoft.com/webres/wwwroot/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://www.dynamsoft.com/webres/wwwroot/fontawesome-free-5.13.0-web/css/all.min.css" />
+    <link rel="stylesheet" href="https://www.dynamsoft.com/webres/wwwroot/css/site_basic.min.css" />
+    <link href="https://www.dynamsoft.com/webres/wwwroot/css/header_bs.min.css" rel="stylesheet" />
+    <link href="https://www.dynamsoft.com/webres/wwwroot/css/footer_bs.min.css" rel="stylesheet" />
+    <script src="https://www.dynamsoft.com/webres/wwwroot/lib/algolia/algoliasearch-lite.umd.js"></script>
+    <script src="https://www.dynamsoft.com/webres/wwwroot/lib/algolia/instantsearch.production.min.js"></script>
+    <link rel="stylesheet" href="https://www.dynamsoft.com/webres/wwwroot/lib/algolia/satellite.min.css">
+    <link href="https://www.dynamsoft.com/webres/wwwroot/css/bootstrap-xxl.min.css" rel="stylesheet" />
+    <link href="https://www.dynamsoft.com/webres/wwwroot/css/basic_style.min.css" rel="stylesheet" />
+    <link href="https://www.dynamsoft.com/webres/wwwroot/css/docs/algoliaSearch.css" rel="stylesheet" />
+</head>
 
-{%- include head.html -%}
-<body>
-  {%- include page_header.html -%}
-  {%- include productNav.html -%}
-
-  <div id="main" class="newDocSearch">
-    <h1 class="h2 fontOswald tc">Dynamsoft Web TWAIN Document Search</h1>
-    <div class="searchDiv clearfix">
-      <input type="text" name="searchInput" class="fl" value="" />
-      <span class="searchBtn tc fontOswald fr">Search</span>
-    </div>
-    <div class="searchResult">
-      <div class="loading" id="loadingLogin" style="display:none;">
-        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-      </div>
-      <div class="resultList"></div>
-    </div>
-    <div id="paginationDiv"></div>
-  </div>
-
-  {%- include livehelp.html -%}
-  
-  <script type="text/javascript">
-    var pageSize = 20;
-    var currentPage = 1;
-    var queryString = "";
-    $(function () {
-      var urlQueryString = getUrlVars(document.URL)["q"]
-      if (urlQueryString) {
-        $('input[name=searchInput]').val(urlQueryString)
-        SearchData(urlQueryString, 1)
-      }
-
-      $(".searchBtn").on("click", function () {
-        currentPage = 1;
-        queryString = $("input[name=searchInput]").val();
-        let newUrl = document.URL.split("?")[0]
-        history.pushState(null, null, newUrl + "?q=" + queryString);
-        SearchData(queryString, currentPage)
-      })
-
-      $('input[name=searchInput]').keypress(function (event) {
-        if (event.which === 13) {
-          currentPage = 1;
-          queryString = $("input[name=searchInput]").val();
-          SearchData(queryString, currentPage)
-        }
-      });
-    });
-
-    function SearchData(queryString, curPage) {
-      $(".dwtDocSearch .searchResult .loading").show()
-      $.ajax({
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        type: "POST",
-        url: GLOBAL.SiteRoot + "/Api/AlgoliaSearch/Search",
-        dataType: "JSON",
-        data: JSON.stringify({
-          Index: "{{page.index}}",
-          Query: queryString,
-          CurrentPage: curPage,
-          PageSize: pageSize
-        }),
-        success: function (res) {
-          if (res.code == 0) {
-            initData(res.data)
-            initPagination(res.data.nbPages)
-            $(".dwtDocSearch .searchResult .loading").hide()
-          }
-        },
-        error: function (res) { }
-      })
-    }
-
-    function initData(data) {
-      var resultHtml = ""
-      for (var i = 0; i < data.hits.length; i++) {
-        resultHtml += `
-          <div class="result-item">
-            <p class="title"><a class="orangeLink" href="${data.hits[i].url}" target="_blank">${data.hits[i]._snippetResult.title ? data.hits[i]._snippetResult.title.value : data.hits[i].title}</a></p>
-            <p class="description">${data.hits[i]._snippetResult.description ? data.hits[i]._snippetResult.description.value : data.hits[i].description}</p>
-            <p class="content">${data.hits[i]._snippetResult.content ? data.hits[i]._snippetResult.content.value : data.hits[i].content}</p>
+<div id="main" class="docSearch container ptb80">
+  <div class="row">
+    <div class="col-12 col-xl-10 col-xxl-8 offset-xl-1 offset-xxl-2">
+      <h1 class="h2 fontOswald tc">{{page.h1}}</h1>
+      <div class="content mt60">
+        <div id="searchbox">
+          <div class="ais-SearchBox-form">
+            <input id="custom-searchbox" class="ais-SearchBox-input" type="search" placeholder="Search for products..."
+              autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" maxlength="512">
+            <button id="search-button" class="ais-SearchBox-submit" type="button">Search</button>
+            <button class="ais-SearchBox-reset" type="reset" title="Clear the search query">
+              <svg class="ais-SearchBox-resetIcon" viewBox="0 0 20 20" width="10" height="10" aria-hidden="true">
+                <path
+                  d="M8.114 10L.944 2.83 0 1.885 1.886 0l.943.943L10 8.113l7.17-7.17.944-.943L20 1.886l-.943.943-7.17 7.17 7.17 7.17.943.944L18.114 20l-.943-.943-7.17-7.17-7.17 7.17-.944.943L0 18.114l.943-.943L8.113 10z">
+                </path>
+              </svg>
+            </button>
           </div>
-        `
-      }
-      $(".searchResult .resultList").html(resultHtml);
-    }
+        </div>
+        <div id="hits" class="mt20"></div>
+        <div id="pagination" class="mt20"></div>
+      </div>
+    </div>
+  </div>
+</div>
+{{ content }}
+<script src="https://www.dynamsoft.com/webres/wwwroot/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://www.dynamsoft.com/webres/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://www.dynamsoft.com/webres/wwwroot/js/doT.min.js"></script>
+<script src="https://www.dynamsoft.com/webres/wwwroot/js/util.min.js"></script>
+<script src="https://www.dynamsoft.com/webres/wwwroot/js/site.min.js"></script>
+<script src="https://www.dynamsoft.com/webres/wwwroot/js/header.min.js"></script>
+<script src="https://www.dynamsoft.com/webres/wwwroot/js/footer.min.js"></script>
+<script>
+  const mySearch = instantsearch({
+    indexName: 'Crawler-DWT-Docs-New',
+    searchClient: algoliasearch('989MTMK88E', '68565cc874554161b1842b2364287be7'),
+  });
 
-    function initPagination(totalPage) {
-      var paginationHtml = '<ul class="pagination">'
-      for (var i = 0; i < totalPage; i++) {
-        if (i + 1 == currentPage) {
-          paginationHtml += '<li class="paginationItem on" page="' + (i + 1) + '">' + (i + 1) + '</li>';
-        } else {
-          paginationHtml += '<li class="paginationItem" page="' + (i + 1) + '">' + (i + 1) + '</li>';
-        }
-      }
-      paginationHtml += '</ul>';
-      $('#paginationDiv').html(paginationHtml);
+  mySearch.addWidgets([
+    instantsearch.widgets.configure({
+      hitsPerPage: 10,
+      responseFields: ["*"],
+      attributesToSnippet: ["content:30"],
+      snippetEllipsisText: "...",
+    }),
 
-      $('.paginationItem').on('click', function () {
-        window.scrollTo(0, 0);
-        currentPage = Number($(this).attr("page"))
-        SearchData(queryString, currentPage)
-      });
+    instantsearch.widgets.hits({
+      container: '#hits',
+      templates: {
+        item: (hit, { html, components }) => html`
+                      <div>
+                          <div class="hit-title"><a href="${hit.url}" target="_blank">${components.Highlight({ hit, attribute: 'title' })}</a></div>
+                          <div class="hit-url">${hit.url}</div>
+                          <div class="hit-content">${components.Snippet({ hit, attribute: 'content' })}</div>
+                      </div>
+                  `
+      }
+    }),
+
+    instantsearch.widgets.pagination({
+      container: '#pagination'
+    })
+  ]);
+
+  mySearch.start();
+
+  init();
+
+  const searchBox = document.querySelector('#custom-searchbox');
+  const searchButton = document.querySelector('#search-button');
+
+  $('#custom-searchbox').on("keyup", function () {
+    let value = $(this).val()
+    if (value && value != "") {
+      $(".ais-SearchBox-reset").show()
+    } else {
+      $(".ais-SearchBox-reset").hide()
     }
-  </script>
+  })
+
+  $("#search-button").on("click", function () {
+    mySearch.helper.setQuery($("#custom-searchbox").val()).search();
+  })
+
+  $('#custom-searchbox').keydown(function (e) {
+    if (e.keyCode == 13) {
+      mySearch.helper.setQuery($("#custom-searchbox").val()).search();
+    }
+  })
+
+  $(".ais-SearchBox-reset").on("click", function () {
+    $('#custom-searchbox').val("")
+    $("#search-button").click()
+    $(this).hide()
+    $('#custom-searchbox').focus()
+  })
+
+  function init() {
+    let queryStr = getUrlParam("q") ? decodeURIComponent(getUrlParam("q")) : ""
+    $('#custom-searchbox').val(queryStr)
+    mySearch.helper.setQuery(queryStr).search();
+  }
+</script>
+{%- include livehelp.html -%}
 </body>
 
 </html>
