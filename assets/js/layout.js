@@ -719,7 +719,7 @@ function initNoteForOldVersions(historyList = null) {
         } else {
             $("#versionNote").remove()
         }
-    } else if (["dlr", "ddn", "dce", "dcp"].indexOf(queryProduct) >= 0) {
+    } else if (["dlr", "ddn", "dce", "dcp", "dcv"].indexOf(queryProduct) >= 0) {
         if($("#versionNote").length == 0) {
             var redirectUrl = document.URL.split("?")[0]
             redirectUrl = redirectUrl.replace("/docs-archive/", "/docs/")
