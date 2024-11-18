@@ -10,20 +10,25 @@ layout: null
     <title>{{page.title}}</title>
     <meta name="description" content="{{page.description}}">
     <meta name="keywords" content="{{page.keywords}}">
+    {%- assign assetsPath = '/webres/wwwroot' -%}
     <link rel="canonical" href="https://www.dynamsoft.com/web-twain/docs-search-test/" />
+    <link rel="stylesheet" href="{{ site.assets }}css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://www.dynamsoft.com/webres/wwwroot/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://www.dynamsoft.com/webres/wwwroot/fontawesome-free-5.13.0-web/css/all.min.css" />
     <link rel="stylesheet" href="https://www.dynamsoft.com/webres/wwwroot/css/site_basic.min.css" />
     <link href="https://www.dynamsoft.com/webres/wwwroot/css/header_bs.min.css" rel="stylesheet" />
-    <link href="https://www.dynamsoft.com/webres/wwwroot/css/footer_bs.min.css" rel="stylesheet" />
     <script src="https://www.dynamsoft.com/webres/wwwroot/lib/algolia/algoliasearch-lite.umd.js"></script>
     <script src="https://www.dynamsoft.com/webres/wwwroot/lib/algolia/instantsearch.production.min.js"></script>
     <link rel="stylesheet" href="https://www.dynamsoft.com/webres/wwwroot/lib/algolia/satellite.min.css">
     <link href="https://www.dynamsoft.com/webres/wwwroot/css/bootstrap-xxl.min.css" rel="stylesheet" />
     <link href="https://www.dynamsoft.com/webres/wwwroot/css/basic_style.min.css" rel="stylesheet" />
     <link href="https://www.dynamsoft.com/webres/wwwroot/css/docs/algoliaSearch.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ assetsPath }}/css/docs/basis-bs.min.css?v={{ 'now' | date: "%s"}}" />
+    <link rel="stylesheet" href="{{ assetsPath }}/css/docs/basis.min.css?v={{ 'now' | date: "%s"}}" />
+    <link rel="stylesheet" href="{{ assetsPath }}/css/docs/footer.css" />
 </head>
-
+<body>
+  {%- include page_header.html -%}
 <div id="main" class="docSearch container ptb80">
   <div class="row">
     <div class="col-12 col-xl-10 col-xxl-8 offset-xl-1 offset-xxl-2">
@@ -50,13 +55,15 @@ layout: null
   </div>
 </div>
 {{ content }}
+<div id="footerWrapper">
+  {%- include page_footer.html -%}
+</div>
 <script src="https://www.dynamsoft.com/webres/wwwroot/lib/jquery/dist/jquery.min.js"></script>
 <script src="https://www.dynamsoft.com/webres/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://www.dynamsoft.com/webres/wwwroot/js/doT.min.js"></script>
 <script src="https://www.dynamsoft.com/webres/wwwroot/js/util.min.js"></script>
 <script src="https://www.dynamsoft.com/webres/wwwroot/js/site.min.js"></script>
 <script src="https://www.dynamsoft.com/webres/wwwroot/js/header.min.js"></script>
-<script src="https://www.dynamsoft.com/webres/wwwroot/js/footer.min.js"></script>
 <script>
   const mySearch = instantsearch({
     indexName: 'Crawler-DWT-Docs-New',
