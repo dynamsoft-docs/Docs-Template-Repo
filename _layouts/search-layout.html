@@ -83,7 +83,7 @@ layout: null
       templates: {
         item: (hit, { html, components }) => html`
                       <div>
-                          <div class="hit-title"><a href="${hit.url}" target="_blank">${components.Highlight({ hit, attribute: 'title' })}</a></div>
+                          <div class="hit-title"><a href="${hit.url}">${components.Highlight({ hit, attribute: 'title' })}</a></div>
                           <div class="hit-url">${hit.url}</div>
                           <div class="hit-content">${components.Snippet({ hit, attribute: 'content' })}</div>
                       </div>
