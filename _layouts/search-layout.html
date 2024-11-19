@@ -1,14 +1,23 @@
 ---
 layout: null
 ---
+
+{%- assign title = page.title -%}
+{%- assign description = page.description -%}
+
+{%- if site.firstLevelUrl contains 'web-twain' -%}
+  {%- assign title = 'Dynamic Web TWAIN SDK Documentation Search' -%}
+  {%- assign description = 'Dynamic Web TWAIN SDK Documentation Search' -%}
+{%- endif -%}
+
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>{{page.title}}</title>
-    <meta name="description" content="{{page.description}}">
+    <title>{{title}}</title>
+    <meta name="description" content="{{description}}">
     <meta name="keywords" content="{{page.keywords}}">
     {%- assign assetsPath = '/webres/wwwroot' -%}
     <link rel="canonical" href="https://www.dynamsoft.com/web-twain/docs-search-test/" />
