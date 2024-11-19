@@ -20,7 +20,14 @@ layout: null
     <meta name="description" content="{{description}}">
     <meta name="keywords" content="{{page.keywords}}">
     {%- assign assetsPath = '/webres/wwwroot' -%}
-    <link rel="canonical" href="https://www.dynamsoft.com/web-twain/docs-search-test/" />
+    {%- assign docFullPath = site.docFullPath -%}
+    {%- assign docFullPathLastChar = docFullPath | split:'' | last -%}
+    {%- if docFullPathLastChar contains '/' -%}	
+        {%- assign truncateDocHomePageSize = docFullPath | size | minus:1 -%}
+        {%- assign docFullPath = docFullPath | slice: 0, truncateDocHomePageSize -%}
+    {%- endif -%}
+    <link href="{{ docFullPath }}{{ targetUrl }}" rel="canonical">
+
     <link rel="stylesheet" href="{{ site.assets }}css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://www.dynamsoft.com/webres/wwwroot/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://www.dynamsoft.com/webres/wwwroot/fontawesome-free-5.13.0-web/css/all.min.css" />
