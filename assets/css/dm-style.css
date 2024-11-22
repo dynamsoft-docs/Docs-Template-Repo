@@ -1,7 +1,7 @@
 /*! normalize.css v4.1.1 | MIT License | github.com/necolas/normalize.css */
 @font-face {
   font-family: Oswald-Regular;
-  src: local('☺'), url('../font-face/oswald-regular-webfont.woff2') format('woff2'), url('../font-face/oswald-regular-webfont.woff') format('woff'), url('../font-face/Oswald-Regular.ttf') format('truetype');
+  src: local('☺'), url('../font-face/Oswald-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: optional;
@@ -9,7 +9,7 @@
 
 @font-face {
   font-family: Oswald-Light;
-  src: local('☺'), url('../font-face/oswald-light-webfont.woff2') format('woff2'), url('../font-face/oswald-light-webfont.woff') format('woff'), url('../font-face/Oswald-Light.ttf') format('truetype');
+  src: local('☺'), url('../font-face/Oswald-Light.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: optional;
@@ -17,7 +17,7 @@
 
 @font-face {
   font-family: OpenSans-Light;
-  src: local('☺'), url('../font-face/OpenSans-Light.woff2') format('woff2'),url('../font-face/OpenSans-Light.woff') format('woff'), url('../font-face/OpenSans-Light.ttf') format('truetype'), url('../font-face/OpenSans-Light.svg#webfontOTINA1xY') format('svg'), url('../font-face/OpenSans-Light.eot?#iefix') format('embedded-opentype');
+  src: local('☺'), url('../font-face/OpenSans-Light.woff') format('woff'), url('../font-face/OpenSans-Light.ttf') format('truetype'), url('../font-face/OpenSans-Light.svg#webfontOTINA1xY') format('svg'), url('../font-face/OpenSans-Light.eot?#iefix') format('embedded-opentype');
   font-weight: normal;
   font-style: normal;
   font-display: optional;
@@ -25,7 +25,7 @@
 
 @font-face {
   font-family: OpenSans-Regular;
-  src: local('☺'), url('../font-face/OpenSans-Regular.woff2') format('woff2'), url('../font-face/OpenSans-Regular.woff') format('woff'), url('../font-face/OpenSans-Regular.ttf') format('truetype'), url('../font-face/OpenSans-Regular.svg#webfontOTINA1xY') format('svg'), url('../font-face/OpenSans-Regular.eot?#iefix') format('embedded-opentype');
+  src: local('☺'), url('../font-face/OpenSans-Regular.woff') format('woff'), url('../font-face/OpenSans-Regular.ttf') format('truetype'), url('../font-face/OpenSans-Regular.svg#webfontOTINA1xY') format('svg'), url('../font-face/OpenSans-Regular.eot?#iefix') format('embedded-opentype');
   font-weight: normal;
   font-style: normal;
   font-display: optional;
@@ -33,7 +33,7 @@
 
 @font-face {
   font-family: OpenSans-Semibold;
-  src: local('☺'), url('../font-face/OpenSans-Semibold.woff2') format('woff2'), url('../font-face/OpenSans-Semibold.woff') format('woff'), url('../font-face/OpenSans-Semibold.ttf') format('truetype'), url('../font-face/OpenSans-Semibold.svg#webfontOTINA1xY') format('svg'), url('../font-face/OpenSans-Semibold.eot?#iefix') format('embedded-opentype');
+  src: local('☺'), url('../font-face/OpenSans-Semibold.woff') format('woff'), url('../font-face/OpenSans-Semibold.ttf') format('truetype'), url('../font-face/OpenSans-Semibold.svg#webfontOTINA1xY') format('svg'), url('../font-face/OpenSans-Semibold.eot?#iefix') format('embedded-opentype');
   font-weight: normal;
   font-style: normal;
   font-display: optional;
