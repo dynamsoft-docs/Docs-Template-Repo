@@ -1,0 +1,114 @@
+{%- assign assetsPath = '/webres/wwwroot' -%}
+<link href="{{assetsPath}}/css/intlTelInput.min.css" rel="stylesheet" />
+<script src="{{assetsPath}}/js/intlTelInput.min.js"></script>
+<link rel="stylesheet" href="{{ assetsPath }}/fontawesome-free-5.13.0-web/css/all.min.css" />
+<link rel="stylesheet" href="{{ assetsPath }}/css/docs/trialLicense.css" />
+
+<div class="trial-license-wrap" style="display: none;">
+  <div class="not-logged-in hide">
+    <p class="title">Request a Trial License</p>
+    <div class="result">
+      <div class="key">Demo: DLS2eyJvcmdhbml6YXeyJo34567AwMDAxLTEwM34XphdGlvbk812345AxIn0=</div>
+      <div type="button" class="d-btn orange-btn reveal-btn" value="Reveal">Reveal</div>
+    </div>
+    <p class="note">This generates an online license that collects data regarding your usage of the SDK. If you prefer
+      an offline license key, please <a href="/contact/">contact us</a>.​</p>
+  </div>
+  <div class="had-license hide">
+    <p class="title">Your Trial License</p>
+    <div class="result">
+      <div class="key">DLS2eyJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSJ9DLS2eyJoYW5kc2hha2VDb2RlIjoiMjAwMDAxLTEwMTIwMDkzNiIsIm9yZ2FuaXphdGlvbklEIjoiMjAwMDAxIn0=</div>
+      <div type="button" class="d-btn orange-btn copy-btn" value="Copy">Copy</div>
+    </div>
+    <span class="copyied">Copied!</span>
+  </div>
+  <div class="request-success hide">
+    <p class="title">Request a Trial License - Successful</p>
+    <div class="desc">
+      <i class="icon-send"></i>
+      <p>The license will be sent to your email immediately. If you don't see it in your inbox, please check your junk/spam folder as well.</p>
+    </div>
+  </div>
+</div>
+
+<div class="modal trial-license-request-modal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <i class="icon-close"></i>
+      <div class="modal-body">
+        <div class="loading" id="loadingLogin" style="display: none;">
+          <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+        </div>
+        <div class="emailErrorAlert off">
+          <div class="ds-alert error"><p>We are unable to deliver to the email address provided. Please try a different one.</p><div class="ds-alert-close-btn"></div></div>
+        </div>
+        <div class="third-party-request">
+          <p>One Click to Request a 30-Day Trial License</p>
+          <div class="login-btns">
+            <div type="button" class="third-party-btn github-btn"><i class="fab fa-github"></i>Github</div>
+            <div type="button" class="third-party-btn microsoft-btn"><i class="fab fa-microsoft"></i>Microsoft</div>
+            <div type="button" class="third-party-btn linkedin-btn"><i class="fab fa-linkedin"></i>LinkedIn</div>
+          </div>
+        </div>
+        <p class="devide">or continue with a work email</p>
+        <div class="dynamsoft-request">
+          <div class="basicForm">
+            <div class="basicFormGroup" style="grid-area: a">
+              <input type="email" id="Email" name="email"
+                onkeyup="$('#emailErrorMsg').hide(); clearInvalidEnter(event)" onblur="checkPublicDomain()"
+                class="basicFormInput" autofocus placeholder=" " />
+              <label class="fieldLabel emailLabel" placeholder="* Email: name@yourbusiness.com"
+                value="Business Email:"></label>
+              <p class="errorMsg" id="emailErrorMsg" style="display: none;">Emails from this domain are not permitted.
+                Please enter a business email address.</p>
+            </div>
+            <div class="clearfix" style="grid-area: b">
+              <div class="basicFormGroup fl" style="width: 49.5%">
+                <input type="text" id="FirstName" autocomplete="new-password" class="basicFormInput" placeholder=" ">
+                <label class="fieldLabel firstNameLabel" placeholder="* First Name:" value="First Name:"></label>
+              </div>
+              <div class="basicFormGroup fr" style="width: 49.5%">
+                <input type="text" id="LastName" autocomplete="new-password" class="basicFormInput"
+                  placeholder=" ">
+                <label class="fieldLabel lastNameLabel" placeholder="* Last Name:" value="Last Name:"></label>
+              </div>
+            </div>
+            <div class="basicFormGroup phoneNumberField" style="grid-area: c">
+              <input type="tel" id="PhoneNumber" class="basicFormInput" autocomplete="new-password"
+                placeholder=" ">
+              <label class="fieldLabel phoneNumberLabel" placeholder="* Phone Number:" value="Phone number:"></label>
+            </div>
+            <div class="basicFormGroup companyField" style="grid-area: d">
+              <input type="text" id="CompanyName" autocomplete="new-password" class="basicFormInput"
+                placeholder=" ">
+              <label class="fieldLabel companyLabel" placeholder="* Your Company Name:" value="Company Name:"></label>
+            </div>
+            <div class="basicFormGroup" id="options" style="display: none; grid-area: e">
+              <div class="d-checkbox">
+                <input type="checkbox" name="IsOptIn1" id="IsOptIn1" checked />
+                <label for="IsOptIn1">Please email me the Product Tutorial & New Release Emails</label>
+              </div>
+              <div class="d-checkbox mt15">
+                <input type="checkbox" name="IsOptIn2" id="IsOptIn2" checked />
+                <label for="IsOptIn2">Please email me the Monthly Newsletters</label>
+              </div>
+            </div>
+            <div class="basicFormGroup CNSupportGroup" style="display: none; grid-area: f">
+              <div class="d-checkbox">
+                <input type="checkbox" id="isCNSupportNeeded">
+                <label for="isCNSupportNeeded">Get a phone call from our Mandarin speaking customer service
+                  representatives.</label>
+              </div>
+            </div>
+          </div>
+          <div class="generateLine">
+            <div type="button" class="generateLicense" value="Generate a License">Generate a License</div>
+            <p>The license will be sent to your email immediately.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="{{ assetsPath }}/js/docs/trialLicense.js"></script>
