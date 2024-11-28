@@ -3,11 +3,13 @@ layout: null
 ---
 
 {%- assign title = page.title -%}
+{%- assign indexName = page.indexName -%}
 {%- assign description = page.description -%}
 
 {%- if site.firstLevelUrl contains 'web-twain' -%}
   {%- assign title = 'Dynamic Web TWAIN SDK Documentation Search' -%}
   {%- assign description = 'Dynamic Web TWAIN SDK Documentation Search' -%}
+  {%- assign indexName = 'Crawler-DWT-Docs-New' -%}
 {%- endif -%}
 
 <!DOCTYPE html>
@@ -82,7 +84,7 @@ layout: null
 <script src="https://www.dynamsoft.com/webres/wwwroot/js/header.min.js"></script>
 <script>
   const mySearch = instantsearch({
-    indexName: 'Crawler-DWT-Docs-New',
+    indexName: '{{indexName}}',
     searchClient: algoliasearch('989MTMK88E', '68565cc874554161b1842b2364287be7'),
   });
 
