@@ -30,7 +30,7 @@ jobs:
           git clone --depth 1 https://github.com/dynamsoft-docs/Docs-Template-Repo.git Docs-Template-Repo
           cp -rfp ./${{ inputs.doc-repo }}/* ./DocHome/
           cp -rfp ./Docs-Template-Repo/* ./DocHome/
-          cd DocHome && bundle install && bundle exec jekyll build
+          cd DocHome && sudo bundle install && bundle exec jekyll build
           # cd DocHome && bundle exec jekyll build
 
       - name: Sync files
