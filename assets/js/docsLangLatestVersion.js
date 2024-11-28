@@ -12,8 +12,8 @@ var docsLangLatestVersion = {
         maui: "10.4.2002"
     },
     dcv:{
-        core: "2.4.2100",
-        cplusplus: "2.4.2000",
+        core: "2.6.1000",
+        cplusplus: "2.6.1000",
         android: "2.4.2000",
         dotnet: "2.4.2000",
         ios: "2.4.2000",
