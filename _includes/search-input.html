@@ -1,0 +1,110 @@
+<div class="d-search">
+  <div class="d-search-input-wrap">
+    <input class="d-search-input" id="searchbox" type="text" placeholder="Search">
+    <button class="ais-SearchBox-reset" type="reset" title="Clear the search query">
+      <svg class="ais-SearchBox-resetIcon" viewBox="0 0 20 20" width="10" height="10" aria-hidden="true">
+        <path
+          d="M8.114 10L.944 2.83 0 1.885 1.886 0l.943.943L10 8.113l7.17-7.17.944-.943L20 1.886l-.943.943-7.17 7.17 7.17 7.17.943.944L18.114 20l-.943-.943-7.17-7.17-7.17 7.17-.944.943L0 18.114l.943-.943L8.113 10z">
+        </path>
+      </svg>
+    </button>
+  </div>
+  <div class="d-search-result">
+    <div id="hits"></div>
+    <div class="allResults"><a href="javascript:;" class="orangeLink">See all results ></a></div>
+  </div>
+</div>
+
+<script>
+  const mySearch = instantsearch({
+    indexName: '{{site.searchIndexName}}',
+    searchClient: algoliasearch('989MTMK88E', '68565cc874554161b1842b2364287be7'),
+    searchFunction(helper) {
+      // 如果搜索框为空，不触发搜索
+      const query = helper.state.query;
+      if (!query) {
+          return; // 不发送搜索请求
+      }
+      helper.search();
+    }
+  });
+
+  mySearch.addWidgets([
+    instantsearch.widgets.configure({
+      hitsPerPage: 10,
+      responseFields: ["*"],
+      attributesToSnippet: ["content:15"],
+      snippetEllipsisText: "...",
+      removeWordsIfNoResults: "none"
+    }),
+
+    instantsearch.widgets.hits({
+      container: '#hits',
+      templates: {
+        item: (hit, { html, components }) => html`
+            <div>
+                <div class="hit-title"><a href="${hit.url}">${components.Highlight({ hit, attribute: 'title' })}</a></div>
+                <div class="hit-content">${components.Snippet({ hit, attribute: 'content' })}</div>
+            </div>
+        `
+      }
+    })
+  ]);
+
+  mySearch.start();
+
+  $('#searchbox').on("keyup", function () {
+    let value = $(this).val()
+    if (value && value != "") {
+      $(".ais-SearchBox-reset").show()
+    } else {
+      $(".ais-SearchBox-reset").hide()
+    }
+  })
+
+  $('#searchbox').keydown(function (e) {
+    if (e.keyCode == 13) {
+      let value = $(this).val()
+      if (value && value != "") {
+        $(".d-search-result").show()
+      } else {
+        $(".d-search-result").hide()
+      }
+      mySearch.helper.setQuery($("#searchbox").val()).search();
+    }
+  })
+
+  $(".ais-SearchBox-reset").on("click", function () {
+    $('#searchbox').val("")
+    $(".d-search-result").hide()
+    $(this).hide()
+    $("#hits").html("")
+    $('#searchbox').focus()
+  })
+
+  $(".allResults a").on("click", function() {
+    let product = getUrlVars(document.URL)["product"] ? getUrlVars(document.URL)["product"] : getCurrentUrlProductName(document.URL)
+    if (["dbr", "dlr", "dce", "dcp", "dcv", "ddn"].indexOf(product) >= 0) {
+        let lang = getCurrentUrlLang(document.URL, true)
+        let reporType = ""
+        if (lang && lang != "core") {
+            lang = lang.toLowerCase().trim().split(",")[0]
+            if (['javascript', 'js'].indexOf(lang) >= 0) {
+                reporType = "web"
+            }
+            if (['objectivec-swift', 'android', 'objective-c', 'objc', 'swift', 'ios', 'react-native', 'maui', 'flutter', 'xamarin', 'cordova'].indexOf(lang) >= 0) {
+                reporType = "mobile"
+            }
+            if (['c', 'cpp', 'c++', 'csharp', 'dotnet', 'java', 'python', 'cpluscplus'].indexOf(lang) >= 0) {
+                reporType = "server"
+            }
+        } else {
+            reporType = "core"
+        }
+        window.location.href = "/" + getDoumentName(product) + "/docs/" + reporType + "/search.html?q=" + $("#searchbox").val()
+    } else {
+        let preUrl = document.URL.split("/docs/")[0]
+        window.location.href = preUrl + "/docs/search.html?q=" + $("#searchbox").val()
+    }
+  })
+</script>
