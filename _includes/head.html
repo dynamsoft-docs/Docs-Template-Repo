@@ -80,19 +80,7 @@
         </style>
     {%- endif -%}
 
-    <script>
-        var myMermaid = null
-    </script>
-
-    <script type="module">
-        import mermaid from '{{assetsPath}}/lib/mermaid/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ startOnLoad: false },);
-        await mermaid.run({
-            querySelector: '.language-mermaid'
-        });
-        myMermaid = mermaid
-    </script>
-
+    <script type="text/javascript" src="{{assetsPath}}/lib/mermaid/dist/mermaid.min.js"></script>
     <script type="text/javascript" src="{{ site.assets }}js/jquery-3.5.0.min.js"></script>
     <script type="text/javascript" src="{{ site.assets }}js/bootstrap.min.js"></script>
     <script src="{{ assetsPath }}/js/util.min.js"></script>
