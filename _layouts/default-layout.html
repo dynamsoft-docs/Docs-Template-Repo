@@ -78,19 +78,6 @@
             </main>
             <aside class="sideBar col-xs-12 col-md-3 hide-xs hide-sm" data-nosnippet>
                 <div id="sideBarCnt">
-                    <div class="history list" id="categoryMenuTree_history">
-                        {%- include liquid_autoGenerateHistoryList.html -%}
-                        {%- if site.firstLevelUrl contains 'web-twain' -%}
-                        {%- include version-list.html -%}
-                        <div id="dwtRedirectList">
-                            {%- for redirectLink in page.redirect_from -%}
-                            <input type="hidden" class="dwtReditectLink" value="{{site.firstLevelUrl}}{{redirectLink}}">
-                            {%- endfor -%}
-                        </div>
-                        {%- else -%}
-                        {%- include auto-version-list.html -%}
-                        {%- endif -%}
-                    </div>
                     {%- unless site.searchIndexName -%}
                     <div class="docSearchPart" style="margin-top: 30px;">
                         <input id="txtSearch" class="search" type="text">
@@ -106,6 +93,25 @@
                     </nav>
                 </div>
             </aside>
+        </div>
+    </div>
+
+    <div class="history list" id="categoryMenuTree_history">
+        <div class="container">
+            <div class="col-xs-12">
+                {%- include liquid_autoGenerateHistoryList.html -%}
+                
+                {%- if site.firstLevelUrl contains 'web-twain' -%}
+                {%- include version-list.html -%}
+                <div id="dwtRedirectList">
+                    {%- for redirectLink in page.redirect_from -%}
+                    <input type="hidden" class="dwtReditectLink" value="{{site.firstLevelUrl}}{{redirectLink}}">
+                    {%- endfor -%}
+                </div>
+                {%- else -%}
+                {%- include auto-version-list.html -%}
+                {%- endif -%}
+            </div>
         </div>
     </div>
 

@@ -54,6 +54,13 @@
     <link rel="stylesheet" href="{{ assetsPath }}/css/docs/basis.min.css?v={{ 'now' | date: "%s"}}" />
     <link rel="stylesheet" href="{{ assetsPath }}/css/docs/footer.css" />
 
+    {%- if site.searchIndexName -%}
+    <script type="text/javascript" src="{{ assetsPath }}/lib/algolia/algoliasearch-lite.umd.js"></script>
+    <script type="text/javascript" src="{{ assetsPath }}/lib/algolia/instantsearch.production.min.js"></script>
+    <link rel="stylesheet" href="{{ assetsPath }}/lib/algolia/satellite.min.css">
+    <link rel="stylesheet" href="{{ assetsPath }}/css/docs/algoliaSearch.css" />
+    {%- endif -%}
+
     {%- if page.layout contains 'search-' -%}
     <link rel="stylesheet" href="{{ assetsPath }}/css/docs/searchPage.min.css" />
     {%- endif -%}
