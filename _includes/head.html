@@ -26,6 +26,14 @@
     {%- endif -%}
     {%- assign targetUrl = targetUrl | replace: '/index.html', '/' | strip -%}
 
+    {%- if page.ignore -%}
+	    {%- assign excludeFlag = true -%}
+    {%- endif -%}
+
+    {%- if page.url contains 'search.html' or page.url contains 'search-test.html' -%}	
+        {%- assign excludeFlag = true -%}
+    {%- endif -%}
+
     {%- if excludeFlag -%}
     <meta name="robots" content="noindex">
     {%- endif -%}
