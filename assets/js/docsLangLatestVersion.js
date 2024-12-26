@@ -6,8 +6,8 @@ var docsLangLatestVersion = {
         java: "9.6.40",
         python: "10.5.2100",
         dotnet: "10.4.2000",
-        android: "10.4.2002",
-        ios: "10.4.2002",
+        android: "10.4.2003",
+        ios: "10.4.2003",
         javascript: "10.4.2002",
         maui: "10.4.2002"
     },
