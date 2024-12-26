@@ -1,6 +1,7 @@
 {%- assign assetsPath = '/webres/wwwroot' -%}
 <link href="{{assetsPath}}/css/intlTelInput.min.css" rel="stylesheet" />
 <script src="{{assetsPath}}/js/intlTelInput.min.js"></script>
+<script src="{{assetsPath}}/js/docs/dayjs.min.js"></script>
 <link rel="stylesheet" href="{{ assetsPath }}/fontawesome-free-5.13.0-web/css/all.min.css" />
 <link rel="stylesheet" href="{{ assetsPath }}/css/docs/trialLicense.css" />
 
@@ -8,25 +9,31 @@
   <div class="not-logged-in hide">
     <p class="title">Request a Trial License</p>
     <div class="result">
-      <div class="key">Demo: DLS2eyJvcmdhbml6YXeyJo34567AwMDAxLTEwM34XphdGlvbk812345AxIn0=</div>
-      <div type="button" class="d-btn orange-btn reveal-btn" value="Reveal">Reveal</div>
+      <div class="key">Demo: DLS2eyJvcmdhbml6YXeyJo34567AwMDAxLTEwM34XphdGlvbk812345AxIn0= </div>
+      <div type="button" class="d-btn orange-btn reveal-btn">Reveal</div>
     </div>
     <p class="note">This generates an online license that collects data regarding your usage of the SDK. If you prefer
       an offline license key, please <a href="/contact/">contact us</a>.​</p>
   </div>
   <div class="had-license hide">
-    <p class="title">Your Trial License</p>
+    <p class="title">Your Trial License <span class="expiredTime"></span></p>
     <div class="result">
-      <div class="key">DLS2eyJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSJ9DLS2eyJoYW5kc2hha2VDb2RlIjoiMjAwMDAxLTEwMTIwMDkzNiIsIm9yZ2FuaXphdGlvbklEIjoiMjAwMDAxIn0=</div>
-      <div type="button" class="d-btn orange-btn copy-btn" value="Copy">Copy</div>
+      <div class="key">
+        DLS2eyJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSJ9DLS2eyJoYW5kc2hha2VDb2RlIjoiMjAwMDAxLTEwMTIwMDkzNiIsIm9yZ2FuaXphdGlvbklEIjoiMjAwMDAxIn0=
+      </div>
+      <i class="fa fa-copy"></i>
+      <div type="button" class="d-btn orange-btn copy-btn">Copy</div>
+      <div type="button" class="d-btn orange-btn extend-btn" style="display: none;">Extend</div>
     </div>
+    <p class="note" style="display: none;">Trial extension quota reached. If you need to continue using it, please <a href="/contact/">contact us</a>.​</p>
     <span class="copyied">Copied!</span>
   </div>
   <div class="request-success hide">
     <p class="title">Request a Trial License - Successful</p>
     <div class="desc">
       <i class="icon-send"></i>
-      <p>The license will be sent to your email immediately. If you don't see it in your inbox, please check your junk/spam folder as well.</p>
+      <p>The license will be sent to your email immediately. If you don't see it in your inbox, please check your
+        junk/spam folder as well.</p>
     </div>
   </div>
 </div>
@@ -37,10 +44,18 @@
       <i class="icon-close"></i>
       <div class="modal-body">
         <div class="loading" id="loadingLogin" style="display: none;">
-          <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+          <div class="lds-ring">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
         </div>
         <div class="emailErrorAlert off">
-          <div class="ds-alert error"><p>We are unable to deliver to the email address provided. Please try a different one.</p><div class="ds-alert-close-btn"></div></div>
+          <div class="ds-alert error">
+            <p>We are unable to deliver to the email address provided. Please try a different one.</p>
+            <div class="ds-alert-close-btn"></div>
+          </div>
         </div>
         <div class="third-party-request">
           <p>One Click to Request a 30-Day Trial License</p>
@@ -54,55 +69,255 @@
         <div class="dynamsoft-request">
           <div class="basicForm">
             <div class="basicFormGroup" style="grid-area: a">
-              <input type="email" id="Email" name="email"
-                onkeyup="$('#emailErrorMsg').hide(); clearInvalidEnter(event)" onblur="checkPublicDomain()"
-                class="basicFormInput" autofocus placeholder=" " />
-              <label class="fieldLabel emailLabel" placeholder="* Email: name@yourbusiness.com"
-                value="Business Email:"></label>
-              <p class="errorMsg" id="emailErrorMsg" style="display: none;">Emails from this domain are not permitted.
-                Please enter a business email address.</p>
+              <input type="email" id="Email" name="email" class="basicFormInput" autofocus placeholder=" " />
+              <div class="placeholder"><span>*</span> Business Email Address</div>
             </div>
             <div class="clearfix" style="grid-area: b">
               <div class="basicFormGroup fl" style="width: 49.5%">
-                <input type="text" id="FirstName" autocomplete="new-password" class="basicFormInput" placeholder=" ">
-                <label class="fieldLabel firstNameLabel" placeholder="* First Name:" value="First Name:"></label>
+                <input type="text" id="FirstName" class="basicFormInput" placeholder=" ">
+                <div class="placeholder"><span>*</span> First Name</div>
               </div>
               <div class="basicFormGroup fr" style="width: 49.5%">
-                <input type="text" id="LastName" autocomplete="new-password" class="basicFormInput"
-                  placeholder=" ">
-                <label class="fieldLabel lastNameLabel" placeholder="* Last Name:" value="Last Name:"></label>
+                <input type="text" id="LastName" class="basicFormInput" placeholder=" ">
+                <div class="placeholder"><span>*</span> Last Name</div>
               </div>
             </div>
-            <div class="basicFormGroup phoneNumberField" style="grid-area: c">
-              <input type="tel" id="PhoneNumber" class="basicFormInput" autocomplete="new-password"
-                placeholder=" ">
-              <label class="fieldLabel phoneNumberLabel" placeholder="* Phone Number:" value="Phone number:"></label>
+            <div class="basicFormGroup companyField" style="grid-area: c">
+              <input type="text" id="CompanyName" class="basicFormInput" placeholder=" ">
+              <div class="placeholder"><span>*</span> Company Name</div>
             </div>
-            <div class="basicFormGroup companyField" style="grid-area: d">
-              <input type="text" id="CompanyName" autocomplete="new-password" class="basicFormInput"
-                placeholder=" ">
-              <label class="fieldLabel companyLabel" placeholder="* Your Company Name:" value="Company Name:"></label>
-            </div>
-            <div class="basicFormGroup" id="options" style="display: none; grid-area: e">
-              <div class="d-checkbox">
-                <input type="checkbox" name="IsOptIn1" id="IsOptIn1" checked />
-                <label for="IsOptIn1">Please email me the Product Tutorial & New Release Emails</label>
-              </div>
-              <div class="d-checkbox mt15">
-                <input type="checkbox" name="IsOptIn2" id="IsOptIn2" checked />
-                <label for="IsOptIn2">Please email me the Monthly Newsletters</label>
-              </div>
-            </div>
-            <div class="basicFormGroup CNSupportGroup" style="display: none; grid-area: f">
-              <div class="d-checkbox">
-                <input type="checkbox" id="isCNSupportNeeded">
-                <label for="isCNSupportNeeded">Get a phone call from our Mandarin speaking customer service
-                  representatives.</label>
-              </div>
+            <div class="basicFormGroup phoneNumberField" style="grid-area: d">
+              <input type="tel" id="PhoneNumber" class="basicFormInput" autocomplete="new-password" placeholder=" ">
+              <div class="placeholder"><span>*</span> Phone Number</div>
             </div>
           </div>
           <div class="generateLine">
             <div type="button" class="generateLicense" value="Generate a License">Generate a License</div>
+            <p>The license will be sent to your email immediately.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal trial-license-extend-modal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <i class="icon-close"></i>
+      <div class="modal-body">
+        <div class="extensionSurvey">
+          <div class="survey survey1">
+            <div class="form-group">
+              <label class="control-label">Are you building an app for your own company or for a client? <span
+                  class="fontOrange">*</span></label>
+              <div class="radio-group">
+                <div class="radio">
+                  <label class="radio">
+                    <input name="BuildingAppUser" id="BuildingAppUser1" type="radio" value="Own Company" required>
+                    <label for="BuildingAppUser1"><span>Own Company</span></label>
+                  </label>
+                </div>
+                <div class="radio">
+                  <label class="radio">
+                    <input name="BuildingAppUser" id="BuildingAppUser2" type="radio" value="A Client">
+                    <label for="BuildingAppUser2"><span>A Client</span></label>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label">Which one of the following deployment types best describes your <span
+                  class="showQ1A2" style="display: none;">client's</span> usage scenario? <span
+                  class="fontOrange">*</span></label>
+              <div class="radio-group">
+                <div class="radio">
+                  <label class="radio">
+                    <input name="UsageScenario" data-businessType="100000000" id="UsageScenario1" type="radio"
+                      value="Internal use by employees and contractors of my company only" required>
+                    <label for="UsageScenario1"><span>Internal use by employees and contractors of my <span
+                          class="showQ1A2" style="display: none;">client's</span> company only</span></label>
+                  </label>
+                </div>
+                <div class="radio">
+                  <label class="radio">
+                    <input name="UsageScenario" data-businessType="100000002" id="UsageScenario2" type="radio"
+                      value="Hosted software/service for consumption by customers (e.g., SaaS)">
+                    <label for="UsageScenario2"><span>Hosted software/service for consumption by customers (e.g.,
+                        SaaS)</span></label>
+                  </label>
+                </div>
+                <div class="radio">
+                  <label class="radio">
+                    <input name="UsageScenario" data-businessType="100000001" id="UsageScenario3" type="radio"
+                      value="Product for sale to customers for on-premises use">
+                    <label for="UsageScenario3"><span>Product for sale to customers for on-premises use</span></label>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label">When do you need to release your application with the SDK feature integrated?
+                <span class="fontOrange">*</span></label>
+              <div class="radio-group">
+                <div class="radio">
+                  <label class="radio">
+                    <input name="ReleaseTime" id="ReleaseTime1" type="radio" value="Less than a week" required>
+                    <label for="ReleaseTime1"><span>Less than a week</span></label>
+                  </label>
+                </div>
+                <div class="radio">
+                  <label class="radio">
+                    <input name="ReleaseTime" id="ReleaseTime2" type="radio" value="Less than a month">
+                    <label for="ReleaseTime2"><span>Less than a month</span></label>
+                  </label>
+                </div>
+                <div class="radio">
+                  <label class="radio">
+                    <input name="ReleaseTime" id="ReleaseTime3" type="radio" value="1 to 3 months">
+                    <label for="ReleaseTime3"><span>1 to 3 months</span></label>
+                  </label>
+                </div>
+                <div class="radio">
+                  <label class="radio">
+                    <input name="ReleaseTime" id="ReleaseTime4" type="radio" value="3 to 6 months">
+                    <label for="ReleaseTime4"><span>3 to 6 months</span></label>
+                  </label>
+                </div>
+                <div class="radio">
+                  <label class="radio">
+                    <input name="ReleaseTime" id="ReleaseTime5" type="radio" value="More than 6 months">
+                    <label for="ReleaseTime5"><span>More than 6 months</span></label>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label">How many end users (persons) will need the SDK feature in your application?
+                <span class="fontOrange">*</span></label>
+              <div class="radio-group">
+                <div class="radio">
+                  <label class="radio">
+                    <input name="CompanySize" id="CompanySize1" type="radio" value="Less than 30" required>
+                    <label for="CompanySize1"><span>Less than 30</span></label>
+                  </label>
+                </div>
+                <div class="radio">
+                  <label class="radio">
+                    <input name="CompanySize" id="CompanySize2" type="radio" value="31 - 100">
+                    <label for="CompanySize2"><span>31 - 100</span></label>
+                  </label>
+                </div>
+                <div class="radio">
+                  <label class="radio">
+                    <input name="CompanySize" id="CompanySize3" type="radio" value="101 - 500">
+                    <label for="CompanySize3"><span>101 - 500</span></label>
+                  </label>
+                </div>
+                <div class="radio">
+                  <label class="radio">
+                    <input name="CompanySize" id="CompanySize4" type="radio" value="501 - 1000">
+                    <label for="CompanySize4"><span>501 - 1000</span></label>
+                  </label>
+                </div>
+                <div class="radio">
+                  <label class="radio">
+                    <input name="CompanySize" id="CompanySize5" type="radio" value="More than 1000">
+                    <label for="CompanySize5"><span>More than 1000</span></label>
+                  </label>
+                </div>
+                <div class="radio">
+                  <label class="radio">
+                    <input name="CompanySize" id="CompanySize6" type="radio" value="I don't know">
+                    <label for="CompanySize6"><span>I don't know</span></label>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label">So far, does our SDK meet your need well? <span
+                  class="fontOrange">*</span></label>
+              <div class="radio-group">
+                <div class="radio">
+                  <label class="radio">
+                    <input name="CustomerReviews" id="CustomerReviews1" type="radio" value="Yes, I am satisfied."
+                      required>
+                    <label for="CustomerReviews1"><span>Yes, I am satisfied.</span></label>
+                  </label>
+                </div>
+                <div class="radio">
+                  <label class="radio">
+                    <input name="CustomerReviews" id="CustomerReviews2" type="radio"
+                      value="Yes, I just need more time to complete the development.">
+                    <label for="CustomerReviews2"><span>Yes, I just need more time to complete the
+                        development.</span></label>
+                  </label>
+                </div>
+                <div class="radio">
+                  <label class="radio">
+                    <input name="CustomerReviews" id="CustomerReviews3" type="radio"
+                      value="I haven't tried the SDK yet.">
+                    <label for="CustomerReviews3"><span>I haven't tried the SDK yet.</span></label>
+                  </label>
+                </div>
+                <div class="radio">
+                  <label class="radio">
+                    <input name="CustomerReviews" id="CustomerReviews4" type="radio"
+                      value="No, I need some technical help.">
+                    <label for="CustomerReviews4"><span>No, I need some technical help.</span></label>
+                  </label>
+                  <textarea id="MyTechnicalHelp" rows="2" name="MyTechnicalHelp" placeholder=""></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="survey survey2">
+            <div class="form-group">
+              <label class="control-label">Based on your current estimation, how soon will you release the application
+                with the SDK features? <span class="fontOrange">*</span></label>
+              <div class="radio-group">
+                <div class="radio">
+                  <label class="radio">
+                    <input name="ReleaseTimeB" id="ReleaseTimeB1" type="radio" value="Less than a week" required>
+                    <label for="ReleaseTimeB1"><span>Less than a week</span></label>
+                  </label>
+                </div>
+                <div class="radio">
+                  <label class="radio">
+                    <input name="ReleaseTimeB" id="ReleaseTimeB2" type="radio" value="Less than a month">
+                    <label for="ReleaseTimeB2"><span>Less than a month</span></label>
+                  </label>
+                </div>
+                <div class="radio">
+                  <label class="radio">
+                    <input name="ReleaseTimeB" id="ReleaseTimeB3" type="radio" value="1 to 3 months">
+                    <label for="ReleaseTimeB3"><span>1 to 3 months</span></label>
+                  </label>
+                </div>
+                <div class="radio">
+                  <label class="radio">
+                    <input name="ReleaseTimeB" id="ReleaseTimeB4" type="radio" value="3 to 6 months">
+                    <label for="ReleaseTimeB4"><span>3 to 6 months</span></label>
+                  </label>
+                </div>
+                <div class="radio">
+                  <label class="radio">
+                    <input name="ReleaseTimeB" id="ReleaseTimeB5" type="radio" value="More than 6 months">
+                    <label for="ReleaseTimeB5"><span>More than 6 months</span></label>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label">How has your experience been with the SDK during your trial period? <span
+                  class="fontOrange">*</span></label>
+              <div class="textarea-group">
+                <textarea id="OtherInfo" rows="2" name="OtherRequiredOrSuggestion" placeholder=""></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="submitSurvyLine">
+            <span class="d-btn submit-btn fontOswald">Submit</span>
             <p>The license will be sent to your email immediately.</p>
           </div>
         </div>
