@@ -29,14 +29,6 @@
 .footer__item li:last-child {
     margin-bottom: 0;
 }
-.footer__item:nth-child(n + 3) li::after {
-    content: "";
-    width: 15px;
-    height: 15px;
-    background: url("../img-icon/out.svg") no-repeat center center;
-    display: inline-block;
-    vertical-align: -1px;
-}
 .footer__item a {
     font-size: inherit;
     color: inherit;
