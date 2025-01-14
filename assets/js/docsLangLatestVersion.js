@@ -14,9 +14,9 @@ var docsLangLatestVersion = {
     dcv:{
         core: "2.6.1000",
         cplusplus: "2.6.1000",
-        android: "2.6.1001",
+        android: "2.6.1002",
         dotnet: "2.4.2000",
-        ios: "2.6.1001",
+        ios: "2.6.1002",
         javascript: "2.6.1000",
         xamarin: "1.0.5",
         flutter: "1.3.0",
