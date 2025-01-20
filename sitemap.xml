@@ -25,6 +25,10 @@ regenerate: true
 	{%- assign excludeFlag = true -%}
 {%- endif -%}
 
+{%- if page.path contains 'programming-old/' -%}
+	{%- assign excludeFlag = true -%}
+{%- endif -%}
+
 {%- if site.docFullPath contains 'license-server/docs' and page.url contains 'schedule/stable' -%}
 	{%- assign excludeFlag = true -%}
 {%- endif -%}
