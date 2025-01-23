@@ -1,6 +1,7 @@
 <div class="d-search">
+  <div id="facets" style="display: none;"></div>
   <div class="d-search-input-wrap">
-    <input class="d-search-input" id="searchbox" type="text" placeholder="Search">
+    <input class="d-search-input" id="searchbox" type="text" placeholder="Search" autocomplete="new-password">
     <button class="ais-SearchBox-reset" type="reset" title="Clear the search query">
       <svg class="ais-SearchBox-resetIcon" viewBox="0 0 20 20" width="10" height="10" aria-hidden="true">
         <path
@@ -16,6 +17,10 @@
 </div>
 
 <script>
+  var product = getCurrentUrlProductName(document.URL)
+  var lang = getCurrentUrlLang(document.URL, true)
+  var isNeedFilter = "{{site.searchNeedFilter}}"
+
   const mySearch = instantsearch({
     indexName: '{{site.searchIndexName}}',
     searchClient: algoliasearch('989MTMK88E', '68565cc874554161b1842b2364287be7'),
@@ -29,27 +34,87 @@
     }
   });
 
-  mySearch.addWidgets([
-    instantsearch.widgets.configure({
-      hitsPerPage: 10,
-      responseFields: ["*"],
-      attributesToSnippet: ["content:15"],
-      snippetEllipsisText: "...",
-      removeWordsIfNoResults: "none"
-    }),
+  if (isNeedFilter == "true") {
+    mySearch.addWidgets([
+      instantsearch.widgets.configure({
+        hitsPerPage: 10,
+        responseFields: ["*"],
+        attributesToRetrieve: ["*"],
+        attributesToSnippet: ["content:15"],
+        snippetEllipsisText: "...",
+        removeWordsIfNoResults: "none",
+        explain: ["*"],
+        getRankingInfo: true,
+        filters: 'languagues: "'+ (lang ? lang : "core") +'"'
+      }),
 
-    instantsearch.widgets.hits({
-      container: '#hits',
-      templates: {
-        item: (hit, { html, components }) => html`
-            <div>
-                <div class="hit-title"><a href="${hit.url}">${components.Highlight({ hit, attribute: 'title' })}</a></div>
-                <div class="hit-content">${components.Snippet({ hit, attribute: 'content' })}</div>
-            </div>
-        `
-      }
-    })
-  ]);
+      instantsearch.widgets.refinementList({
+        container: '#facets',
+        attribute: 'languagues',
+        searchable: false
+      }),
+
+      instantsearch.widgets.hits({
+        container: '#hits',
+        templates: {
+          item: (hit, { html, components }) => {
+            let temp_url = hit.url
+            let temp_product = getCurrentUrlProductName(hit.url)
+            let temp_lang = getCurrentUrlLang(hit.url, true)
+            if (temp_product != product) {
+              temp_url += "?product=" + product
+              if (lang && lang != "") {
+                temp_url += "&lang=" + lang
+              }
+              temp_url += "&q=" + $("#searchbox").val()
+            } else {
+              if (temp_lang != lang) {
+                temp_url += "?lang=" + lang
+                temp_url += "&q=" + $("#searchbox").val()
+              } else {
+                temp_url += "?q=" + $("#searchbox").val()
+              }
+            }
+            var currentHost = location.host
+            temp_url = temp_url.replace("www.dynamsoft.com", currentHost)
+            return html`
+                <div>
+                    <div class="hit-title"><a href="${temp_url}">${components.Highlight({ hit, attribute: 'title' })}</a></div>
+                    <div class="hit-content">${components.Snippet({ hit, attribute: 'content' })}</div>
+                </div>
+            `
+          } 
+        }
+      })
+    ]);
+  } else {
+    mySearch.addWidgets([
+      instantsearch.widgets.configure({
+        hitsPerPage: 10,
+        responseFields: ["*"],
+        attributesToSnippet: ["content:15"],
+        snippetEllipsisText: "...",
+        removeWordsIfNoResults: "none"
+      }),
+
+      instantsearch.widgets.hits({
+        container: '#hits',
+        templates: {
+          item: (hit, { html, components }) => {
+            var temp_url = hit.url
+            var currentHost = location.host
+            temp_url = temp_url.replace("www.dynamsoft.com", currentHost)
+            return html`
+                <div>
+                    <div class="hit-title"><a href="${temp_url}?q=${$("#searchbox").val()}">${components.Highlight({ hit, attribute: 'title' })}</a></div>
+                    <div class="hit-content">${components.Snippet({ hit, attribute: 'content' })}</div>
+                </div>
+            `
+          }
+        }
+      })
+    ]);
+  }
 
   mySearch.start();
 
@@ -101,7 +166,7 @@
         } else {
             reporType = "core"
         }
-        window.location.href = "/" + getDoumentName(product) + "/docs/" + reporType + "/search.html?q=" + $("#searchbox").val()
+        window.location.href = "/" + getDoumentName(product) + "/docs/" + reporType + "/search.html?lang="+ (lang?lang:"core") + "&q=" + $("#searchbox").val()
     } else {
         let preUrl = document.URL.split("/docs/")[0]
         window.location.href = preUrl + "/docs/search.html?q=" + $("#searchbox").val()
