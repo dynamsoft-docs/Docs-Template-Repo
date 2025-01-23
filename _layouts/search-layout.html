@@ -52,6 +52,7 @@ layout: null
     <div class="col-12 col-xl-10 col-xxl-8 offset-xl-1 offset-xxl-2">
       <h1 class="h2 fontOswald tc">{{page.h1}}</h1>
       <div class="content mt60">
+        <div id="facets" style="display: none;"></div>
         <div id="searchbox">
           <div class="ais-SearchBox-form">
             <input id="custom-searchbox" class="ais-SearchBox-input" type="search" placeholder="Search for products..."
@@ -82,37 +83,107 @@ layout: null
 <script src="https://www.dynamsoft.com/webres/wwwroot/js/util.min.js"></script>
 <script src="https://www.dynamsoft.com/webres/wwwroot/js/site.min.js"></script>
 <script src="https://www.dynamsoft.com/webres/wwwroot/js/header.min.js"></script>
+<script src="https://www.dynamsoft.com/webres/wwwroot/js/docs/index-banner.min.js"></script>
 <script>
+  var product = getCurrentUrlProductName(document.URL)
+  var lang = getCurrentUrlLang(document.URL, true)
+  var isNeedFilter = "{{site.searchNeedFilter}}"
+
   const mySearch = instantsearch({
     indexName: '{{indexName}}',
     searchClient: algoliasearch('989MTMK88E', '68565cc874554161b1842b2364287be7'),
   });
 
-  mySearch.addWidgets([
-    instantsearch.widgets.configure({
-      hitsPerPage: 10,
-      responseFields: ["*"],
-      attributesToSnippet: ["content:30"],
-      snippetEllipsisText: "...",
-    }),
+  if (isNeedFilter == "true") {
+    mySearch.addWidgets([
+      instantsearch.widgets.configure({
+        hitsPerPage: 10,
+        responseFields: ["*"],
+        attributesToRetrieve: ["*"],
+        attributesToSnippet: ["content:30"],
+        snippetEllipsisText: "...",
+        explain: ["*"],
+        getRankingInfo: true,
+        filters: 'languagues: "'+ (lang ? lang : "core") +'"'
+      }),
 
-    instantsearch.widgets.hits({
-      container: '#hits',
-      templates: {
-        item: (hit, { html, components }) => html`
-                      <div>
-                          <div class="hit-title"><a href="${hit.url}">${components.Highlight({ hit, attribute: 'title' })}</a></div>
-                          <div class="hit-url">${hit.url}</div>
-                          <div class="hit-content">${components.Snippet({ hit, attribute: 'content' })}</div>
-                      </div>
-                  `
-      }
-    }),
+      instantsearch.widgets.refinementList({
+        container: '#facets',
+        attribute: 'languagues',
+        searchable: false
+      }),
 
-    instantsearch.widgets.pagination({
-      container: '#pagination'
-    })
-  ]);
+      instantsearch.widgets.hits({
+        container: '#hits',
+        templates: {
+          item: (hit, { html, components }) => {
+            let temp_url = hit.url
+            let temp_product = getCurrentUrlProductName(hit.url)
+            let temp_lang = getCurrentUrlLang(hit.url, true)
+            if (temp_product != product) {
+              temp_url += "?product=" + product
+              if (lang && lang != "") {
+                temp_url += "&lang=" + lang
+              }
+              temp_url += "&q=" + $("#custom-searchbox").val()
+            } else {
+              if (temp_lang != lang) {
+                temp_url += "?lang=" + lang
+                temp_url += "&q=" + $("#custom-searchbox").val()
+              } else {
+                temp_url += "?q=" + $("#custom-searchbox").val()
+              }
+            }
+            var currentHost = location.host
+            temp_url = temp_url.replace("www.dynamsoft.com", currentHost)
+            return html`
+                <div>
+                    <div class="hit-title"><a href="${temp_url}">${components.Highlight({ hit, attribute: 'title' })}</a></div>
+                    <div class="hit-url">${hit.url}</div>
+                    <div class="hit-content">${components.Snippet({ hit, attribute: 'content' })}</div>
+                </div>
+            `
+          } 
+        }
+      }),
+
+      instantsearch.widgets.pagination({
+        container: '#pagination'
+      })
+    ]);
+  } else {
+    mySearch.addWidgets([
+      instantsearch.widgets.configure({
+        hitsPerPage: 10,
+        responseFields: ["*"],
+        attributesToRetrieve: ["*"],
+        attributesToSnippet: ["content:30"],
+        snippetEllipsisText: "..."
+      }),
+
+      instantsearch.widgets.hits({
+        container: '#hits',
+        templates: {
+          item: (hit, { html, components }) => {
+            var temp_url = hit.url
+            var currentHost = location.host
+            temp_url = temp_url.replace("www.dynamsoft.com", currentHost)
+            return html`
+                <div>
+                    <div class="hit-title"><a href="${temp_url}?q=${$("#custom-searchbox").val()}">${components.Highlight({ hit, attribute: 'title' })}</a></div>
+                    <div class="hit-url">${hit.url}</div>
+                    <div class="hit-content">${components.Snippet({ hit, attribute: 'content' })}</div>
+                </div>
+            `
+          } 
+        }
+      }),
+
+      instantsearch.widgets.pagination({
+        container: '#pagination'
+      })
+    ]);
+  }
 
   mySearch.start();
 

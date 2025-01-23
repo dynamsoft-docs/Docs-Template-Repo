@@ -1,3 +1,12 @@
+{%- assign enableLanguageSelection = "" -%}
+{%- if page.enableLanguageSelection -%}
+    {%- assign enableLanguageSelection = "enableLanguageSelection" -%}
+{%- endif -%}
+{%- assign multiProgrammingLanguage = "" -%}
+{%- if page.multiProgrammingLanguage -%}
+    {%- assign multiProgrammingLanguage = "multiProgrammingLanguage" -%}
+{%- endif -%}
+
 <div class="crumbsBox">
     <div>
         <div id="crumbs">
@@ -10,9 +19,34 @@
         {%- endcomment -%}
     </div>
 </div>
+
+{%- if site.firstLevelUrl contains 'barcode-reader' -%}
+<div class="languageWrap {{multiProgrammingLanguage}} {{enableLanguageSelection}}">
+    <label class="title">Language: </label>
+    <div class="languageChange">
+        <label class="chosenLanguage">Swift</label>
+        <i class="fa fa-angle-down"></i>
+    </div>
+    <div class="languageSelectDown">
+        <div data-value="swift" class="on">Swift</div>
+        <div data-value="objc">Objective-C</div>
+    </div>
+</div>
+{%- endif -%}
+
 <div class="iconsBox">
     <div>
-        <a href="{{ site.repositoryUrl }}/{{ page.path | strip }}" class="editLinkColour"><img src="{{ site.assets }}/img-icon/Edit-pencil-write-2.svg" width="30px" height="30px" style="vertical-align: middle;" title="Edit this page" data-placement="bottom" data-toggle="tooltip" data-html="true"  /></a>
+        {%- if page.category -%}
+            {%- if page.category == 'js-repo' -%}
+                <a href="{{ site.repositoryUrlJS }}/{{ page.path | strip }}" class="editLinkColour"><img src="{{ site.assets }}/img-icon/Edit-pencil-write-2.svg" width="30px" height="30px" style="vertical-align: middle;"  title="Edit this page" data-placement="bottom" data-toggle="tooltip" data-html="true" /></a>
+            {%- elsif page.category == 'mobile-repo' -%}
+                <a href="{{ site.repositoryUrlMobile }}/{{ page.path | strip }}" class="editLinkColour"><img src="{{ site.assets }}/img-icon/Edit-pencil-write-2.svg" width="30px" height="30px" style="vertical-align: middle;"  title="Edit this page" data-placement="bottom" data-toggle="tooltip" data-html="true" /></a>
+            {%- else -%}
+                <a href="{{ site.repositoryUrl }}/{{ page.path | strip }}" class="editLinkColour"><img src="{{ site.assets }}/img-icon/Edit-pencil-write-2.svg" width="30px" height="30px" style="vertical-align: middle;" title="Edit this page" data-placement="bottom" data-toggle="tooltip" data-html="true"  /></a>
+            {%- endif -%}
+        {%- else -%}
+            <a href="{{ site.repositoryUrl }}/{{ page.path | strip }}" class="editLinkColour"><img src="{{ site.assets }}/img-icon/Edit-pencil-write-2.svg" width="30px" height="30px" style="vertical-align: middle;" title="Edit this page" data-placement="bottom" data-toggle="tooltip" data-html="true"  /></a>
+        {%- endif -%}
         <span class="rightMenuControlBtn" style="margin-left: 15px;"><img src="{{ site.assets }}/img-icon/Menu-navigation-menu-4.svg" width="30px" height="30px" style="vertical-align: middle;"  title="Collapse Sidebar" data-placement="bottom" data-toggle="tooltip" data-html="true" /></span>
     </div>
 </div>
