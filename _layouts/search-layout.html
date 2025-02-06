@@ -193,7 +193,7 @@ layout: null
   const searchBox = document.querySelector('#custom-searchbox');
   const searchButton = document.querySelector('#search-button');
 
-  $('#custom-searchbox').on("keyup", function () {
+  $('#custom-searchbox').on("keyup", function (e) {
     if (e.key== undefined && e.keyCode == undefined && e.code == undefined) {
       isUserInput = false
     } else {

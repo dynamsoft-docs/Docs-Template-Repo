@@ -132,7 +132,7 @@
 
   mySearch.start();
 
-  $('#searchbox').on("keyup", function () {
+  $('#searchbox').on("keyup", function (e) {
     if (e.key== undefined && e.keyCode == undefined && e.code == undefined) {
       isUserInput = false
     } else {
