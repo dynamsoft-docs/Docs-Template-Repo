@@ -88,6 +88,7 @@ layout: null
   var product = getCurrentUrlProductName(document.URL)
   var lang = getCurrentUrlLang(document.URL, true)
   var isNeedFilter = "{{site.searchNeedFilter}}"
+  var isUserInput = true
 
   const mySearch = instantsearch({
     indexName: '{{indexName}}',
@@ -193,6 +194,11 @@ layout: null
   const searchButton = document.querySelector('#search-button');
 
   $('#custom-searchbox').on("keyup", function () {
+    if (e.key== undefined && e.keyCode == undefined && e.code == undefined) {
+      isUserInput = false
+    } else {
+      isUserInput = true
+    }
     let value = $(this).val()
     if (value && value != "") {
       $(".ais-SearchBox-reset").show()
@@ -206,8 +212,18 @@ layout: null
   })
 
   $('#custom-searchbox').keydown(function (e) {
+    if (e.key== undefined && e.keyCode == undefined && e.code == undefined) {
+      isUserInput = false
+      return
+    }
     if (e.keyCode == 13) {
       mySearch.helper.setQuery($("#custom-searchbox").val()).search();
+    }
+  })
+
+  $('#custom-searchbox').on("input", function(e) {
+    if (!isUserInput) {
+      $("#searchbox").trigger($.Event("keydown", { key: "Enter", keyCode: 13, which: 13 }));
     }
   })
 
