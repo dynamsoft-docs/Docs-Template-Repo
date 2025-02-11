@@ -23,8 +23,7 @@ var docsLangLatestVersion = {
         cordova: "1.0.5",
         reactNative: "1.1.14",
         maui: "2.4.2000",
-        python: "2.5.2100",
-        nodejs: "2.6.1000"
+        python: "2.5.2100"
     },
     mrz: {
         android: "2.0.0",
