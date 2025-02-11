@@ -6,8 +6,8 @@ var docsLangLatestVersion = {
         java: "9.6.40",
         python: "10.5.2100",
         dotnet: "10.4.2000",
-        android: "10.4.3000",
-        ios: "10.4.3000",
+        android: "10.4.3001",
+        ios: "10.4.3001",
         javascript: "10.4.3100",
         maui: "10.4.2002"
     },
@@ -23,7 +23,8 @@ var docsLangLatestVersion = {
         cordova: "1.0.5",
         reactNative: "1.1.14",
         maui: "2.4.2000",
-        python: "2.5.2100"
+        python: "2.5.2100",
+        nodejs: "2.6.1000"
     },
     mrz: {
         android: "2.0.0",
