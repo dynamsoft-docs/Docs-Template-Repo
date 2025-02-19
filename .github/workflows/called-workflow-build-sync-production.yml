@@ -56,6 +56,6 @@ jobs:
             startsWith(inputs.doc-url, 'camera-enhancer')
         run: |
           cd ${{ runner.temp }}/DocHome/assets/scripts/GenerateSitemap
-          python GenerateSitemapByMenuTree.py --product dcv,dbr
+          python3 GenerateSitemapByMenuTree.py --product dcv,dbr
           curl -T ${{ runner.temp }}/DocHome/assets/scripts/GenerateSitemap/barcode-reader/docs/menu-tree-sitemap.xml ftp://${{ secrets.FTP_DYNAMSOFT_LOCAL_SERVER }}/www.dynamsoft.com/barcode-reader/docs/ --user ${{ secrets.FTP_DYNAMSOFT_LOCAL_USER }}:${{ secrets.FTP_DYNAMSOFT_LOCAL_PASSWORD }}
           curl -T ${{ runner.temp }}/DocHome/assets/scripts/GenerateSitemap/capture-vision/docs/menu-tree-sitemap.xml ftp://${{ secrets.FTP_DYNAMSOFT_LOCAL_SERVER }}/www.dynamsoft.com/capture-vision/docs/ --user ${{ secrets.FTP_DYNAMSOFT_LOCAL_USER }}:${{ secrets.FTP_DYNAMSOFT_LOCAL_PASSWORD }}
