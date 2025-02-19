@@ -8,7 +8,7 @@ import os
 
 # python GenerateSitemapByMenuTree.py --product dbr
 # python GenerateSitemapByMenuTree.py --product dcv
-# python GenerateSitemapByMenuTree.py --product dcv,dbr --baseuri https://officecn.dynamsoft.com:808
+# python GenerateSitemapByMenuTree.py --product dcv,dbr --baseuri https://url
 
 # target menu tree urls
 paramParser = argparse.ArgumentParser(description="power shell param")
