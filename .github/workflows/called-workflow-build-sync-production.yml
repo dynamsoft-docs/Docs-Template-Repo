@@ -47,3 +47,15 @@ jobs:
         run: | 
           curl -X POST -H "${{ secrets.WEBHOOK_USER }}" -H "${{ secrets.WEBHOOK_TOKEN }}" -H "Content-Type: application/json" -d "[\"/${{ inputs.doc-url }}/*\"]" ${{ secrets.WEBHOOK_URL }}
 
+      - name: Update Sitemap 
+        if: startsWith(inputs.doc-url, 'barcode-reader') || 
+            startsWith(inputs.doc-url, 'capture-vision') || 
+            startsWith(inputs.doc-url, 'label-recognition') || 
+            startsWith(inputs.doc-url, 'document-normalizer') || 
+            startsWith(inputs.doc-url, 'code-parser') || 
+            startsWith(inputs.doc-url, 'camera-enhancer')
+        run: |
+          cd ${{ runner.temp }}/DocHome/assets/scripts/GenerateSitemap
+          python GenerateSitemapByMenuTree.py --product dcv,dbr
+          curl -T ${{ runner.temp }}/DocHome/assets/scripts/GenerateSitemap/barcode-reader/docs/menu-tree-sitemap.xml ftp://${{ secrets.FTP_DYNAMSOFT_LOCAL_SERVER }}/www.dynamsoft.com/barcode-reader/docs/ --user ${{ secrets.FTP_DYNAMSOFT_LOCAL_USER }}:${{ secrets.FTP_DYNAMSOFT_LOCAL_PASSWORD }}
+          curl -T ${{ runner.temp }}/DocHome/assets/scripts/GenerateSitemap/capture-vision/docs/menu-tree-sitemap.xml ftp://${{ secrets.FTP_DYNAMSOFT_LOCAL_SERVER }}/www.dynamsoft.com/capture-vision/docs/ --user ${{ secrets.FTP_DYNAMSOFT_LOCAL_USER }}:${{ secrets.FTP_DYNAMSOFT_LOCAL_PASSWORD }}
