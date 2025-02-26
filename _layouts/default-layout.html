@@ -160,7 +160,7 @@
         $('#txtSearch').keydown(function(e) {
             if (e.keyCode == 13) {
                 let product = getUrlVars(document.URL)["product"] ? getUrlVars(document.URL)["product"] : getCurrentUrlProductName(document.URL)
-                if (["dbr", "dlr", "dce", "dcp", "dcv", "ddn"].indexOf(product) >= 0) {
+                if (["dbr", "dlr", "dce", "dcp", "dcv", "ddn", "mrz"].indexOf(product) >= 0) {
                     let lang = getCurrentUrlLang(document.URL, true)
                     let reporType = ""
                     if (lang && lang != "core") {
