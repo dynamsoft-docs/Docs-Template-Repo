@@ -178,6 +178,9 @@
 
   $(".allResults a").on("click", function() {
     let product = getUrlVars(document.URL)["product"] ? getUrlVars(document.URL)["product"] : getCurrentUrlProductName(document.URL)
+    if (["dlr", "dce", "ddn", "dcv", "dcp"].indexOf(product) >= 0) {
+      product = "dcv"
+    }
     if (["dbr", "dlr", "dce", "dcp", "dcv", "ddn"].indexOf(product) >= 0) {
         let lang = getCurrentUrlLang(document.URL, true)
         let reporType = ""

@@ -1,7 +1,7 @@
 var docsLangLatestVersion = {
     dbr: {
-        core: "10.5.2100",
-        cplusplus: "10.4.2000",
+        core: "11.0.1000",
+        cplusplus: "11.0.1000",
         c: "9.6.40",
         java: "9.6.40",
         python: "10.5.2100",
@@ -12,8 +12,8 @@ var docsLangLatestVersion = {
         maui: "10.4.3000"
     },
     dcv:{
-        core: "2.6.1000",
-        cplusplus: "2.6.1000",
+        core: "3.0.1000",
+        cplusplus: "3.0.1000",
         android: "2.6.1003",
         dotnet: "2.4.2000",
         ios: "2.6.1003",
