@@ -26,8 +26,8 @@ var docsLangLatestVersion = {
         python: "2.5.2100"
     },
     mrz: {
-        android: "2.0.0",
-        ios: "2.0.0"
+        android: "2.0.1",
+        ios: "2.0.1"
     },
     dce: {
         core: "4.2.10",
