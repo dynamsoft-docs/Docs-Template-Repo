@@ -31,10 +31,9 @@
     indexName: '{{site.searchIndexName}}',
     searchClient: algoliasearch('989MTMK88E', '68565cc874554161b1842b2364287be7'),
     searchFunction(helper) {
-      // 如果搜索框为空，不触发搜索
       const query = helper.state.query;
       if (!query) {
-          return; // 不发送搜索请求
+          return;
       }
       helper.search();
     }
