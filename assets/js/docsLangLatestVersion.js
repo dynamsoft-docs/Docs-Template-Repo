@@ -27,7 +27,8 @@ var docsLangLatestVersion = {
     },
     mrz: {
         android: "2.0.1",
-        ios: "2.0.1"
+        ios: "2.0.1",
+        javascript: "2.0"
     },
     dce: {
         core: "4.2.10",

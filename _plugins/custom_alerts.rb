@@ -1,23 +1,16 @@
 module Jekyll
-  class AlertsConverter < Converter
+  Jekyll::Hooks.register [:pages, :posts], :post_render do |doc|
+    next unless doc.output && !doc.output.nil?  
+    next unless doc.path.end_with?(".md")
+    next unless doc.output.include?("[!")
 
-    def matches(ext)
-      ext =~ /^\.md|\.markdown$/i
-    end
+    doc.output.gsub!(/<blockquote>.*?\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\](.*?)<\/blockquote>/mi) do
+      type = $1.downcase
+      text = $2.strip
 
-    def output_ext(ext)
-      ".html"
-    end
-
-    def convert(content)
-      content.gsub(/^> \[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*(.*)/i) do
-        type = $1.downcase
-        text = $2.strip.gsub(/^>\s*/, "")
-        <<~HTML
-        <div class="blockquote-#{type}"></div>
-        <blockquote>#{text}</blockquote>
-        HTML
-      end
+      <<~HTML
+      <blockquote class="blockquote-#{type}">#{text}</blockquote>
+      HTML
     end
   end
 end
