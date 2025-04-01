@@ -106,6 +106,7 @@
     {%- if site.useVersionTreeV2 -%}
     <script type="text/javascript" src="{{ assetsPath }}/js/docs/index-banner-two.min.js?v={{ 'now' | date: "%s"}}"></script>
     <script type="text/javascript" src="{{ assetsPath }}/js/docs/historymanage-two.min.js?v={{ 'now' | date: "%s"}}"></script>
+    <script type="text/javascript" src="{{ site.assets }}js/setLatestVersion.js"></script>
     {%- else -%}
     <script type="text/javascript" src="{{ site.assets }}js/docsLangLatestVersion.js?v={{ 'now' | date: "%s"}}"></script>
     <script type="text/javascript" src="{{ assetsPath }}/js/docs/index-banner.min.js?v={{ 'now' | date: "%s"}}"></script>
