@@ -131,7 +131,7 @@
     <script>
         anchors.add();
         UrlReplace();
-        $(".currentVersion").text("latest version (18.5.1)");
+        $(".currentVersion").text("latest version ("+ versionNoteLatestVersion +")");
         FullTreeMenuList('{{page.needAutoGenerateSidebar}}', '{{page.needGenerateH3Content}}');
         $(document).ready(function() {
             var downloadLink = getUrlParam('download')
