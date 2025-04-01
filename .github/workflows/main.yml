@@ -4,46 +4,284 @@ name: CI
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push events but only for the master branch
+  # Triggers the workflow on push events
   push:
     branches: 
-    - v18.5.1
+    - main 
+    #- preview 
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs:         
-  Build-v18-5-1:
-    if: ${{ github.ref == 'refs/heads/v18.5.1' }}
-    # The type of runner that the job will run on
-    runs-on: [self-hosted, doc-build]
+jobs:
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      - name: Build the full site - main
-        run: |
-          cd ${{ runner.temp }}
-          mkdir -p DWTDocArchive
-          git clone --depth 1 --branch v18.5.1 https://${{ secrets.GIT_USER }}:${{ secrets.GIT_PAT }}@github.com/dynamsoft-docs/web-twain-docs.git web-twain-docs-archive
-          git clone --depth 1 --branch dwt-v18.5.1 https://github.com/dynamsoft-docs/Docs-Template-Repo.git Docs-Template-Repo-Archive
-          cp -rfp ./web-twain-docs-archive/* ./DWTDocArchive/
-          cp -rfp ./Docs-Template-Repo-Archive/* ./DWTDocArchive/
-          sed -i -e "1,3s/blob\/master$/blob\/v18.5.1/" \
-          -e "1,3s/blob\/main$/blob\/v18.5.1/" ${{ runner.temp }}/DWTDocArchive/_config.yml
-          cd DWTDocArchive && bundle install && bundle exec jekyll build
-          
-      - name: Sync files
-        uses: SamKirkland/FTP-Deploy-Action@4.3.0
-        with:
-          server: ${{ secrets.FTP_DYNAMSOFT_LOCAL_SERVER }}
-          username: ${{ secrets.FTP_DYNAMSOFT_LOCAL_USER }}
-          password: ${{ secrets.FTP_DYNAMSOFT_LOCAL_PASSWORD }}
-          port: 21 
-          local-dir: ${{ runner.temp }}/DWTDocArchive/_site/
-          server-dir: /www.dynamsoft.com/web-twain/docs-archive/v18.5.1/
+  Update-DBR-Core-On-Main-Change:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
+    with:
+      doc-repo: barcode-reader-docs
+      doc-url: barcode-reader/docs/core
+    secrets: inherit
+
+  Update-DBR-Server-On-Main-Change:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
+    with:
+      doc-repo: barcode-reader-docs-server
+      doc-url: barcode-reader/docs/server
+    secrets: inherit
+
+  Update-DBR-Mobile-On-Main-Change:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
+    with:
+      doc-repo: barcode-reader-docs-mobile
+      doc-url: barcode-reader/docs/mobile
+    secrets: inherit
+
+  Update-DBR-Js-On-Main-Change:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
+    with:
+      doc-repo: barcode-reader-docs-js
+      doc-url: barcode-reader/docs/web
+    secrets: inherit
 
 
-      - name: Trigger Webhook 
-        run: | 
-          curl -X POST -H "${{ secrets.WEBHOOK_USER }}" -H "${{ secrets.WEBHOOK_TOKEN }}" -H "Content-Type: application/json" -d "[\"/web-twain/docs-archive/v18.5.1/*\"]" ${{ secrets.WEBHOOK_URL }}
+  Update-DCV-Core-On-Main-Change:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
+    with:
+      doc-repo: capture-vision-docs
+      doc-url: capture-vision/docs/core
+    secrets: inherit
+
+  Update-DCV-Server-On-Main-Change:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
+    with:
+      doc-repo: capture-vision-docs-server
+      doc-url: capture-vision/docs/server
+    secrets: inherit
+
+
+  Update-DCV-Mobile-On-Main-Change:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
+    with:
+      doc-repo: capture-vision-docs-mobile
+      doc-url: capture-vision/docs/mobile
+    secrets: inherit
+
+
+  Update-DCV-Js-On-Main-Change:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
+    with:
+      doc-repo: capture-vision-docs-js
+      doc-url: capture-vision/docs/web
+    secrets: inherit
+
+
+  Update-DLR-Core-On-Main-Change:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
+    with:
+      doc-repo: label-recognition-docs
+      doc-url: label-recognition/docs/core
+    secrets: inherit
+
+
+  Update-DLR-Server-On-Main-Change:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
+    with:
+      doc-repo: label-recognition-docs-server
+      doc-url: label-recognition/docs/server
+    secrets: inherit
+
+
+  Update-DLR-Mobile-On-Main-Change:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
+    with:
+      doc-repo: label-recognition-docs-mobile
+      doc-url: label-recognition/docs/mobile
+    secrets: inherit
+
+
+  Update-DLR-Js-On-Main-Change:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
+    with:
+      doc-repo: label-recognition-docs-js
+      doc-url: label-recognition/docs/web
+    secrets: inherit
+
+
+  Update-DDN-Core-On-Main-Change:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
+    with:
+      doc-repo: document-normalizer-docs
+      doc-url: document-normalizer/docs/core
+    secrets: inherit
+
+  Update-DDN-Server-On-Main-Change:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
+    with:
+      doc-repo: document-normalizer-docs-server
+      doc-url: document-normalizer/docs/server
+    secrets: inherit
+
+  Update-DDN-Mobile-On-Main-Change:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
+    with:
+      doc-repo: document-normalizer-docs-mobile
+      doc-url: document-normalizer/docs/mobile
+    secrets: inherit
+
+
+  Update-DDN-Js-On-Main-Change:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
+    with:
+      doc-repo: document-normalizer-docs-js
+      doc-url: document-normalizer/docs/web
+    secrets: inherit
+
+
+  Update-DCP-Core-On-Main-Change:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
+    with:
+      doc-repo: code-parser-docs
+      doc-url: code-parser/docs/core
+    secrets: inherit
+
+  Update-DCP-Server-On-Main-Change:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
+    with:
+      doc-repo: code-parser-docs-server
+      doc-url: code-parser/docs/server
+    secrets: inherit
+
+  Update-DCP-Mobile-On-Main-Change:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
+    with:
+      doc-repo: code-parser-docs-mobile
+      doc-url: code-parser/docs/mobile
+    secrets: inherit
+
+  Update-DCP-Js-On-Main-Change:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
+    with:
+      doc-repo: code-parser-docs-js
+      doc-url: code-parser/docs/web
+    secrets: inherit
+
+
+  Update-DCE-Core-On-Main-Change:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
+    with:
+      doc-repo: camera-enhancer-docs
+      doc-url: camera-enhancer/docs/core
+    secrets: inherit
+
+
+  #Update-DCE-Server-On-Main-Change:
+  #  if: ${{ github.ref == 'refs/heads/main' }}
+  #  uses: ./.github/workflows/called-workflow-build-sync-production.yml
+  #  with:
+  #    doc-repo: camera-enhancer-docs-server
+  #    doc-url: camera-enhancer/docs/server
+  #  secrets: inherit
+
+
+  Update-DCE-Mobile-On-Main-Change:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
+    with:
+      doc-repo: camera-enhancer-docs-mobile
+      doc-url: camera-enhancer/docs/mobile
+    secrets: inherit
+
+  Update-DCE-JS-On-Main-Change:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
+    with:
+      doc-repo: camera-enhancer-docs-js
+      doc-url: camera-enhancer/docs/web
+    secrets: inherit
+
+  Update-DWT-On-Main-Change:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
+    with:
+      doc-repo: web-twain-docs
+      doc-url: web-twain/docs
+    secrets: inherit
+
+  Update-DDV-On-Main-Change:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
+    with:
+      doc-repo: document-viewer-docs
+      doc-url: document-viewer/docs
+    secrets: inherit
+
+  Update-MWC-On-Main-Change:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
+    with:
+      doc-repo: mobile-web-capture-docs
+      doc-url: mobile-web-capture/docs
+    secrets: inherit
+
+  Update-DLS-On-Main-Change:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
+    with:
+      doc-repo: license-server-docs
+      doc-url: license-server/docs
+    secrets: inherit
+
+
+#  build:
+#    # The type of runner that the job will run on
+#    runs-on: self-hosted
+#
+#    # Steps represent a sequence of tasks that will be executed as part of the job
+#    steps:
+#      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+#      #- uses: actions/checkout@v2
+#
+#      # Runs a set of commands using the runners shell
+#                    
+#      - name: Build DNT Doc
+#        run: |
+#          cd /home/ubuntu
+#          [ ! -d DNTDoc ] && mkdir -p DNTDoc
+#          [ ! -d dotnet-twain-docs ] && git clone --depth 1 https://github.com/dynamsoft-docs/dotnet-twain-docs.git
+#          cd dotnet-twain-docs && git pull && cd .. && cp -rfp ./dotnet-twain-docs/* ./DNTDoc/
+#          cp -rfp ./Docs-Template-Repo/* ./DNTDoc/
+#          cd DNTDoc && bundle exec jekyll build
+#          python3 /home/ubuntu/ftp.py /home/ubuntu/DNTDoc/_site/ ./www.dynamsoft.com/dotnet-twain/docs/ prod
+#
+#
+#      - name: Build Company Doc
+#        run: |
+#          cd /home/ubuntu
+#          [ ! -d CompanyDoc ] && mkdir -p CompanyDoc
+#          [ ! -d company-docs ] && git clone --depth 1 https://github.com/dynamsoft-docs/company-docs.git
+#          cd company-docs && git pull && cd .. && cp -rfp ./company-docs/* ./CompanyDoc/
+#          cp -rfp ./Docs-Template-Repo/* ./CompanyDoc/
+#          cd CompanyDoc && bundle exec jekyll build
+#          python3 /home/ubuntu/ftp.py /home/ubuntu/CompanyDoc/_site/ ./www.dynamsoft.com/company/docs/ prod
