@@ -8,7 +8,7 @@ var docsLangLatestVersion = {
         dotnet: "10.4.2000",
         android: "10.4.3002",
         ios: "10.4.3002",
-        javascript: "10.4.3100",
+        javascript: "10.5.1000",
         maui: "10.4.3000"
     },
     dcv:{
@@ -23,6 +23,7 @@ var docsLangLatestVersion = {
         cordova: "1.0.5",
         reactNative: "1.1.14",
         maui: "2.6.1000",
+        nodejs: "2.6.1000",
         python: "3.0.2000"
     },
     mrz: {
