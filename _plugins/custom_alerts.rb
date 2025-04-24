@@ -1,5 +1,5 @@
 module Jekyll
-  Jekyll::Hooks.register [:pages, :posts], :post_render do |doc|
+  Jekyll::Hooks.register [:pages, :posts, :documents], :post_render do |doc|
     next unless doc.output && !doc.output.nil?  
     next unless doc.path.end_with?(".md")
     next unless doc.output.include?("[!")
