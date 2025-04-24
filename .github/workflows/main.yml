@@ -253,6 +253,29 @@ jobs:
       doc-url: license-server/docs
     secrets: inherit
 
+  Update-MRZ-Core-On-Main-Change:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
+    with:
+      doc-repo: mrz-scanner-docs
+      doc-url: mrz-scanner/docs/core
+    secrets: inherit
+
+  Update-MRZ-Mobile-On-Main-Change:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
+    with:
+      doc-repo: mrz-scanner-docs-mobile
+      doc-url: mrz-scanner/docs/mobile
+    secrets: inherit
+
+  Update-MRZ-Js-On-Main-Change:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
+    with:
+      doc-repo: mrz-scanner-docs-js
+      doc-url: mrz-scanner/docs/web
+    secrets: inherit
 
 #  build:
 #    # The type of runner that the job will run on
