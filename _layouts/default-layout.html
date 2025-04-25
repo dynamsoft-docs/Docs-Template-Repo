@@ -131,7 +131,6 @@
     <script>
         anchors.add();
         UrlReplace();
-        $(".currentVersion").text("latest version ("+ versionNoteLatestVersion +")");
         FullTreeMenuList('{{page.needAutoGenerateSidebar}}', '{{page.needGenerateH3Content}}');
         $(document).ready(function() {
             var downloadLink = getUrlParam('download')
@@ -152,6 +151,8 @@
     {%- endif -%}
     {%- include livehelp.html -%}
     <script type="text/javascript">
+        $(".docsLatestVersion").text(" (" + versionNoteLatestVersion + ")")
+        
         function getCookie(name) {
             var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
             return (arr = document.cookie.match(reg)) ? unescape(arr[2]) : null;
