@@ -1,45 +1,80 @@
 <div id="DocumentViewer" class="main">
   <div id="DocumentViewerMenu" class="productMenu">
-      <div class="container pcProductMenu">
-          <div class="row">
-              <div class="col-12">
-                <ul class="breadcrumb menu-breadcrumb">
-                  <li class="breadcrumb-item"><a href="/"><i class="icon-home"></i></a></li>
-                  <li class="breadcrumb-item"><a href="/products/">Products</a></li>
-                  <li class="breadcrumb-item overview"><a href="{{site.docHomePage}}">Dynamsoft Document Viewer</a></li>
-                  <li class="breadcrumb-item active"><a href="{{site.docHomePage}}">Docs</a></li>
-                </ul>
-                <div class="right-menu fr">
-                    {%- include search-input.html -%}
-                    <div class="trialAndPricing">
-                        <a href="{{site.download}}" class="downloadBtn orangeBorder" style="margin-right: 10px;">Download <span class="hide-xl">30-Day Trial</span></a>
-                        <a class="downloadBtn" href="https://demo.dynamsoft.com/document-viewer/">Try Online Demo</a>
-                    </div>
-                </div>
-              </div>
+    <div class="container pcProductMenu">
+      <div class="row">
+        <div class="col-12">
+          <ul class="breadcrumb menu-breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="/"><i class="icon-home"></i></a>
+            </li>
+            <li class="breadcrumb-item"><a href="/products/">Products</a></li>
+            <li class="breadcrumb-item overview">
+              <a href="{{site.docHomePage}}">Dynamsoft Document Viewer</a>
+            </li>
+            <li class="breadcrumb-item active">
+              <a href="{{site.docHomePage}}">Docs</a>
+            </li>
+          </ul>
+          <div class="right-menu fr">
+            {%- include search-input.html -%}
+            <div class="trialAndPricing">
+              <a
+                href="{{site.download}}"
+                class="downloadBtn orangeBorder"
+                style="margin-right: 10px"
+                >Download <span class="hide-xl">30-Day Trial</span></a
+              >
+              <a
+                class="downloadBtn"
+                href="https://demo.dynamsoft.com/document-viewer/"
+                >Try Online Demo</a
+              >
+            </div>
           </div>
+        </div>
       </div>
-      <div class="container mobileProductMenu">
-          <div class="row">
-              <div class="col-12">
-                  <div class="productLogo"><i class="ddv-logo"></i> <i class="icon-orange-angle"></i></div>
-                  <div id="ddvCurrentPage" class="fontOswald fr currentPage">Resource Base</div>
-              </div>
+    </div>
+    <div class="container mobileProductMenu">
+      <div class="row">
+        <div class="col-12">
+          <div class="productLogo">
+            <i class="ddv-logo"></i> <i class="icon-orange-angle"></i>
           </div>
-      </div>
-      <div class="mobileProductDetailMenu">
-          <div class="container">
-              <div class="row">
-                  <div class="col-12">
-                      <ul class="menuList">
-                          <li class="title"><a class="orangeLink" href="{{site.docHomePage}}">Dynamsoft Document Viewer</a></li>
-                          <li class="item overview">
-                              <a class="textUpperCase" href="{{site.docHomePage}}">Documentation</a>
-                          </li>
-                      </ul>
-                  </div>
-              </div>
+          <div id="ddvCurrentPage" class="fontOswald fr currentPage">
+            Resource Base
           </div>
+        </div>
       </div>
+    </div>
+    <div class="mobileProductDetailMenu">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <ul class="menuList">
+              <li class="title">
+                <a class="orangeLink" href="{{site.docHomePage}}"
+                  >Dynamsoft Document Viewer</a
+                >
+              </li>
+              <li class="item overview">
+                <a class="textUpperCase" href="{{site.docHomePage}}"
+                  >Documentation</a
+                >
+              </li>
+              <li class="item">
+                <a href="{{site.download}}" class="textUpperCase"
+                  >Download 30-Day Trial</a
+                >
+              </li>
+              <li class="item">
+                <a href="https://demo.dynamsoft.com/document-viewer/" class="textUpperCase"
+                  >Try Online Demo</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
