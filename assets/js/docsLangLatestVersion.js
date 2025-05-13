@@ -1,21 +1,21 @@
 var docsLangLatestVersion = {
     dbr: {
-        core: "11.0.2000",
-        cplusplus: "11.0.1000",
+        core: "11.0.3000",
+        cplusplus: "11.0.3000",
         c: "9.6.40",
         java: "9.6.40",
         python: "11.0.2000",
-        dotnet: "10.4.2000",
+        dotnet: "11.0.3000",
         android: "10.4.3002",
         ios: "10.4.3002",
         javascript: "10.5.3000",
         maui: "10.4.3000"
     },
     dcv:{
-        core: "3.0.2000",
-        cplusplus: "3.0.1000",
+        core: "3.0.3000",
+        cplusplus: "3.0.3000",
         android: "2.6.1003",
-        dotnet: "2.4.2000",
+        dotnet: "3.0.3000",
         ios: "2.6.1004",
         javascript: "2.6.1000",
         xamarin: "1.0.5",
