@@ -5,6 +5,9 @@ regenerate: true
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 {%- assign pages = site.html_pages | where_exp:'doc','doc.sitemap != false' | where_exp:'doc','doc.url != "/Hide_Tree_Page.html"' -%}
+{%- if site.docFullPath contains 'web-twain/docs' -%}	
+	{%- assign pages = site.documents | where_exp:'doc','doc.sitemap != false' | where_exp:'doc','doc.url != "/Hide_Tree_Page.html"' -%}
+{%- endif -%}
 {%- for page in pages -%}
 {%- assign excludeFlag = false -%}
 {%- if page.url contains '-v' -%}
