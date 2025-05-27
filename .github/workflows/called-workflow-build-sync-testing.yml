@@ -37,7 +37,7 @@ jobs:
         run: tar -czvf ${{ inputs.doc-repo }}.tar.gz -C ${{ runner.temp }}/DocHome/_site .
 
       - name: Upload the built site as a single artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ inputs.doc-repo }}
           path: ${{ inputs.doc-repo }}.tar.gz
@@ -52,7 +52,7 @@ jobs:
     steps:
       # Runs a set of commands using the runners shell
       - name: Download the artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: ${{ inputs.doc-repo }}
 
