@@ -12,7 +12,7 @@
     {%- assign noSubMenuDoc = "noSubMenuDoc"  -%}
 {%- endif -%}
 
-{%- if site.firstLevelUrl contains 'web-twain' -%}
+{%- if site.useVersionTreeV2 -%}
 <style>
     .DWT17Note {position: relative; padding: 15px 20px 15px 20px;background: #e5f5ff;border: 1px solid #c7dbe8;color: #4788b3;margin-bottom: 20px;}
     .DWT17Note i { position: absolute; right: 10px; top: 8px; font-size: 20px; cursor: pointer; }
@@ -53,26 +53,26 @@
                     {%- assign assetsPath = '/webres/wwwroot' -%}
                     <div class="rightSideMenu col-xs-12 col-md-12 col-lg-3 col-xl-2  hide-md hide-sm hide-xs showRightSideMenu">
                         {%- if page.url contains 'parameters' and site.docFullPath contains 'docs/core' -%}
-                        <div class="freeCustomizedSupport">
-                            <p>FREE template customization help is available. <a href="https://www.dynamsoft.com/contact/">Contact Us.</a></p>
-                        </div>
+                        <blockquote class="blockquote-note">FREE template customization help is available. <a href="https://www.dynamsoft.com/contact/">Contact Us.</a></blockquote>
                         {%- endif -%}
-                        {%- unless site.firstLevelUrl contains 'web-twain' -%}
-                        <div id="compatibleInfo">
-                            <p>This page is compatible for:</p>
-                            <p class="compatibleCurVersion"></p>
+                        <div class="rightSideMenuContent">
+                            {%- unless site.firstLevelUrl contains 'web-twain' -%}
+                            <div id="compatibleInfo">
+                                <p>This page is compatible for:</p>
+                                <p class="compatibleCurVersion"></p>
+                            </div>
+                            {%- endunless -%}
+                            <div id="feedbackFooter" style="color: #306877;">
+                                <p class="fontOswald">Is this page helpful? </p>
+                                <a href="javascript:void(0)" style="color: #306877;" class="recordLink smileLink" onclick="UsefulRecord(true)"><img class="icon-smile" src="{{ assetsPath }}/images/docs/icon-smile.png" alt="Yes" />Yes</a>
+                                <a href="javascript:void(0)" style="color: #306877;" class="recordLink sadLink" onclick="UsefulRecord(false)"><img class="icon-sad" src="{{ assetsPath }}/images/docs/icon-sad.png" alt="No" />No</a>
+                            </div>
+                            <hr />
+                            {%- if page.needAutoGenerateSidebar -%}
+                            <p class="fontOswald" style="color: #306877;"> In this article: </p>
+                            <div id="AutoGenerateSidebar"></div>
+                            {%- endif -%}
                         </div>
-                        {%- endunless -%}
-                        <div id="feedbackFooter" style="color: #306877;">
-                            <p class="fontOswald">Is this page helpful? </p>
-                            <a href="javascript:void(0)" style="color: #306877;" class="recordLink smileLink" onclick="UsefulRecord(true)"><img class="icon-smile" src="{{ assetsPath }}/images/docs/icon-smile.png" alt="Yes" />Yes</a>
-                            <a href="javascript:void(0)" style="color: #306877;" class="recordLink sadLink" onclick="UsefulRecord(false)"><img class="icon-sad" src="{{ assetsPath }}/images/docs/icon-sad.png" alt="No" />No</a>
-                        </div>
-                        <hr />
-                        {%- if page.needAutoGenerateSidebar -%}
-                        <p class="fontOswald" style="color: #306877;"> In this article: </p>
-                        <div id="AutoGenerateSidebar"></div>
-                        {%- endif -%}
                     </div>
                 </div>
                 <div class="main row" style="display: none; background: #f5f5f5;" id="loadingContent">
@@ -103,7 +103,7 @@
                     {%- endunless -%}
                     <nav class="mainPage">
                         <ul id="fullTreeMenuListContainer" name="listLevel1" data-nosnippet>
-                            {%- if site.firstLevelUrl contains 'web-twain' -%}
+                            {%- if site.useVersionTreeV2 -%}
                                 {%- assign treeList = site.data.full_tree.tree_list -%}
                                 {%- include liquid_generateFullTree.html treeList=treeList -%}
                             {%- endif -%}
