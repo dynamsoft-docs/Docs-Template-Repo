@@ -4,12 +4,12 @@ module Jekyll
     next unless doc.path.end_with?(".md")
     next unless doc.output.include?("[!")
 
-    doc.output.gsub!(/<blockquote>.*?\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\](.*?)<\/blockquote>/mi) do
+    doc.output.gsub!(/<blockquote>\s*<p>\s*\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*(.*?)<\/p>\s*<\/blockquote>/mi) do
       type = $1.downcase
       text = $2.strip
 
       <<~HTML
-      <blockquote class="blockquote-#{type}">#{text}</blockquote>
+        <blockquote class="blockquote-#{type}">#{text}</blockquote>
       HTML
     end
   end
