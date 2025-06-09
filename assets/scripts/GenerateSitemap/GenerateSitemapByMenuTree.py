@@ -41,12 +41,12 @@ def extract_links(url, repo_type):
         response = requests.get(url, timeout=100)
         response.raise_for_status()
         soup = BeautifulSoup(response.text, 'html.parser')
-        
+
         version_tree = soup.find(id="version_tree_latest_version")
         if not version_tree:
             print(f"not find id='version_tree_latest_version': {url}")
             return []
-        
+
         liList = version_tree.find_all('li', {}, False)
         links = []
         for liItem in liList:
@@ -109,9 +109,9 @@ def get_directory_by_product(product):
 def write_xml_file(directory, filename, xml_element):
     if not os.path.exists(directory):
         os.makedirs(directory)
-    
+
     filepath = os.path.join(directory, filename)
-    
+
     tree = ET.ElementTree(xml_element)
     tree.write(filepath, encoding="utf-8", xml_declaration=True)
     print("menu-tree-sitemap.xml is generated.")
@@ -136,4 +136,3 @@ for item in productsUrls:
         loc.text = link
 
     write_xml_file(get_directory_by_product(item), "menu-tree-sitemap.xml", urlset)
-

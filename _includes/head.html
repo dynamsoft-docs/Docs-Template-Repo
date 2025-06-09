@@ -30,7 +30,7 @@
 	    {%- assign excludeFlag = true -%}
     {%- endif -%}
 
-    {%- if page.url contains 'search.html' or page.url contains 'search-test.html' -%}	
+    {%- if page.url contains 'search.html' or page.url contains 'search-test.html' -%}
         {%- assign excludeFlag = true -%}
     {%- endif -%}
 
@@ -40,7 +40,7 @@
 
     {%- assign docFullPath = site.docFullPath -%}
     {%- assign docFullPathLastChar = docFullPath | split:'' | last -%}
-    {%- if docFullPathLastChar contains '/' -%}	
+    {%- if docFullPathLastChar contains '/' -%}
         {%- assign truncateDocHomePageSize = docFullPath | size | minus:1 -%}
         {%- assign docFullPath = docFullPath | slice: 0, truncateDocHomePageSize -%}
     {%- endif -%}

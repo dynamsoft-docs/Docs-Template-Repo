@@ -1130,7 +1130,7 @@ div, .sideBar .mainPage {
         left: auto;
         right: 35px;
     }
-    
+
     #categoryMenuTree .rightSideMenu.showRightSideMenu.rsm-fixed {
         right: 35px;
     }
@@ -2562,7 +2562,7 @@ i.dbr-white-logo {
 .fullVersionHistory .fullVersionInfo .hasChildLi.expand {
     background: #f5f5f5;
 }
-.fullVersionHistory .fullVersionInfo .hasChildLi > ul { 
+.fullVersionHistory .fullVersionInfo .hasChildLi > ul {
     display: none;
 }
 .fullVersionHistory .fullVersionInfo .hasChildLi > div i.icon-arrow {
@@ -3022,7 +3022,7 @@ a#toTop {
 }
 #categoryMenuTree .sideBar {
     background: #f5f5f5;
-    -webkit-order: 1; 
+    -webkit-order: 1;
     order: 1;
 }
 #categoryMenuTree .sideBar.col-xs-12, #categoryMenuTree sideBar.col-md-3
@@ -3174,7 +3174,7 @@ a#toTop {
 
 #categoryMenuTree .docContainer {
     background: #FFFFFF;
-    -webkit-order: 2; 
+    -webkit-order: 2;
     order: 2;
 }
 

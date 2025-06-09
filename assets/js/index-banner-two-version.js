@@ -5,9 +5,9 @@ function FullTreeMenuList(generateDocHead, needh3=true) {
   {
       allHerf1[i].onclick = function(){
         if ($(this).parents(".sideBar").length > 0 && (getUrlVars(document.URL)["ver"]==undefined|| getUrlVars(document.URL)["ver"]=="latest")) {
-          addParam(this, verArray[0], 'sidebar'); 
+          addParam(this, verArray[0], 'sidebar');
         } else {
-          addParam(this, verArray[0]); 
+          addParam(this, verArray[0]);
         }
         return false;
       };
@@ -49,13 +49,13 @@ function FullTreeMenuList(generateDocHead, needh3=true) {
       needh3 = needh3 == 'true' || needh3 == true ? true : false
       if (needh3) {
           $('#fullTreeMenuListContainer').addClass('needh3');
-      }               
+      }
       GenerateContentByHead(needh3);
     }
   }
 }
 
-function AddCanonicalLinkOnPage(searchUrl = document.URL) { 
+function AddCanonicalLinkOnPage(searchUrl = document.URL) {
   var oriUrl = searchUrl;
   //history version doc url
   searchUrl = searchUrl.replace(/\/index-v[0-9]+[^\/]*.html/g,"/");
@@ -162,7 +162,7 @@ function ExpandCurrentPageTree(searchListId) {
 }
 
 function SearchVersion() {
-  var docUrl = document.URL;    
+  var docUrl = document.URL;
   var ver = getUrlVars(docUrl)["ver"];
   var curVerFromUrl = "";
   var tmpExp = new RegExp(/-v[0-9]+[^\/^?^#]*((\/)|(.html))/g);
@@ -195,7 +195,7 @@ function SearchVersion() {
           }
       }
       if(compatiableDiv != null){
-          
+
       }
       if (compatiableDiv != null && compatibleTag != null){
           compatiableDiv.style.display = "block";
@@ -229,7 +229,7 @@ function UsefulRecord(isUseful) {
   else {
       $.get("https://www.dynamsoft.com/Secure/Rate.ashx?paper="+encodeUrl+"&product=DBR-Doc&rate=1")
   }
-  
+
   var feedbackTag = document.getElementById("feedbackFooter");
 
   if(feedbackTag!=null) {

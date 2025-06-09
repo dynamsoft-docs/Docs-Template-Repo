@@ -5,7 +5,7 @@ regenerate: true
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 {%- assign pages = site.html_pages | where_exp:'doc','doc.sitemap != false' | where_exp:'doc','doc.url != "/Hide_Tree_Page.html"' -%}
-{%- if site.docFullPath contains 'web-twain/docs' -%}	
+{%- if site.docFullPath contains 'web-twain/docs' -%}
 	{%- assign pages = site.documents | where_exp:'doc','doc.sitemap != false' | where_exp:'doc','doc.url != "/Hide_Tree_Page.html"' -%}
 {%- endif -%}
 {%- for page in pages -%}
@@ -35,23 +35,23 @@ regenerate: true
 {%- if site.docFullPath contains 'license-server/docs' and page.url contains 'schedule/stable' -%}
 	{%- assign excludeFlag = true -%}
 {%- endif -%}
-{%- if site.docFullPath contains 'web-twain/docs' and page.url contains 'indepth/faqs/develop' -%}	
+{%- if site.docFullPath contains 'web-twain/docs' and page.url contains 'indepth/faqs/develop' -%}
 	{%- assign excludeFlag = true -%}
 {%- endif -%}
-{%- if page.url contains 'search.html' or page.url contains 'search-test.html' -%}	
+{%- if page.url contains 'search.html' or page.url contains 'search-test.html' -%}
 	{%- assign excludeFlag = true -%}
 {%- endif -%}
 
 {%- assign docFullPath = site.docFullPath -%}
 {%- assign docFullPathLastChar = docFullPath | split:'' | last -%}
-{%- if docFullPathLastChar contains '/' -%}	
+{%- if docFullPathLastChar contains '/' -%}
 	{%- assign truncateDocHomePageSize = docFullPath | size | minus:1 -%}
 	{%- assign docFullPath = docFullPath | slice: 0, truncateDocHomePageSize -%}
 {%- endif -%}
 
 {%- unless excludeFlag or page.layout == "" or page.layout == "default" -%}
 		<url>
-			<loc>{{ docFullPath }}{{page.url | replace:'/index.html','/' | xml_escape}}</loc> 
+			<loc>{{ docFullPath }}{{page.url | replace:'/index.html','/' | xml_escape}}</loc>
 		</url>
 {%- endunless -%}
 

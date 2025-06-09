@@ -39,20 +39,20 @@ jobs:
           server: ${{ secrets.FTP_DYNAMSOFT_LOCAL_SERVER }}
           username: ${{ secrets.FTP_DYNAMSOFT_LOCAL_USER }}
           password: ${{ secrets.FTP_DYNAMSOFT_LOCAL_PASSWORD }}
-          port: 21 
+          port: 21
           local-dir: ${{ runner.temp }}/DocHome/_site/
-          server-dir: /www.dynamsoft.com/${{ inputs.doc-url }}/        
+          server-dir: /www.dynamsoft.com/${{ inputs.doc-url }}/
 
-      - name: Trigger Webhook 
-        run: | 
+      - name: Trigger Webhook
+        run: |
           curl -X POST -H "${{ secrets.WEBHOOK_USER }}" -H "${{ secrets.WEBHOOK_TOKEN }}" -H "Content-Type: application/json" -d "[\"/${{ inputs.doc-url }}/*\"]" ${{ secrets.WEBHOOK_URL }}
 
-      - name: Update Sitemap 
-        if: startsWith(inputs.doc-url, 'barcode-reader') || 
-            startsWith(inputs.doc-url, 'capture-vision') || 
-            startsWith(inputs.doc-url, 'label-recognition') || 
-            startsWith(inputs.doc-url, 'document-normalizer') || 
-            startsWith(inputs.doc-url, 'code-parser') || 
+      - name: Update Sitemap
+        if: startsWith(inputs.doc-url, 'barcode-reader') ||
+            startsWith(inputs.doc-url, 'capture-vision') ||
+            startsWith(inputs.doc-url, 'label-recognition') ||
+            startsWith(inputs.doc-url, 'document-normalizer') ||
+            startsWith(inputs.doc-url, 'code-parser') ||
             startsWith(inputs.doc-url, 'camera-enhancer')
         run: |
           cd ${{ runner.temp }}/DocHome/assets/scripts/GenerateSitemap
