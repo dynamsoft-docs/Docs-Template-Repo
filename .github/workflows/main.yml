@@ -6,15 +6,24 @@ name: CI
 on:
   # Triggers the workflow on push events
   push:
-    branches: 
-    - main 
-    #- preview 
+    branches:
+    - main
+    - preview
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+
+  # Build and deploy to preview site on push to preview branch
+  Build-Preview:
+    if: ${{ github.ref == 'refs/heads/preview' }}
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
+    with:
+      doc-repo: ${{ inputs.doc-repo }}
+      doc-url: ${{ inputs.doc-repo }}
+    secrets: inherit
 
   Update-DBR-Core-On-Main-Change:
     if: ${{ github.ref == 'refs/heads/main' }}
@@ -287,7 +296,7 @@ jobs:
 #      #- uses: actions/checkout@v2
 #
 #      # Runs a set of commands using the runners shell
-#                    
+#
 #      - name: Build DNT Doc
 #        run: |
 #          cd /home/ubuntu
