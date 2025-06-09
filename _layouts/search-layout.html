@@ -21,10 +21,10 @@ layout: null
     <title>{{title}}</title>
     <meta name="description" content="{{description}}">
     <meta name="keywords" content="{{page.keywords}}">
-    {%- assign assetsPath = '/webres/wwwroot' -%}
+    {%- assign assetsPath = 'https://www.dynamsoft.com/
     {%- assign docFullPath = site.docFullPath -%}
     {%- assign docFullPathLastChar = docFullPath | split:'' | last -%}
-    {%- if docFullPathLastChar contains '/' -%}	
+    {%- if docFullPathLastChar contains '/' -%}
         {%- assign truncateDocHomePageSize = docFullPath | size | minus:1 -%}
         {%- assign docFullPath = docFullPath | slice: 0, truncateDocHomePageSize -%}
     {%- endif -%}
@@ -144,7 +144,7 @@ layout: null
                     <div class="hit-content">${components.Snippet({ hit, attribute: 'content' })}</div>
                 </div>
             `
-          } 
+          }
         }
       }),
 
@@ -176,7 +176,7 @@ layout: null
                     <div class="hit-content">${components.Snippet({ hit, attribute: 'content' })}</div>
                 </div>
             `
-          } 
+          }
         }
       }),
 
