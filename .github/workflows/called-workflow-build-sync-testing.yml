@@ -13,7 +13,6 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-
   Build-Site-Preview:
     # The type of runner that the job will run on
     runs-on: [self-hosted, doc-build]
@@ -33,11 +32,11 @@ jobs:
           -e "1,3s/blob\/main$/blob\/preview/" ${{ runner.temp }}/DocHome/_config.yml
           cd DocHome && bundle install && bundle exec jekyll build
 
-      - name: 'Create Tar files'
+      - name: "Create Tar files"
         run: tar -czvf ${{ inputs.doc-repo }}.tar.gz -C ${{ runner.temp }}/DocHome/_site .
 
       - name: Upload the built site as a single artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: ${{ inputs.doc-repo }}
           path: ${{ inputs.doc-repo }}.tar.gz
@@ -52,23 +51,23 @@ jobs:
     steps:
       # Runs a set of commands using the runners shell
       - name: Download the artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v4.3.0
         with:
           name: ${{ inputs.doc-repo }}
 
-      - name: 'Extract Tar files'
+      - name: "Extract Tar files"
         shell: cmd
         run: |
           mkdir ${{ runner.temp }}\DocHome\_site
           tar -xzf ${{ inputs.doc-repo }}.tar.gz -C ${{ runner.temp }}\DocHome\_site
 
       - name: Sync files
-        uses: SamKirkland/FTP-Deploy-Action@4.3.0
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_TEST_SITE_SERVER }}
           username: ${{ secrets.FTP_TEST_SITE_USER }}
           password: ${{ secrets.FTP_TEST_SITE_PASSWORD }}
-          port: ${{ secrets.FTP_TEST_SITE_PORT }} 
+          protocol: ftps
+          port: ${{ secrets.FTP_TEST_SITE_PORT }}
           local-dir: ${{ runner.temp }}\DocHome\_site/
-          server-dir: /www.dynamsoft.com/${{ inputs.doc-url }}/        
-
+          server-dir: /www.dynamsoft.com/${{ inputs.doc-url }}/

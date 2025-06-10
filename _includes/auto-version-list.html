@@ -13,7 +13,7 @@
         {%- else -%}
             {%- assign validVerInfo = site.data.product_version.version_info_list -%}
         {%- endif -%}
-        
+
         {%- if site.data.product_version.useGroupedVersion -%}
             {%- for verInfo in validVerInfo -%}
                 {%- assign curVerText = "" -%}

@@ -48,7 +48,7 @@
                                         {%- else -%}
                                                 {%- assign verDiff = tmpDiff | divided_by: 10 | divided_by: i -%}
                                         {%- endif -%}
-                                        {%- assign validVer = true -%}    
+                                        {%- assign validVer = true -%}
                                         {%- break -%}
                                 {%- elsif curVal < targetVal -%}
                                         {%- assign needCheckSize = false -%}
@@ -63,7 +63,7 @@
                                                 {%- assign verDiff = curVal | divided_by: 10 -%}
                                         {%- else -%}
                                                 {%- assign verDiff = curVal | divided_by: 10 | divided_by: minSize -%}
-                                        {%- endif -%}  
+                                        {%- endif -%}
                                 {%- endif -%}
                         {% endunless %}
                         {%- if validVer -%}

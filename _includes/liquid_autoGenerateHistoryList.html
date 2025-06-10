@@ -22,7 +22,7 @@
 {%- endif -%}
 
 {%- if curPageVersion contains "latest version" -%}
-	<p class="currentVersion fontOswald">{{ curPageVersion }}</p>		
+	<p class="currentVersion fontOswald">{{ curPageVersion }}</p>
 {%- else -%}
 	<p class="currentVersion fontOswald">{{ "version " | append: curPageVersion }}</p>
 {%- endif -%}
@@ -58,7 +58,7 @@
 			{%- endif -%}
 		{%- endfor -%}
 	{%- endif -%}
-	
+
 	{%- if curPageVersion == tmpPageVersion -%}
 		{%- continue -%}
 	{%- endif -%}
@@ -78,7 +78,7 @@
 			{%- endif -%}
 		{%- endfor -%}
 	{%- endif -%}
-	
+
 	{%- if tmpUsedToMatchUrl != curUsedToMatchUrl -%}
 		{%- continue -%}
 	{%- endif -%}
@@ -98,7 +98,7 @@
 
 	{%- assign firstLevelUrl = site.firstLevelUrl -%}
 	{%- assign firstLevelUrlLastChar = firstLevelUrl | split:'' | last -%}
-	{%- if firstLevelUrlLastChar contains '/' -%}	
+	{%- if firstLevelUrlLastChar contains '/' -%}
 			{%- assign truncateDocHomePageSize = firstLevelUrl | size | minus:1 -%}
 			{%- assign firstLevelUrl = firstLevelUrl | slice: 0, truncateDocHomePageSize -%}
 	{%- endif -%}
@@ -112,4 +112,3 @@
 	{%- assign historyRecode = historyRecode | append: '\nextUrlRecode\' | append: tmpPageVersion -%}
 {%- endfor -%}
 </ul>
-
