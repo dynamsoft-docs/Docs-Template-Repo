@@ -43,7 +43,8 @@
 {%- assign historyRecode = "" -%}
 
 <ul class="otherVersions" style="display: none!important;">
-{%- for my_page in site.pages -%}
+{%- assign pages = site.pages | concat: site.documents -%}
+{%- for my_page in pages -%}
 	{%- assign tmpPageVersion = "latest version" -%}
 	{%- if my_page.url contains '-v' -%}
 		{%- assign candidateVersionStr = my_page.url |  split: '-v' -%}
