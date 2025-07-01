@@ -8,7 +8,7 @@
 {%- endif -%}
 
 {%- assign noSubMenuDoc = "" -%}
-{%- if site.firstLevelUrl contains 'license-server' -%}
+{%- if site.firstLevelUrl contains 'license-server' or site.isNoSubMenuDoc -%}
     {%- assign noSubMenuDoc = "noSubMenuDoc"  -%}
 {%- endif -%}
 

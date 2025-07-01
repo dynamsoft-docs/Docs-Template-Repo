@@ -8,7 +8,7 @@ var docsLangLatestVersion = {
         dotnet: "11.0.3000",
         android: "11.0.3100",
         ios: "11.0.3000",
-        javascript: "10.5.3000",
+        javascript: "11.0.3000",
         maui: "11.0.3100"
     },
     dcv:{
