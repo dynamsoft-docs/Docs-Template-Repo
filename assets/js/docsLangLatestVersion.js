@@ -30,7 +30,7 @@ var docsLangLatestVersion = {
         android: "3.0.3100",
         ios: "3.0.0",
         maui: "3.0.3100",
-        javascript: "2.0"
+        javascript: "3.0.0"
     },
     dce: {
         core: "4.2.10",
