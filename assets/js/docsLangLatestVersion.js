@@ -12,7 +12,7 @@ var docsLangLatestVersion = {
         maui: "11.0.3100"
     },
     dcv:{
-        core: "3.0.4000",
+        core: "3.0.4100",
         cplusplus: "3.0.4000",
         android: "3.0.3100",
         dotnet: "3.0.4000",
@@ -24,7 +24,7 @@ var docsLangLatestVersion = {
         reactNative: "1.1.14",
         maui: "3.0.3100",
         nodejs: "2.6.1000",
-        python: "3.0.4000"
+        python: "3.0.4100"
     },
     mrz: {
         android: "3.0.3100",
