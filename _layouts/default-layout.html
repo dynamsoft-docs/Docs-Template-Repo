@@ -137,6 +137,7 @@
 
     {%- if site.useVersionTreeV2 -%}
     <script>
+        var highlightMenu = "{{page.highlightMenu}}";
         anchors.add();
         UrlReplace();
         $(".currentVersion").text("latest version ("+ versionNoteLatestVersion +")");
@@ -154,6 +155,7 @@
     {%- else -%}
     <script type="text/javascript">
         var sideBarIframeSrc = "{{site.firstLevelUrl}}/Hide_Tree_Page.html";
+        var highlightMenu = "{{page.highlightMenu}}";
         anchors.add();
         PageCreateInit('{{page.needAutoGenerateSidebar}}', '{{page.needGenerateH3Content}}', '{{page.pageStartVer}}', '{{site.useVersionTree}}');
     </script>
