@@ -59,7 +59,7 @@
                                   <i>Original post creation date: {{ page.date | date: "%b %d, %Y" }}</i>
                                 <p>
                             {%- endif -%}
-                            {% if page.last_modified %}
+                            {%- if page.last_modified -%}
                                 <p class="latestModifiedDate">
                                   <i>Last modified date: {{ page.last_modified | date: "%b %d, %Y" }}</i>
                                 <p>
