@@ -54,6 +54,16 @@
                                 </blockquote>
                             {%- endif -%}
                             {{ content }}
+                            {%- if page.date and page.date != site.time -%}
+                                <p class="postDate">
+                                  <i>Original post creation date: {{ page.date | date: "%b %d, %Y" }}</i>
+                                <p>
+                            {%- endif -%}
+                            {% if page.last_modified %}
+                                <p class="latestModifiedDate">
+                                  <i>Last modified date: {{ page.last_modified | date: "%b %d, %Y" }}</i>
+                                <p>
+                            {%- endif -%}
                         </article>
                     </div>
                     {%- assign assetsPath = '/webres/wwwroot' -%}
@@ -137,6 +147,7 @@
 
     {%- if site.useVersionTreeV2 -%}
     <script>
+        var highlightMenu = "{{page.highlightMenu}}";
         anchors.add();
         UrlReplace();
         $(".currentVersion").text("latest version ("+ versionNoteLatestVersion +")");
@@ -154,6 +165,7 @@
     {%- else -%}
     <script type="text/javascript">
         var sideBarIframeSrc = "{{site.firstLevelUrl}}/Hide_Tree_Page.html";
+        var highlightMenu = "{{page.highlightMenu}}";
         anchors.add();
         PageCreateInit('{{page.needAutoGenerateSidebar}}', '{{page.needGenerateH3Content}}', '{{page.pageStartVer}}', '{{site.useVersionTree}}');
     </script>
