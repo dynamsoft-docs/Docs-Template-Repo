@@ -315,8 +315,19 @@ function changeVersion (liTag) {
         return
     } else {
         curUrl = curUrl.replace("/docs-archive/v18.3/", "/docs-archive" + verFileName)
-        window.location.href = curUrl;
+        checkLinkIsValid(curUrl, verFileName);
 	    return;
+    }
+}
+
+async function checkLinkIsValid(curUrl, verFileName) {
+    const response = await fetch(curUrl)
+    if (response.url.toLowerCase().indexOf("pagenotfound") > 0) {
+        let redirectUrl = location.origin + "/web-twain/docs/about/index.html"
+        redirectUrl = redirectUrl.replace("/docs/", "/docs-archive" + verFileName)
+        window.location.href = redirectUrl
+    } else {
+        window.location.href = curUrl;
     }
 }
 
