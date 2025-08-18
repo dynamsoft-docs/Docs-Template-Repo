@@ -6,31 +6,31 @@ var docsLangLatestVersion = {
         java: "11.0.6000",
         python: "11.0.6000",
         dotnet: "11.0.6000",
-        android: "11.0.3100",
-        ios: "11.0.3000",
+        android: "11.0.5000",
+        ios: "11.0.5200",
         javascript: "11.0.6000",
-        maui: "11.0.3100"
+        maui: "11.0.5200"
     },
     dcv:{
         core: "3.0.600",
         cplusplus: "3.0.6000",
-        android: "3.0.3100",
+        android: "3.0.5000",
         dotnet: "3.0.6000",
-        ios: "3.0.3000",
+        ios: "3.0.5200",
         javascript: "3.0.6000",
         xamarin: "1.0.5",
         flutter: "1.3.0",
         cordova: "1.0.5",
         reactNative: "1.1.14",
-        maui: "3.0.3100",
+        maui: "3.0.5200",
         nodejs: "2.6.1000",
         python: "3.0.6000",
         java: "3.0.6000"
     },
     mrz: {
-        android: "3.0.3100",
-        ios: "3.0.0",
-        maui: "3.0.3100",
+        android: "3.0.5000",
+        ios: "3.0.5200",
+        maui: "3.0.5200",
         javascript: "3.0.0"
     },
     dce: {
