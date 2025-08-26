@@ -139,6 +139,7 @@
         var highlightMenu = "{{page.highlightMenu}}";
         anchors.add();
         UrlReplace();
+        $(".currentVersion").text("Version 18.5.1")
         FullTreeMenuList('{{page.needAutoGenerateSidebar}}', '{{page.needGenerateH3Content}}');
         $(document).ready(function() {
             var downloadLink = getUrlParam('download')
