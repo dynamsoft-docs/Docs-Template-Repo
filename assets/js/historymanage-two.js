@@ -345,6 +345,9 @@ function changeVersion (liTag) {
 	}
 	var curUrl = document.URL;
     var verFileName = "/v" + ver + "/";
+    if (ver == "latest") {
+        verFileName = "/docs/";
+    }
 
 	var srcVal = getUrlVars(curUrl)["src"];
 	var anchorVar = undefined;
