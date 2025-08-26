@@ -40,19 +40,10 @@
                 </div>
                 <div class="main row showRightSideMenu" id="articleContent" data-needh3="{{page.needGenerateH3Content}}">
                     <div class="content markdown-body headCounter {{noTitleIndex}} col-xs-12 col-md-12 col-lg-9 col-xl-10 showRightSideMenu">
-                        {%- if site.firstLevelUrl contains 'web-twain' -%}
-                        <div class="dbrThanksDownloading">
-                            <p class="thanksDownloadTitle">Thanks for Downloading Dynamic Web TWAIN 30-Day Trial!</p>
-                            <p style="margin-bottom: 0;">Your download will start shortly. If your download does not begin, <a class="bluelink downloadlink" href="">click here to retry</a>.</p>
+                        <div id="versionNote" style="width: 100%; padding: 20px; background: #b42727; color: #ffffff;border-radius: 5px;">
+                            This is the archived documentation for <span id="versionNoteOldVersion">18.5.1</span>. If you are using the latest version<span id="versionNoteLatestVersion"></span>, please visit <a class="noVersionAdd" href="/remote-scan/docs/about/index.html" style="color: #ffffff;text-decoration: underline !important;">this link</a>.
                         </div>
-                        {%- endif -%}
                         <article>
-                            {%- if page.url contains 'parameters' and site.docFullPath contains 'docs/core' -%}
-                                <blockquote class="blockquote-tip">
-                                    <p style="margin-bottom: 3px;">Need better scanning performance?</p>
-                                    <p><a class="createCaseLink" href="https://www.dynamsoft.com/create-a-case?topic=template-customization">Get a FREE customized reading template.</a></p> 
-                                </blockquote>
-                            {%- endif -%}
                             {{ content }}
                             {%- if page.date and page.date != site.time -%}
                                 <p class="postDate">
@@ -68,24 +59,22 @@
                     </div>
                     {%- assign assetsPath = '/webres/wwwroot' -%}
                     <div class="rightSideMenu col-xs-12 col-md-12 col-lg-3 col-xl-2  hide-md hide-sm hide-xs showRightSideMenu">
-                        <div class="rightSideMenuContent">
-                            {%- unless site.useVersionTreeV2 -%}
-                            <div id="compatibleInfo">
-                                <p>This page is compatible for:</p>
-                                <p class="compatibleCurVersion"></p>
-                            </div>
-                            {%- endunless -%}
-                            <div id="feedbackFooter" style="color: #306877;">
-                                <p class="fontOswald">Is this page helpful? </p>
-                                <a href="javascript:void(0)" style="color: #306877;" class="recordLink smileLink" onclick="UsefulRecord(true)"><img class="icon-smile" src="{{ assetsPath }}/images/docs/icon-smile.png" alt="Yes" />Yes</a>
-                                <a href="javascript:void(0)" style="color: #306877;" class="recordLink sadLink" onclick="UsefulRecord(false)"><img class="icon-sad" src="{{ assetsPath }}/images/docs/icon-sad.png" alt="No" />No</a>
-                            </div>
-                            <hr />
-                            {%- if page.needAutoGenerateSidebar -%}
-                            <p class="fontOswald" style="color: #306877;"> In this article: </p>
-                            <div id="AutoGenerateSidebar"></div>
-                            {%- endif -%}
+                        {%- unless site.useVersionTreeV2 -%}
+                        <div id="compatibleInfo">
+                            <p>This page is compatible for:</p>
+                            <p class="compatibleCurVersion"></p>
                         </div>
+                        {%- endunless -%}
+                        <div id="feedbackFooter" style="color: #306877;">
+                            <p class="fontOswald">Is this page helpful? </p>
+                            <a href="javascript:void(0)" style="color: #306877;" class="recordLink smileLink" onclick="UsefulRecord(true)"><img class="icon-smile" src="{{ assetsPath }}/images/docs/icon-smile.png" alt="Yes" />Yes</a>
+                            <a href="javascript:void(0)" style="color: #306877;" class="recordLink sadLink" onclick="UsefulRecord(false)"><img class="icon-sad" src="{{ assetsPath }}/images/docs/icon-sad.png" alt="No" />No</a>
+                        </div>
+                        <hr />
+                        {%- if page.needAutoGenerateSidebar -%}
+                        <p class="fontOswald" style="color: #306877;"> In this article: </p>
+                        <div id="AutoGenerateSidebar"></div>
+                        {%- endif -%}
                     </div>
                 </div>
                 <div class="main row" style="display: none; background: #f5f5f5;" id="loadingContent">
@@ -98,7 +87,7 @@
                 <div id="sideBarCnt">
                     <div class="history list" id="categoryMenuTree_history">
                         {%- include liquid_autoGenerateHistoryList.html -%}
-                        {%- if site.firstLevelUrl contains 'web-twain' -%}
+                        {%- if site.useVersionTreeV2 -%}
                         {%- include version-list.html -%}
                         <div id="dwtRedirectList">
                             {%- for redirectLink in page.redirect_from -%}
@@ -116,7 +105,7 @@
                     {%- endunless -%}
                     <nav class="mainPage">
                         <ul id="fullTreeMenuListContainer" name="listLevel1" data-nosnippet>
-                            {%- if site.useVersionTreeV2 -%}
+                            {%- if site.useVersionTreeV2  -%}
                                 {%- assign treeList = site.data.full_tree.tree_list -%}
                                 {%- include liquid_generateFullTree.html treeList=treeList -%}
                             {%- endif -%}
@@ -150,7 +139,6 @@
         var highlightMenu = "{{page.highlightMenu}}";
         anchors.add();
         UrlReplace();
-        $(".currentVersion").text("latest version ("+ versionNoteLatestVersion +")");
         FullTreeMenuList('{{page.needAutoGenerateSidebar}}', '{{page.needGenerateH3Content}}');
         $(document).ready(function() {
             var downloadLink = getUrlParam('download')
@@ -165,13 +153,14 @@
     {%- else -%}
     <script type="text/javascript">
         var sideBarIframeSrc = "{{site.firstLevelUrl}}/Hide_Tree_Page.html";
-        var highlightMenu = "{{page.highlightMenu}}";
         anchors.add();
         PageCreateInit('{{page.needAutoGenerateSidebar}}', '{{page.needGenerateH3Content}}', '{{page.pageStartVer}}', '{{site.useVersionTree}}');
     </script>
     {%- endif -%}
     {%- include livehelp.html -%}
     <script type="text/javascript">
+        $(".docsLatestVersion").text(" (" + versionNoteLatestVersion + ")")
+        
         function getCookie(name) {
             var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
             return (arr = document.cookie.match(reg)) ? unescape(arr[2]) : null;
