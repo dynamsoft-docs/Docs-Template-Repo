@@ -1,84 +1,13 @@
 var DcvProducts = ["dlr", "dce", "ddn", "dcv", "dcp"]
 var isArchiveDocsLink = null
 var FullTreePageDoc = null
-var docsFolderName = "/docs/v9/"
-let docsLangLatestVersion = null
+var docsFolderName = "/docs/"
+var releasedDocsFolderName = "/docs/"
+var docsLangLatestVersion = null
 // #region about full tree
 async function PageCreateInit(generateDocHead, needh3 = true, pageStartVer = undefined, useVersionTree = false) {
     await UrlReplace()
     FullTreeMenuList(generateDocHead, needh3, pageStartVer, useVersionTree)
-}
-
-function IsArchiveDocsLink(url) {
-    var productParam = getUrlVars(url)["product"]
-    var lang = getCurrentUrlLang(url, true)
-    var ver = getUrlVars(url)[productParam] || getUrlVars(url)["ver"]
-    var product = productParam || getCurrentUrlProductName(url)
-    var needRedirect = false
-    if (product != "dbr" && DcvProducts.indexOf(product) <= 0 || !ver || ver.toLowerCase() == "latest") {
-        return
-    }
-    productParam = productParam == getCurrentUrlProductName(url) ? null : productParam
-    var matchItem = findVersionMatchItemInSearchList(ver, lang)
-    // 处理 dbr
-    // 1. dbr/docs/xxxx?ver=old (isArchiveDocsLink = true, 目录中有 docs-archive链接时的处理要注意，不能新窗口打开)
-    // 2. dcv/docs/xxxx?product=dbr&ver=old (重定向到 /docs-archive/)
-    // 3. 9.X 及以下版本 
-    // 3.1 如果是正常 dbr 9.4.60 文档中不会有其他产品链接，所以不需要考虑跳转问题和寻找对应文档版本号问题
-    // 3.2 如果链接为 changeVersion 引出的 dlr/docs/XXXX?product=dbr&ver=9.4.60 这种找不到的地址应该在 urlReplace / changeVersion 中处理到引导至首页，因此也不用处理
-    // 4. 新版本
-    if (productParam && productParam == "dbr" || !productParam && product == "dbr") {
-        if (matchItem && !matchItem.matchVersion) {
-            // 1,2
-            isArchiveDocsLink = true
-            if (productParam == "dbr") {
-                needRedirect = true
-            }
-        } else {
-            // 3,4
-            isArchiveDocsLink = false
-        }
-    }
-
-    // 处理 ddn,dlr,dcp,dce
-    // 如果链接中有 product=ddn, 一定为 archive 文档，如果非 dbr 直接重定向到 /docs-archive/
-    // 如果链接中没有 product 参数，模糊处理（如果用户保存了 dlr/docs/xxx?ver=3.4.0, 没法处理，根据逻辑应该会跳转到latest，如果是1.3.0.就跳转到 docs-archive）
-    if (productParam && productParam != "dcv" && DcvProducts.indexOf(productParam) >= 0) {
-        needRedirect = true
-    }
-    if (!productParam && DcvProducts.indexOf(product) >= 0 && product != "dcv") {
-        if (matchItem && matchItem.matchVersion) {
-            isArchiveDocsLink = false
-        } else {
-            needRedirect = true
-        }
-    }
-
-    // 处理 dcv
-    // 1. dlr/xxxx?product=dcv&ver=old，直接重定向到 /docs-archive/
-    // 2. dlr/xxxxx?product=dcv&ver=new (尽量避免吧，新的版本写法 dcv产品不加dcv后缀)
-    // 3. dbr/xxxx?product=dcv&ver=old，不能重定向, isArchiveDocsLink=true, 需要注意的是目录树等得用archive的
-    // 4. dbr/xxxx?product=dcv&ver=new, 不做处理
-    // 5. dcv/xxxx?ver=old，直接重定向到 /docs-archive/
-    // 6. dcv/xxxxx?ver=new
-    if (productParam && productParam == "dcv" || !productParam && product == "dcv") {
-        
-        if (matchItem && matchItem.matchVersion) {
-            // ver = new
-            isArchiveDocsLink = false
-        } else {
-            if (productParam && getCurrentUrlProductName(url) == "dbr") {
-                isArchiveDocsLink = true
-            } else {
-                needRedirect = true
-            }
-        }
-    }
-    if (needRedirect) {
-        // 链接重定向到 docs-archive
-        var replaceUrl = url.replace(docsFolderName, "/docs-archive/")
-        window.location.replace(replaceUrl);
-    }
 }
 
 //findVersionMatchItemInSearchList("10.2.1000", "javascript")
@@ -181,7 +110,7 @@ function FilterLangFullTree(needFilterLang = false) {
     // console.log("-------------- Start Filter Lang Full Tree --------------")
     // console.log(needFilterLang)
     var curUrl = document.URL
-    if (curUrl.indexOf(docsFolderName + "server/") > 0 || curUrl.indexOf(docsFolderName + "mobile/") > 0 || needFilterLang) {
+    if (curUrl.indexOf(`${docsFolderName}server/`) > 0 || curUrl.indexOf(`${docsFolderName}mobile/`) > 0 || needFilterLang) {
         var lang = getCurrentUrlLang(curUrl, needFilterLang);
         // console.log(lang)
         var fullTreeLis = $("#fullTreeMenuListContainer > li")
@@ -234,11 +163,6 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
     }
     var verArray = SearchVersion();
     var product = getUrlVars(pageUrl)["product"] || getCurrentUrlProductName(pageUrl)
-    if ($(".createCaseLink").length > 0) {
-        var caseHref = $(".createCaseLink").attr("href")
-        $(".createCaseLink").attr("href", caseHref + "&product=" + product);
-    }
-    
     if (!useVersionTree && DcvProducts.indexOf(product) < 0 && product != "dbr") {
         var allHerf1 = $(".docContainer .content, #docHead, #AutoGenerateSidebar, .sideBar, #crumbs").find("a");
         for (var i = 0; i < allHerf1.length; i++) {
@@ -322,6 +246,8 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                                     }
                                 }
                             }
+                        } else {
+                            //HighlightCurrentListForFullTree("fullTreeMenuListContainer", false, ($(liAry[i]).children("a"))[0].href);
                         }
                         event.stopPropagation();
                     }
@@ -332,6 +258,7 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
         if (getUrlVars(pageUrl)["product"] || getUrlVars(pageUrl)["lang"] || DcvProducts.indexOf(product) >= 0) {
             needFilterLangTree = true
         }
+        
         var count = 0
         var fullTreeInterval = setInterval(function () {
             if (FullTreePageDoc || count >= 600) {
@@ -340,7 +267,7 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                 // if page is dcv but used in ddn or other docs, need to change navbar
                 // the nav bar in the (DDN or other docs's) Hide_Tree_Page.html file
                 let productName = getCurrentUrlProductName(pageUrl)
-                if (getUrlVars(pageUrl)["product"] || (getUrlVars(pageUrl)["lang"] && pageUrl.indexOf(docsFolderName + "core") >= 0) || productName != "dcv" && DcvProducts.indexOf(productName) >= 0) {
+                if (getUrlVars(pageUrl)["product"] || (getUrlVars(pageUrl)["lang"] && pageUrl.indexOf(`${docsFolderName}core/`) >= 0) || productName != "dcv" && DcvProducts.indexOf(productName) >= 0) {
                     var navBar = $(FullTreePageDoc).find('#docsNavBar');
                     if (navBar && navBar.length > 0) {
                         if (getUrlVars(pageUrl)["product"] || productName != "dcv" && DcvProducts.indexOf(productName) >= 0) {
@@ -369,11 +296,10 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                 var curProduct = getCurrentUrlProductName(document.URL)
                 var curLang = getCurrentUrlLang(document.URL, true)
 
-                var productLatestVersion = getProductLangLatestVersion(product?product:curProduct, curLang)
-
                 if (product && productVersion && curProduct != product) {
                     curPageVersion = (productVersion == 'latest' ? 'latest_version' : productVersion)
                 }
+                console.log("curPageVersion: " + curPageVersion)
                 version_tree_list = $(FullTreePageDoc).find('#version_tree_list ul.version-tree-container');
                 if (version_tree_list && version_tree_list.length > 0 && curPageVersion) {
                     var isFindVersionTree = false
@@ -381,10 +307,6 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                     for (var i = 0; i < version_tree_list.length; i++) {
                         if (!isFindVersionTree) {
                             if ($(version_tree_list[i]).attr('id') == 'version_tree_' + curPageVersion) {
-                                isFindVersionTree = true
-                                findIndex = i
-                            }
-                            if (curPageVersion == "latest_version" && $(version_tree_list[i]).attr('id') == 'version_tree_' + productLatestVersion) {
                                 isFindVersionTree = true
                                 findIndex = i
                             }
@@ -614,9 +536,9 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
                 var ver = getUrlVars(document.URL)["ver"];
                 var ifChangeVersion = getUrlVars(document.URL)["cVer"];
                 if (ifChangeVersion != undefined || (ver != undefined &&
-                    ((ver != "latest" && pageStartVer != undefined && pageStartVer != "" && pageStartVer > ver) ||
-                        (curPageRealVer != undefined && curPageRealVer != "" && ((ver == "latest" && ver != curPageRealVer) || (ver != "latest" && ver > curPageRealVer)))
-                    ))) {
+                        ((ver != "latest" && pageStartVer != undefined && pageStartVer != "" && pageStartVer > ver) ||
+                            (curPageRealVer != undefined && curPageRealVer != "" && ((ver == "latest" && ver != curPageRealVer) || (ver != "latest" && ver > curPageRealVer)))
+                        ))) {
                     addParam(curListATag[0], ver);
                 }
             }
@@ -645,20 +567,18 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
                         }
                     }
                 }
-
-
+                
+                
                 menuAddIcon(curLi)
 
                 initCrumbs()
             }
-        } else {
-            menuAddIcon(null)
         }
     }
 }
 
 function menuAddIcon(curLi) {
-    var parentsUL = curLi != null ? $(curLi).parents("ul") : $("#fullTreeMenuListContainer");
+    var parentsUL = $(curLi).parents("ul");
     for (var j = 0, lenUL = parentsUL.length; j < lenUL; j++) {
         var curUL = parentsUL[j];
         if (curUL.style.display != "block") {
@@ -682,43 +602,42 @@ function menuAddIcon(curLi) {
             }
         }
     }
-    if (curLi != null) {
-        var childUL = $(curLi).children("ul");
-        if (childUL.length > 0) {
-            curLi.className = "expandListStyle"
-            if (childUL[0].style.display != "block") {
-                childUL[0].style.display = "block";
-            }
 
-            if ($("#categoryMenuTree").length == 0) {
-                curListATag[0].removeAttribute("href");
-            }
+    var childUL = $(curLi).children("ul");
+    if (childUL.length > 0) {
+        curLi.className = "expandListStyle"
+        if (childUL[0].style.display != "block") {
+            childUL[0].style.display = "block";
+        }
 
-            var childrenLi = $(childUL[0]).children("li");
-            for (var j = 0; j < childrenLi.length; j++) {
-                var curULTag = $(childrenLi[j]).children("ul");
-                if (curULTag.length > 0) {
-                    if (curULTag[0].style.display != "block") {
-                        childrenLi[j].className = "collapseListStyle"
-                        var iconItem = document.createElement("i")
-                        iconItem.className = "icon-arrow"
-                        childrenLi[j].appendChild(iconItem)
-                    } else {
-                        childrenLi[j].className = "expandListStyle"
-                        var iconItem = document.createElement("i")
-                        iconItem.className = "icon-arrow"
-                        childrenLi[j].appendChild(iconItem)
-                    }
+        if ($("#categoryMenuTree").length == 0) {
+            curListATag[0].removeAttribute("href");
+        }
+
+        var childrenLi = $(childUL[0]).children("li");
+        for (var j = 0; j < childrenLi.length; j++) {
+            var curULTag = $(childrenLi[j]).children("ul");
+            if (curULTag.length > 0) {
+                if (curULTag[0].style.display != "block") {
+                    childrenLi[j].className = "collapseListStyle"
+                    var iconItem = document.createElement("i")
+                    iconItem.className = "icon-arrow"
+                    childrenLi[j].appendChild(iconItem)
+                } else {
+                    childrenLi[j].className = "expandListStyle"
+                    var iconItem = document.createElement("i")
+                    iconItem.className = "icon-arrow"
+                    childrenLi[j].appendChild(iconItem)
                 }
             }
         }
-        var parentsLi = $(curLi).parents("li");
-        for (var j = 0, lenLi = parentsLi.length; j < lenLi; j++) {
-            parentsLi[j].className = "expandListStyle"
-            var iconItem = document.createElement("i")
-            iconItem.className = "icon-arrow"
-            parentsLi[j].appendChild(iconItem)
-        }
+    }
+    var parentsLi = $(curLi).parents("li");
+    for (var j = 0, lenLi = parentsLi.length; j < lenLi; j++) {
+        parentsLi[j].className = "expandListStyle"
+        var iconItem = document.createElement("i")
+        iconItem.className = "icon-arrow"
+        parentsLi[j].appendChild(iconItem)
     }
 }
 
@@ -779,16 +698,16 @@ function UsefulRecord(isUseful) {
 
 function getCurrentUrlRepoType(url) {
     var currentPath = url
-    if (currentPath.includes(docsFolderName + "server/")) {
+    if (currentPath.includes(`${docsFolderName}server/`)) {
         return 'server'
     }
-    if (currentPath.includes(docsFolderName + "core/")) {
+    if (currentPath.includes(`${docsFolderName}core/`)) {
         return 'core'
     }
-    if (currentPath.includes(docsFolderName + "mobile/")) {
+    if (currentPath.includes(`${docsFolderName}mobile/`)) {
         return 'mobile'
     }
-    if (currentPath.includes(docsFolderName + "web/")) {
+    if (currentPath.includes(`${docsFolderName}web/`)) {
         return 'web'
     }
 }
@@ -838,11 +757,11 @@ function getCurrentUrlLang(url, needFilterLang = false) {
             }
         } else {
             var arr = []
-            if (reporType == "server" && url.split(docsFolderName + "server/").length > 1) {
-                arr = url.split(docsFolderName + "server/")[1].split("/")
+            if (reporType == "server" && url.split(`${docsFolderName}server/`).length > 1) {
+                arr = url.split(`${docsFolderName}server/`)[1].split("/")
             }
-            if (reporType == "mobile" && url.split(docsFolderName + "mobile/").length > 1) {
-                arr = url.split(docsFolderName + "mobile/")[1].split("/")
+            if (reporType == "mobile" && url.split(`${docsFolderName}mobile/`).length > 1) {
+                arr = url.split(`${docsFolderName}mobile/`)[1].split("/")
             }
             if (reporType == "mobile" && ["objectivec-swift", "android", "android-kotlin", "xamarin", "react-native", "flutter", "cordova", "maui"].indexOf(arr[1]) < 0) {
                 return "objectivec-swift"
@@ -968,8 +887,6 @@ function getDoumentName(product) {
             return 'license-server';
         case 'mrz':
             return 'mrz-scanner';
-        case 'mds':
-            return 'mobile-document-scanner';
         default:
             return '';
     }
@@ -1004,8 +921,6 @@ function getCurrentUrlProductName(url = null) {
             return 'lts';
         case 'mrz-scanner':
             return 'mrz';
-        case 'mobile-document-scanner':
-            return 'mds';
         default:
             return '';
     }
@@ -1029,7 +944,7 @@ function getRepoTypeByLang(lang, url) {
     }
 
     if (url && lang == "java") {
-        if (url.indexOf(docsFolderName + "mobile") >= 0) {
+        if (url.indexOf(`${docsFolderName}mobile/`) >= 0) {
             repoType = "mobile"
         } else {
             repoType = "server"
@@ -1254,9 +1169,9 @@ async function getVersionSearchList(needArchive = false) {
     if (product == "lts" || product == "" || product == "mwc" || product == "ddv" || product == "mrz") {
         return null
     }
-    var docsStr = needArchive ? "docs-archive" : docsFolderName
+    var docsStr = needArchive ? "docs-archive" : "docs"
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         $.ajax({
             url: `${location.origin}/${getDoumentName(product)}/${docsStr}/${repoType}/assets/js/${product}${titleCase(repoType)}VersionSearch.json`,
             type: "get",
@@ -1287,7 +1202,7 @@ function isInIOSDos(curUrl, linkUrl) {
     if (curProduct != linkProduct) {
         return false
     } else {
-        if (linkUrl.indexOf(docsFolderName + "mobile/programming/objectivec-swift/") > 0) {
+        if (linkUrl.indexOf(`${docsFolderName}mobile/programming/objectivec-swift/`) > 0) {
             return true
         } else {
             return false
@@ -1299,27 +1214,24 @@ function getFormatVal(inputVer) {
     if (!inputVer || inputVer == "latest") {
         return 99999999
     }
-    
-    try {
-        var arr = inputVer.split(".")
-        var sum = 0
-        if (arr.length == 2) {
-            arr.push(0)
-        }
-        for (var i = 0; i < arr.length; i++) {
-            var num = Number(arr[i])
-            if (i == 2) {
-                // num = num < 100 ? num * 100 : num
-                sum = sum * 10000 + num
-            } else {
-                sum = sum * 100 + num
-            }
-        }
-        return sum
-    } catch (e) {
-console.log("inputVer", inputVer)
+    var arr = inputVer.split(".")
+    var sum = 0
+    if (arr.length == 1) {
+        arr.push(0)
     }
-    
+    if (arr.length == 2) {
+        arr.push(0)
+    }
+    for (var i = 0; i < arr.length; i++) {
+        var num = Number(arr[i])
+        if (i == 2) {
+            // num = num < 100 ? num * 100 : num
+            sum = sum * 10000 + num
+        } else {
+            sum = sum * 100 + num
+        }
+    }
+    return sum
 }
 
 function GetVersionDiff(inputVer, compareVer) {
@@ -1343,6 +1255,7 @@ function getProductLangLatestVersion(product, lang, isLatest = false) {
     if (isLatest) {
         latestVersionList = docsLangLatestVersion
     }
+    console.log("getProductLangLatestVersion", latestVersionList)
     lang = lang == "react-native" ? "reactNative" : lang
     product = DcvProducts.indexOf(product) >= 0 ? "dcv" : product
     var productMatch = latestVersionList[product]
@@ -1369,6 +1282,11 @@ function getLatestVersionFile(product, lang) {
         console.error('Error fetching latest version file:', error);
         return null
     })
+}
+
+// 2025/06/25 add first archive version for dbr/dcv/mrz...
+function getProductLangFirstArchiveVersion(product, lang=null) {
+    return docsFirstArchiveVersion[product];
 }
 
 function showPageContentInModal(fetchUrl) {
@@ -1557,4 +1475,14 @@ function onSubsetBtnLineClick(randomId, fromJS) {
     }
     $(`#child-${randomId}`).removeAttr("id")
     $(`#${randomId}`).removeAttr("id")
+}
+
+function getDocsFolderName(product) {
+    if (product == "dbr") {
+        releasedDocsFolderName = "/docs/v2/"
+        return "/docs/v10/"
+    } else if (product == "dcv") {
+        releasedDocsFolderName = "/docs/v10/"
+        return "/docs/v2/"
+    }
 }

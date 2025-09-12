@@ -85,7 +85,7 @@
 	{%- endif -%}
 
 	{%- assign newVer = true -%}
-	{%- assign historyAry = historyRecode | split: '|nextUrlRecode|' -%}
+	{%- assign historyAry = historyRecode | split: '\nextUrlRecode\' -%}
 	{%- for history in historyAry -%}
 		{%- if history == tmpPageVersion -%}
 			{%- assign newVer = false -%}
@@ -110,7 +110,7 @@
 		<li><a href = "{{ firstLevelUrl }}{{ my_page.url }}" class="otherLinkColour">{{ "version " | append: tmpPageVersion }}</a></li>
 	{%- endif -%}
 
-	{%- assign historyRecode = historyRecode | append: '|nextUrlRecode|' | append: tmpPageVersion -%}
+	{%- assign historyRecode = historyRecode | append: '\nextUrlRecode\' | append: tmpPageVersion -%}
 {%- endfor -%}
 </ul>
 

@@ -30,7 +30,7 @@ jobs:
           cd ${{ runner.temp }}
           mkdir -p DocHome
           git clone --depth 1 --branch ${{ inputs.doc-branch }} https://github.com/dynamsoft-docs/${{ inputs.doc-repo }}.git ${{ inputs.doc-repo }}
-          git clone --depth 1 --branch DBR-v9 https://github.com/dynamsoft-docs/Docs-Template-Repo.git Docs-Template-Repo
+          git clone --depth 1 --branch DCV-v2 https://github.com/dynamsoft-docs/Docs-Template-Repo.git Docs-Template-Repo
           cp -rfp ./${{ inputs.doc-repo }}/* ./DocHome/
           cp -rfp ./Docs-Template-Repo/* ./DocHome/
           # cd DocHome && bundle install && bundle exec jekyll build
