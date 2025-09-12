@@ -2,14 +2,7 @@
 layout: tree-layout
 regenerate: true
 ---
-{%- if site.useJSVersionV3 -%}
-<div id="version_tree_list">
-    <ul class="version-tree-container " id="version_tree_latest_version">
-        {%- include liquid_searchVersionTreeFile.html ver="latest version" curPath="" targetRelativePath="sidelist-full-tree.html" -%}
-    </ul>
-    <span id="complete_loading_tree"></span>
-</div>
-{%- elsif site.useVersionTree -%}
+{%- if site.useVersionTree -%}
     <div id="version_tree_list">
         {%- if site.edition -%}
             {%- if site.edition == 'algorithm' -%}
