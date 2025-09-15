@@ -101,7 +101,12 @@
     <script src="{{ assetsPath }}/js/header.min.js"></script>
     <script type="text/javascript" src="{{ site.assets }}js/ds-jquery-bs.min.js"></script>
 
-    {%- if site.useVersionTreeV2 -%}
+    {%- if site.useJSVersionV3 -%}
+    <script type="text/javascript" src="{{ site.assets }}js/docsLangLatestVersion.js?v={{ 'now' | date: "%s"}}"></script>
+    <script type="text/javascript" src="{{ site.assets }}js/docsFirstArchiveVersion.js?v={{ 'now' | date: "%s"}}"></script>
+    <script type="text/javascript" src="{{ site.assets }}js/index-banner-v3.min.js?v={{ 'now' | date: "%s"}}"></script>
+    <script type="text/javascript" src="{{ site.assets }}js/historymanage-v3.min.js?v={{ 'now' | date: "%s"}}"></script>
+    {%- elsif site.useVersionTreeV2 -%}
     <script type="text/javascript" src="{{ assetsPath }}/js/docs/index-banner-two.min.js?v={{ 'now' | date: "%s"}}"></script>
     <script type="text/javascript" src="{{ assetsPath }}/js/docs/historymanage-two.min.js?v={{ 'now' | date: "%s"}}"></script>
     <script type="text/javascript" src="{{ site.assets }}js/setLatestVersion.js"></script>

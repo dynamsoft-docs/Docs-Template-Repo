@@ -22,7 +22,7 @@
                 {%- if ver contains '_' -%}
                     {%- assign arr = ver | split: "_" -%}
                     {%- assign ver = arr.first -%}
-                    {%- assign editions = ver | remove: arr.first | remove_first: '_' -%}
+                    {%- assign editions = verInfo.value | remove: arr.first | remove_first: '_' -%}
                 {%- endif -%}
                 {%- if ver contains "latest version"-%}
                     {%- assign curVerText = ver | capitalize -%}

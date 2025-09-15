@@ -17,7 +17,7 @@ var docsLangLatestVersion = {
         android: "3.0.5000",
         dotnet: "3.0.6000",
         ios: "3.0.5200",
-        javascript: "3.0.6000",
+        javascript: "3.0.6001",
         xamarin: "1.0.5",
         flutter: "1.3.0",
         cordova: "1.0.5",
