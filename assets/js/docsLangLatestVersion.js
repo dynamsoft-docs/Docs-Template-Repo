@@ -9,7 +9,11 @@ var docsLangLatestVersion = {
         android: "11.0.5000",
         ios: "11.0.5200",
         javascript: "11.0.6000",
-        maui: "11.0.5200"
+        maui: "11.0.5200",
+        flutter: "11.0.5200",
+        reactNative: "11.0.5200",
+        xamarin: "11.0.5200",
+        cordova: "11.0.5200"
     },
     dcv:{
         core: "3.0.600",
