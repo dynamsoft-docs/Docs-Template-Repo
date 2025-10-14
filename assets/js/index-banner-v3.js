@@ -1025,6 +1025,14 @@ function initCrumbs() {
         }
         $(crumbul[0]).append(appendText);
     }
+
+    let productName = getUrlVars(document.URL)["product"] || getCurrentUrlProductName(document.URL);
+    var firstItem = $(".fullVersionInfo li:not(.hideLi)").eq(0)
+    if (firstItem.text().toLowerCase() != "latest version") {
+        let latestVersion = getProductLangLatestVersion(productName, lang == "" ? "core" : lang, true)
+        $("#versionNoteLatestVersion").text(`(${latestVersion})`);
+        $("#versionNoteOldVersion").text("Version "+ (productName == "dbr" ? "10.x" : "2.x"));
+    }
 }
 
 function UrlSearch(docUrl, listUrl) {
