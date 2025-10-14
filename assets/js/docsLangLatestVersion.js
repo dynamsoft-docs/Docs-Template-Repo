@@ -1,11 +1,11 @@
 var docsLangLatestVersion = {
     dbr: {
-        core: "11.0.6000",
-        cplusplus: "11.0.6000",
+        core: "11.2.1000",
+        cplusplus: "11.2.1000",
         c: "9.6.40",
-        java: "11.0.6000",
-        python: "11.0.6000",
-        dotnet: "11.0.6000",
+        java: "11.2.1000",
+        python: "11.2.1000",
+        dotnet: "11.2.1000",
         android: "11.0.5000",
         ios: "11.0.5200",
         javascript: "11.0.6000",
@@ -16,10 +16,10 @@ var docsLangLatestVersion = {
         cordova: "11.0.5200"
     },
     dcv:{
-        core: "3.0.600",
-        cplusplus: "3.0.6000",
+        core: "3.2.1000",
+        cplusplus: "3.2.1000",
         android: "3.0.5000",
-        dotnet: "3.0.6000",
+        dotnet: "3.2.1000",
         ios: "3.0.5200",
         javascript: "3.0.6001",
         xamarin: "1.0.5",
@@ -28,8 +28,8 @@ var docsLangLatestVersion = {
         reactNative: "1.1.14",
         maui: "3.0.5200",
         nodejs: "2.6.1000",
-        python: "3.0.6000",
-        java: "3.0.6000"
+        python: "3.2.1000",
+        java: "3.2.1000"
     },
     mrz: {
         android: "3.0.5000",

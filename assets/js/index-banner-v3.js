@@ -1029,6 +1029,8 @@ function initCrumbs() {
         }
         $(crumbul[0]).append(appendText);
     }
+
+    $("#versionNote").hide();
 }
 
 function UrlSearch(docUrl, listUrl) {
