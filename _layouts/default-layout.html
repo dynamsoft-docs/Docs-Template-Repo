@@ -40,6 +40,9 @@
                 </div>
                 <div class="main row showRightSideMenu" id="articleContent" data-needh3="{{page.needGenerateH3Content}}">
                     <div class="content markdown-body headCounter {{noTitleIndex}} col-xs-12 col-md-12 col-lg-9 col-xl-10 showRightSideMenu">
+                        <div id="versionNote" style="width: 100%; padding: 20px; background: #b42727; color: #ffffff;border-radius: 5px;margin-bottom: 20px;">
+                            This is the archived documentation for <span id="versionNoteOldVersion"></span>. If you are using the latest version<span id="versionNoteLatestVersion"></span>, please visit <span class="noVersionAdd" id="docsLatestVersionLink">this link</span>.
+                        </div>
                         {%- if site.firstLevelUrl contains 'web-twain' -%}
                         <div class="dbrThanksDownloading">
                             <p class="thanksDownloadTitle">Thanks for Downloading Dynamic Web TWAIN 30-Day Trial!</p>
@@ -176,6 +179,11 @@
             var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
             return (arr = document.cookie.match(reg)) ? unescape(arr[2]) : null;
         }
+
+        $("#docsLatestVersionLink").on("click", function(e) {
+            $(".fullVersionInfo .latestVer").click();
+            e.stopPropagation();
+        })
         
         $('#txtSearch').keydown(function(e) {
             if (e.keyCode == 13) {

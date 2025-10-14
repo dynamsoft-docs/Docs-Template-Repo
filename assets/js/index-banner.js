@@ -1110,6 +1110,14 @@ function initCrumbs() {
         }
         $(crumbul[0]).append(appendText);
     }
+
+    let productName = getUrlVars(document.URL)["product"] || getCurrentUrlProductName(document.URL);
+    var firstItem = $(".fullVersionInfo li:not(.hideLi)").eq(0)
+    if (firstItem.text().toLowerCase() != "latest version") {
+        let latestVersion = getProductLangLatestVersion(productName, lang == "" ? "core" : lang, true)
+        $("#versionNoteLatestVersion").text(`(${latestVersion})`);
+        $("#versionNoteOldVersion").text("Version 9.x and earlier");
+    }
 }
 
 function UrlSearch(docUrl, listUrl) {
