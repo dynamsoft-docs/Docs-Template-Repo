@@ -40,3 +40,6 @@
 {%- if site.firstLevelUrl == '/faq' -%}
   {%- include productNav/faqNav.html -%}
 {%- endif -%}
+{%- if site.firstLevelUrl contains 'batch-barcode-scanner/docs' -%}
+  {%- include productNav/bbsNav.html -%}
+{%- endif -%}
