@@ -891,6 +891,8 @@ function getDoumentName(product) {
             return 'license-server';
         case 'mrz':
             return 'mrz-scanner';
+        case 'mds':
+            return 'mobile-document-scanner';
         default:
             return '';
     }
@@ -925,6 +927,8 @@ function getCurrentUrlProductName(url = null) {
             return 'lts';
         case 'mrz-scanner':
             return 'mrz';
+        case 'mobile-document-scanner':
+            return 'mds';
         default:
             return '';
     }
