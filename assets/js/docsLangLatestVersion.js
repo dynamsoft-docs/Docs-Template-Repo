@@ -1,9 +1,9 @@
 var docsLangLatestVersion = {
     dbr: {
-        core: "11.2.1000",
+        core: "11.2.1100",
         cplusplus: "11.2.1000",
         c: "9.6.40",
-        java: "11.2.1000",
+        java: "11.2.1100",
         python: "11.2.1000",
         dotnet: "11.2.1000",
         android: "11.2.1000",
@@ -16,7 +16,7 @@ var docsLangLatestVersion = {
         cordova: "11.0.5200"
     },
     dcv:{
-        core: "3.2.1000",
+        core: "3.2.1100",
         cplusplus: "3.2.1000",
         android: "3.2.1000",
         dotnet: "3.2.1000",
@@ -29,7 +29,7 @@ var docsLangLatestVersion = {
         maui: "3.0.5200",
         nodejs: "2.6.1000",
         python: "3.2.1000",
-        java: "3.2.1000"
+        java: "3.2.1100"
     },
     mrz: {
         android: "3.2.1000",
