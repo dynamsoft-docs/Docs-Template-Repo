@@ -1,16 +1,22 @@
 module Jekyll
   Jekyll::Hooks.register [:pages, :posts, :documents], :post_render do |doc|
-    next unless doc.output && !doc.output.nil?  
-    next unless doc.path.end_with?(".md")
+    next unless doc.output && doc.path&.end_with?(".md")
     next unless doc.output.include?("[!")
 
-    doc.output.gsub!(/<blockquote>\s*<p>\s*\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*(.*?)<\/p>\s*<\/blockquote>/mi) do
-      type = $1.downcase
-      text = $2.strip
+    doc.output.gsub!(%r{<blockquote>(.*?)</blockquote>}mi) do |match|
+      inner = $1.dup
 
-      <<~HTML
-        <blockquote class="blockquote-#{type}">#{text}</blockquote>
-      HTML
+      unless inner =~ /\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]/i
+        next match
+      end
+
+      type = $1.downcase
+
+      inner.sub!(/\s*\[!(?:NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*/i, '')
+
+      inner.gsub!(%r{<p>\s*</p>}mi, '')
+
+      %(<blockquote class="blockquote-#{type}">#{inner}</blockquote>)
     end
   end
 end
