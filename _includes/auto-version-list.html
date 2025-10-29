@@ -73,9 +73,9 @@
         {%- assign documentHomePage = "/barcode-reader/docs/core/" -%}
         {%- endif -%}
 
-        {%- unless site.firstLevelUrl contains 'mrz-scanner/docs' or site.firstLevelUrl contains 'remote-scan/docs' or site.firstLevelUrl contains 'document-viewer/docs' or site.firstLevelUrl contains 'batch-barcode-scanner/docs' -%}
+        {%- if site.firstLevelUrl contains 'capture-vision/docs' or site.firstLevelUrl contains 'barcode-reader/docs' or site.firstLevelUrl contains 'web-twain/docs' -%}
         <li><a href="{{documentHomePage}}" target="_blank" style="color: #323234!important;">Documentation Homepage</a></li>
-        {%- endunless -%}
+        {%- endif -%}
     </ul>
     <a class="fvChange fontOswald" href="javascript:;">Change +</a>
 </span>
