@@ -277,14 +277,6 @@ jobs:
       doc-url: mrz-scanner/docs/web
     secrets: inherit
 
-  Update-MDS-On-Main-Change:
-    if: ${{ github.ref == 'refs/heads/main' }}
-    uses: ./.github/workflows/called-workflow-build-sync-production.yml
-    with:
-      doc-repo: mobile-document-scanner-docs-js
-      doc-url: mobile-document-scanner/docs/web/
-    secrets: inherit
-
 #  build:
 #    # The type of runner that the job will run on
 #    runs-on: self-hosted
