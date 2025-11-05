@@ -8,7 +8,7 @@ on:
   push:
     branches: 
     - main 
-    #- preview 
+    - preview 
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -277,6 +277,14 @@ jobs:
       doc-url: mrz-scanner/docs/web
     secrets: inherit
 
+  Update-BBS-On-Main-Change:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    uses: ./.github/workflows/called-workflow-build-sync-production.yml
+    with:
+      doc-repo: batch-barcode-scanner-docs
+      doc-url: batch-barcode-scanner/docs
+    secrets: inherit
+
   Update-MDS-On-Main-Change:
     if: ${{ github.ref == 'refs/heads/main' }}
     uses: ./.github/workflows/called-workflow-build-sync-production.yml
@@ -285,34 +293,260 @@ jobs:
       doc-url: mobile-document-scanner/docs/web/
     secrets: inherit
 
-#  build:
-#    # The type of runner that the job will run on
-#    runs-on: self-hosted
-#
-#    # Steps represent a sequence of tasks that will be executed as part of the job
-#    steps:
-#      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-#      #- uses: actions/checkout@v2
-#
-#      # Runs a set of commands using the runners shell
-#                    
-#      - name: Build DNT Doc
-#        run: |
-#          cd /home/ubuntu
-#          [ ! -d DNTDoc ] && mkdir -p DNTDoc
-#          [ ! -d dotnet-twain-docs ] && git clone --depth 1 https://github.com/dynamsoft-docs/dotnet-twain-docs.git
-#          cd dotnet-twain-docs && git pull && cd .. && cp -rfp ./dotnet-twain-docs/* ./DNTDoc/
-#          cp -rfp ./Docs-Template-Repo/* ./DNTDoc/
-#          cd DNTDoc && bundle exec jekyll build
-#          python3 /home/ubuntu/ftp.py /home/ubuntu/DNTDoc/_site/ ./www.dynamsoft.com/dotnet-twain/docs/ prod
-#
-#
-#      - name: Build Company Doc
-#        run: |
-#          cd /home/ubuntu
-#          [ ! -d CompanyDoc ] && mkdir -p CompanyDoc
-#          [ ! -d company-docs ] && git clone --depth 1 https://github.com/dynamsoft-docs/company-docs.git
-#          cd company-docs && git pull && cd .. && cp -rfp ./company-docs/* ./CompanyDoc/
-#          cp -rfp ./Docs-Template-Repo/* ./CompanyDoc/
-#          cd CompanyDoc && bundle exec jekyll build
-#          python3 /home/ubuntu/ftp.py /home/ubuntu/CompanyDoc/_site/ ./www.dynamsoft.com/company/docs/ prod
+
+  Update-DBR-Core-On-Preview-Change:
+    if: ${{ github.ref == 'refs/heads/preview' }}
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
+    with:
+      doc-repo: barcode-reader-docs
+      doc-url: barcode-reader/docs/core
+    secrets: inherit
+
+  Update-DBR-Server-On-Preview-Change:
+    if: ${{ github.ref == 'refs/heads/preview' }}
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
+    with:
+      doc-repo: barcode-reader-docs-server
+      doc-url: barcode-reader/docs/server
+    secrets: inherit
+
+  Update-DBR-Mobile-On-Preview-Change:
+    if: ${{ github.ref == 'refs/heads/preview' }}
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
+    with:
+      doc-repo: barcode-reader-docs-mobile
+      doc-url: barcode-reader/docs/mobile
+    secrets: inherit
+
+  Update-DBR-Js-On-Preview-Change:
+    if: ${{ github.ref == 'refs/heads/preview' }}
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
+    with:
+      doc-repo: barcode-reader-docs-js
+      doc-url: barcode-reader/docs/web
+    secrets: inherit
+
+  Update-DCV-Core-On-Preview-Change:
+    if: ${{ github.ref == 'refs/heads/preview' }}
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
+    with:
+      doc-repo: capture-vision-docs
+      doc-url: capture-vision/docs/core
+    secrets: inherit
+
+  Update-DCV-Server-On-Preview-Change:
+    if: ${{ github.ref == 'refs/heads/preview' }}
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
+    with:
+      doc-repo: capture-vision-docs-server
+      doc-url: capture-vision/docs/server
+    secrets: inherit
+
+  Update-DCV-Mobile-On-Preview-Change:
+    if: ${{ github.ref == 'refs/heads/preview' }}
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
+    with:
+      doc-repo: capture-vision-docs-mobile
+      doc-url: capture-vision/docs/mobile
+    secrets: inherit
+
+  Update-DCV-Js-On-Preview-Change:
+    if: ${{ github.ref == 'refs/heads/preview' }}
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
+    with:
+      doc-repo: capture-vision-docs-js
+      doc-url: capture-vision/docs/web
+    secrets: inherit
+
+  Update-DLR-Core-On-Preview-Change:
+    if: ${{ github.ref == 'refs/heads/preview' }}
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
+    with:
+      doc-repo: label-recognition-docs
+      doc-url: label-recognition/docs/core
+    secrets: inherit
+
+  Update-DLR-Server-On-Preview-Change:
+    if: ${{ github.ref == 'refs/heads/preview' }}
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
+    with:
+      doc-repo: label-recognition-docs-server
+      doc-url: label-recognition/docs/server
+    secrets: inherit
+
+  Update-DLR-Mobile-On-Preview-Change:
+    if: ${{ github.ref == 'refs/heads/preview' }}
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
+    with:
+      doc-repo: label-recognition-docs-mobile
+      doc-url: label-recognition/docs/mobile
+    secrets: inherit
+
+  Update-DLR-Js-On-Preview-Change:
+    if: ${{ github.ref == 'refs/heads/preview' }}
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
+    with:
+      doc-repo: label-recognition-docs-js
+      doc-url: label-recognition/docs/web
+    secrets: inherit
+
+  Update-DDN-Core-On-Preview-Change:
+    if: ${{ github.ref == 'refs/heads/preview' }}
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
+    with:
+      doc-repo: document-normalizer-docs
+      doc-url: document-normalizer/docs/core
+    secrets: inherit
+
+  Update-DDN-Server-On-Preview-Change:
+    if: ${{ github.ref == 'refs/heads/preview' }}
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
+    with:
+      doc-repo: document-normalizer-docs-server
+      doc-url: document-normalizer/docs/server
+    secrets: inherit
+
+  Update-DDN-Mobile-On-Preview-Change:
+    if: ${{ github.ref == 'refs/heads/preview' }}
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
+    with:
+      doc-repo: document-normalizer-docs-mobile
+      doc-url: document-normalizer/docs/mobile
+    secrets: inherit
+
+  Update-DDN-Js-On-Preview-Change:
+    if: ${{ github.ref == 'refs/heads/preview' }}
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
+    with:
+      doc-repo: document-normalizer-docs-js
+      doc-url: document-normalizer/docs/web
+    secrets: inherit
+
+  Update-DCP-Core-On-Preview-Change:
+    if: ${{ github.ref == 'refs/heads/preview' }}
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
+    with:
+      doc-repo: code-parser-docs
+      doc-url: code-parser/docs/core
+    secrets: inherit
+
+  Update-DCP-Server-On-Preview-Change:
+    if: ${{ github.ref == 'refs/heads/preview' }}
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
+    with:
+      doc-repo: code-parser-docs-server
+      doc-url: code-parser/docs/server
+    secrets: inherit
+
+  Update-DCP-Mobile-On-Preview-Change:
+    if: ${{ github.ref == 'refs/heads/preview' }}
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
+    with:
+      doc-repo: code-parser-docs-mobile
+      doc-url: code-parser/docs/mobile
+    secrets: inherit
+
+  Update-DCP-Js-On-Preview-Change:
+    if: ${{ github.ref == 'refs/heads/preview' }}
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
+    with:
+      doc-repo: code-parser-docs-js
+      doc-url: code-parser/docs/web
+    secrets: inherit
+
+  Update-DCE-Core-On-Preview-Change:
+    if: ${{ github.ref == 'refs/heads/preview' }}
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
+    with:
+      doc-repo: camera-enhancer-docs
+      doc-url: camera-enhancer/docs/core
+    secrets: inherit
+
+  Update-DCE-Mobile-On-Preview-Change:
+    if: ${{ github.ref == 'refs/heads/preview' }}
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
+    with:
+      doc-repo: camera-enhancer-docs-mobile
+      doc-url: camera-enhancer/docs/mobile
+    secrets: inherit
+
+  Update-DCE-JS-On-Preview-Change:
+    if: ${{ github.ref == 'refs/heads/preview' }}
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
+    with:
+      doc-repo: camera-enhancer-docs-js
+      doc-url: camera-enhancer/docs/web
+    secrets: inherit
+
+  Update-DWT-On-Preview-Change:
+    if: ${{ github.ref == 'refs/heads/preview' }}
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
+    with:
+      doc-repo: web-twain-docs
+      doc-url: web-twain/docs
+    secrets: inherit
+
+  Update-DDV-On-Preview-Change:
+    if: ${{ github.ref == 'refs/heads/preview' }}
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
+    with:
+      doc-repo: document-viewer-docs
+      doc-url: document-viewer/docs
+    secrets: inherit
+
+  Update-MWC-On-Preview-Change:
+    if: ${{ github.ref == 'refs/heads/preview' }}
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
+    with:
+      doc-repo: mobile-web-capture-docs
+      doc-url: mobile-web-capture/docs
+    secrets: inherit
+
+  Update-DLS-On-Preview-Change:
+    if: ${{ github.ref == 'refs/heads/preview' }}
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
+    with:
+      doc-repo: license-server-docs
+      doc-url: license-server/docs
+    secrets: inherit
+
+  Update-MRZ-Core-On-Preview-Change:
+    if: ${{ github.ref == 'refs/heads/preview' }}
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
+    with:
+      doc-repo: mrz-scanner-docs
+      doc-url: mrz-scanner/docs/core
+    secrets: inherit
+
+  Update-MRZ-Mobile-On-Preview-Change:
+    if: ${{ github.ref == 'refs/heads/preview' }}
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
+    with:
+      doc-repo: mrz-scanner-docs-mobile
+      doc-url: mrz-scanner/docs/mobile
+    secrets: inherit
+
+  Update-MRZ-Js-On-Preview-Change:
+    if: ${{ github.ref == 'refs/heads/preview' }}
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
+    with:
+      doc-repo: mrz-scanner-docs-js
+      doc-url: mrz-scanner/docs/web
+    secrets: inherit
+
+  Update-BBS-On-Preview-Change:
+    if: ${{ github.ref == 'refs/heads/preview' }}
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
+    with:
+      doc-repo: batch-barcode-scanner-docs
+      doc-url: batch-barcode-scanner/docs
+    secrets: inherit
+
+  Update-MDS-On-Preview-Change:
+    if: ${{ github.ref == 'refs/heads/preview' }}
+    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
+    with:
+      doc-repo: mobile-document-scanner-docs-js
+      doc-url: mobile-document-scanner/docs/web/
+    secrets: inherit
+
