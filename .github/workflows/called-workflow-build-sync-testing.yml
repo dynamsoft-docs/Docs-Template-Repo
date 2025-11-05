@@ -70,5 +70,5 @@ jobs:
           password: ${{ secrets.FTP_TEST_SITE_PASSWORD }}
           port: ${{ secrets.FTP_TEST_SITE_PORT }} 
           local-dir: ${{ runner.temp }}\DocHome\_site/
-          server-dir: /www.dynamsoft.com/${{ inputs.doc-url }}/        
+          server-dir: /www.dynamsoft.com/${{ inputs.doc-url }}/
 
