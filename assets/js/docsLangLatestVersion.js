@@ -6,8 +6,8 @@ var docsLangLatestVersion = {
         java: "11.2.1100",
         python: "11.2.1000",
         dotnet: "11.2.1000",
-        android: "11.2.1000",
-        ios: "11.2.1000",
+        android: "11.2.3000",
+        ios: "11.2.3000",
         javascript: "11.2.2000",
         maui: "11.0.5200",
         flutter: "11.0.5200",
@@ -18,9 +18,9 @@ var docsLangLatestVersion = {
     dcv:{
         core: "3.2.1100",
         cplusplus: "3.2.1000",
-        android: "3.2.1000",
+        android: "3.2.3000",
         dotnet: "3.2.1000",
-        ios: "3.2.1000",
+        ios: "3.2.3000",
         javascript: "3.2.2000",
         xamarin: "1.0.5",
         flutter: "1.3.0",
@@ -32,8 +32,8 @@ var docsLangLatestVersion = {
         java: "3.2.1100"
     },
     mrz: {
-        android: "3.2.1000",
-        ios: "3.2.1000",
+        android: "3.2.3000",
+        ios: "3.2.3000",
         maui: "3.0.5200",
         javascript: "3.0.0"
     },
