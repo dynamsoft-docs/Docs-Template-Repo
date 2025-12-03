@@ -6540,7 +6540,8 @@ pre {
   line-height: 1.45;
   background-color: #f6f8fa !important;
   padding: 25px 16px 25px !important;
-  border-radius: 3px
+  border-radius: 3px;
+  margin: 0 !important;
 }
 
 .markdown-body pre code,
