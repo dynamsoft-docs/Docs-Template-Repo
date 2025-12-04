@@ -6536,10 +6536,12 @@ pre {
 .markdown-body pre {
   padding: 16px;
   overflow: auto;
-  font-size: 85%;
+  font-size: 14px !important;
   line-height: 1.45;
-  background-color: #f6f8fa;
-  border-radius: 3px
+  background-color: #f6f8fa !important;
+  padding: 25px 16px 25px !important;
+  border-radius: 3px;
+  margin: 0 !important;
 }
 
 .markdown-body pre code,
