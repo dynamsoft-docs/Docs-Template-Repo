@@ -1035,6 +1035,7 @@ function initCrumbs() {
     }
 
     $("#versionNote").hide();
+    transformRougeToPrism(document.getElementById('articleContent'));
 }
 
 function UrlSearch(docUrl, listUrl) {
@@ -1464,4 +1465,13 @@ function onSubsetBtnLineClick(randomId, fromJS) {
     }
     $(`#child-${randomId}`).removeAttr("id")
     $(`#${randomId}`).removeAttr("id")
+}
+
+function transformRougeToPrism(root=document) {
+    Prism.highlightAll();
+
+    var template2Objs = $('.markdown-body .sample-code-prefix.template2 + blockquote')
+    for (var i = 0; i < template2Objs.length; i++) {
+        $(template2Objs[i]).find(">div").eq(0).addClass('on')
+    }
 }
