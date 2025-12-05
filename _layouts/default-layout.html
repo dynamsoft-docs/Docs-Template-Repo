@@ -147,11 +147,6 @@
 
     {%- if site.useVersionTreeV2 -%}
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            transformRougeToPrism();
-        });
-    </script>
-    <script>
         var highlightMenu = "{{page.highlightMenu}}";
         anchors.add();
         UrlReplace();
