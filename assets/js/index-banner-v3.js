@@ -2,8 +2,6 @@ var DcvProducts = ["dlr", "dce", "ddn", "dcv", "dcp"]
 var isArchiveDocsLink = null
 var FullTreePageDoc = null
 var docsFolderName = "/docs/"
-var releasedDocsFolderName = "/docs/"
-var docsLangLatestVersion = null
 // #region about full tree
 async function PageCreateInit(generateDocHead, needh3 = true, pageStartVer = undefined, useVersionTree = false) {
     await UrlReplace()
@@ -296,6 +294,8 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                 var curProduct = getCurrentUrlProductName(document.URL)
                 var curLang = getCurrentUrlLang(document.URL, true)
 
+                //var productLatestVersion = getProductLangLatestVersion(product?product:curProduct, curLang)
+
                 if (product && productVersion && curProduct != product) {
                     curPageVersion = (productVersion == 'latest' ? 'latest_version' : productVersion)
                 }
@@ -310,6 +310,10 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                                 isFindVersionTree = true
                                 findIndex = i
                             }
+                            // if (curPageVersion == "latest_version" && $(version_tree_list[i]).attr('id') == 'version_tree_' + productLatestVersion) {
+                            //     isFindVersionTree = true
+                            //     findIndex = i
+                            // }
                         }
                     }
                     $('#fullTreeMenuListContainer').html("");
@@ -341,7 +345,7 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                     DisplayFullTreeAndArticle(generateDocHead, needh3, pageStartVer, verArray, needFilterLangTree, product, productVersion, curProduct)
                 } else {
                     DisplayFullTreeAndArticle(generateDocHead, needh3, pageStartVer, verArray, needFilterLangTree, product, productVersion, curProduct)
-                    OpenLanguageChooseModal()
+                    //OpenLanguageChooseModal()
                 }
                 // End Version Tree
             } else {
@@ -887,6 +891,8 @@ function getDoumentName(product) {
             return 'license-server';
         case 'mrz':
             return 'mrz-scanner';
+        case 'mds':
+            return 'mobile-document-scanner';
         default:
             return '';
     }
@@ -921,6 +927,8 @@ function getCurrentUrlProductName(url = null) {
             return 'lts';
         case 'mrz-scanner':
             return 'mrz';
+        case 'mobile-document-scanner':
+            return 'mds';
         default:
             return '';
     }
@@ -1026,13 +1034,8 @@ function initCrumbs() {
         $(crumbul[0]).append(appendText);
     }
 
-    let productName = getUrlVars(document.URL)["product"] || getCurrentUrlProductName(document.URL);
-    var firstItem = $(".fullVersionInfo li:not(.hideLi)").eq(0)
-    if (firstItem.text().toLowerCase() != "latest version") {
-        let latestVersion = getProductLangLatestVersion(productName, lang == "" ? "core" : lang, true)
-        $("#versionNoteLatestVersion").text(`(${latestVersion})`);
-        $("#versionNoteOldVersion").text("Version "+ (productName == "dbr" ? "10.x" : "2.x"));
-    }
+    $("#versionNote").hide();
+    transformRougeToPrism(document.getElementById('articleContent'));
 }
 
 function UrlSearch(docUrl, listUrl) {
@@ -1258,43 +1261,22 @@ function titleCase(s) {
     return ss && ss.length > 0 ? ss.join(' ') : "";
 }
 
-function getProductLangLatestVersion(product, lang, isLatest = false) {
-    let latestVersionList = curDocsLangVersion
-    if (isLatest) {
-        latestVersionList = docsLangLatestVersion
-    }
-    console.log("getProductLangLatestVersion", latestVersionList)
+function getProductLangLatestVersion(product, lang) {
     lang = lang == "react-native" ? "reactNative" : lang
     product = DcvProducts.indexOf(product) >= 0 ? "dcv" : product
-    var productMatch = latestVersionList[product]
+    var productMatch = docsLangLatestVersion[product]
     var langVersion = productMatch ? productMatch[lang] : null
     return langVersion
-}
-
-function getLatestVersionFile(product, lang) {
-    return fetch(`${location.origin}/${getDoumentName(product)}/docs/${getRepoTypeByLang(lang, null)}/assets/js/docsLangLatestVersion.js`).then(response => {
-        if (!response.ok) {
-            throw new Error('NET Work Error: ' + response.status);
-        }
-        return response.text()
-    }).then(data => {
-        const getVariable = new Function(`${data}; return typeof docsLangLatestVersion !== "undefined" ? docsLangLatestVersion : undefined;`);
-        const variableValue = getVariable();
-        
-        if (variableValue !== undefined) {
-            return variableValue;
-        } else {
-            return null;
-        }
-    }).catch(error => {
-        console.error('Error fetching latest version file:', error);
-        return null
-    })
 }
 
 // 2025/06/25 add first archive version for dbr/dcv/mrz...
 function getProductLangFirstArchiveVersion(product, lang=null) {
     return docsFirstArchiveVersion[product];
+    // lang = lang == "react-native" ? "reactNative" : lang
+    // product = DcvProducts.indexOf(product) >= 0 ? "dcv" : product
+    // var productMatch = docsFirstArchiveVersion[product]
+    // var langVersion = productMatch ? (lang ? productMatch[lang] : null) : null
+    // return langVersion
 }
 
 function showPageContentInModal(fetchUrl) {
@@ -1485,12 +1467,11 @@ function onSubsetBtnLineClick(randomId, fromJS) {
     $(`#${randomId}`).removeAttr("id")
 }
 
-function getDocsFolderName(product) {
-    if (product == "dbr") {
-        releasedDocsFolderName = "/docs/v2/"
-        return "/docs/v10/"
-    } else if (product == "dcv") {
-        releasedDocsFolderName = "/docs/v10/"
-        return "/docs/v2/"
+function transformRougeToPrism(root=document) {
+    Prism.highlightAll();
+
+    var template2Objs = $('.markdown-body .sample-code-prefix.template2 + blockquote')
+    for (var i = 0; i < template2Objs.length; i++) {
+        $(template2Objs[i]).find(">div").eq(0).addClass('on')
     }
 }
