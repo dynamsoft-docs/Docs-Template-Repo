@@ -10,6 +10,7 @@ async function UrlReplace() {
   var docUrl = document.URL;
   var product = getUrlVars(docUrl)["product"];
   var docProduct = getCurrentUrlProductName();
+  product = !product && docProduct != "dbr" ? "dcv" : product;
   product = product == docProduct ? null : product;
   var ver = getUrlVars(docUrl)["ver"];
   
