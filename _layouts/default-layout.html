@@ -180,10 +180,10 @@
             return (arr = document.cookie.match(reg)) ? unescape(arr[2]) : null;
         }
 
-        $("#docsLatestVersionLink").on("click", function(e) {
+        $(document).on("click", "#docsLatestVersionLink", function(e) {
             $(".fullVersionInfo .latestVer").click();
             e.stopPropagation();
-        })
+        });
         
         $('#txtSearch').keydown(function(e) {
             if (e.keyCode == 13) {
