@@ -502,13 +502,13 @@ jobs:
       doc-url: mobile-web-capture/docs
     secrets: inherit
 
-  Update-DLS-On-Preview-Change:
-    if: ${{ github.ref == 'refs/heads/preview' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
-    with:
-      doc-repo: license-server-docs
-      doc-url: license-server/docs
-    secrets: inherit
+  #Update-DLS-On-Preview-Change:
+  #  if: ${{ github.ref == 'refs/heads/preview' }}
+  #  uses: ./.github/workflows/called-workflow-build-sync-testing.yml
+  #  with:
+  #    doc-repo: license-server-docs
+  #    doc-url: license-server/docs
+  #  secrets: inherit
 
   Update-MRZ-Core-On-Preview-Change:
     if: ${{ github.ref == 'refs/heads/preview' }}
