@@ -921,6 +921,7 @@ function getRepoTypeByLang(lang, url) {
 
 function getDocumentationLink(product, lang, url) {
     var reporType = getRepoTypeByLang(lang, url)
+    product = DcvProducts.indexOf(product) >= 0 ? "dcv" : product
     if (product == "dbr" && lang && lang != "core") {
         lang = lang == "js" ? "javascript" : lang
         lang = ['objective-c', 'objc', 'swift', 'ios'].indexOf(lang) >= 0 ? "objectivec-swift" : lang
