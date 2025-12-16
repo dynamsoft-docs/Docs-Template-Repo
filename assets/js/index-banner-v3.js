@@ -425,48 +425,6 @@ function DisplayFullTreeAndArticle(generateDocHead, needh3, pageStartVer, verArr
         }
 
         navWrap = document.getElementById("fullTreeMenuListContainer");
-        var liAry = navWrap.getElementsByTagName("li");
-
-        // 新模版不走这个逻辑，所以不需要绑定事件。
-        // if ($("#categoryMenuTree").length == 0) {
-        //     for (var i = 0, len = liAry.length; i < len; i++) {
-        //         liAry[i].onclick = (function (i) {
-        //             return function (event) {
-        //                 if ($(liAry[i]).children("a").length == 0 || $(liAry[i]).children("a")[0].getAttribute("href") == null) {
-        //                     var subUl = $(liAry[i]).children("ul");
-        //                     if (subUl.length > 0) {
-        //                         for (var j = 0; j < subUl.length; j++) {
-        //                             if (subUl[j].style.display == "block") {
-        //                                 var parentL = $(subUl[j]).parents("li");
-        //                                 if (parentL.length > 0) {
-        //                                     parentL[0].className = "collapseListStyle"
-        //                                 }
-        //                                 subUl[j].style.display = "none";
-        //                             } else {
-        //                                 subUl[j].style.display = "block";
-        //                                 var parentL = $(subUl[j]).parents("li");
-        //                                 if (parentL.length > 0) {
-        //                                     parentL[0].className = "expandListStyle"
-        //                                 }
-        //                                 var parentUl = $(liAry[i]).parents("ul");
-        //                                 for (var m = 0; m < parentUl.length; m++) {
-        //                                     if (parentUl[m].style.display != "block") {
-        //                                         var parentL = $(parentUl[m]).parents("li");
-        //                                         if (parentL.length > 0) {
-        //                                             parentL[0].className = "expandListStyle"
-        //                                         }
-        //                                         parentUl[m].style.display = "block";
-        //                                     }
-        //                                 }
-        //                             }
-        //                         }
-        //                     }
-        //                 }
-        //                 event.stopPropagation();
-        //             }
-        //         })(i)
-        //     }
-        // }
     }
 }
 
@@ -1269,14 +1227,9 @@ function getProductLangLatestVersion(product, lang) {
     return langVersion
 }
 
-// 2025/06/25 add first archive version for dbr/dcv/mrz...
 function getProductLangFirstArchiveVersion(product, lang=null) {
+    product = DcvProducts.indexOf(product) >= 0 ? "dcv" : product
     return docsFirstArchiveVersion[product];
-    // lang = lang == "react-native" ? "reactNative" : lang
-    // product = DcvProducts.indexOf(product) >= 0 ? "dcv" : product
-    // var productMatch = docsFirstArchiveVersion[product]
-    // var langVersion = productMatch ? (lang ? productMatch[lang] : null) : null
-    // return langVersion
 }
 
 function showPageContentInModal(fetchUrl) {

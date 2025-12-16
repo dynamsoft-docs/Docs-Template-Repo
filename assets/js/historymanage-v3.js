@@ -1,19 +1,16 @@
 var dcvVersionList = [];
-// isArchiveDocsLink = true
-// 1. dbr/docs/xxxx?ver=old (isArchiveDocsLink = true, 目录中有 docs-archive链接时的处理要注意，不能新窗口打开)
-// 这种情况 urlReplace的时候用新的应该也没有关系，只需要找到对应的版本号页面不用加后缀和判断后缀
-// 3. dbr/xxxx?product=dcv&ver=old，不能重定向, isArchiveDocsLink=true, 需要注意的是目录树等得用archive的
-// 这种情况的 dcvVersionList 也要更新，需要用 archive 的，因为要找到 dcv 然后其他方法暂定用 old 版本，看看能不能适应新版本
 
 // #region UrlReplace
 async function UrlReplace() {
   var docUrl = document.URL;
   var product = getUrlVars(docUrl)["product"];
   var docProduct = getCurrentUrlProductName();
+  product = !product && DcvProducts.indexOf(docProduct) >= 0 ? "dcv" : product;
   product = product == docProduct ? null : product;
   var ver = getUrlVars(docUrl)["ver"];
 
-  // 注意 dcv 相关产品的versionList可能要访问dcv页面获取，因为本身文档不再包含产品页面
+  /// Note that the versionList of dcv-related products may need to be obtained by accessing the dcv page, 
+  /// as the document itself no longer includes the product page.
   await initHistoryVersionList();
 
   if (product == "dcv" && DcvProducts.indexOf(docProduct) >= 0) {
@@ -95,19 +92,7 @@ function RedirToGivenVersionPage(inputVer, currentUrl = null) {
   var productVar = "";
   var productParam = getUrlVars(docUrl)["product"];
   var langParam = getUrlVars(docUrl)["lang"];
-  // let pLatestVer = getProductLangLatestVersion(
-  //   productParam ? productParam : getCurrentUrlProductName(),
-  //   getCurrentUrlLang(document.URL, true)
-  // );
-  //let pLatestVer_nearestVer = findNearestVersion(pLatestVer);
   let addedVer = inputVer;
-  // if (
-  //   inputVer == pLatestVer &&
-  //   pLatestVer_nearestVer == pLatestVer &&
-  //   pLatestVer_nearestVer != "latest"
-  // ) {
-  //   addedVer = "latest";
-  // }
   var historyList = $(".otherVersions");
 
   if (historyList != null) {
@@ -125,7 +110,7 @@ function RedirToGivenVersionPage(inputVer, currentUrl = null) {
         if (aTag.length > 0 && aTag[0].href) {
           var exp = new RegExp(/[?]+([^=]+)=/gi);
           if (exp.exec(aTag[0].href) != null) {
-            // aTag[0].href中有参数
+            // if aTag[0].href has query parameters
             if (
               productParam != undefined &&
               getCurrentUrlProductName() == productParam
@@ -301,13 +286,6 @@ function addParam(aTag, verText, fromSourse = null, needh3 = false) {
 
   if (hrefVal == "") return;
 
-  // if (hrefVal.indexOf(docsFolderName) <= 0 || hrefVal.indexOf(location.host) < 0) {
-  //   if (productName != "dbr" || hrefVal.indexOf("/docs-archive/") <= 0) {
-  //     window.open(aTag.href);
-  //     return;
-  //   }
-  // }
-
   // #region hash & src,lang,ver
   // get hash string
   let hashIndex = hrefVal.indexOf("#");
@@ -325,7 +303,7 @@ function addParam(aTag, verText, fromSourse = null, needh3 = false) {
   }
   hrefVal = hrefVal.replace(hashStr, "");
 
-  // mobile - ios 页面 - swift&objc 语言切换
+  // mobile - ios language pages - add swift&objc language switch
   let urlLang = getUrlVars(hrefVal)["lang"];
   if (
     $(".languageWrap.multiProgrammingLanguage").length > 0 &&
@@ -341,7 +319,7 @@ function addParam(aTag, verText, fromSourse = null, needh3 = false) {
     }
   }
 
-  // get src string, href += src string (准备把这个参数和lang参数统一，以后只考虑lang)
+  // get src string, href += src string
   var srcString = "";
   if (
     hrefVal.indexOf("/server/programming/c-cplusplus/") > 0 &&
@@ -374,7 +352,7 @@ function addParam(aTag, verText, fromSourse = null, needh3 = false) {
   hrefVal = hrefVal + verStr;
   // #endregion
 
-  // #region 分析出 productVar, langVar
+  // #region add productVar, langVar
   var productVar = "";
   if (dcvVersionList) {
     var href_ProductName = getCurrentUrlProductName(hrefVal);
@@ -382,7 +360,7 @@ function addParam(aTag, verText, fromSourse = null, needh3 = false) {
     if (!getUrlVars(hrefVal)["product"]) {
       var isNeedAddLang = false;
       if (hrefVal.indexOf("/docs-archive/") >= 0) {
-        // dbr 文档中打开 dcv archive 页面
+        // dbr docs open dcv archive pages
         productVar = `${
           hrefVal.indexOf("?") < 0 ? "?" : "&"
         }product=${productName}`;
@@ -407,7 +385,7 @@ function addParam(aTag, verText, fromSourse = null, needh3 = false) {
           getCurrentUrlLang(hrefVal, true) != lang
         ) {
           // dcv/docs/web/xxxxx?product=dbr ---> dbr/docs/core
-          // dcv-dbrjs --> dbr core 需要加上 lang
+          // dcv-dbrjs --> dbr core need to add lang
           isNeedAddLang = true;
         }
         // dcv/docs/web/xxxxxx?product=dbr ---> dbr/docs/web/xxxx (同product，同lang)
@@ -532,16 +510,16 @@ function addParam(aTag, verText, fromSourse = null, needh3 = false) {
         getUrlVars(originHref)["product"] != productName
       ) {
         if (productName == "dbr" && isArchiveDocsLink) {
-          // dbr 文档中打开 dcv.....?product=dlr
+          // dbr docs open dcv.....?product=dlr
           let fProductName = getUrlVars(originHref)["product"];
-          // 获取 dlr 相对于 dbr 的 version (dbrVer, originHref, curProduct, curLang, fProductName)
+          // Get the version of dlr relative to dbr (dbrVer, originHref, curProduct, curLang, fProductName)
           let fProductVersion = getLinkVersion(
             currentVersion,
             null,
             productName,
             lang,
             fProductName
-          ); // 切换获取方式
+          ); // Switch acquisition method
           if (fProductVersion == -1) {
             fProductVersion = currentVersion;
           }
@@ -549,7 +527,7 @@ function addParam(aTag, verText, fromSourse = null, needh3 = false) {
             ? getUrlVars(originHref)["lang"]
             : getCurrentUrlLang(originHref, true);
           let hrefVal_Product = getCurrentUrlProductName(originHref);
-          // 获取 dcv 相对于 dlr 的 version
+          // Get the version of dcv relative to dlr
           let hrefVal_ProductVersion = getLinkVersion(
             fProductVersion,
             null,
@@ -568,16 +546,16 @@ function addParam(aTag, verText, fromSourse = null, needh3 = false) {
             }&ver=${hrefVal_ProductVersion}`;
           }
         } else {
-          // 1、dbr 文档中打开 dlr.....?product=dcv
+          // 1、dbr docs open dlr.....?product=dcv
           let fProductName = getUrlVars(originHref)["product"];
-          // 获取 dcv 相对于 dbr 的 version (dbrVer, originHref, curProduct, curLang, fProductName)
+          // Get the version of dcv relative to dbr (dbrVer, originHref, curProduct, curLang, fProductName)
           let fProductVersion = getLinkVersion(
             currentVersion,
             null,
             productName,
             lang,
             fProductName
-          ); // 切换获取方式
+          );
           if (fProductVersion == -1) {
             fProductVersion = currentVersion;
           }
@@ -585,8 +563,6 @@ function addParam(aTag, verText, fromSourse = null, needh3 = false) {
         }
         window.open(originHref + queryParam + anchorVal);
       } else {
-        // dbr --- dcv 或者 dcv --- dbr
-        // dbr core --- dbr web
         if (productName == "dbr" && isArchiveDocsLink) {
           let isCoreDocs = false;
           if (
@@ -665,8 +641,7 @@ function addParam(aTag, verText, fromSourse = null, needh3 = false) {
                 }ver=${changeVersion}${anchorVal}`
               );
             } else {
-              // e.g. core to dcv...,
-              // e.g. dbr文档中打开 dlr链接，注意查找到dlr相对于dbr的版本号
+              // e.g. core to dcv...
               let hrefVal_ProductVersion = getLinkVersion(
                 currentVersion,
                 originHref,
@@ -704,15 +679,14 @@ function addParam(aTag, verText, fromSourse = null, needh3 = false) {
                   : `?ver=${currentVersion}`;
             }
           } else {
-            // 1、dbr 文档中打开 dlr.....?product=dcv
-            // 获取 dcv 相对于 dbr 的 version (dbrVer, originHref, curProduct, curLang, fProductName)
+            // 1、dbr docs open dlr.....?product=dcv
             let fProductVersion = getLinkVersion(
               currentVersion,
               null,
               productName,
               lang,
               linkProduct
-            ); // 切换获取方式
+            );
             if (fProductVersion == -1) {
               fProductVersion = currentVersion;
             }
@@ -788,7 +762,7 @@ function RequestNewPage(
         let originClassName = $(".languageWrap").attr("class").trim();
         if (className != originClassName) {
           $(".languageWrap").attr("class", className);
-          // mobile - ios 页面
+          // mobile - ios pages
           var urlLang = getUrlVars(paramLink)["lang"];
           if (
             $(".languageWrap.multiProgrammingLanguage").length > 0 &&
@@ -1629,14 +1603,11 @@ function getLinkVersion(
   curLang = null,
   linkProduct = null
 ) {
-  // 需要得到是 currcent link: product, language
-  // 得到 product
   let product = curProduct
     ? curProduct
     : getUrlVars(document.URL)["product"]
     ? getUrlVars(document.URL)["product"]
     : getCurrentUrlProductName();
-  // 得到 language
   let lang = curLang
     ? curLang
     : getUrlVars(document.URL)["lang"]
