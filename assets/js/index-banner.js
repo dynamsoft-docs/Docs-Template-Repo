@@ -6,6 +6,9 @@ let docsLangLatestVersion = null
 // #region about full tree
 async function PageCreateInit(generateDocHead, needh3 = true, pageStartVer = undefined, useVersionTree = false) {
     await UrlReplace()
+    if (getCurrentUrlLang(document.URL, true) == "c") {
+        $("#latestVersionNote").hide()
+    }
     FullTreeMenuList(generateDocHead, needh3, pageStartVer, useVersionTree)
 }
 

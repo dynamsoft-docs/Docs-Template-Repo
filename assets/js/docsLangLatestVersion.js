@@ -2,8 +2,8 @@ var curDocsLangVersion = {
     dbr: {
         core: "11.0.4000",
         cplusplus: "11.0.4000",
-        c: "9.6.40",
-        java: "9.6.40",
+        c: "9.6.60",
+        java: "9.6.60",
         python: "11.0.4000",
         dotnet: "11.0.4000",
         android: "11.0.3100",
