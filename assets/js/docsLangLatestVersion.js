@@ -2,7 +2,7 @@ var docsLangLatestVersion = {
     dbr: {
         core: "11.2.5000",
         cplusplus: "11.2.5000",
-        c: "9.6.40",
+        c: "9.6.60",
         java: "11.2.5000",
         python: "11.2.5000",
         dotnet: "11.2.5000",
