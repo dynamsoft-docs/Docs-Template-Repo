@@ -23,13 +23,6 @@ function IsArchiveDocsLink(url) {
     }
     productParam = productParam == getCurrentUrlProductName(url) ? null : productParam
     var matchItem = findVersionMatchItemInSearchList(ver, lang)
-    // 处理 dbr
-    // 1. dbr/docs/xxxx?ver=old (isArchiveDocsLink = true, 目录中有 docs-archive链接时的处理要注意，不能新窗口打开)
-    // 2. dcv/docs/xxxx?product=dbr&ver=old (重定向到 /docs-archive/)
-    // 3. 9.X 及以下版本 
-    // 3.1 如果是正常 dbr 9.4.60 文档中不会有其他产品链接，所以不需要考虑跳转问题和寻找对应文档版本号问题
-    // 3.2 如果链接为 changeVersion 引出的 dlr/docs/XXXX?product=dbr&ver=9.4.60 这种找不到的地址应该在 urlReplace / changeVersion 中处理到引导至首页，因此也不用处理
-    // 4. 新版本
     if (productParam && productParam == "dbr" || !productParam && product == "dbr") {
         if (matchItem && !matchItem.matchVersion) {
             // 1,2
@@ -42,10 +35,6 @@ function IsArchiveDocsLink(url) {
             isArchiveDocsLink = false
         }
     }
-
-    // 处理 ddn,dlr,dcp,dce
-    // 如果链接中有 product=ddn, 一定为 archive 文档，如果非 dbr 直接重定向到 /docs-archive/
-    // 如果链接中没有 product 参数，模糊处理（如果用户保存了 dlr/docs/xxx?ver=3.4.0, 没法处理，根据逻辑应该会跳转到latest，如果是1.3.0.就跳转到 docs-archive）
     if (productParam && productParam != "dcv" && DcvProducts.indexOf(productParam) >= 0) {
         needRedirect = true
     }
@@ -56,14 +45,6 @@ function IsArchiveDocsLink(url) {
             needRedirect = true
         }
     }
-
-    // 处理 dcv
-    // 1. dlr/xxxx?product=dcv&ver=old，直接重定向到 /docs-archive/
-    // 2. dlr/xxxxx?product=dcv&ver=new (尽量避免吧，新的版本写法 dcv产品不加dcv后缀)
-    // 3. dbr/xxxx?product=dcv&ver=old，不能重定向, isArchiveDocsLink=true, 需要注意的是目录树等得用archive的
-    // 4. dbr/xxxx?product=dcv&ver=new, 不做处理
-    // 5. dcv/xxxx?ver=old，直接重定向到 /docs-archive/
-    // 6. dcv/xxxxx?ver=new
     if (productParam && productParam == "dcv" || !productParam && product == "dcv") {
         
         if (matchItem && matchItem.matchVersion) {
@@ -78,7 +59,6 @@ function IsArchiveDocsLink(url) {
         }
     }
     if (needRedirect) {
-        // 链接重定向到 docs-archive
         var replaceUrl = url.replace(docsFolderName, "/docs-archive/")
         window.location.replace(replaceUrl);
     }
@@ -503,47 +483,6 @@ function DisplayFullTreeAndArticle(generateDocHead, needh3, pageStartVer, verArr
 
         navWrap = document.getElementById("fullTreeMenuListContainer");
         var liAry = navWrap.getElementsByTagName("li");
-
-        // 新模版不走这个逻辑，所以不需要绑定事件。
-        // if ($("#categoryMenuTree").length == 0) {
-        //     for (var i = 0, len = liAry.length; i < len; i++) {
-        //         liAry[i].onclick = (function (i) {
-        //             return function (event) {
-        //                 if ($(liAry[i]).children("a").length == 0 || $(liAry[i]).children("a")[0].getAttribute("href") == null) {
-        //                     var subUl = $(liAry[i]).children("ul");
-        //                     if (subUl.length > 0) {
-        //                         for (var j = 0; j < subUl.length; j++) {
-        //                             if (subUl[j].style.display == "block") {
-        //                                 var parentL = $(subUl[j]).parents("li");
-        //                                 if (parentL.length > 0) {
-        //                                     parentL[0].className = "collapseListStyle"
-        //                                 }
-        //                                 subUl[j].style.display = "none";
-        //                             } else {
-        //                                 subUl[j].style.display = "block";
-        //                                 var parentL = $(subUl[j]).parents("li");
-        //                                 if (parentL.length > 0) {
-        //                                     parentL[0].className = "expandListStyle"
-        //                                 }
-        //                                 var parentUl = $(liAry[i]).parents("ul");
-        //                                 for (var m = 0; m < parentUl.length; m++) {
-        //                                     if (parentUl[m].style.display != "block") {
-        //                                         var parentL = $(parentUl[m]).parents("li");
-        //                                         if (parentL.length > 0) {
-        //                                             parentL[0].className = "expandListStyle"
-        //                                         }
-        //                                         parentUl[m].style.display = "block";
-        //                                     }
-        //                                 }
-        //                             }
-        //                         }
-        //                     }
-        //                 }
-        //                 event.stopPropagation();
-        //             }
-        //         })(i)
-        //     }
-        // }
     }
 }
 

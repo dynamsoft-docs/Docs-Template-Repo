@@ -218,10 +218,7 @@ function initPageLayout() {
     if ($(".headCounter").hasClass("noTitleIndex")) {
         $("#AutoGenerateSidebar").addClass("noTitleIndex")
     }
-
-    // mobile - ios 页面
     if ($(".languageWrap.multiProgrammingLanguage").length > 0 && getCurrentUrlLang(document.URL, true) == "objectivec-swift") {
-        // $(".languageWrap").show()
         var urlLang = getUrlVars(document.URL)["lang"]
         if (urlLang) {
             var lang = urlLang.split(",")[0]
@@ -461,7 +458,6 @@ function realFunc() {
 }
 
 function openChildMenuTree(obj, needIcon) {
-    // 添加 obj 层级
     var curLi = $(obj).parent()
     var curLiLevel = getCurrentMenuObjLevel(curLi)
     $(curLi).attr("data-level", curLiLevel);
@@ -930,17 +926,13 @@ function scrollToKeyword(keyword) {
 function highlightKeyword(keyword) {
     if (!keyword) return;
 
-    // 将关键词转换为小写并拆分成单词
     let lowerCaseKeyword = keyword.trim().toLowerCase().split(/\s+/);
     highlightWithinElement(document.querySelector('article'), lowerCaseKeyword);
 }
 
 function highlightWithinElement(element, lowerCaseKeyword) {
-    // 收集所有文本节点的内容，并保留它们的引用
     function collectTextNodes(node) {
         let nodes = [];
-
-        // 递归查找文本节点
         if (node.nodeType === Node.TEXT_NODE) {
             nodes.push(node);
         } else if (node.nodeType === Node.ELEMENT_NODE) {
@@ -953,19 +945,13 @@ function highlightWithinElement(element, lowerCaseKeyword) {
     }
 
     let nodes = collectTextNodes(element);
-    // 将所有文本节点的内容合并成一个大的文本块
     let combinedText = nodes.map(node => node.textContent).join('');
-    // 创建匹配关键词的正则表达式
     const regex = new RegExp(lowerCaseKeyword.join("\\s*"), "gi");
-    // 在合并的文本中进行匹配
     let matches = [...combinedText.matchAll(regex)];
-    // 用来追踪文本节点的位置
     let matchIndex = 0;
-    // 遍历所有匹配项并进行高亮处理
     matches.forEach(match => {
         let matchStart = match.index;
         let matchEnd = matchStart + match[0].length;
-        // 逐个节点处理
         let currentIndex = 0;
         nodes.forEach(node => {
             let nodeText = node.textContent;
@@ -975,10 +961,7 @@ function highlightWithinElement(element, lowerCaseKeyword) {
                 let matchedText = nodeText.substring(matchStart - currentIndex, matchEnd - currentIndex);
                 let afterMatch = nodeText.substring(matchEnd - currentIndex);
                 let highlightedNode = document.createElement("span");
-                //highlightedNode.innerHTML = `${beforeMatch}<span style="background-color: yellow;">${matchedText}</span>${afterMatch}`;
-                //node.replaceWith(highlightedNode);
-                // 更新匹配的结束位置
-                matchStart = -1;  // 防止多次替换
+                matchStart = -1;
             }
 
             currentIndex += nodeLength;
