@@ -25,7 +25,7 @@ var docsLangLatestVersion = {
         xamarin: "1.0.5",
         flutter: "3.2.5000",
         cordova: "1.0.5",
-        reactNative: "3.2.5000",
+        reactNative: "3.2.5001",
         maui: "3.2.5000",
         nodejs: "2.6.1000",
         python: "3.2.5000",
