@@ -26,9 +26,10 @@
   var lang = getCurrentUrlLang(document.URL, true)
   var isNeedFilter = "{{site.searchNeedFilter}}"
   var isUserInput = true
+  var searchIndexName = "{{site.searchIndexName}}"
 
   const mySearch = instantsearch({
-    indexName: '{{site.searchIndexName}}',
+    indexName: searchIndexName,
     searchClient: algoliasearch('989MTMK88E', '68565cc874554161b1842b2364287be7'),
     searchFunction(helper) {
       const query = helper.state.query;
@@ -39,7 +40,7 @@
     }
   });
 
-  if (isNeedFilter == "true") {
+  if (isNeedFilter == "true" && searchIndexName != "Crawler-FAQ-Docs-New") {
     mySearch.addWidgets([
       instantsearch.widgets.configure({
         hitsPerPage: 10,
