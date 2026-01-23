@@ -988,7 +988,7 @@ function initCrumbs() {
     let productName = getUrlVars(document.URL)["product"] || getCurrentUrlProductName(document.URL);
     var firstItem = $(".fullVersionInfo li:not(.hideLi)").eq(0)
     if (firstItem.text().toLowerCase() != "latest version") {
-        let latestVersion = getProductLangLatestVersion(productName, lang == "" ? "core" : lang, true)
+        let latestVersion = getProductLangLatestVersion(productName, getCurrentUrlLang(document.URL, true) == "" ? "core" : getCurrentUrlLang(document.URL, true), true)
         $("#versionNoteLatestVersion").text(`(${latestVersion})`);
         $("#versionNoteOldVersion").text("Version "+ (productName == "dbr" ? "10.x" : "2.x"));
     }
@@ -1218,6 +1218,7 @@ function titleCase(s) {
 }
 
 function getProductLangLatestVersion(product, lang, isLatest = false) {
+    console.log("getProductLangLatestVersion called", product, lang, isLatest)
     let latestVersionList = curDocsLangVersion
     if (isLatest) {
         latestVersionList = docsLangLatestVersion
