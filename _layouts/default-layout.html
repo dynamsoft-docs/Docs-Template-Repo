@@ -27,22 +27,6 @@
     {%- assign isDCV = "true"  -%}
 {%- endif -%}
 
-{%- assign temp_docFullPath = site.docFullPath -%}
-{%- assign docFullPathLastChar = temp_docFullPath | split:'' | last -%}
-{%- if docFullPathLastChar contains '/' -%}	
-    {%- assign truncateDocHomePageSize = temp_docFullPath | size | minus:1 -%}
-    {%- assign temp_docFullPath = temp_docFullPath | slice: 0, truncateDocHomePageSize -%}
-{%- endif -%}
-
-{%- if temp_docFullPath contains '/docs/' -%}
-    {%- assign pathParts = temp_docFullPath | split: '/docs/' -%}
-    {%- assign beforeDocs = pathParts[0] -%}
-    {%- assign afterDocs = pathParts[1] | split: '/' -%}
-    {%- if afterDocs.size > 1 -%}
-        {%- assign temp_docFullPath = beforeDocs | append: '/docs/' | append: afterDocs[1] -%}
-    {%- endif -%}
-{%- endif -%}
-
 <body class="{{noSubMenuDoc}}" isDCV="{{isDCV}}">
     {%- include page_header.html -%}
     {%- include productNav.html -%}
@@ -56,16 +40,9 @@
                 </div>
                 <div class="main row showRightSideMenu" id="articleContent" data-needh3="{{page.needGenerateH3Content}}">
                     <div class="content markdown-body headCounter {{noTitleIndex}} col-xs-12 col-md-12 col-lg-9 col-xl-10 showRightSideMenu">
-                        {%- if site.firstLevelUrl contains 'barcode-reader' -%}
-                        <div id="versionNote" style="width: 100%; padding: 20px; background: #b42727; color: #ffffff;border-radius: 5px;margin-bottom: 20px;">
-                            <p>This documentation is deprecated. It applies only to legacy versions of Barcode Reader (<span id="docEditionName"></span>) and must not be used for new development.</p>
-                            <p style="margin-bottom: 0;">Please refer to the <span class="noVersionAdd" id="docsLatestVersionLink">latest documentation</span> and <a class="noVersionAdd" href="{{temp_docFullPath}}/migrate-from-v10/" style="color: #fff; text-decoration: underline !important;">Migration Guide</a>, which supersede this content.</p>
-                        </div>
-                        {%- else -%}
                         <div id="versionNote" style="width: 100%; padding: 20px; background: #b42727; color: #ffffff;border-radius: 5px;margin-bottom: 20px;">
                             This is the archived documentation for <span id="versionNoteOldVersion"></span>. If you are using the latest version<span id="versionNoteLatestVersion"></span>, please visit <span class="noVersionAdd" id="docsLatestVersionLink">this link</span>
                         </div>
-                        {%- endif -%}
                         {%- if site.firstLevelUrl contains 'web-twain' -%}
                         <div class="dbrThanksDownloading">
                             <p class="thanksDownloadTitle">Thanks for Downloading Dynamic Web TWAIN 30-Day Trial!</p>
@@ -203,7 +180,7 @@
             return (arr = document.cookie.match(reg)) ? unescape(arr[2]) : null;
         }
 
-        $(document).on("click", "#docsLatestVersionLink", function(e) {
+        $(document).delegate("#docsLatestVersionLink", "click", function(e) {
             $(".fullVersionInfo .latestVer").click();
             e.stopPropagation();
         });

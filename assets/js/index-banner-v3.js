@@ -14,7 +14,6 @@ async function PageCreateInit(generateDocHead, needh3 = true, pageStartVer = und
 function findVersionMatchItemInSearchList(version, lang) {
     lang = lang == "cplusplus" ? "cpp" : lang
     lang = lang == "js" ? "javascript" : lang
-    console.log(dcvVersionList)
     if (dcvVersionList) {
         let filteredItems = dcvVersionList.filter(function (item) {
             let productVersion = item.version
@@ -299,7 +298,6 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                 if (product && productVersion && curProduct != product) {
                     curPageVersion = (productVersion == 'latest' ? 'latest_version' : productVersion)
                 }
-                console.log("curPageVersion: " + curPageVersion)
                 version_tree_list = $(FullTreePageDoc).find('#version_tree_list ul.version-tree-container');
                 if (version_tree_list && version_tree_list.length > 0 && curPageVersion) {
                     var isFindVersionTree = false
@@ -984,13 +982,21 @@ function initCrumbs() {
         }
         $(crumbul[0]).append(appendText);
     }
-
+    
     let productName = getUrlVars(document.URL)["product"] || getCurrentUrlProductName(document.URL);
     var firstItem = $(".fullVersionInfo li:not(.hideLi)").eq(0)
     if (firstItem.text().toLowerCase() != "latest version") {
         let latestVersion = getProductLangLatestVersion(productName, getCurrentUrlLang(document.URL, true) == "" ? "core" : getCurrentUrlLang(document.URL, true), true)
         $("#versionNoteLatestVersion").text(`(${latestVersion})`);
-        $("#versionNoteOldVersion").text("Version "+ (productName == "dbr" ? "10.x" : "2.x"));
+        if (productName == "dbr") {
+            $("#versionNote").html(`
+                <p>This documentation is deprecated. It applies only to legacy versions of Barcode Reader (<span id="docEditionName"></span>) and must not be used for new development.</p>
+                <p style="margin-bottom: 0;">Please refer to the <span class="noVersionAdd" id="docsLatestVersionLink">latest documentation</span> and 
+                <a class="noVersionAdd" href="/barcode-reader/docs/${getRepoTypeByLang(getCurrentUrlLang(document.URL, true))}/migrate-from-v10/" style="color: #fff; text-decoration: underline !important;">Migration Guide</a>,which supersede this content.</p>
+            `)
+        } else {
+            $("#versionNoteOldVersion").text("Version "+ (productName == "dbr" ? "10.x" : "2.x"));
+        }
     }
 }
 
@@ -1218,12 +1224,10 @@ function titleCase(s) {
 }
 
 function getProductLangLatestVersion(product, lang, isLatest = false) {
-    console.log("getProductLangLatestVersion called", product, lang, isLatest)
     let latestVersionList = curDocsLangVersion
     if (isLatest) {
         latestVersionList = docsLangLatestVersion
     }
-    console.log("getProductLangLatestVersion", latestVersionList)
     lang = lang == "react-native" ? "reactNative" : lang
     product = DcvProducts.indexOf(product) >= 0 ? "dcv" : product
     var productMatch = latestVersionList[product]
