@@ -645,10 +645,11 @@ function getUrlVars(inputUrl) {
 
 function UsefulRecord(isUseful) {
     var encodeUrl = encodeURIComponent(document.URL);
+    var product = getUrlVars(document.URL)["product"] || getCurrentUrlProductName(document.URL)
     if (isUseful) {
-        $.get("https://www.dynamsoft.com/Secure/Rate.ashx?paper=" + encodeUrl + "&product=DBR-Doc&rate=5")
+        $.get("https://www.dynamsoft.com/Secure/Rate.ashx?paper=" + encodeUrl + "&product="+ product +"&rate=5")
     } else {
-        $.get("https://www.dynamsoft.com/Secure/Rate.ashx?paper=" + encodeUrl + "&product=DBR-Doc&rate=1")
+        $.get("https://www.dynamsoft.com/Secure/Rate.ashx?paper=" + encodeUrl + "&product="+ product +"&rate=1")
     }
 
     var feedbackTag = document.getElementById("feedbackFooter");
