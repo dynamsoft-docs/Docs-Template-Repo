@@ -2,12 +2,13 @@
     <title>{{ page.title }}</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Cache-Control" content="max-age=7200" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, noarchive"> 
+    <meta name="doc-status" content="deprecated"> 
     <meta name="description" content="{{ page.description }}" />
     <meta name="keywords" content="{{ page.keywords }}" />
 
-    {%- assign excludeFlag = false -%}
     {%- assign targetUrl = page.url -%}
     {%- if page.url contains '-v' -%}
 	{%- assign candidateVersionStr = page.url |  split: '-v' -%}
@@ -17,7 +18,6 @@
 			{{ tmpVer | truncate: 4 | replace:"...", "" }}
 		{%- endcapture -%}
 		{%- if firstChar >= "0" and firstChar <= "9" -%}
-            {%- assign excludeFlag = true -%}
             {%- assign needRemoveStr = "-v" | append: tmpVer -%}
             {%- assign targetUrl = page.url | remove: needRemoveStr | strip -%}
 			{%- break -%}
@@ -26,23 +26,20 @@
     {%- endif -%}
     {%- assign targetUrl = targetUrl | replace: '/index.html', '/' | strip -%}
 
-    {%- if page.ignore -%}
-	    {%- assign excludeFlag = true -%}
-    {%- endif -%}
-
-    {%- if page.url contains 'search.html' or page.url contains 'search-test.html' -%}	
-        {%- assign excludeFlag = true -%}
-    {%- endif -%}
-
-    {%- if excludeFlag -%}
-    <meta name="robots" content="noindex">
-    {%- endif -%}
-
     {%- assign docFullPath = site.docFullPath -%}
     {%- assign docFullPathLastChar = docFullPath | split:'' | last -%}
     {%- if docFullPathLastChar contains '/' -%}	
         {%- assign truncateDocHomePageSize = docFullPath | size | minus:1 -%}
         {%- assign docFullPath = docFullPath | slice: 0, truncateDocHomePageSize -%}
+    {%- endif -%}
+    
+    {%- if docFullPath contains '/docs/' -%}
+        {%- assign pathParts = docFullPath | split: '/docs/' -%}
+        {%- assign beforeDocs = pathParts[0] -%}
+        {%- assign afterDocs = pathParts[1] | split: '/' -%}
+        {%- if afterDocs.size > 1 -%}
+            {%- assign docFullPath = beforeDocs | append: '/docs/' | append: afterDocs[1] -%}
+        {%- endif -%}
     {%- endif -%}
     <link href="{{ docFullPath }}{{ targetUrl }}" rel="canonical">
 
