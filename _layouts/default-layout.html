@@ -27,6 +27,22 @@
     {%- assign isDCV = "true"  -%}
 {%- endif -%}
 
+{%- assign temp_docFullPath = site.docFullPath -%}
+{%- assign docFullPathLastChar = temp_docFullPath | split:'' | last -%}
+{%- if docFullPathLastChar contains '/' -%}	
+    {%- assign truncateDocHomePageSize = temp_docFullPath | size | minus:1 -%}
+    {%- assign temp_docFullPath = temp_docFullPath | slice: 0, truncateDocHomePageSize -%}
+{%- endif -%}
+
+{%- if temp_docFullPath contains '/docs/' -%}
+    {%- assign pathParts = temp_docFullPath | split: '/docs/' -%}
+    {%- assign beforeDocs = pathParts[0] -%}
+    {%- assign afterDocs = pathParts[1] | split: '/' -%}
+    {%- if afterDocs.size > 1 -%}
+        {%- assign temp_docFullPath = beforeDocs | append: '/docs/' | append: afterDocs[1] -%}
+    {%- endif -%}
+{%- endif -%}
+
 <body class="{{noSubMenuDoc}}" isDCV="{{isDCV}}">
     {%- include page_header.html -%}
     {%- include productNav.html -%}
@@ -40,15 +56,21 @@
                 </div>
                 <div class="main row showRightSideMenu" id="articleContent" data-needh3="{{page.needGenerateH3Content}}">
                     <div class="content markdown-body headCounter {{noTitleIndex}} col-xs-12 col-md-12 col-lg-9 col-xl-10 showRightSideMenu">
-                        <div id="versionNote" style="width: 100%; padding: 20px; background: #b42727; color: #ffffff;border-radius: 5px;margin-bottom: 20px;">
-                            This is the archived documentation for <span id="versionNoteOldVersion"></span>. If you are using the latest version<span id="versionNoteLatestVersion"></span>, please visit <span class="noVersionAdd" id="docsLatestVersionLink">this link</span>
-                        </div>
-                        {%- if site.firstLevelUrl contains 'web-twain' -%}
-                        <div class="dbrThanksDownloading">
-                            <p class="thanksDownloadTitle">Thanks for Downloading Dynamic Web TWAIN 30-Day Trial!</p>
-                            <p style="margin-bottom: 0;">Your download will start shortly. If your download does not begin, <a class="bluelink downloadlink" href="">click here to retry</a>.</p>
-                        </div>
+                        {%- assign isBarcodeReader = false -%}
+                        {%- if site.firstLevelUrl contains 'barcode-reader' -%}
+                            {%- assign isBarcodeReader = true -%}
                         {%- endif -%}
+                        {%- if isBarcodeReader -%}
+                            {%- assign versionText = 'version 10.x' -%}
+                            {%- assign docName = 'Barcode Reader' -%}
+                        {%- else -%}
+                            {%- assign versionText = 'version 2.x' -%}
+                            {%- assign docName = 'Capture Vision' -%}
+                        {%- endif -%}
+                        <div class="deprecated-banner" id="versionNote" style="width: 100%; padding: 20px; background: #b42727; color: #ffffff; border-radius: 5px; margin-bottom: 20px;">
+                            <p>This documentation is deprecated. It applies only to legacy <span id="versionNoteOldVersion">{{versionText}}</span> of <span class="documentName">{{docName}}</span> and must not be used for new development.</p>
+                            <p style="margin-bottom: 0;">Please refer to the <span class="noVersionAdd" id="docsLatestVersionLink">latest documentation</span> <span class="migration-link-span">and <a class="noVersionAdd migration-link" href="#" style="color: #fff; text-decoration: underline !important;">Migration Guide</a></span>, which supersede this content.</p>
+                        </div>
                         <article>
                             {%- if page.url contains 'parameters' and site.docFullPath contains 'docs/core' -%}
                                 <blockquote class="blockquote-tip">
@@ -101,16 +123,7 @@
                 <div id="sideBarCnt">
                     <div class="history list" id="categoryMenuTree_history">
                         {%- include liquid_autoGenerateHistoryList.html -%}
-                        {%- if site.firstLevelUrl contains 'web-twain' -%}
-                        {%- include version-list.html -%}
-                        <div id="dwtRedirectList">
-                            {%- for redirectLink in page.redirect_from -%}
-                            <input type="hidden" class="dwtReditectLink" value="{{site.firstLevelUrl}}{{redirectLink}}">
-                            {%- endfor -%}
-                        </div>
-                        {%- else -%}
                         {%- include auto-version-list.html -%}
-                        {%- endif -%}
                     </div>
                     {%- unless site.searchIndexName or site.needSearchIndex -%}
                     <div class="docSearchPart" style="margin-top: 30px;">

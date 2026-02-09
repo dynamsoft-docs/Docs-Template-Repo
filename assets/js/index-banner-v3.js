@@ -530,6 +530,11 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
 
                 initCrumbs()
             }
+        } else {
+            if (firstTime) {
+                menuAddIcon(listAry[0])
+                initCrumbs()
+            }
         }
     }
 }
@@ -931,7 +936,7 @@ function getDocumentationText(product, lang) {
         lang = lang == "js" ? "javascript" : lang;
         lang = ['objective-c', 'objc', 'swift', 'ios'].indexOf(lang) >= 0 ? "iOS" : lang;
         lang = ['cpp', 'c++', 'cplusplus'].indexOf(lang) >= 0 ? "C++" : lang;
-        lang = lang.charAt(0).toUpperCase() + lang.slice(1); // Capitalize the first letter
+        lang = capitalize(lang);
         lang = lang == "IOS" ? "iOS" : lang
         productName = product == "dbr" ? "Barcode Reader" : "Capture Vision";
         return `${productName} ${lang} Edition`;
@@ -940,7 +945,12 @@ function getDocumentationText(product, lang) {
     }
 }
 
+function capitalize(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 function initCrumbs() {
+    // console.log("initCrumbs")
     var crumbul = $('#crumbs').children("ul")
     if (crumbul.length != 0) {
         var product = getUrlVars(document.URL)["product"] || getCurrentUrlProductName(document.URL)
@@ -985,17 +995,23 @@ function initCrumbs() {
     
     let productName = getUrlVars(document.URL)["product"] || getCurrentUrlProductName(document.URL);
     var firstItem = $(".fullVersionInfo li:not(.hideLi)").eq(0)
+    // console.log("firstItem: ", firstItem.text(), "productName: ", productName)
     if (firstItem.text().toLowerCase() != "latest version") {
-        let latestVersion = getProductLangLatestVersion(productName, getCurrentUrlLang(document.URL, true) == "" ? "core" : getCurrentUrlLang(document.URL, true), true)
-        $("#versionNoteLatestVersion").text(`(${latestVersion})`);
+        let currentLang = getCurrentUrlLang(document.URL, true) || "core";
+        let latestVersion = getProductLangLatestVersion(productName, currentLang, true);
+        if (latestVersion) {
+            $("#versionNoteLatestVersion").text(`version ${latestVersion}`);
+        }
+        $("#versionNoteOldVersion").text("Version " + (productName == "dbr" ? "10.x" : "2.x"));
+        $("#versionNote .migration-link-span").hide();
+        $("#versionNote .documentName").text(productName == "dbr" ? "Barcode Reader" : "Capture Vision");
+        // console.log("productName: ", productName, "currentLang: ", currentLang, "latestVersion: ", latestVersion)
         if (productName == "dbr") {
-            $("#versionNote").html(`
-                <p>This documentation is deprecated. It applies only to legacy versions of Barcode Reader (<span id="docEditionName"></span>) and must not be used for new development.</p>
-                <p style="margin-bottom: 0;">Please refer to the <span class="noVersionAdd" id="docsLatestVersionLink">latest documentation</span> and 
-                <a class="noVersionAdd" href="/barcode-reader/docs/${getRepoTypeByLang(getCurrentUrlLang(document.URL, true))}/migrate-from-v10/" style="color: #fff; text-decoration: underline !important;">Migration Guide</a>,which supersede this content.</p>
-            `)
-        } else {
-            $("#versionNoteOldVersion").text("Version "+ (productName == "dbr" ? "10.x" : "2.x"));
+            let repoType = getRepoTypeByLang(currentLang);
+            if (repoType != "core") {
+                $("#versionNote .migration-link").attr("href", `/barcode-reader/docs/${repoType}/programming/${currentLang}/migrate-from-v10/`);
+                $("#versionNote .migration-link-span").show();
+            }
         }
     }
 }

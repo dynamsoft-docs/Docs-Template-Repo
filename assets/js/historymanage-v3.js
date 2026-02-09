@@ -111,7 +111,6 @@ function RedirToGivenVersionPage(inputVer, currentUrl = null) {
         if (aTag.length > 0 && aTag[0].href) {
           var exp = new RegExp(/[?]+([^=]+)=/gi);
           if (exp.exec(aTag[0].href) != null) {
-            // aTag[0].href中有参数
             if (
               productParam != undefined &&
               getCurrentUrlProductName() == productParam
@@ -481,16 +480,14 @@ function addParam(aTag, verText, fromSourse = null, needh3 = false) {
         getUrlVars(originHref)["product"] != productName
       ) {
         if (productName == "dbr" && isArchiveDocsLink) {
-          // dbr 文档中打开 dcv.....?product=dlr
           let fProductName = getUrlVars(originHref)["product"];
-          // 获取 dlr 相对于 dbr 的 version (dbrVer, originHref, curProduct, curLang, fProductName)
           let fProductVersion = getLinkVersion(
             currentVersion,
             null,
             productName,
             lang,
             fProductName
-          ); // 切换获取方式
+          );
           if (fProductVersion == -1) {
             fProductVersion = currentVersion;
           }
@@ -498,7 +495,6 @@ function addParam(aTag, verText, fromSourse = null, needh3 = false) {
             ? getUrlVars(originHref)["lang"]
             : getCurrentUrlLang(originHref, true);
           let hrefVal_Product = getCurrentUrlProductName(originHref);
-          // 获取 dcv 相对于 dlr 的 version
           let hrefVal_ProductVersion = getLinkVersion(
             fProductVersion,
             null,
