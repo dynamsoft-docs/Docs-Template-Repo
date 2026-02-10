@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html lang="en-US">
-
+<head>
+  <title>{{ page.title }}</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 {%- include head.html -%}
+</head>
 
 {%- assign cx = page.cx -%}
 {%- if site.firstLevelUrl contains 'barcode-reader' -%}
@@ -33,10 +38,10 @@
   {%- include page_header.html -%}
 
   {%- include productNav.html -%}
-  <div class="sideBarIcon"><i class="fa fa-list" style="margin-right: 5px;"></i> Table of contents</div>
+  <div class="sideBarIcon"><i class="fa fa-list toc-icon-gap"></i> Table of contents</div>
   <div class="container" id="searchContent">
     <div class="row">
-      <div class="docContainer col-xs-12" style="border-left: 0;">
+      <div class="docContainer col-xs-12 no-border-left">
         <div class="main row">
           <div id="searchResult" class="container pt40 pb60 sm-pt50">
             <div class="row">
@@ -47,7 +52,7 @@
               </div>
             </div>
           </div>
-          <div class="content markdown-body headCounter col-xs-12" style="min-height: unset;">
+          <div class="content markdown-body headCounter col-xs-12 min-height-unset">
             {{ content }}
 
           </div>

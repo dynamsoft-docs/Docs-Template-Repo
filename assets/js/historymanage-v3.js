@@ -268,16 +268,9 @@ function RedirToGivenVersionPage(inputVer, currentUrl = null) {
 function addParam(aTag, verText, fromSourse = null, needh3 = false) {
   let originHref = aTag.href;
   let hrefVal = aTag.href;
-  let productName =
-    getUrlVars(document.URL)["product"] ||
-    getCurrentUrlProductName(document.URL);
-  productName =
-    (productName != "dbr" || !isArchiveDocsLink) &&
-    DcvProducts.indexOf(productName) >= 0
-      ? "dcv"
-      : productName;
-  let lang =
-    getUrlVars(document.URL)["lang"] || getCurrentUrlLang(document.URL, true);
+  let productName = getUrlVars(document.URL)["product"] || getCurrentUrlProductName(document.URL);
+  productName = (productName != "dbr" || !isArchiveDocsLink) && DcvProducts.indexOf(productName) >= 0 ? "dcv" : productName;
+  let lang = getUrlVars(document.URL)["lang"] || getCurrentUrlLang(document.URL, true);
   let currentDocDomain = document.URL.split(docsFolderName)[0] + docsFolderName;
   let p_ver = getUrlVars(document.URL)[productName];
   if (p_ver != undefined) {
