@@ -166,17 +166,26 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
         var allHerf1 = $(".docContainer .content, #docHead, #AutoGenerateSidebar, .sideBar, #crumbs").find("a");
         for (var i = 0; i < allHerf1.length; i++) {
             allHerf1[i].onclick = function () {
-                if (!$(this).hasClass("refreshLink") && $(this).parents(".sideBar").length > 0 && $("#articleContent").length > 0) {
-                    addParam(this, verArray[0], 'sidebar', needh3);
-                } else if (!$(this).hasClass("refreshLink") && $(this).parents(".markdown-body").length > 0 && $("#articleContent").length > 0) {
-                    addParam(this, verArray[0], 'docContainer', needh3);
-                } else if (!$(this).hasClass("refreshLink") && $(this).parents("#AutoGenerateSidebar").length > 0) {
-                    addParam(this, verArray[0], 'rightMenuContainer', needh3);
-                } else if (!$(this).hasClass("refreshLink") && !$(this).hasClass("noVersionAdd")) {
-                    addParam(this, verArray[0]);
-                } else {
-                    return true
+                var $this = $(this);
+                
+                // Allow default behavior for special class markers
+                if ($this.hasClass("refreshLink") || $this.hasClass("noVersionAdd")) {
+                    return true;
                 }
+                
+                var hasArticleContent = $("#articleContent").length > 0;
+                
+                // Determine parameter type based on parent container
+                if ($this.parents(".sideBar").length > 0 && hasArticleContent) {
+                    addParam(this, verArray[0], 'sidebar', needh3);
+                } else if ($this.parents(".markdown-body").length > 0 && hasArticleContent) {
+                    addParam(this, verArray[0], 'docContainer', needh3);
+                } else if ($this.parents("#AutoGenerateSidebar").length > 0) {
+                    addParam(this, verArray[0], 'rightMenuContainer', needh3);
+                } else {
+                    addParam(this, verArray[0]);
+                }
+                
                 return false;
             };
         }
@@ -321,17 +330,25 @@ function FullTreeMenuList(generateDocHead, needh3 = true, pageStartVer = undefin
                     var allHerf1 = $(".docContainer .content, #docHead, #AutoGenerateSidebar, .sideBar, #crumbs").find("a");
                     for (var i = 0; i < allHerf1.length; i++) {
                         allHerf1[i].onclick = function () {
-                            if (!$(this).hasClass("refreshLink") && $(this).parents(".sideBar").length > 0 && $("#articleContent").length > 0) {
-                                addParam(this, verArray[0], 'sidebar', needh3);
-                            } else if (!$(this).hasClass("refreshLink") && $(this).parents(".markdown-body").length > 0 && $("#articleContent").length > 0) {
-                                addParam(this, verArray[0], 'docContainer', needh3);
-                            } else if (!$(this).hasClass("refreshLink") && $(this).parents("#AutoGenerateSidebar").length > 0) {
-                                addParam(this, verArray[0], 'rightMenuContainer', needh3);
-                            } else if (!$(this).hasClass("refreshLink") && !$(this).hasClass("noVersionAdd")) {
-                                addParam(this, verArray[0]);
-                            } else {
-                                return true
+                            var $this = $(this);
+                            // Allow default behavior for special class markers
+                            if ($this.hasClass("refreshLink") || $this.hasClass("noVersionAdd")) {
+                                return true;
                             }
+                            
+                            var hasArticleContent = $("#articleContent").length > 0;
+                            
+                            // Determine parameter type based on parent container
+                            if ($this.parents(".sideBar").length > 0 && hasArticleContent) {
+                                addParam(this, verArray[0], 'sidebar', needh3);
+                            } else if ($this.parents(".markdown-body").length > 0 && hasArticleContent) {
+                                addParam(this, verArray[0], 'docContainer', needh3);
+                            } else if ($this.parents("#AutoGenerateSidebar").length > 0) {
+                                addParam(this, verArray[0], 'rightMenuContainer', needh3);
+                            } else {
+                                addParam(this, verArray[0]);
+                            }
+                            
                             return false;
                         };
                     }
