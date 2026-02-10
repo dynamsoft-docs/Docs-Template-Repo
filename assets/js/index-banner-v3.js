@@ -435,9 +435,9 @@ function HighlightCurrentListForFullTree(searchListId, firstTime, searchUrl = do
         var listAry = navWrap.getElementsByTagName("li");
         var oriUrl = searchUrl;
         //history version doc url
-        searchUrl = searchUrl.replace(/\/index-v[0-9]+[^\/]*.html/g, "/");
-        searchUrl = searchUrl.replace(/-v[0-9]+[^\/]*\//g, "/");
-        searchUrl = searchUrl.replace(/-v[0-9]+[^\/]*.html/g, ".html");
+        // searchUrl = searchUrl.replace(/\/index-v[0-9]+[^\/]*.html/g, "/");
+        // searchUrl = searchUrl.replace(/-v[0-9]+[^\/]*\//g, "/");
+        // searchUrl = searchUrl.replace(/-v[0-9]+[^\/]*.html/g, ".html");
 
         var dochead = document.head || document.getElementsByTagName('head')[0];
 
