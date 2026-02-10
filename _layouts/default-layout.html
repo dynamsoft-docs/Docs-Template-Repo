@@ -40,15 +40,10 @@
                 </div>
                 <div class="main row showRightSideMenu" id="articleContent" data-needh3="{{page.needGenerateH3Content}}">
                     <div class="content markdown-body headCounter {{noTitleIndex}} col-xs-12 col-md-12 col-lg-9 col-xl-10 showRightSideMenu">
-                        <div id="versionNote" style="width: 100%; padding: 20px; background: #b42727; color: #ffffff;border-radius: 5px;margin-bottom: 20px;">
-                            This is the archived documentation for <span id="versionNoteOldVersion"></span>. <span id="latestVersionNote">If you are using the latest version<span id="versionNoteLatestVersion"></span>, please visit <span class="noVersionAdd" id="docsLatestVersionLink">this link</span>.</span>
+                        <div class="deprecated-banner" id="versionNote" style="width: 100%; padding: 20px; background: #b42727; color: #ffffff; border-radius: 5px; margin-bottom: 20px;">
+                            <p>This documentation is deprecated. It applies only to legacy <span id="versionNoteOldVersion">version 9.x</span> of <span class="documentName">Barcode Reader</span> and must not be used for new development.</p>
+                            <p style="margin-bottom: 0;">Please refer to the <span class="noVersionAdd" id="docsLatestVersionLink">latest documentation</span> <span class="migration-link-span">and <a class="noVersionAdd migration-link" href="#" style="color: #fff; text-decoration: underline !important;">Migration Guide</a></span>, which supersede this content.</p>
                         </div>
-                        {%- if site.firstLevelUrl contains 'web-twain' -%}
-                        <div class="dbrThanksDownloading">
-                            <p class="thanksDownloadTitle">Thanks for Downloading Dynamic Web TWAIN 30-Day Trial!</p>
-                            <p style="margin-bottom: 0;">Your download will start shortly. If your download does not begin, <a class="bluelink downloadlink" href="">click here to retry</a>.</p>
-                        </div>
-                        {%- endif -%}
                         <article>
                             {%- if page.url contains 'parameters' and site.docFullPath contains 'docs/core' -%}
                                 <blockquote class="blockquote-tip">
@@ -101,16 +96,7 @@
                 <div id="sideBarCnt">
                     <div class="history list" id="categoryMenuTree_history">
                         {%- include liquid_autoGenerateHistoryList.html -%}
-                        {%- if site.firstLevelUrl contains 'web-twain' -%}
-                        {%- include version-list.html -%}
-                        <div id="dwtRedirectList">
-                            {%- for redirectLink in page.redirect_from -%}
-                            <input type="hidden" class="dwtReditectLink" value="{{site.firstLevelUrl}}{{redirectLink}}">
-                            {%- endfor -%}
-                        </div>
-                        {%- else -%}
                         {%- include auto-version-list.html -%}
-                        {%- endif -%}
                     </div>
                     {%- unless site.searchIndexName or site.needSearchIndex -%}
                     <div class="docSearchPart" style="margin-top: 30px;">
