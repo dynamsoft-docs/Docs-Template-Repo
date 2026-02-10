@@ -1065,14 +1065,16 @@ function SearchVersion(currentUrl = null) {
     var docUrl = currentUrl || document.URL;
     var ver = getUrlVars(docUrl)["ver"];
     var curVerFromUrl = "";
-    var tmpExp = new RegExp(/-v[0-9]+[^\/^?^#]*((\/)|(.html))/g);
-    var searchAry = tmpExp.exec(docUrl);
-    if (searchAry != null) {
-        curVerFromUrl = searchAry[0].replace('-v', '');
-        curVerFromUrl = curVerFromUrl.replace('.html', '');
-        curVerFromUrl = curVerFromUrl.replace('/', '');
+    var pathVersionMatch = docUrl.match(/\/docs(?:-archive)?\/v([0-9]+(?:\.[0-9]+)*)\//i);
+    if (pathVersionMatch) {
+        curVerFromUrl = pathVersionMatch[1];
     } else {
-        curVerFromUrl = "latest"
+        var indexVersionMatch = docUrl.match(/\/index-v([0-9]+(?:\.[0-9]+)*)\.html/i);
+        if (indexVersionMatch) {
+            curVerFromUrl = indexVersionMatch[1];
+        } else {
+            curVerFromUrl = "latest";
+        }
     }
 
     var productName = getUrlVars(docUrl)["product"];

@@ -1,7 +1,22 @@
 <!DOCTYPE html>
 <html lang="en-US">
+<head>
+    <title>{{ page.title }}</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {%- include head.html -%}
+    {%- if site.useVersionTreeV2 -%}
+    <style>
+        .DWT17Note {position: relative; padding: 15px 20px 15px 20px;background: #e5f5ff;border: 1px solid #c7dbe8;color: #4788b3;margin-bottom: 20px;}
+        .DWT17Note i { position: absolute; right: 10px; top: 8px; font-size: 20px; cursor: pointer; }
+        .rightSideMenu.hasNote { padding-top: 168px; }
+        .docContainer, .sideBar, .history { visibility: visible; }
+        #fullTreeMenuListContainer li.expandListStyle > ul { display: block; }
+    </style>
+    {%- endif -%}
+</head>
 
-{%- include head.html -%}
 {%- assign noTitleIndex = "" -%}
 {%- if page.noTitleIndex or page.url contains 'release-notes' -%}
     {%- assign noTitleIndex = "noTitleIndex" -%}
@@ -10,16 +25,6 @@
 {%- assign noSubMenuDoc = "" -%}
 {%- if site.firstLevelUrl contains 'license-server' or site.isNoSubMenuDoc -%}
     {%- assign noSubMenuDoc = "noSubMenuDoc"  -%}
-{%- endif -%}
-
-{%- if site.useVersionTreeV2 -%}
-<style>
-    .DWT17Note {position: relative; padding: 15px 20px 15px 20px;background: #e5f5ff;border: 1px solid #c7dbe8;color: #4788b3;margin-bottom: 20px;}
-    .DWT17Note i { position: absolute; right: 10px; top: 8px; font-size: 20px; cursor: pointer; }
-    .rightSideMenu.hasNote { padding-top: 168px; }
-    .docContainer, .sideBar, .history { visibility: visible; }
-    #fullTreeMenuListContainer li.expandListStyle > ul { display: block; }
-</style>
 {%- endif -%}
 
 {%- assign isDCV = "false" -%}
@@ -31,7 +36,7 @@
     {%- include page_header.html -%}
     {%- include productNav.html -%}
 
-    <div class="sideBarIcon"><i class="fa fa-list" style="margin-right: 5px;"></i> Table of contents</div>
+    <div class="sideBarIcon"><i class="fa fa-list toc-icon-gap"></i> Table of contents</div>
     <div class="container" id="categoryMenuTree">
         <div class="row">
             <main class="docContainer col-xs-12 col-md-9">
@@ -43,13 +48,13 @@
                         {%- if site.firstLevelUrl contains 'web-twain' -%}
                         <div class="dbrThanksDownloading">
                             <p class="thanksDownloadTitle">Thanks for Downloading Dynamic Web TWAIN 30-Day Trial!</p>
-                            <p style="margin-bottom: 0;">Your download will start shortly. If your download does not begin, <a class="bluelink downloadlink" href="">click here to retry</a>.</p>
+                            <p class="no-margin-bottom">Your download will start shortly. If your download does not begin, <a class="bluelink downloadlink" href="">click here to retry</a>.</p>
                         </div>
                         {%- endif -%}
                         <article>
                             {%- if page.url contains 'parameters' and site.docFullPath contains 'docs/core' -%}
                                 <blockquote class="blockquote-tip">
-                                    <p style="margin-bottom: 3px;">Need better scanning performance?</p>
+                                    <p class="small-margin-bottom">Need better scanning performance?</p>
                                     <p><a class="createCaseLink" href="https://www.dynamsoft.com/create-a-case?topic=template-customization">Get a FREE customized reading template.</a></p> 
                                 </blockquote>
                             {%- endif -%}
@@ -66,6 +71,7 @@
                             {%- endif -%}
                         </article>
                     </div>
+
                     {%- assign assetsPath = '/webres/wwwroot' -%}
                     <div class="rightSideMenu col-xs-12 col-md-12 col-lg-3 col-xl-2  hide-md hide-sm hide-xs showRightSideMenu">
                         <div class="rightSideMenuContent">
@@ -75,20 +81,20 @@
                                 <p class="compatibleCurVersion"></p>
                             </div>
                             {%- endunless -%}
-                            <div id="feedbackFooter" style="color: #306877;">
+                            <div id="feedbackFooter" class="feedback-accent">
                                 <p class="fontOswald">Is this page helpful? </p>
-                                <a href="javascript:void(0)" style="color: #306877;" class="recordLink smileLink" onclick="UsefulRecord(true)"><img class="icon-smile" src="{{ assetsPath }}/images/docs/icon-smile.png" alt="Yes" />Yes</a>
-                                <a href="javascript:void(0)" style="color: #306877;" class="recordLink sadLink" onclick="UsefulRecord(false)"><img class="icon-sad" src="{{ assetsPath }}/images/docs/icon-sad.png" alt="No" />No</a>
+                                <a href="javascript:void(0)" class="recordLink smileLink feedback-accent" onclick="UsefulRecord(true)"><img class="icon-smile" src="{{ assetsPath }}/images/docs/icon-smile.png" alt="Yes" />Yes</a>
+                                <a href="javascript:void(0)" class="recordLink sadLink feedback-accent" onclick="UsefulRecord(false)"><img class="icon-sad" src="{{ assetsPath }}/images/docs/icon-sad.png" alt="No" />No</a>
                             </div>
                             <hr />
                             {%- if page.needAutoGenerateSidebar -%}
-                            <p class="fontOswald" style="color: #306877;"> In this article: </p>
+                            <p class="fontOswald feedback-accent"> In this article: </p>
                             <div id="AutoGenerateSidebar"></div>
                             {%- endif -%}
                         </div>
                     </div>
                 </div>
-                <div class="main row" style="display: none; background: #f5f5f5;" id="loadingContent">
+                <div class="main row loading-hidden" id="loadingContent">
                     <div class="loading" id="loadingLogin">
                         <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
                     </div>
@@ -110,18 +116,32 @@
                         {%- endif -%}
                     </div>
                     {%- unless site.searchIndexName or site.needSearchIndex -%}
-                    <div class="docSearchPart" style="margin-top: 30px;">
-                        <input id="txtSearch" class="search" type="text">
+                    <div class="docSearchPart doc-search-spacer">
+                        <label class="sr-only" for="txtSearch">Search documentation</label>
+                        <input id="txtSearch" class="search" type="text" placeholder="Search docs" aria-label="Search documentation">
                     </div>
                     {%- endunless -%}
                     <nav class="mainPage">
+                        {%- if site.useVersionTreeV2 -%}
+                            {%- assign treeList = site.data.full_tree.tree_list -%}
+                        {%- endif -%}
                         <ul id="fullTreeMenuListContainer" name="listLevel1" data-nosnippet>
-                            {%- if site.useVersionTreeV2 -%}
-                                {%- assign treeList = site.data.full_tree.tree_list -%}
-                                {%- include liquid_generateFullTree.html treeList=treeList -%}
-                            {%- endif -%}
+                            <template id="fullTreeMenuTemplate">
+                                {%- if site.useVersionTreeV2 -%}
+                                    {%- include liquid_generateFullTree.html treeList=treeList -%}
+                                {%- endif -%}
+                            </template>
                         </ul>
                     </nav>
+                    <script>
+                        (function() {
+                            var template = document.getElementById('fullTreeMenuTemplate');
+                            var target = document.getElementById('fullTreeMenuListContainer');
+                            if (template && target) {
+                                target.insertAdjacentHTML('beforeend', template.innerHTML);
+                            }
+                        })();
+                    </script>
                 </div>
             </aside>
         </div>
@@ -131,7 +151,7 @@
         {%- include page_footer.html -%}
     </footer>
 
-    <script type="text/javascript">
+    <!-- <script type="text/javascript">
         var myMermaid = null
         var mermaidInterval = setInterval(async function() {
             if (mermaid) {
@@ -143,7 +163,7 @@
                 clearInterval(mermaidInterval)
             }
         }, 100)
-    </script>
+    </script> -->
 
     {%- if site.useVersionTreeV2 -%}
     <script>
@@ -227,7 +247,7 @@
     </script>
     <!-- Google Tag Manager -->
     <noscript>
-        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-538F83" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-538F83" height="0" width="0" class="gtm-hidden"></iframe>
     </noscript>
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
