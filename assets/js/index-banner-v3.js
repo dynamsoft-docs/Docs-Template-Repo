@@ -1002,7 +1002,7 @@ function initCrumbs() {
         if (latestVersion) {
             $("#versionNoteLatestVersion").text(`version ${latestVersion}`);
         }
-        $("#versionNoteOldVersion").text("Version " + (productName == "dbr" ? "10.x" : "2.x"));
+        $("#versionNoteOldVersion").text("version " + (productName == "dbr" ? "10.x" : "2.x"));
         $("#versionNote .migration-link-span").hide();
         $("#versionNote .documentName").text(productName == "dbr" ? "Barcode Reader" : "Capture Vision");
         // console.log("productName: ", productName, "currentLang: ", currentLang, "latestVersion: ", latestVersion)
