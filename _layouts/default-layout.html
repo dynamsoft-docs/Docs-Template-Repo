@@ -1,10 +1,37 @@
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
-    <title>{{ page.title }}</title>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Cache-Control" content="max-age=7200" />
+    
+    {%- assign seo_title = page.title -%}
+    {%- assign seo_description = page.description -%}
+    {%- assign seo_group = '' -%}
+    {%- if page.url contains '/faq/mrz-scanner/license/' -%}
+        {%- assign seo_group = 'mrz_license' -%}
+    {%- elsif page.url contains '/faq/barcode-reader/license/' -%}
+        {%- assign seo_group = 'dbr_license' -%}
+    {%- endif -%}
+
+    {%- if seo_group != '' -%}
+        {%- assign seo_slug = page.url | split: '/' | last | replace: '.html', '' -%}
+        {%- if seo_slug == '' -%}
+            {%- assign seo_slug = 'index' -%}
+        {%- endif -%}
+
+        {%- assign seo_override = site.data.license_seo_overrides[seo_group][seo_slug] -%}
+        {%- if seo_override and seo_override.title and seo_override.title != '' -%}
+            {%- assign seo_title = seo_override.title -%}
+        {%- endif -%}
+        {%- if seo_override and seo_override.description and seo_override.description != '' -%}
+            {%- assign seo_description = seo_override.description -%}
+        {%- endif -%}
+    {%- endif -%}
+    <title>{{ seo_title }}</title>
+    <meta name="description" content="{{ seo_description }}">
+    <meta name="keywords" content="{{ page.keywords }}" />
     {%- include head.html -%}
     {%- if site.useVersionTreeV2 -%}
     <style>
