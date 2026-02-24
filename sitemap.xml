@@ -38,6 +38,9 @@ regenerate: true
 {%- if site.docFullPath contains 'web-twain/docs' and page.url contains 'indepth/faqs/develop' -%}	
 	{%- assign excludeFlag = true -%}
 {%- endif -%}
+{%- if site.docFullPath contains 'barcode-reader/docs' and page.url contains '/faq/' -%}	
+	{%- assign excludeFlag = true -%}
+{%- endif -%}
 {%- if page.url contains 'search.html' or page.url contains 'search-test.html' -%}	
 	{%- assign excludeFlag = true -%}
 {%- endif -%}
