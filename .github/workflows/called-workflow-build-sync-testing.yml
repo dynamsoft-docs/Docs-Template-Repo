@@ -31,21 +31,7 @@ jobs:
           cp -rfp ./Docs-Template-Repo/* ./DocHome/
           sed -i -e "1,3s/blob\/master$/blob\/preview/" \
           -e "1,3s/blob\/main$/blob\/preview/" ${{ runner.temp }}/DocHome/_config.yml
-          cd DocHome
-          echo "===== _plugins list ====="
-          ls -la _plugins || true
-          echo "===== search path-reference related logic ====="
-          grep -RIn --exclude-dir=.git --exclude-dir=_site "mrz-scanner/license|barcode-reader/license|../license|PathReferenceAlias|Generator|Jekyll::Hooks" . || true
-          echo "===== placeholder file content ====="
-          [ -f mrz-scanner/license ] && cat mrz-scanner/license || true
-          [ -f barcode-reader/license ] && cat barcode-reader/license || true
-          bundle install && bundle exec jekyll build
-          echo "===== built license trees ====="
-          find _site/mrz-scanner/license -maxdepth 2 -type f | sort || true
-          find _site/barcode-reader/license -maxdepth 2 -type f | sort || true
-          echo "===== sample title check ====="
-          sed -n '1,20p' _site/mrz-scanner/license/how-license-tracking-works.html || true
-          sed -n '1,20p' _site/barcode-reader/license/how-license-tracking-works.html || true
+          cd DocHome && bundle install && bundle exec jekyll build
 
       - name: 'Create Tar files'
         run: tar -czvf ${{ inputs.doc-repo }}.tar.gz -C ${{ runner.temp }}/DocHome/_site .

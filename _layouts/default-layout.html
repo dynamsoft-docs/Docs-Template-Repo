@@ -9,9 +9,9 @@
     {%- assign seo_title = page.title -%}
     {%- assign seo_description = page.description -%}
     {%- assign seo_group = '' -%}
-    {%- if page.url contains '/faq/mrz-scanner/license/' -%}
+    {%- if page.url contains '/mrz-scanner/license/' and site.firstLevelUrl contains '/faq' -%}
         {%- assign seo_group = 'mrz_license' -%}
-    {%- elsif page.url contains '/faq/barcode-reader/license/' -%}
+    {%- elsif page.url contains '/barcode-reader/license/' and site.firstLevelUrl contains '/faq' -%}
         {%- assign seo_group = 'dbr_license' -%}
     {%- endif -%}
 
