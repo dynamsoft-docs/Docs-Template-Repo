@@ -49,8 +49,8 @@ function RedirToGivenVersionPage(inputVer, currentUrl = null) {
   var curVer = null;
   var docUrl = currentUrl || document.URL;
   var curDocUrl = currentUrl || document.URL;
-  if (curVerTag != null) {
-    var verText = curVerTag[0].innerHTML.toLowerCase();
+  if (curVerTag != null && curVerTag.length > 0) {
+    var verText = curVerTag.first().html().toLowerCase();
     if (verText.indexOf("latest version") >= 0) {
       curVer = "latest";
     } else {
@@ -107,10 +107,11 @@ function RedirToGivenVersionPage(inputVer, currentUrl = null) {
       }
       if (tmpVer == inputVer) {
         var aTag = $(listAry[i]).children("a");
-        if (aTag.length > 0 && aTag[0].href) {
+        var aHref = aTag.first().attr("href");
+        if (aTag.length > 0 && aHref) {
           var exp = new RegExp(/[?]+([^=]+)=/gi);
-          if (exp.exec(aTag[0].href) != null) {
-            // if aTag[0].href has query parameters
+          if (exp.exec(aHref) != null) {
+            // if aHref has query parameters
             if (
               productParam != undefined &&
               getCurrentUrlProductName() == productParam
@@ -124,10 +125,10 @@ function RedirToGivenVersionPage(inputVer, currentUrl = null) {
               }
             }
             if (inputVer == "latest") {
-              window.location.replace(aTag[0].href + productVar + anchorVal);
+              window.location.replace(aHref + productVar + anchorVal);
             } else {
               window.location.replace(
-                aTag[0].href +
+                aHref +
                   "&ver=" +
                   addedVer +
                   "&matchVer=true" +
@@ -139,7 +140,7 @@ function RedirToGivenVersionPage(inputVer, currentUrl = null) {
             return;
           } else {
             var srcVal = getUrlVars(docUrl)["src"];
-            var redirectUrl = aTag[0].href;
+            var redirectUrl = aHref;
             if (srcVal != undefined) {
               redirectUrl = redirectUrl + "?src=" + srcVal;
             }
@@ -188,10 +189,14 @@ function RedirToGivenVersionPage(inputVer, currentUrl = null) {
   if (bestVerIndex >= 0) {
     var aTag = $(listAry[bestVerIndex]).children("a");
     if (aTag.length > 0) {
+      var aHref = aTag.first().attr("href");
+      if (!aHref) {
+        return;
+      }
       var exp = new RegExp(/[?]+([^=]+)=/gi);
-      if (exp.exec(aTag[0].href) != null) {
+      if (exp.exec(aHref) != null) {
         window.location.replace(
-          aTag[0].href +
+          aHref +
             "&ver=" +
             addedVer +
             "&matchVer=true" +
@@ -201,7 +206,7 @@ function RedirToGivenVersionPage(inputVer, currentUrl = null) {
         return;
       } else {
         var srcVal = getUrlVars(docUrl)["src"];
-        var redirectUrl = aTag[0].href;
+        var redirectUrl = aHref;
         if (srcVal != undefined) {
           redirectUrl = redirectUrl + "?src=" + srcVal;
         }
@@ -731,8 +736,18 @@ function RequestNewPage(
   redirectUrl = null,
   onlyLoadContent = false
 ) {
-  $("#articleContent").addClass("hidden");
-  $("#loadingContent").show();
+  const $articleContent = $("#articleContent");
+  const $loadingContent = $("#loadingContent");
+  const $languageWrap = $(".languageWrap");
+  const $fullTreeContainer = $("#fullTreeMenuListContainer");
+  const $autoGenerateSidebar = $("#AutoGenerateSidebar");
+  const hash =
+    paramLink.split("#").length > 1
+      ? paramLink.split("#")[1].toLowerCase()
+      : null;
+
+  $articleContent.addClass("hidden");
+  $loadingContent.show();
   var fetchUrl = redirectUrl ? redirectUrl : aTag.href;
   var oldLang = getCurrentUrlLang(document.URL);
   fetch(fetchUrl, { cache: "no-cache" })
@@ -740,21 +755,26 @@ function RequestNewPage(
       return response.text();
     })
     .then(function (data) {
-      var otherVersions = $(data).find(".otherVersions > li");
-      document.title = $(data)[1].innerText;
+      const parsedDoc = new DOMParser().parseFromString(data, "text/html");
+      const $parsedDoc = $(parsedDoc);
+      var otherVersions = $parsedDoc.find(".otherVersions > li");
+      var pageTitle = parsedDoc.querySelector('title');
+      if (pageTitle && pageTitle.textContent) {
+        document.title = pageTitle.textContent.trim()
+      }
 
       // init language select container
-      let languageWrapItem = $(data).find(".languageWrap");
+      let languageWrapItem = $parsedDoc.find(".languageWrap");
       if (
         languageWrapItem &&
         languageWrapItem.length > 0 &&
-        $(".languageWrap").length > 0
+        $languageWrap.length > 0
       ) {
         languageWrapItem = languageWrapItem[0];
         let className = languageWrapItem.className.trim();
-        let originClassName = $(".languageWrap").attr("class").trim();
+        let originClassName = $languageWrap.attr("class").trim();
         if (className != originClassName) {
-          $(".languageWrap").attr("class", className);
+          $languageWrap.attr("class", className);
           // mobile - ios pages
           var urlLang = getUrlVars(paramLink)["lang"];
           if (
@@ -766,7 +786,7 @@ function RequestNewPage(
             );
             if (!$(".languageWrap").hasClass("enableLanguageSelection")) {
               let singleLang = "";
-              if ($(data).find(".language-swift").length > 0) {
+              if ($parsedDoc.find(".language-swift").length > 0) {
                 singleLang = "swift";
               } else {
                 singleLang = "objc";
@@ -827,17 +847,14 @@ function RequestNewPage(
       !onlyLoadContent && history.pushState(null, null, paramLink);
 
       // remove old active link and li style
-      for (
-        var i = 0;
-        i < $("#fullTreeMenuListContainer .activeLink").parents("li").length;
-        i++
-      ) {
-        var obj = $("#fullTreeMenuListContainer .activeLink").parents("li")[i];
+      var activeLinkParents = $fullTreeContainer.find(".activeLink").parents("li");
+      for (var i = 0; i < activeLinkParents.length; i++) {
+        var obj = activeLinkParents[i];
         if ($(obj).hasClass("hasActiveLinkList")) {
           $(obj).removeClass("hasActiveLinkList");
         }
       }
-      $("#fullTreeMenuListContainer .activeLink").removeClass("activeLink");
+      $fullTreeContainer.find(".activeLink").removeClass("activeLink");
 
       // add current active link and li style
       $(aTag).addClass("activeLink");
@@ -850,31 +867,30 @@ function RequestNewPage(
       }
 
       // show article content
-      var showRightSideMenu =
-        $("#articleContent").hasClass("showRightSideMenu");
-      $("#articleContent")
-        .html($(data).find("#articleContent").html())
-        .removeClass("hidden");
-      $("#feedbackFooter a.smileLink").prop("href", "#");
-      $("#feedbackFooter a.smileLink").on("click", function (e) {
+      var showRightSideMenu = $articleContent.hasClass("showRightSideMenu");
+      var $parsedArticleContent = $parsedDoc.find("#articleContent");
+      $articleContent.html($parsedArticleContent.html()).removeClass("hidden");
+      $("#feedbackFooter a.smileLink")
+        .prop("href", "#")
+        .off("click")
+        .on("click", function (e) {
         e.preventDefault();
         UsefulRecord(true);
         return false;
       });
-      $("#feedbackFooter a.sadLink").prop("href", "#");
-      $("#feedbackFooter a.sadLink").on("click", function (e) {
+      $("#feedbackFooter a.sadLink")
+        .prop("href", "#")
+        .off("click")
+        .on("click", function (e) {
         e.preventDefault();
         UsefulRecord(true);
         return false;
       });
       if (!showRightSideMenu) {
-        $("#articleContent")
-          .find(".rightSideMenu, .markdown-body")
-          .removeClass("showRightSideMenu");
+        $articleContent.find(".rightSideMenu, .markdown-body").removeClass("showRightSideMenu");
       }
-      $("#loadingContent").hide();
-      needh3 =
-        $(data).find("#articleContent").data("needh3") == true ? true : false;
+      $loadingContent.hide();
+      needh3 = $parsedArticleContent.data("needh3") == true ? true : false;
 
       // if full tree has scroll bar, scroll to activelink position
       var scrollDiv = document.getElementsByClassName("mainPage")[0];
@@ -891,16 +907,18 @@ function RequestNewPage(
 
       //  noTitleIndex
       if ($(".headCounter").hasClass("noTitleIndex")) {
-        $("#AutoGenerateSidebar").addClass("noTitleIndex");
+        $autoGenerateSidebar.addClass("noTitleIndex");
       } else {
-        $("#AutoGenerateSidebar").removeClass("noTitleIndex");
+        $autoGenerateSidebar.removeClass("noTitleIndex");
       }
 
       // replace edit url link
-      if ($(data).find("#docHead").find(".iconsBox a").length > 0) {
-        var editMdFileLink = $(data)
+      if ($parsedDoc.find("#docHead").find(".iconsBox a").length > 0) {
+        var editMdFileLink = $parsedDoc
           .find("#docHead")
-          .find(".iconsBox a")[0].href;
+          .find(".iconsBox a")
+          .first()
+          .attr("href");
         $("#docHead .iconsBox a").attr("href", editMdFileLink);
       }
 
@@ -916,20 +934,20 @@ function RequestNewPage(
       }
 
       // load breadcrumbs add right side menu
-      if ($("#AutoGenerateSidebar").length > 0) {
-        $("#fullTreeMenuListContainer").removeClass("needh3");
+      if ($autoGenerateSidebar.length > 0) {
+        $fullTreeContainer.removeClass("needh3");
         if (needh3) {
-          $("#fullTreeMenuListContainer").addClass("needh3");
+          $fullTreeContainer.addClass("needh3");
         }
         GenerateContentByHead(needh3);
-        if ($("#AutoGenerateSidebar > ul > li").length == 0) {
+        if ($autoGenerateSidebar.find("> ul > li").length == 0) {
           $(".rightSideMenu > p").hide();
         } else {
           $(".rightSideMenu > p").show();
         }
       }
 
-      let latestPageUri = $(data).find("#latestPageUri");
+      let latestPageUri = $parsedDoc.find("#latestPageUri");
       let curPageLatestPageUri = $("#latestPageUri");
       if (curPageLatestPageUri && curPageLatestPageUri.length > 0) {
         if (latestPageUri && latestPageUri.length > 0) {
@@ -978,7 +996,7 @@ function RequestNewPage(
         showSelectMultiPanel(nextSiblings, switchIndex, needh3);
       }
 
-      $("article").on(
+      $("article").off("click", ".multi-panel-switching-prefix + ul > li").on(
         "click",
         ".multi-panel-switching-prefix + ul > li",
         function () {
@@ -1025,9 +1043,7 @@ function RequestNewPage(
         }
       }
 
-      let codeSampleStyle = $(data).filter(function (item) {
-        return $(data).eq(item).attr("id") == "CodeAutoHeight";
-      });
+      let codeSampleStyle = $parsedDoc.find("#CodeAutoHeight");
       if (codeSampleStyle && codeSampleStyle.length > 0) {
         if ($("#CodeAutoHeight").length == 0) {
           $(
@@ -1169,10 +1185,6 @@ function RequestNewPage(
       anchors.add();
 
       // scroll to the start of article
-      var hash =
-        paramLink.split("#").length > 1
-          ? paramLink.split("#")[1].toLowerCase()
-          : null;
       var sd = $(window).scrollTop();
       if (hash && $("#" + hash).length > 0) {
         var scrollTop = $("#" + hash).offset().top;
@@ -1192,6 +1204,10 @@ function RequestNewPage(
           }, 100);
         }
       }
+    })
+    .catch(function () {
+      $loadingContent.hide();
+      $articleContent.removeClass("hidden");
     });
 }
 // #endregion
