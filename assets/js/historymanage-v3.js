@@ -29,9 +29,9 @@ async function UrlReplace() {
   if (ver != undefined) {
     var tempVer = findNearestVersion(ver);
     if (tempVer != "latest") {
-      var verFileName = `/v${tempVer.split(".")[0]}/`;
+      var verFileName = `-v${tempVer.split(".")[0]}/`;
       if (GetVersionDiff(firstArchiveVersion, tempVer) < 0) {
-        verFileName = `/v${firstArchiveVersion.split(".")[0]}/`;
+        verFileName = `-v${firstArchiveVersion.split(".")[0]}/`;
       }
       docUrl = docUrl.replace(docsFolderName, `/docs${verFileName}`);
       window.location.replace(docUrl);
@@ -1424,10 +1424,10 @@ async function changeVersion(liTag) {
       langVar || getCurrentUrlLang(document.URL, true)
     );
   }
-  var verFileName = `/v${ver.split(".")[0]}/`;
+  var verFileName = `-v${ver.split(".")[0]}/`;
   var needAddVersion = false;
   if (GetVersionDiff(firstArchiveVersion, ver) < 0) {
-    verFileName = `/v${firstArchiveVersion.split(".")[0]}/`;
+    verFileName = `-v${firstArchiveVersion.split(".")[0]}/`;
     if (firstArchiveVersion.split(".")[0] != ver.split(".")[0]) {
       needAddVersion = true;
     }
