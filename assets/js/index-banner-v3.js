@@ -1496,10 +1496,10 @@ function onSubsetBtnLineClick(randomId, fromJS) {
 
 function getDocsFolderName(product) {
     if (product == "dbr") {
-        releasedDocsFolderName = "/docs/v2/"
-        return "/docs/v10/"
+        releasedDocsFolderName = "/docs-v2/"
+        return "/docs-v10/"
     } else if (product == "dcv") {
-        releasedDocsFolderName = "/docs/v10/"
-        return "/docs/v2/"
+        releasedDocsFolderName = "/docs-v10/"
+        return "/docs-v2/"
     }
 }
