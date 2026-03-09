@@ -21,7 +21,7 @@ jobs:
     uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: barcode-reader-docs
-      doc-url: barcode-reader/docs/v10/core
+      doc-url: barcode-reader/docs-v10/core
       doc-branch: v10
     secrets: inherit
 
@@ -30,7 +30,7 @@ jobs:
     uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: barcode-reader-docs-server
-      doc-url: barcode-reader/docs/v10/server
+      doc-url: barcode-reader/docs-v10/server
       doc-branch: v10
     secrets: inherit
 
@@ -39,7 +39,7 @@ jobs:
     uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: barcode-reader-docs-mobile
-      doc-url: barcode-reader/docs/v10/mobile
+      doc-url: barcode-reader/docs-v10/mobile
       doc-branch: v10
     secrets: inherit
 
@@ -48,7 +48,7 @@ jobs:
     uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: barcode-reader-docs-js
-      doc-url: barcode-reader/docs/v10/web
+      doc-url: barcode-reader/docs-v10/web
       doc-branch: v10
     secrets: inherit
 
@@ -58,7 +58,7 @@ jobs:
     uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: capture-vision-docs
-      doc-url: capture-vision/docs/v2/core
+      doc-url: capture-vision/docs-v2/core
       doc-branch: v2
     secrets: inherit
 
@@ -67,7 +67,7 @@ jobs:
     uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: capture-vision-docs-server
-      doc-url: capture-vision/docs/v2/server
+      doc-url: capture-vision/docs-v2/server
       doc-branch: v2
     secrets: inherit
 
@@ -77,7 +77,7 @@ jobs:
     uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: capture-vision-docs-mobile
-      doc-url: capture-vision/docs/v2/mobile
+      doc-url: capture-vision/docs-v2/mobile
       doc-branch: v2
     secrets: inherit
 
@@ -87,7 +87,7 @@ jobs:
     uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: capture-vision-docs-js
-      doc-url: capture-vision/docs/v2/web
+      doc-url: capture-vision/docs-v2/web
       doc-branch: v2
     secrets: inherit
 
@@ -97,7 +97,7 @@ jobs:
     uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: label-recognition-docs
-      doc-url: label-recognition/docs/v2/core
+      doc-url: label-recognition/docs-v2/core
       doc-branch: v2
     secrets: inherit
 
@@ -107,7 +107,7 @@ jobs:
     uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: label-recognition-docs-server
-      doc-url: label-recognition/docs/v2/server
+      doc-url: label-recognition/docs-v2/server
       doc-branch: v2
     secrets: inherit
 
@@ -117,7 +117,7 @@ jobs:
     uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: label-recognition-docs-mobile
-      doc-url: label-recognition/docs/v2/mobile
+      doc-url: label-recognition/docs-v2/mobile
       doc-branch: v2
     secrets: inherit
 
@@ -127,7 +127,7 @@ jobs:
     uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: label-recognition-docs-js
-      doc-url: label-recognition/docs/v2/web
+      doc-url: label-recognition/docs-v2/web
       doc-branch: v2
     secrets: inherit
 
@@ -137,7 +137,7 @@ jobs:
     uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: document-normalizer-docs
-      doc-url: document-normalizer/docs/v2/core
+      doc-url: document-normalizer/docs-v2/core
       doc-branch: v2
     secrets: inherit
 
@@ -146,7 +146,7 @@ jobs:
     uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: document-normalizer-docs-server
-      doc-url: document-normalizer/docs/v2/server
+      doc-url: document-normalizer/docs-v2/server
       doc-branch: v2
     secrets: inherit
 
@@ -155,7 +155,7 @@ jobs:
     uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: document-normalizer-docs-mobile
-      doc-url: document-normalizer/docs/v2/mobile
+      doc-url: document-normalizer/docs-v2/mobile
       doc-branch: v2
     secrets: inherit
 
@@ -165,7 +165,7 @@ jobs:
     uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: document-normalizer-docs-js
-      doc-url: document-normalizer/docs/v2/web
+      doc-url: document-normalizer/docs-v2/web
       doc-branch: v2
     secrets: inherit
 
@@ -175,7 +175,7 @@ jobs:
     uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: code-parser-docs
-      doc-url: code-parser/docs/v2/core
+      doc-url: code-parser/docs-v2/core
       doc-branch: v2
     secrets: inherit
 
@@ -184,7 +184,7 @@ jobs:
     uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: code-parser-docs-server
-      doc-url: code-parser/docs/v2/server
+      doc-url: code-parser/docs-v2/server
       doc-branch: v2
     secrets: inherit
 
@@ -193,7 +193,7 @@ jobs:
     uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: code-parser-docs-mobile
-      doc-url: code-parser/docs/v2/mobile
+      doc-url: code-parser/docs-v2/mobile
       doc-branch: v2
     secrets: inherit
 
@@ -202,7 +202,7 @@ jobs:
     uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: code-parser-docs-js
-      doc-url: code-parser/docs/v2/web
+      doc-url: code-parser/docs-v2/web
       doc-branch: v2
     secrets: inherit
 
@@ -212,7 +212,7 @@ jobs:
     uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: camera-enhancer-docs
-      doc-url: camera-enhancer/docs/v2/core
+      doc-url: camera-enhancer/docs-v2/core
       doc-branch: v2
     secrets: inherit
 
@@ -222,7 +222,7 @@ jobs:
     uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: camera-enhancer-docs-mobile
-      doc-url: camera-enhancer/docs/v2/mobile
+      doc-url: camera-enhancer/docs-v2/mobile
       doc-branch: v2
     secrets: inherit
 
@@ -231,6 +231,6 @@ jobs:
     uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: camera-enhancer-docs-js
-      doc-url: camera-enhancer/docs/v2/web
+      doc-url: camera-enhancer/docs-v2/web
       doc-branch: v2
     secrets: inherit
