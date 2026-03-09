@@ -21,7 +21,7 @@ jobs:
     uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: barcode-reader-docs
-      doc-url: barcode-reader/docs/v9/core
+      doc-url: barcode-reader/docs-v9/core
       doc-branch: v9
     secrets: inherit
 
@@ -30,7 +30,7 @@ jobs:
     uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: barcode-reader-docs-server
-      doc-url: barcode-reader/docs/v9/server
+      doc-url: barcode-reader/docs-v9/server
       doc-branch: v9
     secrets: inherit
 
@@ -39,7 +39,7 @@ jobs:
     uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: barcode-reader-docs-mobile
-      doc-url: barcode-reader/docs/v9/mobile
+      doc-url: barcode-reader/docs-v9/mobile
       doc-branch: v9
     secrets: inherit
 
@@ -48,6 +48,6 @@ jobs:
     uses: ./.github/workflows/called-workflow-build-sync-production.yml
     with:
       doc-repo: barcode-reader-docs-js
-      doc-url: barcode-reader/docs/v9/web
+      doc-url: barcode-reader/docs-v9/web
       doc-branch: v9
     secrets: inherit
