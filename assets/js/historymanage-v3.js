@@ -30,9 +30,9 @@ async function UrlReplace() {
   if (ver != undefined) {
     var tempVer = findNearestVersion(ver);
     if (tempVer != "latest") {
-      var verFileName = `/v${tempVer.split(".")[0]}/`;
+      var verFileName = `-v${tempVer.split(".")[0]}/`;
       if (GetVersionDiff(firstArchiveVersion, tempVer) < 0) {
-        verFileName = `/v${firstArchiveVersion.split(".")[0]}/`;
+        verFileName = `-v${firstArchiveVersion.split(".")[0]}/`;
       }
       docUrl = docUrl.replace(docsFolderName, `/docs${verFileName}`);
       window.location.replace(docUrl);
@@ -324,14 +324,6 @@ function addParam(aTag, verText, fromSourse = null, needh3 = false) {
     }
   }
   hrefVal = hrefVal + srcString;
-
-  // new link dosen't have version, use current link version
-  var expVersion = new RegExp(/[?&]ver=[^&^#]+/gi);
-  var verStr = "";
-  if (expVersion.exec(hrefVal) == null && verText != "" && verText != "latest") {
-    verStr = hrefVal.indexOf("?") > 0 ? "&ver=" + verText : "?ver=" + verText;
-  }
-  hrefVal = hrefVal + verStr;
   // #endregion
 
   // #region Analyze productVar and langVar
@@ -446,224 +438,7 @@ function addParam(aTag, verText, fromSourse = null, needh3 = false) {
   hrefVal = hrefVal + productVar;
   // #endregion
   if (aTag.target == "_blank") {
-    if (getUrlVars(originHref)["ver"] != undefined) {
-      window.open(originHref);
-    } else {
-      let hashIndex = originHref.indexOf("#");
-      let queryIndex = originHref.indexOf("?");
-      let anchorVal = "";
-      let queryParam = "";
-      if (hashIndex != -1) {
-        if (queryIndex != -1 && hashIndex < queryIndex) {
-          let urlQuery = originHref.split("?");
-          let urlHash = urlQuery[0].split("#");
-          anchorVal = "#" + urlHash[1];
-          originHref = originHref.replace(anchorVal, "");
-        } else if (queryIndex != -1 && hashIndex > queryIndex) {
-          anchorVal = "#" + originHref.split("#")[1];
-          originHref = anchorVal ? originHref.split("#")[0] : originHref;
-        } else {
-          let urlAry = originHref.split("#");
-          if (urlAry.length == 2) {
-            anchorVal = "#" + urlAry[1];
-          }
-        }
-      }
-      if (anchorVal && anchorVal != "") {
-        originHref = originHref.replace(anchorVal, "");
-      }
-      let currentVersion = $(".currentVersion").text().toLowerCase();
-      currentVersion = currentVersion.indexOf("latest version") >= 0 ? "latest" : currentVersion.replace("version ", "");
-
-      if (
-        getUrlVars(originHref)["product"] != undefined &&
-        getUrlVars(originHref)["product"] != productName
-      ) {
-        if (productName == "dbr" && isArchiveDocsLink) {
-          let fProductName = getUrlVars(originHref)["product"];
-          let fProductVersion = getLinkVersion(
-            currentVersion,
-            null,
-            productName,
-            lang,
-            fProductName
-          );
-          if (fProductVersion == -1) {
-            fProductVersion = currentVersion;
-          }
-          let fProductLang = getUrlVars(originHref)["lang"]
-            ? getUrlVars(originHref)["lang"]
-            : getCurrentUrlLang(originHref, true);
-          let hrefVal_Product = getCurrentUrlProductName(originHref);
-          let hrefVal_ProductVersion = getLinkVersion(
-            fProductVersion,
-            null,
-            fProductName,
-            fProductLang,
-            hrefVal_Product
-          );
-          if (hrefVal_ProductVersion == -1) {
-            hrefVal_ProductVersion = fProductVersion;
-          }
-          if (getUrlVars(originHref)["lang"] != undefined) {
-            queryParam = `&${fProductName}=${fProductVersion}&ver=${hrefVal_ProductVersion}`;
-          } else {
-            queryParam = `&${fProductName}=${fProductVersion}${
-              fProductLang ? "&lang=" + fProductLang : ""
-            }&ver=${hrefVal_ProductVersion}`;
-          }
-        } else {
-          let fProductName = getUrlVars(originHref)["product"];
-          let fProductVersion = getLinkVersion(
-            currentVersion,
-            null,
-            productName,
-            lang,
-            fProductName
-          );
-          if (fProductVersion == -1) {
-            fProductVersion = currentVersion;
-          }
-          queryParam = `&ver=${fProductVersion}`;
-        }
-        window.open(originHref + queryParam + anchorVal);
-      } else {
-        if (productName == "dbr" && isArchiveDocsLink) {
-          let isCoreDocs = false;
-          if (
-            getUrlVars(document.URL)["product"] &&
-            !getUrlVars(document.URL)["lang"]
-          ) {
-            isCoreDocs = true;
-          } else if (document.URL.indexOf(docsFolderName + "core/")) {
-            isCoreDocs = true;
-          }
-          // link product & link language
-          var linkProduct =
-            getUrlVars(originHref)["product"] ||
-            getCurrentUrlProductName(originHref);
-          var linkLang = getCurrentUrlLang(originHref, true);
-          var dcvLang = [
-            "cordova",
-            "xamarin",
-            "flutter",
-            "react-native",
-            "maui",
-          ];
-          if (
-            isCoreDocs &&
-            ((linkLang && linkProduct == productName) ||
-              (linkProduct == "dcv" && dcvLang.includes(linkLang)))
-          ) {
-            if (linkLang && linkProduct == productName) {
-              // core-> normal lang
-              window.open(
-                `${originHref}${
-                  currentVersion == "latest"
-                    ? ""
-                    : queryIndex > 0
-                    ? "&ver=" + currentVersion
-                    : "?ver=" + currentVersion
-                }${anchorVal}`
-              );
-            } else {
-              // core -> dcv lang
-              let dcvLangVersion = getDCVLangVersion(linkLang, currentVersion);
-              if (dcvLangVersion == -1) {
-                dcvLangVersion = currentVersion;
-              }
-              window.open(
-                `${originHref}${
-                  queryIndex > 0 ? "&" : "?"
-                }ver=${dcvLangVersion}${anchorVal}`
-              );
-            }
-          } else {
-            if (linkProduct == productName && lang) {
-              // dbr js to dbr core, dbr js to dbr ios 等
-              var linkLangVersion = getProductLangLatestVersion(
-                dcvLang.includes(linkLang) && linkProduct != "dcv"
-                  ? "dcv"
-                  : linkProduct,
-                linkLang != "" ? linkLang : "core", true
-              );
-              var curLangVersion = getProductLangLatestVersion(
-                dcvLang.includes(lang) && productName != "dcv"
-                  ? "dcv"
-                  : productName,
-                lang, true
-              );
-              var changeVersion = currentVersion;
-              if (
-                changeVersion == "latest" &&
-                getFormatVal(curLangVersion) < getFormatVal(linkLangVersion)
-              ) {
-                changeVersion = curLangVersion;
-              }
-              window.open(
-                `${originHref}${
-                  queryIndex > 0 ? "&" : "?"
-                }ver=${changeVersion}${anchorVal}`
-              );
-            } else {
-              let hrefVal_ProductVersion = getLinkVersion(
-                currentVersion,
-                originHref,
-                productName,
-                lang,
-                linkProduct
-              );
-              if (hrefVal_ProductVersion == -1) {
-                hrefVal_ProductVersion = currentVersion;
-              }
-              if (hrefVal_ProductVersion == "latest") {
-                window.open(originHref + anchorVal);
-              } else {
-                if (queryIndex > 0) {
-                  window.open(
-                    originHref + "&ver=" + hrefVal_ProductVersion + anchorVal
-                  );
-                } else {
-                  window.open(
-                    originHref + "?ver=" + hrefVal_ProductVersion + anchorVal
-                  );
-                }
-              }
-            }
-          }
-        } else {
-          var linkProduct =
-            getUrlVars(originHref)["product"] ||
-            getCurrentUrlProductName(originHref);
-          if (linkProduct == productName) {
-            if (currentVersion != "latest") {
-              queryParam =
-                queryIndex > 0
-                  ? `&ver=${currentVersion}`
-                  : `?ver=${currentVersion}`;
-            }
-          } else {
-            let fProductVersion = getLinkVersion(
-              currentVersion,
-              null,
-              productName,
-              lang,
-              linkProduct
-            );
-            if (fProductVersion == -1) {
-              fProductVersion = currentVersion;
-            }
-            if (currentVersion != "latest") {
-              queryParam =
-                queryIndex > 0
-                  ? `&ver=${fProductVersion}`
-                  : `?ver=${fProductVersion}`;
-            }
-          }
-          window.open(originHref + queryParam + anchorVal);
-        }
-      }
-    }
+    window.open(hrefVal + hashStr);
   } else {
     if (fromSourse == "sidebar") {
       // request link
@@ -1418,10 +1193,10 @@ async function changeVersion(liTag) {
       langVar || getCurrentUrlLang(document.URL, true)
     );
   }
-  var verFileName = `/v${ver.split(".")[0]}/`;
+  var verFileName = `-v${ver.split(".")[0]}/`;
   var needAddVersion = false;
   if (GetVersionDiff(firstArchiveVersion, ver) < 0) {
-    verFileName = `/v${firstArchiveVersion.split(".")[0]}/`;
+    verFileName = `-v${firstArchiveVersion.split(".")[0]}/`;
     if (firstArchiveVersion.split(".")[0] != ver.split(".")[0]) {
       needAddVersion = true;
     }
@@ -1613,8 +1388,6 @@ function getLinkVersion(
   lang = ["objectivec-swift", "objectivec", "objc", "swift"].includes(lang) ? "ios" : lang;
   lang = lang == "core" ? "" : lang;
   lang = lang == "js" || lang == "javascript" ? "javascript" : lang;
-
-  console.log("getLinkVersion", curVersion, linkUrl, product, lang, linkProduct)
 
   if (curProduct == "dbr" && linkProduct == "dcv") {
     if (curVersion == "9") {

@@ -1124,7 +1124,10 @@ function SearchVersion(currentUrl = null) {
             if (ver == "latest") {
                 curVerTag[0].innerText = "latest version";
             } else {
-                curVerTag[0].innerText = "version " + ver;
+                if (ver.indexOf(".") < 0) {
+                    ver = ver + ".x"
+                }
+                curVerTag[0].innerText = "Version " + ver;
             }
             if (productName != undefined) {
                 var productVersion = getUrlVars(docUrl)[productName];
@@ -1132,13 +1135,19 @@ function SearchVersion(currentUrl = null) {
                     if (productVersion == "latest") {
                         curVerTag[0].innerText = "latest version";
                     } else {
-                        curVerTag[0].innerText = "version " + productVersion;
+                        if (productVersion.indexOf(".") < 0) {
+                            productVersion = productVersion + ".x"
+                        }
+                        curVerTag[0].innerText = "Version " + productVersion;
                     }
                 }
             }
         }
         if (compatiableDiv != null && compatibleTag != null) {
             compatiableDiv.style.display = "block";
+            if (ver.indexOf(".") < 0) {
+                ver = ver + ".x"
+            }
             compatibleTag[0].innerText = "Version " + ver;
             if (productName != undefined) {
                 var productVersion = getUrlVars(docUrl)[productName];
@@ -1146,6 +1155,9 @@ function SearchVersion(currentUrl = null) {
                     if (productVersion == "latest") {
                         compatiableDiv.style.display = "none";
                     } else {
+                        if (productVersion.indexOf(".") < 0) {
+                            productVersion = productVersion + ".x"
+                        }
                         compatibleTag[0].innerText = "Version " + productVersion;
                     }
                 }
@@ -1162,6 +1174,7 @@ function SearchVersion(currentUrl = null) {
             ver = productVersion
         }
     }
+    ver = ver.replace(".x", "")
     var verArray = new Array(ver, curVerFromUrl);
     return verArray;
 }
