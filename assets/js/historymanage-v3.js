@@ -30,9 +30,9 @@ async function UrlReplace() {
   if (ver != undefined) {
     var tempVer = findNearestVersion(ver);
     if (tempVer != "latest") {
-      var verFileName = `/v${tempVer.split(".")[0]}/`;
+      var verFileName = `-v${tempVer.split(".")[0]}/`;
       if (GetVersionDiff(firstArchiveVersion, tempVer) < 0) {
-        verFileName = `/v${firstArchiveVersion.split(".")[0]}/`;
+        verFileName = `-v${firstArchiveVersion.split(".")[0]}/`;
       }
       docUrl = docUrl.replace(docsFolderName, `/docs${verFileName}`);
       window.location.replace(docUrl);
@@ -326,12 +326,12 @@ function addParam(aTag, verText, fromSourse = null, needh3 = false) {
   hrefVal = hrefVal + srcString;
 
   // new link dosen't have version, use current link version
-  var expVersion = new RegExp(/[?&]ver=[^&^#]+/gi);
-  var verStr = "";
-  if (expVersion.exec(hrefVal) == null && verText != "" && verText != "latest") {
-    verStr = hrefVal.indexOf("?") > 0 ? "&ver=" + verText : "?ver=" + verText;
-  }
-  hrefVal = hrefVal + verStr;
+  // var expVersion = new RegExp(/[?&]ver=[^&^#]+/gi);
+  // var verStr = "";
+  // if (expVersion.exec(hrefVal) == null && verText != "" && verText != "latest") {
+  //   verStr = hrefVal.indexOf("?") > 0 ? "&ver=" + verText : "?ver=" + verText;
+  // }
+  // hrefVal = hrefVal + verStr;
   // #endregion
 
   // #region Analyze productVar and langVar
@@ -1418,10 +1418,10 @@ async function changeVersion(liTag) {
       langVar || getCurrentUrlLang(document.URL, true)
     );
   }
-  var verFileName = `/v${ver.split(".")[0]}/`;
+  var verFileName = `-v${ver.split(".")[0]}/`;
   var needAddVersion = false;
   if (GetVersionDiff(firstArchiveVersion, ver) < 0) {
-    verFileName = `/v${firstArchiveVersion.split(".")[0]}/`;
+    verFileName = `-v${firstArchiveVersion.split(".")[0]}/`;
     if (firstArchiveVersion.split(".")[0] != ver.split(".")[0]) {
       needAddVersion = true;
     }
@@ -1543,8 +1543,18 @@ async function initHistoryVersionList_Detail() {
   } else {
     let latestVersion = getProductLangLatestVersion(productName, lang == "" ? "core" : lang, true)
     let latestLi = $("<li class='latestVer' onclick='changeVersion(this)'>").text("Latest Version (" + latestVersion + ")");
+    if (latestVersion != undefined) {
+      let majorVersion = latestVersion.toString().split(".")[0].trim();
+      if (majorVersion == "9") {
+        latestLi.addClass("sameVerAsLatestLi");
+      }
+    }
     $(".fullVersionInfo").prepend(latestLi);
     $(".currentVersion").text("Version 9.x");
+  }
+  let sameVerItems = $(".fullVersionInfo .sameVerAsLatestLi");
+  if (sameVerItems.length > 1) {
+    sameVerItems.slice(1).addClass("hideLi").hide();
   }
 }
 // #endregion

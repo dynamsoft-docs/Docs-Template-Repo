@@ -1026,6 +1026,10 @@ function initCrumbs() {
                 $("#versionNote .migration-link").attr("href", `/barcode-reader/docs/${repoType}/programming/${currentLang}/migrate-from-v9/`);
                 $("#versionNote .migration-link-span").show();
             }
+            if (currentLang == "c") {
+                $("#versionNote  .p-migration").hide();
+                $("#versionNote p").css("margin-bottom", "0px");
+            }
         }
     }
 }
@@ -1480,6 +1484,6 @@ function onSubsetBtnLineClick(randomId, fromJS) {
 }
 
 function getDocsFolderName(product) {
-    releasedDocsFolderName = "/docs/v2/"
-    return "/docs/v9/"
+    releasedDocsFolderName = "/docs-v2/"
+    return "/docs-v9/"
 }
