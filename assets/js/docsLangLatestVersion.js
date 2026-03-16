@@ -7,7 +7,7 @@ var docsLangLatestVersion = {
         python: "11.4.1000",
         dotnet: "11.4.1000",
         android: "11.4.1000",
-        ios: "11.4.1000",
+        ios: "11.4.1010",
         javascript: "11.2.4000",
         maui: "11.2.5000",
         flutter: "11.2.5000",
