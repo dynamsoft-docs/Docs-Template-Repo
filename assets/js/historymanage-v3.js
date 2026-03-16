@@ -1087,11 +1087,17 @@ function RequestNewPage(
         })();
       }
 
-      if (myMermaid) {
-        myMermaid.run({
-          querySelector: ".language-mermaid",
-        });
+      // load mermaid style
+      try {
+        if (myMermaid) {
+          myMermaid.run({
+            querySelector: ".language-mermaid",
+          });
+        }
+      } catch (e) {
+        // console.log("mermaid error:" + e);
       }
+      
 
       // file tree
       if ($(".filetree h3").length > 0) {
