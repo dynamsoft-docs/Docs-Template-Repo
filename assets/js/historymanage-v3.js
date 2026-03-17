@@ -30,6 +30,10 @@ async function UrlReplace() {
   if (ver != undefined) {
     var tempVer = findNearestVersion(ver);
     if (tempVer != "latest") {
+      var tempVerMajor = Number(tempVer.split(".")[0]);
+      if (tempVerMajor == 9)  {
+        return;
+      }
       var verFileName = `-v${tempVer.split(".")[0]}/`;
       if (GetVersionDiff(firstArchiveVersion, tempVer) < 0) {
         verFileName = `-v${firstArchiveVersion.split(".")[0]}/`;
