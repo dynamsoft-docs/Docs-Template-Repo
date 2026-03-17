@@ -621,6 +621,7 @@ function menuAddIcon(curLi) {
 
 function findNearestVersion(ver) {
     var versionList = $(".fullVersionInfo li").not(".hideLi, .latestVer")
+    ver = ver.split(".")[0];
     var bestVer = ver,
         verDiff = null
     for (var i = 0; i < versionList.length; i++) {
@@ -630,9 +631,10 @@ function findNearestVersion(ver) {
                 tempVer = "latest"
             } else {
                 tempVer = tempVer.replace('version ', '');
+                tempVer = tempVer.split(".")[0]
             }
             if (tempVer == ver) {
-                return tempVer
+                return tempVer.split(" ")[0] + ".x"
             } else {
                 var tmpDiff = GetVersionDiff(ver, tempVer);
                 if (verDiff == null || (tmpDiff >= 0 && (tmpDiff < verDiff || verDiff < 0))) {

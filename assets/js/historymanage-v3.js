@@ -29,13 +29,16 @@ async function UrlReplace() {
   );
   if (ver != undefined) {
     var tempVer = findNearestVersion(ver);
-    
     if (tempVer != "latest") {
       var tempVerMajor = Number(tempVer.split(".")[0]);
+      var verMajor = Number(ver.split(".")[0]);
+      if (verMajor > tempVerMajor) {
+        $("#docsLatestVersionLink").click()
+        return
+      }
       var isSameAsLatestMajor =
-        (tempVerMajor == 10 && product == "dbr") ||
-        (tempVerMajor == 2 && product == "dcv");
-
+        (tempVerMajor == 10 && (product || docProduct) == "dbr") ||
+        (tempVerMajor == 2 && (product || docProduct) == "dcv");
       if (isSameAsLatestMajor) {
         return;
       }
@@ -826,11 +829,16 @@ function RequestNewPage(
         })();
       }
 
-      if (myMermaid) {
-        myMermaid.run({
-          querySelector: ".language-mermaid",
-        });
+      try {
+        if (myMermaid) {
+          myMermaid.run({
+            querySelector: ".language-mermaid",
+          });
+        }
+      } catch (e) {
+        //nothing
       }
+      
 
       // file tree
       if ($(".filetree h3").length > 0) {
