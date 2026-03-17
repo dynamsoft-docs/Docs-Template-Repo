@@ -29,12 +29,22 @@ async function UrlReplace() {
   );
   if (ver != undefined) {
     var tempVer = findNearestVersion(ver);
+    
     if (tempVer != "latest") {
-      var verFileName = `-v${tempVer.split(".")[0]}/`;
-      if (GetVersionDiff(firstArchiveVersion, tempVer) < 0) {
-        verFileName = `-v${firstArchiveVersion.split(".")[0]}/`;
+      var tempVerMajor = Number(tempVer.split(".")[0]);
+      var isSameAsLatestMajor =
+        (tempVerMajor == 10 && product == "dbr") ||
+        (tempVerMajor == 2 && product == "dcv");
+
+      if (isSameAsLatestMajor) {
+        return;
       }
-      docUrl = docUrl.replace(docsFolderName, `/docs${verFileName}`);
+
+      var redirectMajor = tempVerMajor;
+      if (GetVersionDiff(firstArchiveVersion, tempVer) < 0) {
+        redirectMajor = Number(firstArchiveVersion.split(".")[0]);
+      }
+      docUrl = docUrl.replace(docsFolderName, `/docs-v${redirectMajor}/`);
       window.location.replace(docUrl);
     }
   }
