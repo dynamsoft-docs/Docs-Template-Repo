@@ -336,23 +336,23 @@ function addParam(aTag, verText, fromSourse = null, needh3 = false) {
 
     // #region Analyze langVar
     var href_ProductName = getCurrentUrlProductName(hrefVal);
+    var hrefLang = getCurrentUrlLang(aTag.href, true);
     var hasProductParam = !!getUrlVars(hrefVal)["product"];
     if (href_ProductName != productName && !hasProductParam && aTag.target != "_blank") {
         hrefVal += `${hrefVal.indexOf("?") < 0 ? "?" : "&"}product=${productName}`;
     }
-
     if (!hasProductParam) {
         var isNeedAddLang = false;
         if (hrefVal.indexOf("/docs-archive/") >= 0) {
-            isNeedAddLang = true;
+            isNeedAddLang = hrefLang != lang && lang != "";
         } else if (
             hrefVal.indexOf(currentDocDomain) < 0 && (productName != "dcv" || DcvProducts.indexOf(href_ProductName) < 0)
         ) {
             if (!getUrlVars(document.URL)["product"] || getUrlVars(document.URL)["product"] != href_ProductName) {
-                isNeedAddLang = true;
+                isNeedAddLang = hrefLang != lang && lang != "";
             } else if (
                 getUrlVars(document.URL)["product"] == href_ProductName &&
-                getCurrentUrlLang(hrefVal, true) != lang
+                hrefLang != lang
             ) {
                 isNeedAddLang = true;
             }
@@ -363,17 +363,19 @@ function addParam(aTag, verText, fromSourse = null, needh3 = false) {
                     (productName != "dcv" || DcvProducts.indexOf(href_ProductName) < 0)
                 ) {
                     // case 2
-                    isNeedAddLang = true;
+                    isNeedAddLang = hrefLang != lang && lang != "";
                 } else {
                     if (
                         DcvProducts.indexOf(href_ProductName) >= 0 &&
-                        getUrlVars(document.URL)["lang"]
+                        getUrlVars(document.URL)["lang"] &&
+                        hrefLang != lang &&
+                        lang != ""
                     ) {
                         isNeedAddLang = true;
                     }
                     if (
                         href_ProductName == productName &&
-                        getCurrentUrlLang(hrefVal, true) != lang &&
+                        hrefLang != lang &&
                         lang != ""
                     ) {
                         isNeedAddLang = true;
@@ -383,15 +385,15 @@ function addParam(aTag, verText, fromSourse = null, needh3 = false) {
                 if (
                     href_ProductName == "dcv" &&
                     DcvProducts.indexOf(productName) >= 0 &&
-                    getCurrentUrlLang(hrefVal, true) == lang
+                    hrefLang == lang
                 ) {
                 } else {
-                    isNeedAddLang = true;
+                    isNeedAddLang = hrefLang != lang && lang != "";
                 }
             }
         }
 
-        if (isNeedAddLang && lang != "") {
+        if (isNeedAddLang && lang != "" && hrefLang != lang) {
             if (getUrlVars(hrefVal)["lang"]) {
                 hrefVal = hrefVal.replace(
                     `lang=${getUrlVars(hrefVal)["lang"]}`,
@@ -409,7 +411,7 @@ function addParam(aTag, verText, fromSourse = null, needh3 = false) {
                         DcvProducts.indexOf(href_ProductName) >= 0)) &&
                 !getUrlVars(document.URL)["product"]
             ) {
-                if (getCurrentUrlLang(hrefVal, true) != lang && lang != "") {
+                if (hrefLang != lang && lang != "") {
                     hrefVal += `${hrefVal.indexOf("?") < 0 ? "?" : "&"}lang=${lang}`;
                 }
             }

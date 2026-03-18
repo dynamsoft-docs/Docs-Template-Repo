@@ -673,16 +673,16 @@ function UsefulRecord(isUseful) {
 
 function getCurrentUrlRepoType(url) {
     var currentPath = url
-    if (currentPath.includes(`${docsFolderName}server/`)) {
+    if (currentPath.includes(`/server/`)) {
         return 'server'
     }
-    if (currentPath.includes(`${docsFolderName}core/`)) {
+    if (currentPath.includes(`/core/`)) {
         return 'core'
     }
-    if (currentPath.includes(`${docsFolderName}mobile/`)) {
+    if (currentPath.includes(`/mobile/`)) {
         return 'mobile'
     }
-    if (currentPath.includes(`${docsFolderName}web/`)) {
+    if (currentPath.includes(`/web/`)) {
         return 'web'
     }
 }
