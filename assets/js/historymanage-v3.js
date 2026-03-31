@@ -738,9 +738,6 @@ function RequestNewPage(
 ) {
   const $articleContent = $("#articleContent");
   const $loadingContent = $("#loadingContent");
-  const $languageWrap = $(".languageWrap");
-  const $fullTreeContainer = $("#fullTreeMenuListContainer");
-  const $autoGenerateSidebar = $("#AutoGenerateSidebar");
   const hash =
     paramLink.split("#").length > 1
       ? paramLink.split("#")[1].toLowerCase()
@@ -764,6 +761,7 @@ function RequestNewPage(
       }
 
       // init language select container
+      const $languageWrap = $(".languageWrap");
       let languageWrapItem = $parsedDoc.find(".languageWrap");
       if (
         languageWrapItem &&
@@ -847,6 +845,7 @@ function RequestNewPage(
       !onlyLoadContent && history.pushState(null, null, paramLink);
 
       // remove old active link and li style
+      const $fullTreeContainer = $("#fullTreeMenuListContainer");
       var activeLinkParents = $fullTreeContainer.find(".activeLink").parents("li");
       for (var i = 0; i < activeLinkParents.length; i++) {
         var obj = activeLinkParents[i];
@@ -906,6 +905,7 @@ function RequestNewPage(
       }
 
       //  noTitleIndex
+      const $autoGenerateSidebar = $("#AutoGenerateSidebar");
       if ($(".headCounter").hasClass("noTitleIndex")) {
         $autoGenerateSidebar.addClass("noTitleIndex");
       } else {
@@ -934,7 +934,9 @@ function RequestNewPage(
       }
 
       // load breadcrumbs add right side menu
+      console.log("load breadcrumbs and right side menu", $autoGenerateSidebar.length);
       if ($autoGenerateSidebar.length > 0) {
+        console.log("auto generate sidebar");
         $fullTreeContainer.removeClass("needh3");
         if (needh3) {
           $fullTreeContainer.addClass("needh3");
