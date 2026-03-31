@@ -86,6 +86,7 @@ function GenerateContentByHead(needh3 = true) {
         appendHtml += curliContent
     }
     appendHtml += '</ul>'
+    console.log($('#AutoGenerateSidebar').length)
     if ($('#AutoGenerateSidebar').length != 0) {
         $('#AutoGenerateSidebar').html("")
         $('#AutoGenerateSidebar').append(appendHtml);
