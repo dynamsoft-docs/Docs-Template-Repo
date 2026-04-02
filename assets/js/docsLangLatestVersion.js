@@ -32,8 +32,8 @@ var docsLangLatestVersion = {
         java: "3.4.2000"
     },
     mrz: {
-        android: "3.4.1000",
-        ios: "3.4.1000",
+        android: "3.4.1200",
+        ios: "3.4.1200",
         flutter: "3.2.5000",
         maui: "3.0.5200",
         javascript: "3.1.0"
