@@ -7,6 +7,9 @@
     <meta http-equiv="Cache-Control" content="max-age=7200" />
     
     {%- assign seo_title = page.title -%}
+    {%- if site.title -%}
+        {%- assign seo_title = page.title | append: " - " | append: site.title -%}
+    {%- endif -%}
     {%- assign seo_description = page.description -%}
     {%- assign seo_group = '' -%}
     {%- if page.url contains '/mrz-scanner/license/' and site.firstLevelUrl contains '/faq' -%}
