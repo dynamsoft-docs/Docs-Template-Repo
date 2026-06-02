@@ -20,7 +20,7 @@
 
     {%- if seo_group != '' -%}
         {%- assign seo_slug = page.url | split: '/' | last | replace: '.html', '' -%}
-        {%- if seo_slug == '' -%}
+        {%- if seo_slug == '' or seo_slug == 'license' -%}
             {%- assign seo_slug = 'index' -%}
         {%- endif -%}
 
@@ -33,7 +33,7 @@
         {%- endif -%}
     {%- endif -%}
     <title>{{ seo_title }}</title>
-    <meta name="description" content="{{ seo_description }}">
+    <meta name="description" content="{{ seo_description | escape_once }}">
     <meta name="keywords" content="{{ page.keywords }}" />
     {%- include head.html -%}
     {%- if site.useVersionTreeV2 -%}
