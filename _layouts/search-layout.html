@@ -5,7 +5,7 @@
   <title>{% if site.firstLevelUrl contains 'web-twain' %}Dynamic Web TWAIN SDK Documentation Search{% else %}{{ page.title }}{% endif %}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="description" content="{% if site.firstLevelUrl contains 'web-twain' %}Dynamic Web TWAIN SDK Documentation Search{% else %}{{ page.description }}{% endif %}">
+  <meta name="description" content="{% if site.firstLevelUrl contains 'web-twain' %}Dynamic Web TWAIN SDK Documentation Search{% else %}{{ page.description | escape_once }}{% endif %}">
   <meta name="keywords" content="{{page.keywords}}">
   
   {%- assign docFullPath = site.docFullPath -%}
