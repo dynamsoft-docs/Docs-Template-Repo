@@ -200,8 +200,12 @@
         }
         window.location.href = "/" + getDoumentName(product) + "/docs/" + reporType + "/search.html?lang="+ (lang?lang:"core") + "&q=" + $("#searchbox").val()
     } else {
+      if (document.URL.indexOf("/docs/") >= 0) {
         let preUrl = document.URL.split("/docs/")[0]
         window.location.href = preUrl + "/docs/search.html?q=" + $("#searchbox").val()
+      } else {
+        window.location.href = "/faq/search.html?q=" + $("#searchbox").val()
+      }
     }
   })
 </script>
