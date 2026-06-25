@@ -1426,14 +1426,24 @@ function onSubsetBtnLineClick(randomId, fromJS) {
 }
 
 function transformRougeToPrism(root=document) {
-    Prism.plugins.NormalizeWhitespace.setDefaults({
-        "tabs-to-spaces": 2,
-        "indent": 2
+    Prism.hooks.add('before-highlight', function (env) {
+        env.code = normalizeIndent(env.code, 4, 2);
+        console.log(JSON.stringify(env.code));
     });
     Prism.highlightAll();
+}
 
-    // var template2Objs = $('.markdown-body .sample-code-prefix.template2 + blockquote')
-    // for (var i = 0; i < template2Objs.length; i++) {
-    //     $(template2Objs[i]).find(">div").eq(0).addClass('on')
-    // }
+
+function normalizeIndent(code, from = 4, to = 2) {
+  return code
+    .split('\n')
+    .map(line => {
+      const match = line.match(/^ */);
+      const spaces = match ? match[0].length : 0;
+
+      const level = Math.floor(spaces / from);
+
+      return ' '.repeat(level * to) + line.trimStart();
+    })
+    .join('\n');
 }
