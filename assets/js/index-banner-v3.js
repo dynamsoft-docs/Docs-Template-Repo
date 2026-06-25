@@ -1426,6 +1426,10 @@ function onSubsetBtnLineClick(randomId, fromJS) {
 }
 
 function transformRougeToPrism(root=document) {
+    Prism.plugins.NormalizeWhitespace.setDefaults({
+        "tabs-to-spaces": 2,
+        "indent": 2
+    });
     Prism.highlightAll();
 
     // var template2Objs = $('.markdown-body .sample-code-prefix.template2 + blockquote')
