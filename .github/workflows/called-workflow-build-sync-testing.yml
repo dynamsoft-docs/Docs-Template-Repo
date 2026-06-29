@@ -63,7 +63,7 @@ jobs:
           tar -xzf ${{ inputs.doc-repo }}.tar.gz -C ${{ runner.temp }}\DocHome\_site
 
       - name: Sync files
-        uses: SamKirkland/FTP-Deploy-Action@v4
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
           server: ${{ secrets.FTP_TEST_SITE_SERVER }}
           username: ${{ secrets.FTP_TEST_SITE_USER }}
