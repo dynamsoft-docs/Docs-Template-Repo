@@ -9,8 +9,8 @@ var docsLangLatestVersion = {
         android: "11.4.3000",
         ios: "11.4.3000",
         javascript: "11.4.3000",
-        maui: "11.4.1300",
-        flutter: "11.4.1300",
+        maui: "11.4.3000",
+        flutter: "11.4.3000",
         reactNative: "11.4.3010",
         xamarin: "11.0.5200",
         cordova: "11.0.5200"
@@ -23,10 +23,10 @@ var docsLangLatestVersion = {
         ios: "3.4.3000",
         javascript: "3.4.3000",
         xamarin: "1.0.5",
-        flutter: "3.4.1300",
+        flutter: "3.4.3000",
         cordova: "1.0.5",
         reactNative: "3.4.3010",
-        maui: "3.4.1300",
+        maui: "3.4.3000",
         nodejs: "2.6.1000",
         python: "3.4.3000",
         java: "3.4.3000"
