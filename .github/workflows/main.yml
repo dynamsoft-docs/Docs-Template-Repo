@@ -285,13 +285,13 @@ jobs:
       doc-url: batch-barcode-scanner/docs
     secrets: inherit
 
-  Update-MDS-On-Main-Change:
-    if: ${{ github.ref == 'refs/heads/main' }}
-    uses: ./.github/workflows/called-workflow-build-sync-production.yml
-    with:
-      doc-repo: mobile-document-scanner-docs-js
-      doc-url: mobile-document-scanner/docs/web/
-    secrets: inherit
+  # Update-MDS-On-Main-Change:
+  #   if: ${{ github.ref == 'refs/heads/main' }}
+  #   uses: ./.github/workflows/called-workflow-build-sync-production.yml
+  #   with:
+  #     doc-repo: mobile-document-scanner-docs-js
+  #     doc-url: mobile-document-scanner/docs/web/
+  #   secrets: inherit
 
 
   Update-DBR-Core-On-Preview-Change:
@@ -542,11 +542,11 @@ jobs:
       doc-url: batch-barcode-scanner/docs
     secrets: inherit
 
-  Update-MDS-On-Preview-Change:
-    if: ${{ github.ref == 'refs/heads/preview' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
-    with:
-      doc-repo: mobile-document-scanner-docs-js
-      doc-url: mobile-document-scanner/docs/web/
-    secrets: inherit
+  # Update-MDS-On-Preview-Change:
+  #   if: ${{ github.ref == 'refs/heads/preview' }}
+  #   uses: ./.github/workflows/called-workflow-build-sync-testing.yml
+  #   with:
+  #     doc-repo: mobile-document-scanner-docs-js
+  #     doc-url: mobile-document-scanner/docs/web/
+  #   secrets: inherit
 
