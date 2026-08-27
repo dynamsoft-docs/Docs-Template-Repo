@@ -23,7 +23,12 @@
 {%- endfor -%}
 {%- endif -%}
 
-<link rel="alternate" type="text/markdown" href="{{ docFullPath }}{{ targetUrl | replace: '.html', '.md' }}">
+{%- assign markdownUrl = targetUrl | replace: '.html', '.md' -%}
+{%- assign markdownUrlLastChar = markdownUrl | split:'' | last -%}
+{%- if markdownUrlLastChar contains '/' -%}
+    {%- assign markdownUrl = markdownUrl | append: 'index.md' -%}
+{%- endif -%}
+<link rel="alternate" type="text/markdown" href="{{ docFullPath }}{{ markdownUrl }}">
 
 {%- assign targetUrl = targetUrl | replace: '/index.html', '/' | strip -%}
 
