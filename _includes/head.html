@@ -1,3 +1,10 @@
+{%- assign docFullPath = site.firstLevelUrl -%}
+{%- assign docFullPathLastChar = docFullPath | split:'' | last -%}
+{%- if docFullPathLastChar contains '/' -%}	
+    {%- assign truncateDocHomePageSize = docFullPath | size | minus:1 -%}
+    {%- assign docFullPath = docFullPath | slice: 0, truncateDocHomePageSize -%}
+{%- endif -%}
+
 {%- assign excludeFlag = false -%}
 {%- assign targetUrl = page.url -%}
 {%- if page.url contains '-v' -%}
@@ -15,6 +22,14 @@
     {%- endif -%}
 {%- endfor -%}
 {%- endif -%}
+
+{%- assign markdownUrl = targetUrl | replace: '.html', '.md' -%}
+{%- assign markdownUrlLastChar = markdownUrl | split:'' | last -%}
+{%- if markdownUrlLastChar contains '/' -%}
+    {%- assign markdownUrl = markdownUrl | append: 'index.md' -%}
+{%- endif -%}
+<link rel="alternate" type="text/markdown" href="{{ docFullPath }}{{ markdownUrl }}">
+
 {%- assign targetUrl = targetUrl | replace: '/index.html', '/' | strip -%}
 
 {%- if page.ignore -%}
@@ -29,13 +44,9 @@
 <meta name="robots" content="noindex">
 {%- endif -%}
 
-{%- assign docFullPath = site.firstLevelUrl -%}
-{%- assign docFullPathLastChar = docFullPath | split:'' | last -%}
-{%- if docFullPathLastChar contains '/' -%}	
-    {%- assign truncateDocHomePageSize = docFullPath | size | minus:1 -%}
-    {%- assign docFullPath = docFullPath | slice: 0, truncateDocHomePageSize -%}
-{%- endif -%}
+
 <link href="{{ docFullPath }}{{ targetUrl }}" rel="canonical">
+
 
 {%- assign assetsPath = '/webres/wwwroot' -%}
 
