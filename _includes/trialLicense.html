@@ -149,6 +149,20 @@
                 <a href="javascript:;" class="orangeLink resendBusinessEmailCode">Resend verification code</a>
               </div>
             </div>
+            <div class="businessEmailPasswordStep" style="display: none;">
+              <h3 class="title mb20 tl">Verify ownership</h3>
+              <p class="mb20 tl desc">This business email is associated with an existing account. Enter the password of <span class="businessEmailPasswordTarget"></span> to verify ownership and extend your trial.</p>
+              <div class="collectUserInfo">
+                <div class="basicFormGroup">
+                  <input type="password" id="businessEmailPassword" class="basicFormInput" placeholder=" " autocomplete="current-password" required>
+                  <div class="placeholder"><span>*</span> Password</div>
+                </div>
+              </div>
+              <button class="d-btn border-btn confirmBusinessEmailPasswordBtn fontOswald">Verify &amp; extend my trial</button>
+              <div class="resetBusinessEmailPasswordLine">
+                <a href="javascript:;" class="orangeLink resetBusinessEmailPassword">Forgot password?</a>
+              </div>
+            </div>
           </div>
         </div>
         <div class="extensionSurvey">
@@ -371,4 +385,5 @@
   </div>
 </div>
 
+<script src="{{ assetsPath }}/js/AesGcmHybridEncryptor.js"></script>
 <script src="{{ assetsPath }}/js/docs/trialLicense.js"></script>
