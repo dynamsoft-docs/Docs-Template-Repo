@@ -90,6 +90,8 @@ module Jekyll
         @domain = (@cfg["domain"] || site.config["url"] || "https://www.dynamsoft.com").to_s.sub(%r{/+\z}, "")
         @baseurl = (site.config["baseurl"] || "").to_s
         @baseurl = "" if @baseurl == "/"
+        @baseurl = "/#{@baseurl}" unless @baseurl.empty? || @baseurl.start_with?("/")
+        @baseurl = @baseurl.sub(%r{/+\z}, "")
         @rewrite_domains = Array(@cfg["rewrite_domains"])
         @page_map = {}
         @md_set = Set.new
@@ -214,7 +216,11 @@ module Jekyll
         }
 
         template = site.liquid_renderer.file(rel).parse(body)
-        template.render!(payload, info)
+        rendered = template.render!(payload, info)
+        if rendered.include?("{{") || rendered.include?("{%")
+          warn_for(rel, "unresolved Liquid syntax remains in #{rel}")
+        end
+        rendered
       rescue StandardError => e
         warn_for(rel, "Liquid render failed for #{rel}, published raw instead: #{e.message}")
         body
@@ -269,8 +275,11 @@ module Jekyll
       end
 
       def internal_host?(host)
-        host == URI.parse(@domain).host || @rewrite_domains.any? do |d|
-          host == d || host.end_with?(".#{d}")
+        normalized_host = host.to_s.split("@", 2).last.to_s.split(":", 2).first.downcase
+        domain_host = URI.parse(@domain).host.to_s.downcase
+        normalized_domains = @rewrite_domains.map { |d| d.to_s.downcase.sub(%r{/+\z}, "") }
+        normalized_host == domain_host || normalized_domains.any? do |d|
+          normalized_host == d || normalized_host.end_with?(".#{d}")
         end
       end
 
@@ -307,18 +316,20 @@ module Jekyll
 
         def rewrite(text)
           out = +""
-          fence_char = nil
+          fence_marker = nil
           text.each_line do |line|
-            if fence_char
+            if fence_marker
               out << line
-              fence_char = nil if line =~ FENCE_RE && Regexp.last_match(2).start_with?(fence_char)
+              if (closing = FENCE_RE.match(line)) && closing[2][0] == fence_marker[0] && closing[2].length >= fence_marker.length
+                fence_marker = nil
+              end
               next
             end
 
             m = FENCE_RE.match(line)
             if m
               out << line
-              fence_char = m[2][0]
+              fence_marker = m[2]
               next
             end
 
@@ -350,16 +361,25 @@ module Jekyll
               # Whole link/image token; rewrite its URL unless we are inside a
               # code span or the URL is an anchor-only fragment.
               url = m[2] || m[3]
-              if in_code || url.nil? || url.start_with?("#")
+              label_code = m[1].include?("`")
+              if url.nil? || url.start_with?("#")
+                out << m[0]
+              elsif in_code && !label_code
+                # Genuinely inside a code span (`[x](u)`) - keep as-is.
                 out << m[0]
               else
                 new_url = rewrite_url(url)
                 if new_url
                   @p.rewritten += 1 if new_url != url
-                  out << "#{m[1]}(#{new_url}#{m[4]})"
+                  rendered_url = m[2] ? "<#{new_url}>" : new_url
+                  out << "#{m[1]}(#{rendered_url}#{m[4]})"
                 else
                   out << m[0]
                 end
+                # A link whose label is wrapped in backticks ([`x`](url))
+                # consumed those backticks as part of the label, so a code
+                # span that seemed to start right before it ends here.
+                in_code = false if in_code && label_code
               end
             else
               # Backtick run outside a link: toggle code-span state.
@@ -383,7 +403,8 @@ module Jekyll
               new_url = rewrite_url(url)
               if new_url
                 @p.rewritten += 1 if new_url != url
-                "#{m[1]}(#{new_url}#{m[4]})"
+                rendered_url = m[2] ? "<#{new_url}>" : new_url
+                "#{m[1]}(#{rendered_url}#{m[4]})"
               else
                 m[0]
               end
@@ -396,7 +417,8 @@ module Jekyll
             url = m[2].delete_prefix("<").delete_suffix(">")
             new_url = url.start_with?("#") ? nil : rewrite_url(url)
             if new_url
-              "#{m[1]}#{new_url}#{m[3]}"
+              rendered_url = m[2].start_with?("<") ? "<#{new_url}>" : new_url
+              "#{m[1]}#{rendered_url}#{m[3]}"
             else
               seg
             end
@@ -421,10 +443,11 @@ module Jekyll
             origin = "https://#{host}"
             path = "/#{tail}"
           elsif raw =~ %r{\A([a-z][a-z0-9+.\-]*)://([^/]+)(/.*)?\z}i
-            return nil unless Regexp.last_match(1) == "http" || Regexp.last_match(1) == "https"
+            scheme = Regexp.last_match(1).downcase
+            return nil unless %w[http https].include?(scheme)
             return nil unless @p.internal_host?(Regexp.last_match(2))
 
-            origin = "#{Regexp.last_match(1)}://#{Regexp.last_match(2)}"
+            origin = "#{scheme}://#{Regexp.last_match(2)}"
             path = Regexp.last_match(3) || "/"
           elsif raw.start_with?("/")
             path = raw
@@ -640,15 +663,17 @@ module Jekyll
           dest = File.join(@p.site.dest, *rel.split("/"))
           return unless File.file?(dest)
 
-          fence = nil
+          fence_marker = nil
           File.foreach(dest, encoding: "UTF-8") do |line|
-            if fence
-              fence = nil if line =~ FENCE_RE && Regexp.last_match(2).start_with?(fence)
+            if fence_marker
+              if (closing = FENCE_RE.match(line)) && closing[2][0] == fence_marker[0] && closing[2].length >= fence_marker.length
+                fence_marker = nil
+              end
               next
             end
 
             if (m = FENCE_RE.match(line))
-              fence = m[2][0]
+              fence_marker = m[2]
               next
             end
 
@@ -657,16 +682,19 @@ module Jekyll
         end
 
         def check_line(src, line)
-          in_code = false
+          pending = false
           line.to_enum(:scan, LINK_OR_TICK_RE).each do
             m = Regexp.last_match
             if m[1]
-              check_url(src, m[2] || m[3]) unless in_code
+              target = m[2] || m[3]
+              if target && !target.start_with?("#")
+                check_url(src, target) unless pending
+              end
             else
-              in_code = !in_code
+              pending = !pending
             end
           end
-          return if in_code
+          return if pending
 
           ref = REF_DEF_RE.match(line)
           check_url(src, ref[2].delete_prefix("<").delete_suffix(">")) if ref
