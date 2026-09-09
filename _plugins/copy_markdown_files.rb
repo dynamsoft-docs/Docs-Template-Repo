@@ -93,8 +93,10 @@ module Jekyll
         @rewrite_domains = Array(@cfg["rewrite_domains"])
         @page_map = {}
         @md_set = Set.new
+        @md_ci = {} # downcased rel => [published rels sharing that spelling]
         @html_to_md = {}
         @rewritten = 0
+        @case_normalized = 0
         @warn_counts = Hash.new(0)
         @warn_first = {}
       end
@@ -147,6 +149,8 @@ module Jekyll
       def build_indexes(rels)
         rels.each do |rel|
           @md_set << rel
+          @md_ci[rel.downcase] ||= []
+          @md_ci[rel.downcase] << rel
           page = @page_map[rel]
           next unless page
 
@@ -245,6 +249,23 @@ module Jekyll
 
       def abs_path_for_rel(rel)
         "#{baseurl_prefix}#{rel}"
+      end
+
+      # Web URLs are case-insensitive on the production server, so a link may
+      # reference a published page with different casing than the actual file
+      # (e.g. .../auxiliary-DatamatrixDetails.html vs the real
+      # auxiliary-DataMatrixDetails.md). Return the actually published rel for
+      # a case-insensitive match of `rel`; nil when absent or ambiguous
+      # (two real files differing only in case).
+      def twin_md(rel)
+        return rel if @md_set.include?(rel)
+
+        cands = @md_ci[rel.downcase]
+        cands && cands.size == 1 ? cands.first : nil
+      end
+
+      def count_normalized
+        @case_normalized += 1
       end
 
       def internal_host?(host)
@@ -408,11 +429,29 @@ module Jekyll
           elsif raw.start_with?("/")
             path = raw
           else
-            path = resolve_relative(raw)
+            path = resolve_ref(raw)
           end
 
           path, query, fragment = split_url(path)
+          path = normalize_abs(path)
           handle(path, query, fragment, origin)
+        end
+
+        # Collapse "." and ".." segments of an absolute path (/a/../b == /b).
+        def normalize_abs(path)
+          return path unless path.start_with?("/")
+
+          parts = []
+          path.split("/").each do |seg|
+            next if seg.empty? || seg == "."
+
+            if seg == ".."
+              parts.pop unless parts.empty?
+            else
+              parts << seg
+            end
+          end
+          parts.empty? ? "/" : "/#{parts.join('/')}"
         end
 
         def split_url(path)
@@ -421,7 +460,7 @@ module Jekyll
           [path, query, fragment]
         end
 
-        def resolve_relative(ref)
+        def resolve_ref(ref)
           parts = @dir_parts.dup
           ref.split("/").each do |seg|
             next if seg.empty? || seg == "."
@@ -447,7 +486,7 @@ module Jekyll
           elsif path.end_with?(".html", ".htm")
             handle_html(path, query, fragment, base)
           else
-            assemble(base, path, true, query, fragment)
+            handle_extensionless(path, query, fragment, base)
           end
         end
 
@@ -455,8 +494,9 @@ module Jekyll
           if @p.cfg["folder_to_index"]
             if @p.under_base?(path)
               rel = "#{@p.rel_under_base(path)}index.md"
-              if @p.md_set.include?(rel)
-                return assemble(base, @p.abs_path_for_rel(rel), false, nil, fragment)
+              if (actual = @p.twin_md(rel))
+                @p.count_normalized if actual != rel
+                return assemble(base, @p.abs_path_for_rel(actual), false, nil, fragment)
               end
               warn("folder link has no published index.md twin: #{path}")
             elsif @p.docs_like?(path)
@@ -467,10 +507,19 @@ module Jekyll
         end
 
         def handle_md(path, query, fragment, base)
-          if @p.under_base?(path) && !@p.md_set.include?(@p.rel_under_base(path))
-            warn("link target has no published .md twin: #{path}")
-          end
           strip = @p.cfg["strip_query"]
+          if @p.under_base?(path)
+            rel = @p.rel_under_base(path)
+            actual = @p.twin_md(rel)
+            if actual
+              if actual != rel
+                @p.count_normalized
+                return assemble(base, @p.abs_path_for_rel(actual), !strip, query, fragment)
+              end
+            else
+              warn("link target has no published .md twin: #{path}")
+            end
+          end
           assemble(base, path, !strip, query, fragment)
         end
 
@@ -480,8 +529,9 @@ module Jekyll
 
           if same_repo
             rel = @p.rel_under_base(md_candidate)
-            if @p.md_set.include?(rel)
-              return assemble(base, md_candidate, false, nil, fragment)
+            if (actual = @p.twin_md(rel))
+              @p.count_normalized if actual != rel
+              return assemble(base, @p.abs_path_for_rel(actual), false, nil, fragment)
             end
 
             if (hit = @p.html_to_md[path])
@@ -494,6 +544,40 @@ module Jekyll
 
           if @p.docs_like?(path)
             assemble(base, md_candidate, false, nil, fragment)
+          else
+            assemble(base, path, true, query, fragment)
+          end
+        end
+
+        # Extension-less page URLs (e.g.
+        # .../programming/javascript/samples-demos) point at the directory
+        # default page, which is rendered from <dir>/index.md. Resolve them
+        # to the .md twin when possible.
+        def handle_extensionless(path, query, fragment, base)
+          if @p.under_base?(path)
+            rel = @p.rel_under_base(path)
+
+            if @p.cfg["folder_to_index"]
+              cand = "#{rel}/index.md"
+              if (actual = @p.twin_md(cand))
+                @p.count_normalized if actual != cand
+                return assemble(base, @p.abs_path_for_rel(actual), false, nil, fragment)
+              end
+            end
+
+            cand_file = "#{rel}.md"
+            if (actual = @p.twin_md(cand_file))
+              @p.count_normalized if actual != cand_file
+              return assemble(base, @p.abs_path_for_rel(actual), false, nil, fragment)
+            end
+
+            # No page twin; keep the URL and let the link checker classify
+            # (html-only page vs genuinely missing).
+            assemble(base, path, true, query, fragment)
+          elsif @p.docs_like?(path) && @p.cfg["folder_to_index"]
+            # Other product's docs on the same domain follow the same
+            # directory convention: <dir>/index.md.
+            assemble(base, "#{path}/index.md", false, nil, fragment)
           else
             assemble(base, path, true, query, fragment)
           end
@@ -634,8 +718,7 @@ module Jekyll
 
         def resolve_relative(src, ref)
           parts = (@p.baseurl.split("/") + src.split("/")[0...-1]).reject(&:empty?)
-          rel_path, = split_pqf(ref)
-          rel_path.split("/").each do |seg|
+          ref.split("/").each do |seg|
             next if seg.empty? || seg == "."
 
             if seg == ".."
@@ -666,8 +749,8 @@ module Jekyll
         end
 
         def verify_md(src, rel)
-          if @p.md_set.include?(rel)
-            @inbound[rel] += 1
+          if (actual = @p.twin_md(rel))
+            @inbound[actual] += 1
             return
           end
 
@@ -676,7 +759,7 @@ module Jekyll
 
         def verify_html(src, rel)
           md_rel = rel.sub(/\.html?\z/, ".md")
-          if @p.md_set.include?(md_rel)
+          if @p.twin_md(md_rel)
             @warns << [src, @p.abs_path_for_rel(rel), ".html target has a .md twin; link should point to the twin"]
             return
           end
@@ -690,8 +773,8 @@ module Jekyll
 
         def verify_folder(src, rel_dir)
           candidate = "#{rel_dir}index.md"
-          if @p.md_set.include?(candidate)
-            @inbound[candidate] += 1
+          if (actual = @p.twin_md(candidate))
+            @inbound[actual] += 1
             return
           end
 
@@ -704,13 +787,10 @@ module Jekyll
         end
 
         def verify_other(src, rel)
-          # Direct file/asset that exists in the output.
           return if dest_file?(rel)
 
-          # Pretty page URL without extension: /a/b -> /a/b.html.
           if dest_file?("#{rel}.html")
-            md_rel = "#{rel}.md"
-            if @p.md_set.include?(md_rel)
+            if @p.twin_md("#{rel}.md")
               @warns << [src, @p.abs_path_for_rel(rel), "extensionless target has a .md twin; link should point to the twin"]
             else
               @warns << [src, @p.abs_path_for_rel(rel), "extensionless target has no .md twin (AI will get HTML)"]
@@ -718,7 +798,6 @@ module Jekyll
             return
           end
 
-          # Directory link without trailing slash.
           if dest_dir?(rel)
             verify_folder(src, "#{rel}/")
             return
@@ -728,11 +807,25 @@ module Jekyll
         end
 
         def dest_file?(rel)
-          File.file?(File.join(@p.site.dest, *rel.split("/")))
+          path = dest_resolve(rel)
+          path ? File.file?(path) : false
         end
 
         def dest_dir?(rel)
-          File.directory?(File.join(@p.site.dest, *rel.split("/")))
+          path = dest_resolve(rel)
+          path ? File.directory?(path) : false
+        end
+
+        def dest_resolve(rel)
+          full = File.join(@p.site.dest, *rel.split("/"))
+          return full if File.exist?(full)
+
+          dir = File.dirname(full)
+          leaf = File.basename(full)
+          return nil unless File.directory?(dir)
+
+          hit = Dir.children(dir).find { |c| c.casecmp?(leaf) }
+          hit ? File.join(dir, hit) : nil
         end
 
         def report
