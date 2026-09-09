@@ -67,6 +67,11 @@ module Jekyll
 
     FENCE_RE = /\A(\s*)(`{3,}|~{3,})/
 
+    # Alternation used by Rewriter#rewrite_line: a whole markdown link/image
+    # (whose label may itself contain backticks, e.g. [`setMaxFrames`](url))
+    # wins over a backtick run, so code spans are only toggled outside links.
+    LINK_OR_TICK_RE = /#{INLINE_LINK_RE.source}|(`+)/
+
     YAML_FRONT_MATTER_RE = /\A(---\s*\r?\n)(.*?)^(---|\.\.\.)\s*\r?\n/m
 
     class Processor
@@ -298,17 +303,42 @@ module Jekyll
         private
 
         # Rewrite links of one line while protecting inline code spans.
+        # Tokens are scanned left to right: a complete markdown link/image is
+        # handled as one unit (its label may contain backticks, e.g.
+        # [`method`](page.html#anchor)); backtick runs only toggle code-span
+        # state when they occur outside of such a link.
         def rewrite_line(line)
           out = +""
           in_code = false
           seg_start = 0
 
-          line.to_enum(:scan, /(`+)/).each do
+          line.to_enum(:scan, LINK_OR_TICK_RE).each do
             m = Regexp.last_match
+
             seg = line[seg_start...m.begin(0)]
             out << (in_code ? seg : rewrite_plain(seg))
-            out << m[0]
-            in_code = !in_code
+
+            if m[1]
+              # Whole link/image token; rewrite its URL unless we are inside a
+              # code span or the URL is an anchor-only fragment.
+              url = m[2] || m[3]
+              if in_code || url.nil? || url.start_with?("#")
+                out << m[0]
+              else
+                new_url = rewrite_url(url)
+                if new_url
+                  @p.rewritten += 1 if new_url != url
+                  out << "#{m[1]}(#{new_url}#{m[4]})"
+                else
+                  out << m[0]
+                end
+              end
+            else
+              # Backtick run outside a link: toggle code-span state.
+              out << m[0]
+              in_code = !in_code
+            end
+
             seg_start = m.end(0)
           end
 
