@@ -41,6 +41,9 @@
 #     folder_to_index: true              # /dir/ -> /dir/index.md when a twin exists
 #     rewrite_domains: [dynamsoft.com]   # hosts treated as internal docs
 #     domain: https://www.dynamsoft.com  # prefix used to absolutize links
+#     link_check: true                   # run the .md link checker after build
+#     orphan_check: true                 # report pages no other .md links to
+#     orphan_entries: [index.md]         # entry pages ignored by orphan report
 #
 # A single page can opt out of publishing its .md twin with
 # `copy_markdown: false` in its front matter.
@@ -56,6 +59,9 @@ module Jekyll
       "folder_to_index" => true,
       "rewrite_domains" => ["dynamsoft.com"],
       "domain"          => nil,
+      "link_check"      => true,
+      "orphan_check"    => true,
+      "orphan_entries"  => ["index.md"],
     }.freeze
 
     # Inline markdown link / image: ![alt](url "title")  or  [text](url).
@@ -104,6 +110,7 @@ module Jekyll
 
         build_indexes(rels)
         rels.each { |rel| process_file(rel) }
+        LinkChecker.new(self).run if @cfg["link_check"]
         log_summary(rels.size)
       end
 
@@ -501,6 +508,254 @@ module Jekyll
 
         def warn(message)
           @p.warn_for(@rel, message)
+        end
+      end
+
+      # ---------------------------------------------------------------------
+      # Link checker
+      # ---------------------------------------------------------------------
+      # Walks every published .md twin after it is written and reports link
+      # problems between them - the Markdown equivalent of an HTML link
+      # checker (e.g. html-proofer):
+      #
+      #   ERROR : a linked .md page was not published (no twin), or a
+      #           same-site .html / folder / asset target does not exist in
+      #           the generated output at all.
+      #   WARN  : a same-site link still points to an .html page - either the
+      #           page has a .md twin (the link should point to it) or it has
+      #           no twin at all (the AI will receive HTML instead of md).
+      #   INFO  : pages that no other published .md links to (orphans) - they
+      #           are unreachable through the Markdown web. Entry pages listed
+      #           in `orphan_entries` are ignored.
+      #
+      # Links to external hosts are skipped; links that leave the current
+      # docs root (other products on the same domain, e.g. /capture-vision/..
+      # from a barcode-reader page) cannot be verified inside this repo's
+      # build and are counted only. Fenced code blocks / inline code and
+      # anchor-only (#...) links are ignored. Anchor (heading) existence is
+      # not checked yet.
+      class LinkChecker
+        def initialize(processor)
+          @p = processor
+          @errors = [] # [source_rel, target]
+          @warns = []  # [source_rel, target, detail]
+          @inbound = Hash.new(0)
+          @total = 0
+          @cross = 0
+          @external = 0
+        end
+
+        def run
+          @p.md_set.to_a.sort.each { |rel| check_file(rel) }
+          report
+        end
+
+        private
+
+        def check_file(rel)
+          dest = File.join(@p.site.dest, *rel.split("/"))
+          return unless File.file?(dest)
+
+          fence = nil
+          File.foreach(dest, encoding: "UTF-8") do |line|
+            if fence
+              fence = nil if line =~ FENCE_RE && Regexp.last_match(2).start_with?(fence)
+              next
+            end
+
+            if (m = FENCE_RE.match(line))
+              fence = m[2][0]
+              next
+            end
+
+            check_line(rel, line)
+          end
+        end
+
+        def check_line(src, line)
+          in_code = false
+          line.to_enum(:scan, LINK_OR_TICK_RE).each do
+            m = Regexp.last_match
+            if m[1]
+              check_url(src, m[2] || m[3]) unless in_code
+            else
+              in_code = !in_code
+            end
+          end
+          return if in_code
+
+          ref = REF_DEF_RE.match(line)
+          check_url(src, ref[2].delete_prefix("<").delete_suffix(">")) if ref
+        end
+
+        def check_url(src, raw)
+          url = raw.to_s.strip
+          return if url.empty? || url.start_with?("#")
+          return if url.start_with?("mailto:", "tel:", "javascript:", "data:")
+          # Leftover Liquid from a page that failed to render.
+          return if url.include?("{{") || url.include?("{%")
+
+          @total += 1
+          path = nil
+
+          if url.start_with?("//")
+            host, _, tail = url.sub(%r{\A//}, "").partition("/")
+            unless @p.internal_host?(host)
+              @external += 1
+              return
+            end
+            path = "/#{tail}"
+          elsif (m = %r{\A([a-z][a-z0-9+.\-]*)://([^/]+)(/.*)?\z}i.match(url))
+            unless %w[http https].include?(m[1].downcase)
+              @external += 1
+              return
+            end
+            unless @p.internal_host?(m[2])
+              @external += 1
+              return
+            end
+            path = m[3] || "/"
+          elsif url.start_with?("/")
+            path = url
+          else
+            path = resolve_relative(src, url)
+          end
+
+          path, = split_pqf(path)
+          verify_target(src, path)
+        end
+
+        # [path, query, fragment]
+        def split_pqf(path)
+          path, fragment = path.split("#", 2)
+          path, query = path.split("?", 2)
+          [path, query, fragment]
+        end
+
+        def resolve_relative(src, ref)
+          parts = (@p.baseurl.split("/") + src.split("/")[0...-1]).reject(&:empty?)
+          rel_path, = split_pqf(ref)
+          rel_path.split("/").each do |seg|
+            next if seg.empty? || seg == "."
+
+            if seg == ".."
+              parts.pop unless parts.empty?
+            else
+              parts << seg
+            end
+          end
+          parts.empty? ? "/" : "/#{parts.join('/')}"
+        end
+
+        def verify_target(src, path)
+          unless @p.under_base?(path)
+            @cross += 1
+            return
+          end
+
+          rel = @p.rel_under_base(path)
+          if path.end_with?("/") || rel.empty?
+            verify_folder(src, rel)
+          elsif rel.end_with?(".md", ".markdown")
+            verify_md(src, rel)
+          elsif rel.end_with?(".html", ".htm")
+            verify_html(src, rel)
+          else
+            verify_other(src, rel)
+          end
+        end
+
+        def verify_md(src, rel)
+          if @p.md_set.include?(rel)
+            @inbound[rel] += 1
+            return
+          end
+
+          @errors << [src, @p.abs_path_for_rel(rel), "linked .md page has no published twin"]
+        end
+
+        def verify_html(src, rel)
+          md_rel = rel.sub(/\.html?\z/, ".md")
+          if @p.md_set.include?(md_rel)
+            @warns << [src, @p.abs_path_for_rel(rel), ".html target has a .md twin; link should point to the twin"]
+            return
+          end
+
+          if dest_file?(rel)
+            @warns << [src, @p.abs_path_for_rel(rel), ".html target has no .md twin (AI will get HTML)"]
+          else
+            @errors << [src, @p.abs_path_for_rel(rel), ".html target not found in output"]
+          end
+        end
+
+        def verify_folder(src, rel_dir)
+          candidate = "#{rel_dir}index.md"
+          if @p.md_set.include?(candidate)
+            @inbound[candidate] += 1
+            return
+          end
+
+          html = "#{rel_dir}index.html"
+          if dest_file?(html)
+            @warns << [src, @p.abs_path_for_rel(html), "folder link has no .md index twin (AI will get HTML)"]
+          else
+            @errors << [src, @p.abs_path_for_rel(html), "folder link target not found in output"]
+          end
+        end
+
+        def verify_other(src, rel)
+          # Direct file/asset that exists in the output.
+          return if dest_file?(rel)
+
+          # Pretty page URL without extension: /a/b -> /a/b.html.
+          if dest_file?("#{rel}.html")
+            md_rel = "#{rel}.md"
+            if @p.md_set.include?(md_rel)
+              @warns << [src, @p.abs_path_for_rel(rel), "extensionless target has a .md twin; link should point to the twin"]
+            else
+              @warns << [src, @p.abs_path_for_rel(rel), "extensionless target has no .md twin (AI will get HTML)"]
+            end
+            return
+          end
+
+          # Directory link without trailing slash.
+          if dest_dir?(rel)
+            verify_folder(src, "#{rel}/")
+            return
+          end
+
+          @errors << [src, @p.abs_path_for_rel(rel), "linked file not found in output"]
+        end
+
+        def dest_file?(rel)
+          File.file?(File.join(@p.site.dest, *rel.split("/")))
+        end
+
+        def dest_dir?(rel)
+          File.directory?(File.join(@p.site.dest, *rel.split("/")))
+        end
+
+        def report
+          @errors.each do |src, target, why|
+            Jekyll.logger.error("MD Link Check:", "broken link #{target} (#{why}) -- referenced from #{src}")
+          end
+          @warns.each do |src, target, why|
+            Jekyll.logger.warn("MD Link Check:", "#{target} (#{why}) -- referenced from #{src}")
+          end
+
+          if @p.cfg["orphan_check"]
+            excluded = Array(@p.cfg["orphan_entries"])
+            orphans = @p.md_set.to_a.reject { |rel| @inbound.key?(rel) || excluded.include?(rel) }.sort
+            if orphans.any?
+              list = orphans.size > 25 ? "#{orphans.first(25).join(', ')}, ... (#{orphans.size - 25} more)" : orphans.join(", ")
+              Jekyll.logger.info("MD Link Check:", "#{orphans.size} page(s) are not linked by any other published Markdown: #{list}")
+            end
+          end
+
+          msg = +"checked #{@total} internal link(s) across #{@p.md_set.size} .md file(s): " \
+                 "#{@errors.size} broken, #{@warns.size} warnings, #{@external} external skipped, " \
+                 "#{@cross} cross-repo unverifiable"
+          Jekyll.logger.info("MD Link Check:", msg)
         end
       end
     end
