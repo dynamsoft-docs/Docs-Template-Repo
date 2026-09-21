@@ -2,11 +2,13 @@
 html {
     font-size: 10px;
     color: #444444;
-    font-family: OpenSans-Regular;
+    font-family: Inter;
+font-weight: normal;
 }
 
 body {
-    font-family: OpenSans-Regular;
+    font-family: Inter;
+font-weight: normal;
 }
 
 .h1,
@@ -27,7 +29,8 @@ h5 {
 
 strong {
     color: #323234;
-    font-family: OpenSans-Semibold;
+    font-family: Inter;
+    font-weight: 500;
 }
 
 .markdown-body h1 {
@@ -62,14 +65,15 @@ strong {
 .markdown-body h4,
 .markdown-body h5,
 .markdown-body h6 {
-    font-weight: normal;
-    font-family: OpenSans-Semibold;
+    font-weight: 500;
+    font-family: Inter;
     padding: 0;
     margin: 0
 }
 
 .markdown-body h1 {
-    font-family: OpenSans-Regular;
+    font-family: Inter;
+    font-weight: normal;
 }
 
 .markdown-body h4 {
@@ -431,7 +435,8 @@ ul.disc>li p:hover {
     box-sizing: border-box;
     min-height: auto;
     padding-bottom: 50px;
-    font-family: OpenSans-Regular;
+    font-family: Inter;
+font-weight: normal;
 }
 
 .markdown-body table th,
@@ -823,7 +828,8 @@ ul.disc>li p:hover {
 }
 
 .btn {
-    font-family: OpenSans-Regular;
+    font-family: Inter;
+    font-weight: normal;
 }
 
 #footerTop .subscribe {
@@ -999,7 +1005,8 @@ div, .sideBar .mainPage {
     #subMenu .subMenuContent .pro>a,
     #footerTop ul li.title,
     #smNav li:first-child a {
-        font-family: OpenSans-Semibold;
+        font-family: Inter;
+        font-weight: 500;
     }
 }
 
@@ -2089,7 +2096,8 @@ i.dbr-white-logo {
     color: #707070;
     font-size: 14px;
     text-transform: none;
-    font-family: OpenSans-Regular;
+    font-family: Inter;
+font-weight: normal;
 }
 
 .productMenu .pcProductMenu .ct-more li a.on,
@@ -2901,7 +2909,8 @@ i.dbr-white-logo {
 .markdown-body p.subtitle {
     font-size: 14px;
     color: #606060;
-    font-family: 'OpenSans-Regular';
+    font-family: 'Inter';
+    font-weight: normal;
     margin-top: 5px;
     margin-bottom: 0;
 }
@@ -3002,7 +3011,6 @@ a#toTop {
 
 
 /* start left menu style 2.0   id: categoryMenuTree */
-/* font-family: OpenSans-Semibold; */
 #categoryMenuTree_history {
     width: 265px;
 }
@@ -3067,14 +3075,16 @@ a#toTop {
 }
 
 #categoryMenuTree #fullTreeMenuListContainer > li > a {
-    font-family: OpenSans-Semibold;
+    font-family: Inter;
+    font-weight: 500;
     color: #323234;
 }
 
 #categoryMenuTree #fullTreeMenuListContainer li.category {
     font-size: 14px;
     color: #606060;
-    font-family: OpenSans-Semibold;
+    font-family: Inter;
+    font-weight: 500;
     height: 45px;
     line-height: 45px;
     padding-left: 0;
@@ -3264,7 +3274,8 @@ a#toTop {
 .languageWrap {
     display: none;
     position: relative;
-    font-family: OpenSans-Regular;
+    font-family: Inter;
+font-weight: normal;
     float: right;
     color: #F5F5F5;
     font-size: 16px;
@@ -3296,8 +3307,8 @@ a#toTop {
 
 .languageWrap .languageChange .chosenLanguage {
     color: #FFFFFF;
-    font-weight: normal;
-    font-family: OpenSans-Semibold;
+    font-family: Inter;
+    font-weight: 500;
     margin-bottom: 0;
 }
 
@@ -3537,7 +3548,8 @@ div[class^="blockquote-"]  + blockquote::before {
     padding-left: 26px;
     font-size: 16px;
     line-height: 20px;
-    font-family: OpenSans-Semibold;
+    font-family: Inter;
+    font-weight: 500;
 }
 
 div.blockquote-note + blockquote {
