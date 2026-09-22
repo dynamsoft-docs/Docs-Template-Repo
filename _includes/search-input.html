@@ -26,9 +26,10 @@
   var lang = getCurrentUrlLang(document.URL, true)
   var isNeedFilter = "{{site.searchNeedFilter}}"
   var isUserInput = true
+  var searchIndexName = "{{site.searchIndexName}}"
 
   const mySearch = instantsearch({
-    indexName: '{{site.searchIndexName}}',
+    indexName: searchIndexName,
     searchClient: algoliasearch('989MTMK88E', '68565cc874554161b1842b2364287be7'),
     searchFunction(helper) {
       const query = helper.state.query;
@@ -39,7 +40,7 @@
     }
   });
 
-  if (isNeedFilter == "true") {
+  if (isNeedFilter == "true" && searchIndexName != "Crawler-FAQ-Docs") {
     mySearch.addWidgets([
       instantsearch.widgets.configure({
         hitsPerPage: 10,
@@ -180,7 +181,7 @@
     if (["dlr", "dce", "ddn", "dcv", "dcp"].indexOf(product) >= 0) {
       product = "dcv"
     }
-    if (["dbr", "dlr", "dce", "dcp", "dcv", "ddn", "mrz"].indexOf(product) >= 0) {
+    if (["dbr", "dlr", "dce", "dcp", "dcv", "ddn", "mrz", "mds"].indexOf(product) >= 0) {
         let lang = getCurrentUrlLang(document.URL, true)
         let reporType = ""
         if (lang && lang != "core") {
@@ -191,7 +192,7 @@
             if (['objectivec-swift', 'android', 'objective-c', 'objc', 'swift', 'ios', 'react-native', 'maui', 'flutter', 'xamarin', 'cordova'].indexOf(lang) >= 0) {
                 reporType = "mobile"
             }
-            if (['c', 'cpp', 'c++', 'csharp', 'dotnet', 'java', 'python', 'cpluscplus'].indexOf(lang) >= 0) {
+            if (['c', 'cpp', 'c++', 'csharp', 'dotnet', 'java', 'python', 'cpluscplus', 'cplusplus'].indexOf(lang) >= 0) {
                 reporType = "server"
             }
         } else {
@@ -199,8 +200,12 @@
         }
         window.location.href = "/" + getDoumentName(product) + "/docs/" + reporType + "/search.html?lang="+ (lang?lang:"core") + "&q=" + $("#searchbox").val()
     } else {
+      if (document.URL.indexOf("/docs/") >= 0) {
         let preUrl = document.URL.split("/docs/")[0]
         window.location.href = preUrl + "/docs/search.html?q=" + $("#searchbox").val()
+      } else {
+        window.location.href = "/faq/search.html?q=" + $("#searchbox").val()
+      }
     }
   })
 </script>

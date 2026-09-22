@@ -1,25 +1,60 @@
 <!DOCTYPE html>
 <html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Cache-Control" content="max-age=7200" />
+    
+    {%- assign seo_title = page.title -%}
+    {%- if site.title -%}
+        {%- assign seo_title = page.title | append: " - " | append: site.title -%}
+    {%- endif -%}
+    {%- assign seo_description = page.description -%}
+    {%- assign seo_group = '' -%}
+    {%- if page.url contains '/mrz-scanner/license/' and site.firstLevelUrl contains '/faq' -%}
+        {%- assign seo_group = 'mrz_license' -%}
+    {%- elsif page.url contains '/barcode-reader/license/' and site.firstLevelUrl contains '/faq' -%}
+        {%- assign seo_group = 'dbr_license' -%}
+    {%- endif -%}
 
-{%- include head.html -%}
+    {%- if seo_group != '' -%}
+        {%- assign seo_slug = page.url | split: '/' | last | replace: '.html', '' -%}
+        {%- if seo_slug == '' or seo_slug == 'license' -%}
+            {%- assign seo_slug = 'index' -%}
+        {%- endif -%}
+
+        {%- assign seo_override = site.data.license_seo_overrides[seo_group][seo_slug] -%}
+        {%- if seo_override and seo_override.title and seo_override.title != '' -%}
+            {%- assign seo_title = seo_override.title -%}
+        {%- endif -%}
+        {%- if seo_override and seo_override.description and seo_override.description != '' -%}
+            {%- assign seo_description = seo_override.description -%}
+        {%- endif -%}
+    {%- endif -%}
+    <title>{{ seo_title }}</title>
+    <meta name="description" content="{{ seo_description | escape_once }}">
+    <meta name="keywords" content="{{ page.keywords }}" />
+    {%- include head.html -%}
+    {%- if site.useVersionTreeV2 -%}
+    <style>
+        .DWT17Note {position: relative; padding: 15px 20px 15px 20px;background: #e5f5ff;border: 1px solid #c7dbe8;color: #4788b3;margin-bottom: 20px;}
+        .DWT17Note i { position: absolute; right: 10px; top: 8px; font-size: 20px; cursor: pointer; }
+        .rightSideMenu.hasNote { padding-top: 168px; }
+        .docContainer, .sideBar, .history { visibility: visible; }
+        #fullTreeMenuListContainer li.expandListStyle > ul { display: block; }
+    </style>
+    {%- endif -%}
+</head>
+
 {%- assign noTitleIndex = "" -%}
 {%- if page.noTitleIndex or page.url contains 'release-notes' -%}
     {%- assign noTitleIndex = "noTitleIndex" -%}
 {%- endif -%}
 
 {%- assign noSubMenuDoc = "" -%}
-{%- if site.firstLevelUrl contains 'license-server' -%}
+{%- if site.firstLevelUrl contains 'license-server' or site.isNoSubMenuDoc -%}
     {%- assign noSubMenuDoc = "noSubMenuDoc"  -%}
-{%- endif -%}
-
-{%- if site.useVersionTreeV2 -%}
-<style>
-    .DWT17Note {position: relative; padding: 15px 20px 15px 20px;background: #e5f5ff;border: 1px solid #c7dbe8;color: #4788b3;margin-bottom: 20px;}
-    .DWT17Note i { position: absolute; right: 10px; top: 8px; font-size: 20px; cursor: pointer; }
-    .rightSideMenu.hasNote { padding-top: 168px; }
-    .docContainer, .sideBar, .history { visibility: visible; }
-    #fullTreeMenuListContainer li.expandListStyle > ul { display: block; }
-</style>
 {%- endif -%}
 
 {%- assign isDCV = "false" -%}
@@ -31,7 +66,7 @@
     {%- include page_header.html -%}
     {%- include productNav.html -%}
 
-    <div class="sideBarIcon"><i class="fa fa-list" style="margin-right: 5px;"></i> Table of contents</div>
+    <div class="sideBarIcon"><i class="fa fa-list toc-icon-gap"></i> Table of contents</div>
     <div class="container" id="categoryMenuTree">
         <div class="row">
             <main class="docContainer col-xs-12 col-md-9">
@@ -43,14 +78,31 @@
                         {%- if site.firstLevelUrl contains 'web-twain' -%}
                         <div class="dbrThanksDownloading">
                             <p class="thanksDownloadTitle">Thanks for Downloading Dynamic Web TWAIN 30-Day Trial!</p>
-                            <p style="margin-bottom: 0;">Your download will start shortly. If your download does not begin, <a class="bluelink downloadlink" href="">click here to retry</a>.</p>
+                            <p class="no-margin-bottom">Your download will start shortly. If your download does not begin, <a class="bluelink downloadlink" href="">click here to retry</a>.</p>
                         </div>
                         {%- endif -%}
                         <article>
+                            {%- if page.url contains 'parameters' and site.docFullPath contains 'docs/core' -%}
+                                <blockquote class="blockquote-tip">
+                                    <p class="small-margin-bottom">Need better scanning performance?</p>
+                                    <p><a class="createCaseLink" href="https://www.dynamsoft.com/create-a-case?topic=template-customization">Get a FREE customized reading template.</a></p> 
+                                </blockquote>
+                            {%- endif -%}
                             {{ content }}
+                            {%- if page.date and page.date != site.time -%}
+                                <p class="postDate">
+                                  <i>Original post creation date: {{ page.date | date: "%b %d, %Y" }}</i>
+                                <p>
+                            {%- endif -%}
+                            {%- if page.last_modified -%}
+                                <p class="latestModifiedDate">
+                                  <i>Last modified date: {{ page.last_modified | date: "%b %d, %Y" }}</i>
+                                <p>
+                            {%- endif -%}
                         </article>
                     </div>
-                    {%- assign assetsPath = 'https://www.dynamsoft.com/webres/wwwroot' -%}
+
+                    {%- assign assetsPath = '/webres/wwwroot' -%}
                     <div class="rightSideMenu col-xs-12 col-md-12 col-lg-3 col-xl-2  hide-md hide-sm hide-xs showRightSideMenu">
                         <div class="rightSideMenuContent">
                             {%- unless site.useVersionTreeV2 -%}
@@ -59,20 +111,20 @@
                                 <p class="compatibleCurVersion"></p>
                             </div>
                             {%- endunless -%}
-                            <div id="feedbackFooter" style="color: #306877;">
+                            <div id="feedbackFooter" class="feedback-accent">
                                 <p class="fontOswald">Is this page helpful? </p>
-                                <a href="javascript:void(0)" style="color: #306877;" class="recordLink smileLink" onclick="UsefulRecord(true)"><img class="icon-smile" src="{{ assetsPath }}/images/docs/icon-smile.png" alt="Yes" />Yes</a>
-                                <a href="javascript:void(0)" style="color: #306877;" class="recordLink sadLink" onclick="UsefulRecord(false)"><img class="icon-sad" src="{{ assetsPath }}/images/docs/icon-sad.png" alt="No" />No</a>
+                                <a href="javascript:void(0)" class="recordLink smileLink feedback-accent" onclick="UsefulRecord(true)"><img class="icon-smile" src="{{ assetsPath }}/images/docs/icon-smile.png" alt="Yes" />Yes</a>
+                                <a href="javascript:void(0)" class="recordLink sadLink feedback-accent" onclick="UsefulRecord(false)"><img class="icon-sad" src="{{ assetsPath }}/images/docs/icon-sad.png" alt="No" />No</a>
                             </div>
                             <hr />
                             {%- if page.needAutoGenerateSidebar -%}
-                            <p class="fontOswald" style="color: #306877;"> In this article: </p>
+                            <p class="fontOswald feedback-accent"> In this article: </p>
                             <div id="AutoGenerateSidebar"></div>
                             {%- endif -%}
                         </div>
                     </div>
                 </div>
-                <div class="main row" style="display: none; background: #f5f5f5;" id="loadingContent">
+                <div class="main row loading-hidden" id="loadingContent">
                     <div class="loading" id="loadingLogin">
                         <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
                     </div>
@@ -94,18 +146,32 @@
                         {%- endif -%}
                     </div>
                     {%- unless site.searchIndexName or site.needSearchIndex -%}
-                    <div class="docSearchPart" style="margin-top: 30px;">
-                        <input id="txtSearch" class="search" type="text">
+                    <div class="docSearchPart doc-search-spacer">
+                        <label class="sr-only" for="txtSearch">Search documentation</label>
+                        <input id="txtSearch" class="search" type="text" placeholder="Search docs" aria-label="Search documentation">
                     </div>
                     {%- endunless -%}
                     <nav class="mainPage">
+                        {%- if site.useVersionTreeV2 -%}
+                            {%- assign treeList = site.data.full_tree.tree_list -%}
+                        {%- endif -%}
                         <ul id="fullTreeMenuListContainer" name="listLevel1" data-nosnippet>
-                            {%- if site.useVersionTreeV2 -%}
-                                {%- assign treeList = site.data.full_tree.tree_list -%}
-                                {%- include liquid_generateFullTree.html treeList=treeList -%}
-                            {%- endif -%}
+                            <template id="fullTreeMenuTemplate">
+                                {%- if site.useVersionTreeV2 -%}
+                                    {%- include liquid_generateFullTree.html treeList=treeList -%}
+                                {%- endif -%}
+                            </template>
                         </ul>
                     </nav>
+                    <script>
+                        (function() {
+                            var template = document.getElementById('fullTreeMenuTemplate');
+                            var target = document.getElementById('fullTreeMenuListContainer');
+                            if (template && target) {
+                                target.insertAdjacentHTML('beforeend', template.innerHTML);
+                            }
+                        })();
+                    </script>
                 </div>
             </aside>
         </div>
@@ -115,7 +181,7 @@
         {%- include page_footer.html -%}
     </footer>
 
-    <script type="text/javascript">
+    <!-- <script type="text/javascript">
         var myMermaid = null
         var mermaidInterval = setInterval(async function() {
             if (mermaid) {
@@ -127,10 +193,11 @@
                 clearInterval(mermaidInterval)
             }
         }, 100)
-    </script>
+    </script> -->
 
     {%- if site.useVersionTreeV2 -%}
     <script>
+        var highlightMenu = "{{page.highlightMenu}}";
         anchors.add();
         UrlReplace();
         $(".currentVersion").text("latest version ("+ versionNoteLatestVersion +")");
@@ -148,6 +215,7 @@
     {%- else -%}
     <script type="text/javascript">
         var sideBarIframeSrc = "{{site.firstLevelUrl}}/Hide_Tree_Page.html";
+        var highlightMenu = "{{page.highlightMenu}}";
         anchors.add();
         PageCreateInit('{{page.needAutoGenerateSidebar}}', '{{page.needGenerateH3Content}}', '{{page.pageStartVer}}', '{{site.useVersionTree}}');
     </script>
@@ -158,11 +226,11 @@
             var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
             return (arr = document.cookie.match(reg)) ? unescape(arr[2]) : null;
         }
-
+        
         $('#txtSearch').keydown(function(e) {
             if (e.keyCode == 13) {
                 let product = getUrlVars(document.URL)["product"] ? getUrlVars(document.URL)["product"] : getCurrentUrlProductName(document.URL)
-                if (["dbr", "dlr", "dce", "dcp", "dcv", "ddn", "mrz"].indexOf(product) >= 0) {
+                if (["dbr", "dlr", "dce", "dcp", "dcv", "ddn", "mrz", "mds"].indexOf(product) >= 0) {
                     let lang = getCurrentUrlLang(document.URL, true)
                     let reporType = ""
                     if (lang && lang != "core") {
@@ -209,13 +277,13 @@
     </script>
     <!-- Google Tag Manager -->
     <noscript>
-        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-538F83" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-538F83" height="0" width="0" class="gtm-hidden"></iframe>
     </noscript>
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-538F83');</script>
+    })(window,document,'script','dataLayer','GTM-538F83');</script> 
     <!-- End Google Tag Manager -->
 </body>
 

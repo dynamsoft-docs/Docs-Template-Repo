@@ -34,3 +34,12 @@
 {%- if site.firstLevelUrl contains 'remote-scan/docs' -%}
   {%- include productNav/remoteScanNav.html -%}
 {%- endif -%}
+{%- if site.firstLevelUrl contains 'mobile-document-scanner/docs' -%}
+  {%- include productNav/mdsNav.html -%}
+{%- endif -%}
+{%- if site.firstLevelUrl == '/faq' -%}
+  {%- include productNav/faqNav.html -%}
+{%- endif -%}
+{%- if site.firstLevelUrl contains 'batch-barcode-scanner/docs' -%}
+  {%- include productNav/bbsNav.html -%}
+{%- endif -%}

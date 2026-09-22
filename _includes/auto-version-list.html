@@ -22,7 +22,7 @@
                 {%- if ver contains '_' -%}
                     {%- assign arr = ver | split: "_" -%}
                     {%- assign ver = arr.first -%}
-                    {%- assign editions = ver | remove: arr.first | remove_first: '_' -%}
+                    {%- assign editions = verInfo.value | remove: arr.first | remove_first: '_' -%}
                 {%- endif -%}
                 {%- if ver contains "latest version"-%}
                     {%- assign curVerText = ver | capitalize -%}
@@ -73,9 +73,9 @@
         {%- assign documentHomePage = "/barcode-reader/docs/core/" -%}
         {%- endif -%}
 
-        {%- unless site.firstLevelUrl contains 'mrz-scanner/docs' or site.firstLevelUrl contains 'remote-scan/docs' -%}
+        {%- if site.firstLevelUrl contains 'capture-vision/docs' or site.firstLevelUrl contains 'barcode-reader/docs' or site.firstLevelUrl contains 'web-twain/docs' -%}
         <li><a href="{{documentHomePage}}" target="_blank" style="color: #323234!important;">Documentation Homepage</a></li>
-        {%- endunless -%}
+        {%- endif -%}
     </ul>
     <a class="fvChange fontOswald" href="javascript:;">Change +</a>
 </span>

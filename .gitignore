@@ -2,3 +2,5 @@
 .DS_Store
 /.vs
 /.history
+.github/copilot-instructions.md
+Gemfile.lock
