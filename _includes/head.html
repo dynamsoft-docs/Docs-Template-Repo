@@ -50,7 +50,8 @@
 
 {%- assign assetsPath = '/webres/wwwroot' -%}
 
-<link rel="preload" as="font" href="{{ site.assets }}font-face/Inter-VariableFont_opsz,wght.ttf" type="font/ttf" crossorigin="anonymous">
+<link rel="preload" as="font" href="{{ assetsPath }}/font-face/Inter/Inter-VariableFont_opsz,wght.full.woff2" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" as="font" href="{{ assetsPath }}/font-face/Oswald-Regular.ttf" type="font/ttf" crossorigin="anonymous">
 <link rel="preload" as="font" href="{{ site.assets }}font-face/fontawesome-webfont.woff2" type="font/woff2" crossorigin="anonymous">
 
 <link rel="stylesheet" href="{{ site.assets }}css/dm-style.min.css?v={{ 'now' | date: "%s"}}" />
