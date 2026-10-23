@@ -41,7 +41,11 @@
 
 
 {%- assign historyRecode = "" -%}
-
+{%- assign showHistory = true -%}
+{%- if site.useJSVersionV3 -%}
+	{%- assign showHistory = false -%}
+{%- endif -%}
+{%- if showHistory -%}
 <ul class="otherVersions" style="display: none!important;">
 {%- assign pages = site.pages | concat: site.documents -%}
 {%- for my_page in pages -%}
@@ -113,4 +117,5 @@
 	{%- assign historyRecode = historyRecode | append: '\nextUrlRecode\' | append: tmpPageVersion -%}
 {%- endfor -%}
 </ul>
+{%- endif -%}
 
