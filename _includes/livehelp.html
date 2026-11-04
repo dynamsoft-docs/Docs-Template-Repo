@@ -1,9 +1,55 @@
 {%- if site.baseurl contains 'web-twain/docs' -%}
 <!--Begin Comm100 Live Chat Code-->
-<div id="comm100-button-e49fdb5a-a4f5-4a6b-a57e-a4c8e3da8296"></div>
-<script type="text/javascript">
-  var Comm100API=Comm100API||{};(function(t){function e(e){var a=document.createElement("script"),c=document.getElementsByTagName("script")[0];a.type="text/javascript",a.async=!0,a.src=e+t.site_id,c.parentNode.insertBefore(a,c)}t.chat_buttons=t.chat_buttons||[],t.chat_buttons.push({code_plan:"e49fdb5a-a4f5-4a6b-a57e-a4c8e3da8296",div_id:"comm100-button-e49fdb5a-a4f5-4a6b-a57e-a4c8e3da8296"}),t.site_id=90003305,t.main_code_plan="e49fdb5a-a4f5-4a6b-a57e-a4c8e3da8296",e("https://vue.comm100.com/livechat.ashx?siteId="),setTimeout(function(){t.loaded||e("https://standby.comm100vue.com/livechat.ashx?siteId=")},5e3)})(Comm100API||{})
-</script>
+  <div id="comm100-button-e49fdb5a-a4f5-4a6b-a57e-a4c8e3da8296"></div>
+  <div id="comm100-button-901ce2f2-5002-4e5b-ac7e-d987e8998365"></div>
+
+  <script type="text/javascript">
+    var Comm100API = Comm100API || {};
+    (function (t) {
+      var c1 = "e49fdb5a-a4f5-4a6b-a57e-a4c8e3da8296",
+          c2 = "901ce2f2-5002-4e5b-ac7e-d987e8998365",
+          pending = false;
+
+      function hideC1Button() {
+        var nodes = document.querySelectorAll("#comm100-button-" + c1 + ',[id^="comm100-float-button-' + c1 + '"]');
+        for (var i = 0; i < nodes.length; i++) nodes[i].style.setProperty("display", "none", "important");
+      }
+      hideC1Button();
+      new MutationObserver(hideC1Button).observe(document.body, { childList: true, subtree: true });
+
+      function openC1() {
+        if (typeof Comm100API.do === "function") Comm100API.do("livechat.button.click", c1);
+        else pending = true;
+      }
+
+      t.onReady = function () {
+        var hide = function () { Comm100API.set("livechat.button.isVisible", false, c1); hideC1Button(); };
+        hide();
+        if (typeof Comm100API.on === "function") {
+          Comm100API.on("livechat.button.show", function (b) { if (b && b.id === c1) hide(); });
+        }
+        if (pending) { pending = false; openC1(); }
+      };
+
+      t.chat_buttons = t.chat_buttons || [];
+      t.chat_buttons.push({ code_plan: c1, div_id: "comm100-button-" + c1 });
+      t.chat_buttons.push({ code_plan: c2, div_id: "comm100-button-" + c2 });
+      t.site_id = 90003305;
+      t.main_code_plan = c2;
+
+      document.getElementById("ask-ai-btn").addEventListener("click", openC1);
+
+      function load(src) {
+        var a = document.createElement("script"), c = document.getElementsByTagName("script")[0];
+        a.type = "text/javascript";
+        a.async = true;
+        a.src = src + t.site_id;
+        c.parentNode.insertBefore(a, c);
+      }
+      load("https://vue.comm100.com/livechat.ashx?siteId=");
+      setTimeout(function () { t.loaded || load("https://standby.comm100vue.com/livechat.ashx?siteId="); }, 5000);
+    })(Comm100API || {});
+  </script>
 <!--End Comm100 Live Chat Code-->
 {%- else -%}
 <!--Begin Comm100 Live Chat Code-->
