@@ -33,6 +33,32 @@ jobs:
           -e "1,3s/blob\/main$/blob\/preview/" ${{ runner.temp }}/DocHome/_config.yml
           cd DocHome && bundle install && bundle exec jekyll build
 
+      - name: Check internal links with HTMLProofer
+        # Report-only for now: remove continue-on-error once the existing broken links are fixed.
+        continue-on-error: true
+        run: |
+          cd ${{ runner.temp }}/DocHome
+          # The site is served under a sub-path (baseurl) while _site is the site root.
+          # Map absolute site links back to _site, and ignore links to other products/editions.
+          BASEURL=$(bundle exec ruby -ryaml -e 'print YAML.load_file("_config.yml")["baseurl"].to_s.strip.sub(%r{/+\z}, "")')
+          ROOT="$RUNNER_TEMP/htmlproofer-root"
+          rm -rf "$ROOT"
+          if [ -n "$BASEURL" ] && [ "$BASEURL" != "/" ]; then
+            mkdir -p "$ROOT$(dirname "$BASEURL")"
+            ln -s "$PWD/_site" "$ROOT$BASEURL"
+            IGNORE_ARGS=(--ignore-urls "$(printf '/^\\/(?!%s(?:\\/|$))/' "${BASEURL#/}")")
+          else
+            ROOT="$PWD/_site"
+            IGNORE_ARGS=()
+          fi
+          bundle exec htmlproofer _site \
+            --disable-external \
+            --no-enforce-https \
+            --ignore-missing-alt \
+            --allow-missing-href \
+            --root-dir "$ROOT" \
+            "${IGNORE_ARGS[@]}"
+
       - name: 'Create Tar files'
         run: tar -czvf ${{ inputs.doc-repo }}.tar.gz -C ${{ runner.temp }}/DocHome/_site .
 

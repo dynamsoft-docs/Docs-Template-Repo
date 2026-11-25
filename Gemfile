@@ -11,3 +11,4 @@ gem "jekyll-seo-tag", group: :jekyll_plugins
 gem "uri"
 gem "net"
 gem "kramdown-parser-gfm"
+gem "html-proofer", "~> 5.2"
