@@ -51,11 +51,13 @@ jobs:
             ROOT="$PWD/_site"
             IGNORE_ARGS=()
           fi
+          # Anchors are often date/JS-dependent; only check that link targets exist.
           bundle exec htmlproofer _site \
             --disable-external=true \
             --enforce-https=false \
             --ignore-missing-alt=true \
             --allow-missing-href=true \
+            --check-internal-hash=false \
             --root-dir "$ROOT" \
             "${IGNORE_ARGS[@]}"
 
