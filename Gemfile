@@ -11,4 +11,5 @@ gem "jekyll-seo-tag", group: :jekyll_plugins
 gem "uri"
 gem "net"
 gem "kramdown-parser-gfm"
-gem "html-proofer", "~> 5.2"
+# 5.x requires Ruby >= 3.1; the build runner currently uses Ruby 3.0.
+gem "html-proofer", "~> 4.4"

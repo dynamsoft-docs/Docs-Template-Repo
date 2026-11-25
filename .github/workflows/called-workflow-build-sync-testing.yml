@@ -52,10 +52,10 @@ jobs:
             IGNORE_ARGS=()
           fi
           bundle exec htmlproofer _site \
-            --disable-external \
-            --no-enforce-https \
-            --ignore-missing-alt \
-            --allow-missing-href \
+            --disable-external=true \
+            --enforce-https=false \
+            --ignore-missing-alt=true \
+            --allow-missing-href=true \
             --root-dir "$ROOT" \
             "${IGNORE_ARGS[@]}"
 
