@@ -27,6 +27,9 @@
   var isNeedFilter = "{{site.searchNeedFilter}}"
   var isUserInput = true
   var searchIndexName = "{{site.searchIndexName}}"
+  var isGlobalDocsIndex = searchIndexName == "Crawler-Global-Docs-New"
+  var searchFacet = isGlobalDocsIndex ? "{{site.searchFacet}}" : "languagues"
+  var searchFacetValue = isGlobalDocsIndex ? "{{site.searchFacetValue}}" : (lang ? lang : "core")
 
   const mySearch = instantsearch({
     indexName: searchIndexName,
@@ -51,12 +54,12 @@
         removeWordsIfNoResults: "none",
         explain: ["*"],
         getRankingInfo: true,
-        filters: 'languagues: "'+ (lang ? lang : "core") +'"'
+        filters: searchFacet + ': "' + searchFacetValue + '"'
       }),
 
       instantsearch.widgets.refinementList({
         container: '#facets',
-        attribute: 'languagues',
+        attribute: searchFacet,
         searchable: false
       }),
 

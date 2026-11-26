@@ -1132,3 +1132,8 @@ textarea:focus {
     width: calc(100% - 40px)
   }
 }
+
+.headSubMenu .subMenuContent p.title, .headSubMenu .subMenuContent a.title {
+  font-family: 'Inter'!important;
+  font-weight: 600!important;
+}
