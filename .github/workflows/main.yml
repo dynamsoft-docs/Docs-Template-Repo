@@ -237,13 +237,13 @@ jobs:
       doc-url: document-viewer/docs
     secrets: inherit
 
-  Update-MWC-On-Main-Change:
-    if: ${{ github.ref == 'refs/heads/main' }}
-    uses: ./.github/workflows/called-workflow-build-sync-production.yml
-    with:
-      doc-repo: mobile-web-capture-docs
-      doc-url: mobile-web-capture/docs
-    secrets: inherit
+  #Update-MWC-On-Main-Change:
+  #  if: ${{ github.ref == 'refs/heads/main' }}
+  #  uses: ./.github/workflows/called-workflow-build-sync-production.yml
+  #  with:
+  #    doc-repo: mobile-web-capture-docs
+  #    doc-url: mobile-web-capture/docs
+  #  secrets: inherit
 
   Update-DLS-On-Main-Change:
     if: ${{ github.ref == 'refs/heads/main' }}
@@ -494,13 +494,13 @@ jobs:
       doc-url: document-viewer/docs
     secrets: inherit
 
-  Update-MWC-On-Preview-Change:
-    if: ${{ github.ref == 'refs/heads/preview' }}
-    uses: ./.github/workflows/called-workflow-build-sync-testing.yml
-    with:
-      doc-repo: mobile-web-capture-docs
-      doc-url: mobile-web-capture/docs
-    secrets: inherit
+  #Update-MWC-On-Preview-Change:
+  #  if: ${{ github.ref == 'refs/heads/preview' }}
+  #  uses: ./.github/workflows/called-workflow-build-sync-testing.yml
+  #  with:
+  #    doc-repo: mobile-web-capture-docs
+  #    doc-url: mobile-web-capture/docs
+  #  secrets: inherit
 
   #Update-DLS-On-Preview-Change:
   #  if: ${{ github.ref == 'refs/heads/preview' }}
