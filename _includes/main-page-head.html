@@ -35,9 +35,6 @@
 {%- endif -%}
 
 {%- assign path = page.path | strip -%}
-{%- if site.firstLevelUrl contains '/faq' and (path contains 'mrz-scanner/license/' or path contains 'barcode-reader/license/') -%}
-    {%- assign path = path | replace: 'mrz-scanner', '' | replace: 'barcode-reader', '' -%}
-{%- endif -%}
 
 <div class="iconsBox">
     <div>
