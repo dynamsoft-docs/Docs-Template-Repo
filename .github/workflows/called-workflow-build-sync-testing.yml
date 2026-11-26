@@ -33,6 +33,173 @@ jobs:
           -e "1,3s/blob\/main$/blob\/preview/" ${{ runner.temp }}/DocHome/_config.yml
           cd DocHome && bundle install && bundle exec jekyll build
 
+      - name: Check internal links with HTMLProofer
+        id: htmlproofer
+        # Report-only for now: remove continue-on-error once the existing broken links are fixed.
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          cd ${{ runner.temp }}/DocHome
+          # The site is served under a sub-path (baseurl) while _site is the site root.
+          # Map absolute site links back to _site, and ignore links to other products/editions.
+          BASEURL=$(bundle exec ruby -ryaml -e 'print YAML.load_file("_config.yml")["baseurl"].to_s.strip.sub(%r{/+\z}, "")')
+          ROOT="$RUNNER_TEMP/htmlproofer-root"
+          rm -rf "$ROOT"
+          if [ -n "$BASEURL" ] && [ "$BASEURL" != "/" ]; then
+            mkdir -p "$ROOT$(dirname "$BASEURL")"
+            ln -s "$PWD/_site" "$ROOT$BASEURL"
+            IGNORE_ARGS=(--ignore-urls "$(printf '/^\\/(?!%s(?:\\/|$))/' "${BASEURL#/}")")
+          else
+            ROOT="$PWD/_site"
+            IGNORE_ARGS=()
+          fi
+          # Anchors are often date/JS-dependent; only check that link targets exist.
+          bundle exec htmlproofer _site \
+            --disable-external=true \
+            --enforce-https=false \
+            --ignore-missing-alt=true \
+            --allow-missing-href=true \
+            --check-internal-hash=false \
+            --root-dir "$ROOT" \
+            "${IGNORE_ARGS[@]}" 2>&1 | tee "$RUNNER_TEMP/htmlproofer.log"
+
+      - name: Send link check result to Teams
+        # Only notify when HTMLProofer found problems.
+        if: always() && steps.htmlproofer.outcome == 'failure'
+        env:
+          TEAMS_NOTIFY_API_URL: ${{ secrets.TEAMS_NOTIFY_API_URL }}
+          TEAMS_NOTIFY_API_METHOD: ${{ vars.TEAMS_NOTIFY_API_METHOD }}
+          TEAMS_NOTIFY_CONTENT_TYPE: ${{ vars.TEAMS_NOTIFY_CONTENT_TYPE }}
+          # Dev group (General)
+          TEAMS_TEAM_ID: "933552ca-c040-45ea-b9ab-6370af0d2b9e"
+          TEAMS_CHANNEL_ID: "19%3Av6ZUKftrvQ2qt3xOA5Dp6v7avcPYEqMjpFODXxz8HZA1%40thread.tacv2"
+          TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
+          DOC_REPO: ${{ inputs.doc-repo }}
+          DOC_URL: ${{ inputs.doc-url }}
+          BRANCH: ${{ github.ref_name }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          LOG_FILE: ${{ runner.temp }}/htmlproofer.log
+        run: |
+          if [ -z "$TEAMS_NOTIFY_API_URL" ] && [ -z "$TEAMS_WEBHOOK_URL" ]; then
+            echo "::warning::Neither TEAMS_NOTIFY_API_URL nor TEAMS_WEBHOOK_URL is configured; skipping Teams notification."
+            exit 0
+          fi
+          if [ ! -f "$LOG_FILE" ]; then
+            echo "::warning::HTMLProofer log not found; skipping Teams notification."
+            exit 0
+          fi
+          python3 - <<'PY'
+          import json, os, re, urllib.request
+
+          log = open(os.environ["LOG_FILE"], encoding="utf-8", errors="replace").read()
+          log = re.sub(r"\x1b\[[0-9;]*m", "", log)
+          match = re.search(r"HTML-Proofer found (\d+) failures", log)
+          count = match.group(1) if match else "unknown"
+
+          start = log.find("For the ")
+          detail = log[start:] if start >= 0 else log
+          detail = detail.strip()
+          if len(detail) > 3500:
+              detail = detail[:3500] + "\n... (truncated; see the Actions run for the full log)"
+
+          repo = os.environ["DOC_REPO"]
+          doc_url = os.environ["DOC_URL"]
+          branch = os.environ["BRANCH"]
+          run_url = os.environ["RUN_URL"]
+          notify_api = os.environ.get("TEAMS_NOTIFY_API_URL", "").strip()
+          webhook = os.environ.get("TEAMS_WEBHOOK_URL", "").strip()
+          title = f"Docs link check failed: {repo}"
+
+          if notify_api:
+              # Internal notification API used by the Azure DevOps release pipelines.
+              message = "\n".join([
+                  "Link Check Reminder",
+                  "",
+                  f"**{count} broken link(s) found**",
+                  "",
+                  f"Repo: {repo}",
+                  f"Doc URL: {doc_url}",
+                  f"Branch: {branch}",
+                  f"Run: [Open Actions run]({run_url})",
+                  "",
+                  detail,
+              ])
+              method = os.environ.get("TEAMS_NOTIFY_API_METHOD") or "POST"
+              content_type = os.environ.get("TEAMS_NOTIFY_CONTENT_TYPE") or "application/json"
+              req = urllib.request.Request(
+                  notify_api,
+                  data=json.dumps({
+                      "teamId": os.environ["TEAMS_TEAM_ID"],
+                      "channelId": os.environ["TEAMS_CHANNEL_ID"],
+                      "message": message,
+                  }).encode("utf-8"),
+                  headers={"Content-Type": f"{content_type}; charset=utf-8"},
+                  method=method,
+              )
+              success_message = "Teams notification sent via Notify API"
+          elif "webhook.office.com" in webhook or "outlook.office.com" in webhook:
+              # Classic Teams Incoming Webhook (MessageCard).
+              payload = {
+                  "@type": "MessageCard",
+                  "@context": "https://schema.org/extensions",
+                  "summary": title,
+                  "themeColor": "D7000F",
+                  "title": title,
+                  "text": "\n\n".join([
+                      f"**Doc URL:** {doc_url}",
+                      f"**Branch:** {branch}",
+                      f"**Failures:** {count}",
+                      f"**Run:** [Open Actions run]({run_url})",
+                      "```",
+                      detail,
+                      "```",
+                  ]),
+              }
+              req = urllib.request.Request(
+                  webhook,
+                  data=json.dumps(payload).encode("utf-8"),
+                  headers={"Content-Type": "application/json"},
+              )
+              success_message = "Teams notification sent via webhook"
+          else:
+              # Power Automate Workflows webhook (Adaptive Card).
+              payload = {
+                  "type": "message",
+                  "attachments": [{
+                      "contentType": "application/vnd.microsoft.card.adaptive",
+                      "contentUrl": None,
+                      "content": {
+                          "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+                          "type": "AdaptiveCard",
+                          "version": "1.4",
+                          "body": [
+                              {"type": "TextBlock", "size": "Large", "weight": "Bolder", "text": title},
+                              {"type": "FactSet", "facts": [
+                                  {"title": "Repo", "value": repo},
+                                  {"title": "Doc URL", "value": doc_url},
+                                  {"title": "Branch", "value": branch},
+                                  {"title": "Failures", "value": count},
+                              ]},
+                              {"type": "TextBlock", "text": detail, "wrap": True},
+                          ],
+                          "actions": [{"type": "Action.OpenUrl", "title": "Open Actions run", "url": run_url}],
+                      },
+                  }],
+              }
+              req = urllib.request.Request(
+                  webhook,
+                  data=json.dumps(payload).encode("utf-8"),
+                  headers={"Content-Type": "application/json"},
+              )
+              success_message = "Teams notification sent via webhook"
+
+          try:
+              with urllib.request.urlopen(req, timeout=30) as resp:
+                  print(f"{success_message} (HTTP {resp.status}).")
+          except Exception as exc:
+              print(f"::warning::Failed to send Teams notification: {exc}")
+          PY
+
       - name: 'Create Tar files'
         run: tar -czvf ${{ inputs.doc-repo }}.tar.gz -C ${{ runner.temp }}/DocHome/_site .
 
